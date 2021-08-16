@@ -30,7 +30,7 @@
         <strong>{!! trans('main.message') !!}</strong>{{ session('success') }}
     </div>
 @endif-->
-<div class="wrap" sylte="width:100%">
+<div class="wrap" style="width:100%">
     <nav class="nav-bar navbar-inverse" role="navigation">
         <div id ="top-menu" class="container-fluid active">
             <a class="navbar-brand" id="nav-a" href="">Centro de Docencia - Evaluaciones</a>

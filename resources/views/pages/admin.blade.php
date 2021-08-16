@@ -11,7 +11,7 @@
     <br>
     <br>
     <br>
-    <div style="max-width:fit-content;" id="inner">
+    <div id="inner">
     <div class="top-bar">            
     </div>
     <section class="content-inner">

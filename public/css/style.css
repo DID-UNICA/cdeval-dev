@@ -17,19 +17,25 @@ align-content: center;
 }
 
 .card{
-height: 370px;
+height: 340px;
 margin-top: auto;
 margin-bottom: auto;
-width: 400px;
+width: 500px;
 background-color: rgba(0,0,0,0.5) !important;
 }
 
 
 .card-header h3{
 color: white;
+text-align: center;
 }
 
-
+.card-body h4{
+    color: white;
+    font-size: medium;
+    margin-right: 0.5cm;
+    margin-top: 0.2cm;
+}
 
 .input-group-prepend span{
 width: 50px;
