@@ -12,5 +12,5 @@
 */
 
 Route::get('/', function () {
-    return view('pages.participante');
+    return view('pages.main');
 });

@@ -1,3 +1,4 @@
+<!-- Vista: Visualizar Participante -->
 @extends('layouts.principal')
 @section('contenido')
 

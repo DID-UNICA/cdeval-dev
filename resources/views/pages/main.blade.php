@@ -1,6 +1,9 @@
+<!-- Vista:  Inicio de sesión -->
+
+
 <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
 <!------ Include the above in your HEAD tag ---------->
 
 <!DOCTYPE html>
@@ -39,7 +42,7 @@
 			
 			<form class="form-horizontal" method="POST" action="">
                         {{ csrf_field() }}
-
+					<!-- Descomentar la siguiente parte, una vez que la contraseña sea correcta -->
 					<!-- <div class="input-group form-group">
 						<h4 style="margin-right:1.1cm;">Seleccionar Área:</h4>
 						<div class="input-group-prepend">

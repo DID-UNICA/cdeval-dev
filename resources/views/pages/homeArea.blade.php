@@ -1,4 +1,4 @@
-<!-- Guardado en resources/views/pages/admin.blade.php -->
+<!-- Vista:  Home - Áreas -->
 @extends('layouts.principal')
 
 @section('contenido')

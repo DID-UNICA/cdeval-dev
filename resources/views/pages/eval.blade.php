@@ -1,4 +1,4 @@
-<!-- Guardado en resources/views/pages/admin.blade.php -->
+<!-- Vista: Main Contestar Evaluación -->
 @extends('layouts.principal')
 
 @section('contenido')
@@ -42,8 +42,8 @@
                                 <tr>
                                     <td>
                                     
-                                         <p>NOMBRE ALUMNO APELLIDO PATERNO APELLIDO MATERNO </p>
-                                        
+                                         <p> APELLIDO PATERNO APELLIDO MATERNO NOMBRE ALUMNO</p>
+                                        <!-- Ordenados por apellido paterno -->
                                     </td>
                                     <td>
                                       <a href="" class="btn btn-success">Evaluación final de curso</a>

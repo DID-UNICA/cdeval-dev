@@ -1,4 +1,4 @@
-<!-- Guardado en resources/views/pages/admin.blade.php -->
+<!-- Vista: Home - Centro de Docencia y Área de Gestión y Vinculación -->
 @extends('layouts.principal')
 
 @section('contenido')
