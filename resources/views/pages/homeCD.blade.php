@@ -4,9 +4,9 @@
 @section('contenido')
   <!--Body content-->
 
-  @if (session()->has('msj'))
+  <!-- @if (session()->has('msj'))
     <p align="center" style="color:green;">{{ session('msj') }}<strong></strong></p>
-  @endif
+  @endif -->
   <!--<div class="content" style="max-width:fit-content;">-->
     <br>
     <br>

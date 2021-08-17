@@ -342,3 +342,19 @@ position: fixed;
 #area{
   margin-left: 40px;
 }
+
+#btn_eval{
+  width: 100px;
+  white-space: normal;
+  text-align: center;
+}
+#btn_reporte{
+  width: 100px;
+  white-space: normal;
+  text-align: center;
+}
+#btn_participantes{
+  width: 120px;
+  white-space: normal;
+  text-align: center;
+}
