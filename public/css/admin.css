@@ -324,3 +324,21 @@ position: fixed;
 .panel-default{
   margin-top: 2%;
 }
+.panel-body{
+
+}
+.div_periodo{
+  float: left;
+  width: 35%;
+  height: 150px;
+}
+
+.div_area{
+  float: left;
+  width: 60%;
+  height: 150px;
+}
+
+#area{
+  margin-left: 40px;
+}
