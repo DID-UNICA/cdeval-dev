@@ -12,5 +12,5 @@
 */
 
 Route::get('/', function () {
-    return view('pages.homeArea');
+    return view('pages.eval');
 });

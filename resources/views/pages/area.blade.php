@@ -26,9 +26,9 @@
             <h3>Área: Cómputo</h3>
               <br>
             <h4>Buscar</h4>
+            <!-- Insertar FORM del sistema anterior -->
             <a href="" class="btn btn-primary">Reporte Global de cursos impartidos</a>
             <a href="" class="btn btn-primary">Reporte de Evaluación Global de Área</a>
-            <!-- Insertar FORM del sistema anterior -->
             <div class="div_info">
               <table class="table table-hover">
                             <thead>
