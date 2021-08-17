@@ -12,5 +12,5 @@
 */
 
 Route::get('/', function () {
-    return view('pages.area');
+    return view('pages.homeArea');
 });
