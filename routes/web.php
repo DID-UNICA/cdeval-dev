@@ -1,5 +1,6 @@
 <?php
-
+use App\Http\Controllers\CoordinadorGeneralController;
+use App\Http\Controllers\AreaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,3 +15,10 @@
 Route::get('/', function () {
     return view('pages.main');
 });
+
+Route::get('/CD',[CoordinadorGeneralController::class,'index'])->name('cd.index');
+Route::get('/CD/area',[CoordinadorGeneralController::class,'area'])->name('cd.area');
+Route::get('/CD/area/evaluacion',[CoordinadorGeneralController::class,'evaluacion'])->name('cd.evaluacion');
+Route::get('/CD/area/participantes',[CoordinadorGeneralController::class,'participantes'])->name('cd.participantes');
+
+Route::get('/area',[AreaController::class,'index'])->name('area.index');

@@ -50,13 +50,13 @@
                                         
                                     </td>
                                     <td>
-                                      <a href="" class="btn btn-success" id="btn_eval">Capturar evaluación final de curso</a>
+                                      <button class="btn btn-success" id="btn_eval" onclick="window.location='{{ route("cd.evaluacion") }}'">Capturar evaluación final de curso</button>
                                     </td>
                                     <td>
                                       <a href="" class="btn btn-info" id="btn_reporte">Reporte de Evaluación final de curso</a><br>
                                       <a href="" class="btn btn-primary" id="btn_reporte">Reporte de Instructores</a>
                                     </td>
-                                    <td><a href="" class="btn btn-warning" id="btn_participantes">Visualizar participantes inscritos</a></td>
+                                    <td><button href="" class="btn btn-warning" id="btn_participantes" onclick="window.location='{{ route("cd.participantes") }}'">Visualizar participantes inscritos</button></td>
                                 </tr>
                             </tbody>
                       

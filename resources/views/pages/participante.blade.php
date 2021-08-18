@@ -52,7 +52,7 @@ td{
 <div class="content">
     <section class="content-inner">
         <br> 
-        @include ('partials.messages')
+        <!--//@ include ('partials.messages')-->
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3>Lista de participantes de {{$curso->getNombreCurso()}}</h3>

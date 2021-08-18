@@ -51,7 +51,7 @@
                     <option value='1'>Cómputo</option>
                   </select>
                 
-                  <button id="area"  type="submit" class="btn btn-success">Visualizar Área</button>
+                  <button id="area"  type="submit" class="btn btn-success" onclick="window.location='{{ route("cd.area") }}'">Visualizar Área</button>
                 </div>
             </div>
         <br><br>
