@@ -123,9 +123,9 @@ td{
                               @else
                               <td> <input type="checkbox" name="adicional[]" value="{{$participantes[$i]->profesor_id}}" id="Adicional{{$i}}" disabled></td>
                               @endif
-                              @if($users[$i]->unam == TRUE)
-                                <td>{{ $users[ $i ]->getDivisionNombre()}}</td>
-                              @elseif($users[$i]->unam == FALSE)
+                              @if($users[$i]->unam == 1)
+                                <td>{{ $users[ $i ]->procedencia}}</td>
+                              @else
                                 <td>{{ $users[ $i ]->procedencia}}</td>
                               @endif
 
