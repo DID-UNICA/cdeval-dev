@@ -29,8 +29,106 @@ class AreaController extends Controller
      */
     public function index(){
 
-        //$coordinaciones = Coordinacion::all();
+        $coordinacion_nombre = 'Área de cómputo';
 
-        return view('pages.homeArea'); //Route -> coordinador
+        $semestre_anio = DB::table('cursos')
+            ->select('semestre_anio')
+            ->get();
+        
+        $coordinaciones = DB::table('coordinacions')
+            ->select('nombre_coordinacion')
+            ->get();
+
+        $semestres = array();
+        foreach($semestre_anio as $semestre){
+            if(!in_array($semestre,$semestres)){
+                array_push($semestres,$semestre);
+            }
+        }
+        sort($semestres);
+        $reversed = array_reverse($semestres);
+
+
+        $fecha="2020-1";
+        $semestre=explode('-',$fecha);
+        $periodo="s";
+        $coordinacion_nombre = 'Área de cómputo';
+
+        $cursos = DB::table('cursos')
+            ->join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
+            ->join('coordinacions','coordinacions.id','=','coordinacion_id')
+            ->select('catalogo_cursos.nombre_curso','cursos.id')
+            ->where([['cursos.semestre_anio',$semestre[0]],['cursos.semestre_pi',$semestre[1]],['cursos.semestre_si',$periodo],['coordinacions.nombre_coordinacion',$coordinacion_nombre]])
+            ->get();
+
+        $datos = array();
+        foreach($cursos as $curso){
+            $tupla = array();
+            $profesores = DB::table('profesor_curso')
+                ->join('profesors','profesors.id','=','profesor_curso.profesor_id')
+                ->select('profesors.nombres','profesors.apellido_paterno','profesors.apellido_materno')
+                ->where('profesor_curso.curso_id','=',$curso->id)
+                ->get();
+            array_push($tupla, $curso);
+            array_push($tupla, $profesores);
+            array_push($datos, $tupla);
+        }
+
+        return view('pages.homeArea')
+            ->with('datos',$datos)
+            ->with('semestre_anio',$reversed)
+            ->with('coordinacion',$coordinacion_nombre);
+
+    }
+
+    public function cambioFecha(Request $request){
+
+        $fecha=$request->get('semestre');
+        $semestre=explode('-',$fecha);
+        $periodo=$request->get('periodo');
+        $coordinacion_nombre = 'Área de cómputo';
+
+        $cursos = DB::table('cursos')
+            ->join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
+            ->join('coordinacions','coordinacions.id','=','coordinacion_id')
+            ->select('catalogo_cursos.nombre_curso','cursos.id')
+            ->where([['cursos.semestre_anio',$semestre[0]],['cursos.semestre_pi',$semestre[1]],['cursos.semestre_si',$periodo],['coordinacions.nombre_coordinacion',$coordinacion_nombre]])
+            ->get();
+
+        $datos = array();
+        foreach($cursos as $curso){
+            $tupla = array();
+            $profesores = DB::table('profesor_curso')
+                ->join('profesors','profesors.id','=','profesor_curso.profesor_id')
+                ->select('profesors.nombres','profesors.apellido_paterno','profesors.apellido_materno')
+                ->where('profesor_curso.curso_id','=',$curso->id)
+                ->get();
+            array_push($tupla, $curso);
+            array_push($tupla, $profesores);
+            array_push($datos, $tupla);
+        }
+
+        $semestre_anio = DB::table('cursos')
+            ->select('semestre_anio')
+            ->get();
+        
+        $coordinaciones = DB::table('coordinacions')
+            ->select('nombre_coordinacion')
+            ->get();
+
+        $semestres = array();
+        foreach($semestre_anio as $semestre){
+            if(!in_array($semestre,$semestres)){
+                array_push($semestres,$semestre);
+            }
+        }
+        sort($semestres);
+        $reversed = array_reverse($semestres);
+        
+        return view('pages.homeArea')
+            ->with('datos',$datos)
+            ->with('semestre_anio',$reversed)
+            ->with('coordinacion',$coordinacion_nombre);
+
     }
 }

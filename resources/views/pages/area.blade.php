@@ -2,6 +2,15 @@
 @extends('layouts.principal')
 
 @section('contenido')
+
+<script>
+  window.onload = function(){
+    var elems = document.getElementsByClassName("btn-warning");
+    for(var i = 0; i < elems.length; i++) {
+      elems[i].disabled = false;
+    }
+  }
+</script>
   <!--Body content-->
 
   <!-- @if (session()->has('msj'))
@@ -23,12 +32,11 @@
         </div>
 
         <div class="panel-body">
-            <h3>Área: Cómputo</h3>
+            <h3>{{$coordinacion}}</h3>
               <br>
             <h4>Buscar</h4>
             <!-- Insertar FORM del sistema anterior -->
-            <a href="" class="btn btn-primary">Reporte Global de cursos impartidos</a>
-            <a href="" class="btn btn-primary">Reporte de Evaluación Global de Área</a>
+            <a onclick="window.location='{{ route("cd.reporte.area",[$semestre,$periodo,$coordinacion_id]) }}'" class="btn btn-primary">Reporte de Evaluación Global de Área</a>
             <div class="div_info">
               <table class="table table-hover">
                             <thead>
@@ -42,22 +50,27 @@
                             </thead>
                             
                             <tbody>
+                              @foreach($datos as $curso)
                                 <tr>
-                                    <td style="width:350px;">NOMBRE DEL CURSO</td>
+                                    <td style="width:350px;">{{$curso[0]->nombre_curso}}</td>
                                     <td>
+                                    @foreach($curso[1] as $profesors)
                                     
-                                         <p>NOMBRE INSTR. APELLIDO PATERNO APELLIDO MATERNO </p>
+                                         <p>{{$profesors->nombres}} {{$profesors->apellido_paterno}} {{$profesors->apellido_materno}}</p>
                                         
+                                    @endforeach
                                     </td>
                                     <td>
-                                      <button class="btn btn-success" id="btn_eval" onclick="window.location='{{ route("cd.evaluacion") }}'">Capturar evaluación final de curso</button>
+                                      <button onclick="window.location='{{ route("cd.evaluacion",[$curso[0]->id])}}'"  class="btn btn-success" id="btn_eval" >Capturar evaluación final de curso</button>
                                     </td>
                                     <td>
-                                      <a href="" class="btn btn-info" id="btn_reporte">Reporte de Evaluación final de curso</a><br>
+                                      <a href="{{url("/CD/area/evaluacion/{$curso[0]->id}")}}" class="btn btn-info" id="btn_reporte">Reporte de Evaluación final de curso</a><br>
                                       <a href="" class="btn btn-primary" id="btn_reporte">Reporte de Instructores</a>
                                     </td>
-                                    <td><button href="" class="btn btn-warning" id="btn_participantes" onclick="window.location='{{ route("cd.participantes") }}'">Visualizar participantes inscritos</button></td>
+                                    <td><button onclick="window.location='{{ route("cd.participantes",[$curso[0]->id])}}'" class="btn btn-warning" id="btn_participantes">Visualizar participantes inscritos</button>
+                                  </td>
                                 </tr>
+                              @endforeach
                             </tbody>
                       
               </table>   

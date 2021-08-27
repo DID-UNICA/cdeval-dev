@@ -61,15 +61,12 @@ td{
 
             </div>
         </div>
-        <form class="form-horizontal" method="POST" action="{{ route('curso.ver-respuesta') }}">
-                  {{csrf_field()}}
+        <!--<form class="form-horizontal" method="POST" action=" route('curso.ver-respuesta') ">
+                  {{csrf_field()}}-->
 									@if( empty($users) )
 										<p>Aún no hay alumnos inscritos en este curso</p>
 										<a href="{{ URL::to('curso/inscripcion', $curso->id) }}" class="btn btn-success" style='margin: 20px;'>Inscribir Participantes</a>
 									@else
-									<!-- <button type="submit" class="btn btn-primary">
-                          Modificar lista ---LA LISTA YA NO ES MODIFICABLE EN CDEVAL
-                  </button> -->
 									
                   
             <div class="panel-body tablaFija" style="overflow-x:auto;">
@@ -117,48 +114,48 @@ td{
                               </td>
 
                               @if ($participantes[$i]->estuvo_en_lista)
-                                  <td><input onclick="Esperador({{$i}})" type="checkbox" name="estuvo_en_lista[]" value=" {{$participantes[$i]->profesor_id}}" checked id="Lista{{$i}}"></td>
+                                  <td><input onclick="Esperador({{$i}})" type="checkbox" name="estuvo_en_lista[]" value=" {{$participantes[$i]->profesor_id}}" checked id="Lista{{$i}}" disabled></td>
                               @else
-                                  <td><input onclick="Esperador({{$i}})" type="checkbox" name="estuvo_en_lista[]" value="{{$participantes[$i]->profesor_id}}" id="Lista{{$i}}"></td>
+                                  <td><input onclick="Esperador({{$i}})" type="checkbox" name="estuvo_en_lista[]" value="{{$participantes[$i]->profesor_id}}" id="Lista{{$i}}" disabled></td>
                               @endif
                               @if ($participantes[$i]->adicional)
-                              <td> <input type="checkbox" name="adicional[]" value="{{$participantes[$i]->profesor_id}}" checked id="Adicional{{$i}}"></td>
+                              <td> <input type="checkbox" name="adicional[]" value="{{$participantes[$i]->profesor_id}}" checked id="Adicional{{$i}}" disabled></td>
                               @else
-                              <td> <input type="checkbox" name="adicional[]" value="{{$participantes[$i]->profesor_id}}" id="Adicional{{$i}}"></td>
+                              <td> <input type="checkbox" name="adicional[]" value="{{$participantes[$i]->profesor_id}}" id="Adicional{{$i}}" disabled></td>
                               @endif
-                              @if($users[$i]->unam)
+                              @if($users[$i]->unam == TRUE)
                                 <td>{{ $users[ $i ]->getDivisionNombre()}}</td>
                               @elseif($users[$i]->unam == FALSE)
                                 <td>{{ $users[ $i ]->procedencia}}</td>
                               @endif
 
                               @if ($participantes[$i]->confirmacion)
-                                  <td><input type="checkbox" name="confirmaciones[]" value=" {{$participantes[$i]->profesor_id}}" checked id="Confirmacion{{$i}}"></td>
+                                  <td><input type="checkbox" name="confirmaciones[]" value=" {{$participantes[$i]->profesor_id}}" checked id="Confirmacion{{$i}}" disabled></td>
                               @else
-                                  <td><input type="checkbox" name="confirmaciones[]" value= "{{$participantes[$i]->profesor_id}}" id="Confirmacion{{$i}}"></td>
+                                  <td><input type="checkbox" name="confirmaciones[]" value= "{{$participantes[$i]->profesor_id}}" id="Confirmacion{{$i}}" disabled></td>
                               @endif
 
                               @if ($participantes[$i]->cancelación)
-                                  <td><input type="checkbox" name="cancelaciones[]" value= "{{$participantes[$i]->profesor_id}}" checked onclick="cancelar({{ $i }})" id="Cancelacion{{$i}}"></td>
+                                  <td><input type="checkbox" name="cancelaciones[]" value= "{{$participantes[$i]->profesor_id}}" checked onclick="cancelar({{ $i }})" id="Cancelacion{{$i}}" disabled></td>
                               @else
-                                  <td><input type="checkbox" name="cancelaciones[]" value= "{{$participantes[$i]->profesor_id}}" onclick="cancelar({{ $i }})" id="Cancelacion{{$i}}"></td>
+                                  <td><input type="checkbox" name="cancelaciones[]" value= "{{$participantes[$i]->profesor_id}}" onclick="cancelar({{ $i }})" id="Cancelacion{{$i}}" disabled></td>
                               @endif
 
                               @if ($participantes[$i]->asistencia)
-                                  <td><input type="checkbox" name="asistencia[]" value="{{$participantes[$i]->profesor_id}}" checked id="Asistencia{{$i}}"></td>
+                                  <td><input type="checkbox" name="asistencia[]" value="{{$participantes[$i]->profesor_id}}" checked id="Asistencia{{$i}}" disabled></td>
                               @else
-                                  <td><input type="checkbox" name="asistencia[]" value="{{$participantes[$i]->profesor_id}}" id="Asistencia{{$i}}"></td>
+                                  <td><input type="checkbox" name="asistencia[]" value="{{$participantes[$i]->profesor_id}}" id="Asistencia{{$i}}" disabled></td>
                               @endif
 
                               @if ($participantes[$i]->acreditacion)
-                                  <td><input type="checkbox" name="acreditacion[]" value="{{$participantes[$i]->profesor_id}}" checked onclick="deshabilitarAcreditacion({{ $i }})" id="Acreditacion{{$i}}"></td>
+                                  <td><input type="checkbox" name="acreditacion[]" value="{{$participantes[$i]->profesor_id}}" checked onclick="deshabilitarAcreditacion({{ $i }})" id="Acreditacion{{$i}}" disabled></td>
 
                               @else
-                                  <td><input type="checkbox" name="acreditacion[]" value= "{{$participantes[$i]->profesor_id}}" onclick="deshabilitarAcreditacion({{ $i }})" id="Acreditacion{{$i}}"></td>
+                                  <td><input type="checkbox" name="acreditacion[]" value= "{{$participantes[$i]->profesor_id}}" onclick="deshabilitarAcreditacion({{ $i }})" id="Acreditacion{{$i}}" disabled></td>
                               @endif
                               <td>
                                   <input name="alumnos[]" type="hidden" value="{{$participantes[$i]->profesor_id}}">
-                                  <input type="number" name="calificaciones[]" value="{{$participantes[$i]->calificacion}}" id="Calificacion{{$i}}" min="0" max="10" oninvalid="this.setCustomValidity('Ingrese una calificacion del 0 al 10')" oninput="this.setCustomValidity('')" step="0.01"></td>
+                                  <input type="number" name="calificaciones[]" value="{{$participantes[$i]->calificacion}}" id="Calificacion{{$i}}" min="0" max="10" /*oninvalid="this.setCustomValidity('Ingrese una calificacion del 0 al 10')" oninput="this.setCustomValidity('')" step="0.01"*/  disabled></td>
                               @if ($participantes[$i]->contesto_hoja_evaluacion)
                                   <td><input type="checkbox" name="hoja_evaluacion[]" value="{{$participantes[$i]->profesor_id}}" checked id="Evaluacion{{$i}}" disabled></td>
 
@@ -168,32 +165,29 @@ td{
                               @endif
 
                                 <td>
-                                  <input type="text" name="causa_no_acreditacion[]" value="{{$participantes[$i]->causa_no_acreditacion}}" id="Causa{{ $i }}">
+                                  <input type="text" name="causa_no_acreditacion[]" value="{{$participantes[$i]->causa_no_acreditacion}}" id="Causa{{ $i }}" disabled>
                                 </td>
-                              @if ($users[$i]->unam == TRUE)
+                              @if ($users[$i]->unam == 1)
                                 <td> <input type="checkbox" name="es_externo[]" id="Externo{{$i}}" disabled></td>
-                              @elseif ($users[$i]->unam == FALSE)
+                              @elseif ($users[$i]->unam == 0)
                                 <td> <input type="checkbox" name="es_externo[]" checked id="Externo{{$i}}" disabled></td>
                               @else
                                 <td> <input type="checkbox" name="es_externo[]" id="Externo{{$i}}" disabled></td>
                               @endif
 
                               @if ($participantes[$i]->pago_curso)
-                                  <td><input type="checkbox" name="pago_curso[]" value=" {{$participantes[$i]->profesor_id}}" onclick="deshabilitarPago({{ $i }})" id="Pago{{ $i }}" checked ></td>
-                                  <td><input type="text" name="monto_pago[]" value="{{$participantes[$i]->monto_pago}}"  id="Monto{{$i }}" pattern="^\d*(\.\d{0,2})?$" title="Monto numérico a dos digitos decimales"></td>
+                                  <td><input type="checkbox" name="pago_curso[]" value=" {{$participantes[$i]->profesor_id}}" onclick="deshabilitarPago({{ $i }})" id="Pago{{ $i }}" checked  disabled></td>
+                                  <td><input type="text" name="monto_pago[]" value="{{$participantes[$i]->monto_pago}}"  id="Monto{{$i }}" pattern="^\d*(\.\d{0,2})?$" title="Monto numérico a dos digitos decimales" disabled></td>
 
                               @else
-                                  <td><input type="checkbox" name="pago_curso[]" value=" {{$participantes[$i]->profesor_id}}" id="Pago{{ $i }}" onclick="deshabilitarPago({{ $i }})"></td>
-                                  <td><input type="text" name="monto_pago[]" value="{{$participantes[$i]->monto_pago}}"  id="Monto{{$i }}" pattern="^\d*(\.\d{0,2})?$" title="Monto numérico a dos digitos decimales"></td>
+                                  <td><input type="checkbox" name="pago_curso[]" value=" {{$participantes[$i]->profesor_id}}" id="Pago{{ $i }}" onclick="deshabilitarPago({{ $i }})" disabled></td>
+                                  <td><input type="text" name="monto_pago[]" value="{{$participantes[$i]->monto_pago}}"  id="Monto{{$i }}" pattern="^\d*(\.\d{0,2})?$" title="Monto numérico a dos digitos decimales" disabled></td>
 
                               @endif
 
 
-                              <td> <input type="text" value="{{$participantes[$i]->comentario}}" name="comentario[]" id="Comentario{{$i}}"></td>
+                              <td> <input type="text" value="{{$participantes[$i]->comentario}}" name="comentario[]" id="Comentario{{$i}}" disabled></td>
 
-                              <td>
-                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal{{$i}}">Dar de baja</button>
-                              </td>
 
 
 

@@ -4,8 +4,9 @@
 @section('contenido')
   <!--Body content-->
 
-  <!-- @if (session()->has('msj'))
-    <p align="center" style="color:green;">{{ session('msj') }}<strong></strong></p>
+
+  <!--@if (\Session::has('msj'))
+  <p align="center" style="color:green;">{!! \Session::get('msj') !!}<strong></strong></p>
   @endif -->
   <!--<div class="content" style="max-width:fit-content;">-->
     <br>
@@ -17,13 +18,15 @@
     <section class="content-inner">
       <br>
       <div class="panel panel-default">
-
+      @if(session()->has('message'))
+        <div class="alert alert-success" role='alert'>{{session('message')}}</div>
+  @endif
         <div class="panel-heading">
           <h3>Coodinación del Centro de Docencia</h3> <!-- Obtener valor de BD-->
         </div>
 
         <div class="panel-body">
-            <h3>Curso: Estrategias de trabajo grupal</h3> <!-- Obtener valor de BD-->
+            <h3>{{$datos[0]->nombre_curso}}</h3> <!-- Obtener valor de BD-->
               <br>
             <h4>Buscar</h4>
 			<!-- Insertar FORM del sistema anterior -->
@@ -39,16 +42,18 @@
                             </thead>
                             
                             <tbody>
+                              @foreach($datos as $dato)
                                 <tr>
                                     <td>
                                     
-                                         <p> APELLIDO PATERNO APELLIDO MATERNO NOMBRE ALUMNO</p>
+                                         <p>{{$dato->apellido_paterno}} {{$dato->apellido_materno}} {{$dato->nombres}}</p>
                                         <!-- Ordenados por apellido paterno -->
                                     </td>
                                     <td>
-                                      <a href="" class="btn btn-success">Evaluación final de curso</a>
+                                      <button onclick="window.location='{{route("cd.evaluacion.vista",[$id, $dato->id])}}'" class="btn btn-success">Evaluación final de curso</button>
                                     </td>
                                 </tr>
+                              @endforeach
                             </tbody>
                       
               </table>   

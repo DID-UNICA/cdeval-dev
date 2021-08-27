@@ -19,7 +19,7 @@
       <div class="panel panel-default">
 
         <div class="panel-heading">
-          <h3>Coodinación Didáctico Pedagógico</h3> <!-- Obtener valor de BD-->
+          <h3>{{$coordinacion}}</h3> <!-- Obtener valor de BD-->
         </div>
 
         <div class="panel-body">
@@ -29,8 +29,32 @@
             <!-- Insertar FORM del sistema anterior -->
             <h4>Periodo</h4>
             <br>
-            <!-- Insertar FORM del sistema anterior -->
-            
+            <div class="panel-body">
+            <form method="POST" action="{{action('AreaController@cambioFecha')}}">
+                <table>
+                  <tr>
+                    <td>
+                      <select name="semestre" id="">
+                        <!-- Obtener valores de BD -->
+                        @foreach($semestre_anio as $anio)
+                          <option value="{{$anio->semestre_anio.'-1'}}">{{$anio->semestre_anio}}-1</option>
+                          <option value="{{$anio->semestre_anio.'-2'}}">{{$anio->semestre_anio}}-2</option>
+                        @endforeach
+                      </select>
+                    </td>
+                    <td>
+                      <select name='periodo' width = '25%'>
+                        <option value='s'>s</option>
+                        <option value='i'>i</option>
+                      </select>
+                    </td>
+                </div>
+                <td>
+                {{ csrf_field ()}}
+                 <button id="area"  type="submit" class="btn btn-success">Buscar</button>
+                </td>
+              </table>
+            </form>
             <div class="div_info">
               <table class="table table-hover">
                             <thead>
@@ -43,18 +67,22 @@
                             </thead>
                             
                             <tbody>
+                              @foreach($datos as $curso)
                                 <tr>
-                                    <td style="width:350px;">NOMBRE DEL CURSO</td>
+                                    <td style="width:350px;">{{$curso[0]->nombre_curso}}</td>
                                     <td>
+                                    @foreach($curso[1] as $profesors)
                                     
-                                         <p>NOMBRE INSTR. APELLIDO PATERNO APELLIDO MATERNO </p>
+                                         <p>{{$profesors->nombres}} {{$profesors->apellido_paterno}} {{$profesors->apellido_materno}}</p>
                                         
+                                    @endforeach
                                     </td>
                                     <td>
-                                      <a href="" class="btn btn-success" >Capturar evaluación final de curso</a>
+                                      <button class="btn btn-success" id="btn_eval" onclick="window.location='{{ route("cd.evaluacion") }}'">Capturar evaluación final de curso</button>
                                     </td>
-                                    <td><a href="" class="btn btn-warning">Visualizar participantes inscritos</a></td>
+                                    <td><button href="" class="btn btn-warning" id="btn_participantes" onclick="window.location='{{ route("cd.participantes") }}'">Visualizar participantes inscritos</button></td>
                                 </tr>
+                              @endforeach
                             </tbody>
                       
               </table>   
