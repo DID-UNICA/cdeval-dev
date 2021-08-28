@@ -12,9 +12,11 @@ use App\Http\Controllers\AreaController;
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('pages.main');
-});
+});*/
+
+Route::get('/',[CoordinadorGeneralController::class,'index'])->name('cd.index');
 
 Route::get('/CD',[CoordinadorGeneralController::class,'index'])->name('cd.index');
 Route::get('/CD/area/{semestre}/{periodo}/',[CoordinadorGeneralController::class,'global'])->name('cd.global');
