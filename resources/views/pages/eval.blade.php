@@ -4,7 +4,6 @@
 @section('contenido')
   <!--Body content-->
 
-
   <!--@if (\Session::has('msj'))
   <p align="center" style="color:green;">{!! \Session::get('msj') !!}<strong></strong></p>
   @endif -->
@@ -50,7 +49,11 @@
                                         <!-- Ordenados por apellido paterno -->
                                     </td>
                                     <td>
-                                      <button onclick="window.location='{{route("cd.evaluacion.vista",[$id, $dato->id])}}'" class="btn btn-success">Evaluación final de curso</button>
+                                      @if(Session::get('sesion')=='cd')
+                                        <button onclick="window.location='{{route("cd.evaluacion.vista",[$id, $dato->id])}}'" class="btn btn-success">Evaluación final de curso</button>
+                                      @else
+                                      <button onclick="window.location='{{route("area.evaluacion.vista",[$id, $dato->id])}}'" class="btn btn-success">Evaluación final de curso</button>
+                                      @endif
                                     </td>
                                 </tr>
                               @endforeach

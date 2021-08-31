@@ -5,7 +5,11 @@
 @section('contenido')
 
   <!--Body content-->
-  <form method="POST" action="{{ action('CoordinadorGeneralController@saveFinal_Seminario',['profesor_id' => $profesor->id,'curso_id'=> $curso->id,  'catalogoCurso_id'=>$catalogoCurso->id ]) }}">
+@if(Session::get('sesion') == 'cd')
+    <form method="POST" action="{{ action('CoordinadorGeneralController@saveFinal_Seminario',['profesor_id' => $profesor->id,'curso_id'=> $curso->id,  'catalogoCurso_id'=>$catalogoCurso->id ]) }}">
+@else
+    <form method="POST" action="{{ action('AreaController@saveFinal_Seminario',['profesor_id' => $profesor->id,'curso_id'=> $curso->id,  'catalogoCurso_id'=>$catalogoCurso->id ]) }}">
+@endif
   <input type="hidden" name="_token" value="{!! csrf_token() !!}">
   <div class="content">
     <div class="top-bar">       

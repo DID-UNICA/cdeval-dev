@@ -4,7 +4,11 @@
 @section('contenido')
 
   <!--Body content-->
-<form method="POST" action="{{ action('CoordinadorGeneralController@saveFinal_Curso',['profesor_id' => $profesor->id,'curso_id'=> $curso->id,  'catalogoCurso_id'=>$catalogoCurso->id ]) }}">
+@if(Session::get('sesion') == 'cd')
+    <form method="POST" action="{{ action('CoordinadorGeneralController@saveFinal_Curso',['profesor_id' => $profesor->id,'curso_id'=> $curso->id,  'catalogoCurso_id'=>$catalogoCurso->id ]) }}">
+@else
+<form method="POST" action="{{ action('AreaController@saveFinal_Curso',['profesor_id' => $profesor->id,'curso_id'=> $curso->id,  'catalogoCurso_id'=>$catalogoCurso->id ]) }}">
+@endif
 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
     @if(session()->has('message'))
         <div class="alert alert-success" role='alert' style='text-align:center'>{{session('message')}}</div>

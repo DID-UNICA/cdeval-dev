@@ -35,7 +35,31 @@
             <h3>{{$coordinacion}}</h3>
               <br>
             <h4>Buscar</h4>
-            <!-- Insertar FORM del sistema anterior -->
+            {!! Form::open(["route" => ["cd.buscar.curso",$coordinacion_id,$semestre,$periodo], "method" => "POST"]) !!}
+              <table>
+                <tr>
+                  <div class="input-group">
+                    <td>
+                      {!!Form::text("pattern", null, [ "class" => "form-control", "placeholder" => "Buscar Curso"])!!}
+                    </td>
+                    <td>
+                      {!! Form::select('type', array(
+                            'nombre' => 'Por nombre',
+                            'instructor' => 'Por instructor'),
+                            null,['class' => 'btn dropdown-toggle pull-left'] ) !!}
+                    </td>
+                    <td>
+                      <span class="input-group-btn col-md-2">
+                        <button class="btn btn-search " type="submit">Buscar</button>
+                    </span>
+                    </td>
+                    <input type="hidden" name="periodo_anio" value="{{isset($periodo_anio)? $periodo_anio:null}}">
+                    <input type="hidden" name="periodo_pi" value="{{isset($periodo_pi)? $periodo_pi:null}}">
+                    <input type="hidden" name="periodo_si" value="{{isset($periodo_si)? $periodo_si:null}}">
+                  </div>
+                </tr>
+              </table>
+            {!! Form::close() !!}
             <a onclick="window.location='{{ route("cd.reporte.area",[$semestre,$periodo,$coordinacion_id]) }}'" class="btn btn-primary">Reporte de Evaluación Global de Área</a>
             <div class="div_info">
               <table class="table table-hover">

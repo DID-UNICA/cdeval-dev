@@ -47,6 +47,9 @@ class CoordinadorGeneralController extends Controller
         sort($semestres);
         $reversed = array_reverse($semestres);
 
+        Session::put('sesion','cd');
+        Session::put('url','CD');
+
         return view('pages.homeCD')
             ->with('semestre_anio',$reversed)
             ->with('coordinaciones',$coordinaciones); //Route -> coordinador
@@ -78,6 +81,10 @@ class CoordinadorGeneralController extends Controller
             array_push($tupla, $profesores);
             array_push($datos, $tupla);
         }
+        if(Session::has('message')){
+            Session::flash('message','Sucedió un error al contestar el formulario. Favor de llenar todas las preguntas o revisar que el usuario en cuestión no lo haya contestado');
+			Session::flash('alert-class', 'alert-danger');
+        }
         
         $coordinacion_id = DB::table('coordinacions')
             ->select('id')
@@ -108,6 +115,106 @@ class CoordinadorGeneralController extends Controller
             ->with('id',$id);
     }
 
+    public function buscarCurso(Request $request, $coordinacion_id,$semestreEnv,$periodo){
+        $fecha=$semestreEnv;
+        $busqueda = $request->get('pattern');
+		$tipo = $request->get('type');
+		$busqueda = $busqueda;
+
+		$datos = array();
+        $cursos = '';
+
+        $datos_coordinacion = DB::table('coordinacions')
+			->select(['id','nombre_coordinacion'])
+            ->where([['id',$coordinacion_id]])
+            ->get();
+
+		if($tipo == 'nombre'){
+			$cursos = DB::table('cursos as c')
+				->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
+				->join('coordinacions as co','co.id','=','cc.coordinacion_id')
+				->where([['cc.nombre_curso','like','%'.$busqueda.'%'],['co.id','=',$coordinacion_id]])
+				->get();
+
+                foreach($cursos as $curso){
+                    $tupla = array();
+                    $profesores = DB::table('profesor_curso')
+                        ->join('profesors','profesors.id','=','profesor_curso.profesor_id')
+                        ->select('profesors.nombres','profesors.apellido_paterno','profesors.apellido_materno')
+                        ->where('profesor_curso.curso_id','=',$curso->id)
+                        ->get();
+                    array_push($tupla, $curso);
+                    array_push($tupla, $profesores);
+                    array_push($datos, $tupla);
+                    }
+		}else{
+            $nombres = explode(" ", $busqueda);
+            if(sizeof($nombres) < 3){
+                //En caso de que no se haya evaluado correctamente el curso regresamos a la vista anterior indicando que la evaluación fue errónea
+			    Session::flash('message','Sucedió un error al contestar el formulario. Favor de llenar todas las preguntas o revisar que el usuario en cuestión no lo haya contestado');
+			    Session::flash('alert-class', 'alert-danger'); 
+
+			    return redirect()->route('cd.area',[$semestreEnv,$periodo,$datos_coordinacion[0]->nombre_coordinacion]);
+            }
+			if(sizeof($nombres) == 3){
+				$cursos = DB::table('cursos as c')
+				->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
+				->join('coordinacions as co','co.id','=','cc.coordinacion_id')
+				->join('profesor_curso as pc','pc.curso_id','=','c.id')
+				->join('profesors as p','p.id','=','pc.profesor_id')
+				->where([['p.nombres','like','%'.$nombres[0].'%'],['p.apellido_paterno','like','%'.$nombres[1].'%'],['p.apellido_materno','like','%'.$nombres[2].'%'],['co.id','=',$coordinacion_id]])
+				->get();
+			}if(sizeof($nombres) == 4){
+				$cursos = DB::table('cursos as c')
+				->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
+				->join('coordinacions as co','co.id','=','cc.coordinacion_id')
+				->join('profesor_curso as pc','pc.curso_id','=','c.id')
+				->join('profesors as p','p.id','=','pc.profesor_id')
+				->where([['p.nombres','like','%'.$nombres[0].'%'],['p.apellido_paterno','like','%'.$nombres[2].'%'],['p.apellido_materno','like','%'.$nombres[3].'%'],['co.id','=',$coordinacion_id]])
+				->get();
+			}
+
+            foreach($cursos as $curso){
+                $tupla = array();
+                $profesores = DB::table('profesor_curso')
+                    ->join('profesors','profesors.id','=','profesor_curso.profesor_id')
+                    ->select('profesors.nombres','profesors.apellido_paterno','profesors.apellido_materno')
+                    ->where('profesor_curso.curso_id','=',$curso->curso_id)
+                    ->get();
+                array_push($tupla, $curso);
+                array_push($tupla, $profesores);
+                array_push($datos, $tupla);
+                }
+		}
+
+
+		$semestre_anio = DB::table('cursos')
+            ->select('semestre_anio')
+            ->get();
+
+		$semestres = array();
+        foreach($semestre_anio as $semestre){
+            if(!in_array($semestre,$semestres)){
+                array_push($semestres,$semestre);
+            }
+        }
+        sort($semestres);
+        $reversed = array_reverse($semestres);
+
+        Session::put('sesion','area');
+        Session::put('url','area');
+
+		
+
+            return view('pages.area')
+            ->with('datos',$datos)
+            ->with('periodo',$periodo)
+            ->with('semestre',$semestreEnv)
+            ->with('semestre_anio',$reversed)
+            ->with('coordinacion',$datos_coordinacion[0]->nombre_coordinacion)
+            ->with('coordinacion_id',$datos_coordinacion[0]->id);
+    }
+
     public function evaluacionVista(Request $request, int $curso_id, int $profesor_id){
         $profesor = Profesor::find($profesor_id);
 		$curso = Curso::find($curso_id);
@@ -117,7 +224,7 @@ class CoordinadorGeneralController extends Controller
 			->count();
         $participante_curo = DB::table('participante_curso')
             ->select('id')
-            ->where([['profesor_id',$profesor_id]])
+            ->where([['profesor_id',$profesor_id],['curso_id',$curso_id]])
             ->get();
 		//Se busca mandar a pages.evaluacionIndex las encuestas realizadas por el usuario para manejar los botones
 		//Se busca evitar que el usuario realice una evaluación por segunda vez

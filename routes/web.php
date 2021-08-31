@@ -21,6 +21,7 @@ Route::get('/',[CoordinadorGeneralController::class,'index'])->name('cd.index');
 Route::get('/CD',[CoordinadorGeneralController::class,'index'])->name('cd.index');
 Route::get('/CD/area/{semestre}/{periodo}/',[CoordinadorGeneralController::class,'global'])->name('cd.global');
 Route::get('/CD/area/{semestre}/{periodo}/{division}',[CoordinadorGeneralController::class,'area'])->name('cd.area');
+Route::post('CD/area/buscar/curso/{id}/{semestreEnv}/{periodo}',[CoordinadorGeneralController::class,'buscarCurso'])->name('cd.buscar.curso');
 Route::get('/CD/evaluacion/{id}',[CoordinadorGeneralController::class,'evaluacion'])->name('cd.evaluacion');
 Route::get('CD/evaluacion/final/{curso_id}/{profesor_id}',[CoordinadorGeneralController::class,'evaluacionVista'])->name('cd.evaluacion.vista');
 Route::get('/CD/participantes/{curso_id}',[CoordinadorGeneralController::class,'participantes'])->name('cd.participantes');
@@ -33,3 +34,9 @@ Route::post('/finals/{profesor_id}/{curso_id}/{catalogoCurso_id}',[CoordinadorGe
 
 Route::get('/area',[AreaController::class,'index'])->name('area.index');
 Route::post('/area/buscar/fecha',[AreaController::class,'cambioFecha'])->name('area.cambioFecha');
+Route::post('/area/buscar/curso/{id}',[AreaController::class,'buscarCurso'])->name('area.buscar.curso');
+Route::get('/area/evaluacion/{id}',[AreaController::class,'evaluacion'])->name('area.evaluacion');
+Route::get('/area/evaluacion/{id}/{profesor_id}',[AreaController::class,'evaluacionVista'])->name('area.evaluacion.vista');
+Route::get('/area/participantes/{id}',[AreaController::class,'participantes'])->name('area.participantes');
+Route::post('/area/finalc/{profesor_id}/{curso_id}/{catalogoCurso_id}',[AreaController::class,'saveFinal_Curso'])->name('area.final.curso');
+Route::post('/area/finals/{profesor_id}/{curso_id}/{catalogoCurso_id}',[AreaController::class,'saveFinal_Seminario'])->name('area.final.curso');
