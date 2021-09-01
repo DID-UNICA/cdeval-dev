@@ -3017,6 +3017,21 @@ $promedio_p4=[
 
     }
 
+    public function modificarEvaluacion(Request $request, int $curso_id, int $profesor_id){
+        $participante_id = DB::table('participante_curso')
+			->select('id','curso_id')
+			->where([['curso_id','=',$curso_id],['profesor_id','=',$profesor_id]])->get();
+
+		$evaluacion_final_curso;
+		if(CatalogoCurso::find(Curso::find($participante_id[0]->curso_id)->catalogo_id)->tipo == 'S'){
+			$evaluacion_final_curso = EvaluacionFinalSeminario::where('participante_curso_id',$participante_id[0]->id)->get();
+		}else{
+			$evaluacion_final_curso = EvaluacionFinalCurso::where('participante_curso_id',$participante_id[0]->id)->get();
+		}
+
+        return [$evaluacion_final_curso[0]->id,$participante_id[0]->id];
+    }
+
 }
 
 

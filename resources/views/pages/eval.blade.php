@@ -37,6 +37,8 @@
                                     <th>Particpante</th>
 
                                     <th>Evaluar</th>
+
+                                    <th>Modificar</th>
                                 </tr>
                             </thead>
                             
@@ -55,6 +57,13 @@
                                       <button onclick="window.location='{{route("area.evaluacion.vista",[$id, $dato->id])}}'" class="btn btn-success">Evaluación final de curso</button>
                                       @endif
                                     </td>
+                                    <td>
+                                    @if(Session::get('sesion')=='cd')
+                                        <button onclick="window.location='{{route("cd.modificar.evaluacion",[$id, $dato->id])}}'" class="btn btn-warning">Modificar evaluación final de curso</button>
+                                      @else
+                                      <button onclick="window.location='{{route("area.modificar.evaluacion",[$id, $dato->id])}}'" class="btn btn-warning">Modificar evaluación final de curso</button>
+                                      @endif
+                                  </td>
                                 </tr>
                               @endforeach
                             </tbody>
