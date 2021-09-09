@@ -795,7 +795,10 @@ $promedio_p4=[
         }
 
         if(sizeof($evaluacionesCursos)==0){
-            return redirect()->route($inicio,['Curso no ha sido evaluado']);
+            Session::flash('message','Periodo seleccionado no cuenta con una evaluacion');
+			Session::flash('alert-class', 'alert-danger'); 
+
+			return redirect()->back()->withInput();
         }
 
         $DP=0;
@@ -1952,11 +1955,11 @@ $promedio_p4=[
 
         $envio = 'pages.global';
         $envioPDF = 'global_'.$periodo.'-'.$semestral;
+        Session::flash('tipos','CD');
         if(strcmp($lugar,'pages.reporte_final_area') == 0){
-            $envio = 'pages.area';
+            Session::flash('tipos','area');
             $envioPDF = 'area_'.$nombreCoordinacion.'_periodo';
         }
-        
         //Obtenemos el pdf con los datos calculados
         $pdf = PDF::loadView($envio,array('nombres'=>$nombres,'periodo'=>$periodo,'acreditaron'=>$acreditaron,'inscritos'=>$inscritos,'contestaron'=>$contestaron,'factor_ocupacion'=>$factor_ocupacion,'factor_recomendacion'=>$factor_recomendacion,'factor_acreditacion'=>$factor_acreditacion,'positivas'=>$positivas,'DP'=>$DP,'DH'=>$DH,'CO'=>$CO,'DI'=>$DI,'Otros'=>$Otros,'DPtematicas'=>$DPtematicas,'DItematicas'=>$DItematicas,'COtematicas'=>$COtematicas,'DHtematicas'=>$DHtematicas,'Otrostematicas'=>$Otrostematicas,'horarios'=>$horarios,'coordinacion'=>$coordinacion,'contenido'=>$contenido,'profesors'=>$profesors,'instructor'=>$instructor,'asistencia'=>$asistencia,'nombreCoordinacion'=>$nombreCoordinacion,'aritmetico_contenido'=>$factor_contenido_aritmetico,'aritmetico_instructor'=>$factor_instructor_aritmetico,'aritmetico_coordinacion'=>$factor_coordinacion_aritmetico,'aritmetico_recomendacion'=>$factor_recomendacion_aritmetico));	
 
@@ -2283,7 +2286,7 @@ $promedio_p4=[
 
         //Pasamos el nombre de la coordinacion y la vista a retornar
         $nombreCoordinacion = $coordinaciones[0]->nombre_coordinacion;
-        $lugar = "pages.reporte_final_coordinacion";
+        $lugar = "pages.reporte_final_area";
         return $this->enviarVista($semestre, $cursos, $nombreCoordinacion, $lugar,1,'elegir.coordinacion',$periodo);
     }
 
@@ -3018,6 +3021,8 @@ $promedio_p4=[
     }
 
     public function modificarEvaluacion(Request $request, int $curso_id, int $profesor_id){
+        $profesor = Profesor::find($profesor_id);
+
         $participante_id = DB::table('participante_curso')
 			->select('id','curso_id')
 			->where([['curso_id','=',$curso_id],['profesor_id','=',$profesor_id]])->get();
@@ -3029,9 +3034,289 @@ $promedio_p4=[
 			$evaluacion_final_curso = EvaluacionFinalCurso::where('participante_curso_id',$participante_id[0]->id)->get();
 		}
 
-        return [$evaluacion_final_curso[0]->id,$participante_id[0]->id];
+        if(sizeof($evaluacion_final_curso) == 0){
+            Session::flash('message','El curso no ha sido evaluado, favor de evaluarlo.');
+			Session::flash('alert-class', 'alert-danger'); 
+
+			return redirect()->back()->withInput($request->input());
+        }
+
+		$catalogoCurso = CatalogoCurso::find(Curso::find($participante_id[0]->curso_id)->catalogo_id);
+        $curso = Curso::find($curso_id);
+        $count = DB::table('profesor_curso')
+			->where('curso_id',$curso_id)
+			->count();
+
+        if(strcmp($catalogoCurso->tipo,"S") == 0){
+            if($count==1){
+                return view("pages.final_seminario_1")
+					->with("profesor",$profesor)
+                    ->with("curso",$curso)
+                    ->with('catalogoCurso',$catalogoCurso)
+                    ->with('evaluacion',$evaluacion_final_curso[0]);
+			}elseif($count==2){
+                return view("pages.final_seminario_2")
+					->with("profesor",$profesor)
+                    ->with("curso",$curso)
+                    ->with('catalogoCurso',$catalogoCurso)
+                    ->with('evaluacion',$evaluacion_final_curso[0]);
+			}elseif($count==3){
+                return view("pages.final_seminario_3")
+                    ->with("profesor",$profesor)
+                    ->with("curso",$curso)
+                    ->with('catalogoCurso',$catalogoCurso)
+                    ->with('evaluacion',$evaluacion_final_curso[0]);
+			}
+        }else{
+			if($count==1){
+				return view("pages.final_curso_1")
+					->with("profesor",$profesor)
+					->with("curso",$curso)
+					->with('catalogoCurso',$catalogoCurso)
+                    ->with('evaluacion',$evaluacion_final_curso[0]);
+			}elseif($count==2){
+				return view("pages.final_curso_2")
+					->with("profesor",$profesor)
+					->with("curso",$curso)
+					->with('catalogoCurso',$catalogoCurso)
+                    ->with('evaluacion',$evaluacion_final_curso[0]);
+			}elseif($count==3){
+				return view("pages.final_curso_3")
+					->with("profesor",$profesor)
+					->with("curso",$curso)
+					->with('catalogoCurso',$catalogoCurso)
+                    ->with('evaluacion',$evaluacion_final_curso[0]);
+			}
+        
+        }
+
     }
 
-}
+    public function changeFinal_Curso(Request $request,$profesor_id,$curso_id, $catalogoCurso_id){
+        $participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
+        $evaluacion_id = DB::table('_evaluacion_final_curso')
+            ->select('id')
+            ->where([['participante_curso_id',$participante[0]->id],['curso_id',$curso_id]])
+            ->get();
+
+        $eval_fcurso = EvaluacionFinalCurso::find($evaluacion_id[0]->id);
+
+        $eval_fcurso->delete();
+        
+        return $this->saveFinal_Curso($request,$profesor_id,$curso_id, $catalogoCurso_id);
+    }
+
+    public function reporteFinalInstructor($curso_id){
+		//Si el formulario no fue rellenado por un profesor, no hace falta enviar el correo
+		if (Session::has('coordinador_id') or Session::has('superadmin'))
+			return;
+
+		//Obtenemos el curso evaluado
+		$curso = DB::table('cursos')
+			->where('id',$curso_id)
+			->get();
+		//Obtenemos el catálogo del curso evaluado
+		$catalogoCurso = DB::table('catalogo_cursos')
+			->where('id',$curso[0]->catalogo_id)
+			->get();
+		//Obtenemos todas las evaluaciones del curso
+		$evals = DB::table('_evaluacion_final_curso')
+			->where('curso_id',$curso_id)
+			->get();
+	
+		//Obtenemos los docentes/facilitadores de los cursos y su número
+		$profesorsDatos = DB::table('profesor_curso')
+			->where('curso_id',$curso[0]->id)
+			->get();
+
+		$count = ProfesoresCurso::select($curso_id)
+			->where('curso_id',$curso_id)
+			->count();
+	
+		$profesors = array();
+	
+		//Obtenemos los datos de los docentes
+		foreach($profesorsDatos as $Dato){
+			$profesor = Profesor::find($Dato->id);
+			array_push($profesors,$profesor);
+		}
+
+		//Empezamps la evaluación del curso
+		$mejor = array(); //mejor
+		$sugerencias = array(); //sug
+		$lugar = 'pages.reporte_final_instructores_1';
+        $nombre = 'reporte_instructores_'.$catalogoCurso[0]->nombre_curso;
+		$experiencia1 = 0; //4_1
+		$planeacion1 = 0;	//4_2
+		$puntualidad1 = 0;	//4_3
+		$materiales1 = 0;	//4_4
+		$dudas1 = 0;		//4_5
+		$control1 = 0;		//4_6
+		$interes1 = 0;		//4_6
+		$actitud1 = 0;		//4_8
+		$experiencia2 = 0;
+		$planeacion2 = 0;
+		$puntualidad2 = 0;
+		$materiales2 = 0;
+		$dudas2 = 0;
+		$control2 = 0;
+		$interes2 = 0;
+		$actitud2 = 0;
+		$experiencia3 = 0;
+		$planeacion3 = 0;
+		$puntualidad3 = 0;
+		$materiales3 = 0;
+		$dudas3 = 0;
+		$control3 = 0;
+		$interes3 = 0;
+		$actitud3 = 0;
+
+		//Iteramos todas las evaluaciones para ir sumando los valores de las evaluaciones
+		foreach($evals as $eval){
+
+			$experiencia1 += $eval->p4_1; //4_1
+			$planeacion1 += $eval->p4_2;	//4_2
+			$puntualidad1 += $eval->p4_3;	//4_3
+			$materiales1 += $eval->p4_4;	//4_4
+			$dudas1 += $eval->p4_5;		//4_5
+			$control1 += $eval->p4_6;		//4_6
+			$interes1 += $eval->p4_7;		//4_7
+			$actitud1 += $eval->p4_8;		//4_8
+	
+			//Si hay dos profesores obtenemos la evaluación del segundo docente
+			if($count>=2){
+				$lugar = 'pages.reporte_final_instructores_2';
+				$experiencia2 += $eval->p5_1;
+				$planeacion2 += $eval->p5_2;
+				$puntualidad2 += $eval->p5_3;
+				$materiales2 += $eval->p5_4;
+				$dudas2 += $eval->p5_5;
+				$control2 += $eval->p5_6;
+				$interes2 += $eval->p5_7;
+				$actitud2 += $eval->p5_8;
+			}
+
+			//Si hay tres docentes obtenemos la evaluación del tercero
+			if($count == 3){
+				$lugar = 'pages.reporte_final_instructores_3';
+				$experiencia3 += $eval->p6_1;
+				$planeacion3 += $eval->p6_2;
+				$puntualidad3 += $eval->p6_3;
+				$materiales3 += $eval->p6_4;
+				$dudas3 += $eval->p6_5;
+				$control3 += $eval->p6_6;
+				$interes3 += $eval->p6_7;
+				$actitud3 += $eval->p6_8;
+			}
+
+			array_push($mejor,$eval->mejor);
+			array_push($sugerencias,$eval->sug);
+
+		}
+
+
+		//Obtenemos los promedios de cada profesor
+		$experiencia1 = round($experiencia1/sizeof($evals),2);
+		$planeacion1 = round($planeacion1/sizeof($evals),2);	//4_2
+		$puntualidad1 = round($puntualidad1/sizeof($evals),2);	//4_3
+		$materiales1 = round($materiales1/sizeof($evals),2);	//4_4
+		$dudas1 = round($dudas1/sizeof($evals),2);		//4_5
+		$control1 = round($control1/sizeof($evals),2);		//4_6
+		$interes1 = round($interes1/sizeof($evals),2);		//4_7
+		$actitud1 = round($actitud1/sizeof($evals),2);	
+
+		$experiencia2 = round($experiencia2/sizeof($evals),2);
+		$planeacion2 = round($planeacion2/sizeof($evals),2);	//4_2
+		$puntualidad2 = round($puntualidad2/sizeof($evals),2);	//4_3
+		$materiales2 = round($materiales2/sizeof($evals),2);	//4_4
+		$dudas2 = round($dudas2/sizeof($evals),2);		//4_5
+		$control2 = round($control2/sizeof($evals),2);		//4_6
+		$interes2 = round($interes2/sizeof($evals),2);		//4_7
+		$actitud2 = round($actitud2/sizeof($evals),2);	
+		
+		$experiencia3 = round($experiencia3/sizeof($evals),2);
+		$planeacion3 = round($planeacion3/sizeof($evals),2);	//4_2
+		$puntualidad3 = round($puntualidad3/sizeof($evals),2);	//4_3
+		$materiales3 = round($materiales3/sizeof($evals),2);	//4_4
+		$dudas3 = round($dudas3/sizeof($evals),2);		//4_5
+		$control3 = round($control3/sizeof($evals),2);		//4_6
+		$interes3 = round($interes3/sizeof($evals),2);		//4_7
+		$actitud3 = round($actitud3/sizeof($evals),2);	
+		
+        setlocale(LC_ALL,"es_MX");
+
+        $date = getdate();
+        $dia = '';
+        $mes= '';
+        switch($date["weekday"]){
+            case 'Monday':
+                $dia = 'Lunes';
+                break;
+            case 'Tuesday':
+                $dia = 'Martes';
+                break;
+            case 'Wednesday':
+                $dia = 'Miércoles';
+                break;
+            case 'Thursday':
+                $dia = 'Jueves';
+                break;
+            case 'Friday':
+                $dia = 'Viernes';
+                break;
+            case 'Saturday':
+                $dia = 'Sábado';
+                break;
+            case 'Sunday':
+                $dia = 'Domingo';
+                break;
+        }
+
+        switch($date["mon"]){
+            case 1:
+                $mes = 'enero';
+                break;
+            case 2:
+                $mes = 'febrero';
+                break;
+            case 3:
+                $mes = 'marzo';
+                break;
+            case 4:
+                $mes = 'abril';
+                break;
+            case 5:
+                $mes = 'mayo';
+                break;
+            case 6:
+                $mes = 'junio';
+                break;
+            case 7:
+                $mes = 'julio';
+                break;
+            case 8:
+                $mes = 'agosto';
+                break;
+            case 9:
+                $mes = 'septiembre';
+                break;
+            case 10:
+                $mes = 'octubre';
+                break;
+            case 11:
+                $mes = 'noviembre';
+                break;
+            case 12:
+                $mes = 'diciembre';
+                break;
+        }
+		//Obtenemos el pdf
+		$pdf = PDF::loadView($lugar,array('experiencia1'=>$experiencia1,'planeacion1'=>$planeacion1,'puntualidad1'=>$puntualidad1,'materiales1'=>$materiales1,'dudas1'=>$dudas1,'control1'=>$control1,'interes1'=>$interes1,'actitud1'=>$actitud1,'experiencia2'=>$experiencia2,'planeacion2'=>$planeacion2,'puntualidad2'=>$puntualidad2,'materiales2'=>$materiales2,'dudas2'=>$dudas2,'control2'=>$control2,'interes2'=>$interes2,'actitud2'=>$actitud2,'experiencia3'=>$experiencia3,'planeacion3'=>$planeacion3,'puntualidad3'=>$puntualidad3,'materiales3'=>$materiales3,'dudas3'=>$dudas3,'control3'=>$control3,'interes3'=>$interes3,'actitud3'=>$actitud3,'mejor'=>$mejor,'sugerencias'=>$sugerencias,'catalogo'=>$catalogoCurso[0],'curso'=>$curso[0],'cursos'=>$curso[0],'profesors'=>$profesors,'date'=>$date,'dia'=>$dia, 'mes'=>$mes));	
+
+        return $pdf->download($nombre);
+
+    }
+
+}   
 
 

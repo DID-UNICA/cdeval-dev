@@ -29,9 +29,14 @@ Route::get('/CD/participantes/{curso_id}',[CoordinadorGeneralController::class,'
 Route::get('descargar/global/{fecha}/{semestral}',[CoordinadorGeneralController::class,'globalPDF'])->name('cd.global_pdf');
 Route::get('/CD/global/{semestre}/{periodo}/{coordinacion_id}',[CoordinadorGeneralController::class,'enviarArea'])->name('cd.reporte.area');
 Route::get('/CD/global/{curso_id}',[CoordinadorGeneralController::class,'reporteFinalCurso'])->name('cd.reporte.curso');
+Route::get('/CD/global/instructores/{curso_id}',[CoordinadorGeneralController::class,'reporteFinalInstructor'])->name('cd.instructores.curso');
 
 Route::post('/finalc/{profesor_id}/{curso_id}/{catalogoCurso_id}',[CoordinadorGeneralController::class,'saveFinal_Curso'])->name('final.curso');
 Route::post('/finals/{profesor_id}/{curso_id}/{catalogoCurso_id}',[CoordinadorGeneralController::class,'saveFinal_Seminario'])->name('final.seminario');
+
+Route::post('/finalc/cambio/{profesor_id}/{curso_id}/{catalogoCurso_id}',[CoordinadorGeneralController::class,'changeFinal_Curso'])->name('final.change');
+Route::post('/finals/cambio{profesor_id}/{curso_id}/{catalogoCurso_id}',[CoordinadorGeneralController::class,'changeFinal_Seminario'])->name('final.seminario.change');
+
 
 Route::get('/area',[AreaController::class,'index'])->name('area.index');
 Route::post('/area/buscar/fecha',[AreaController::class,'cambioFecha'])->name('area.cambioFecha');
@@ -42,4 +47,7 @@ Route::get('/area/modificar/final/{id}/{profesor_id}',[AreaController::class,'mo
 Route::get('/area/participantes/{id}',[AreaController::class,'participantes'])->name('area.participantes');
 Route::get('/area/final/{id}',[AreaController::class,'reporteFinalCurso'])->name('area.curso');
 Route::post('/area/finalc/{profesor_id}/{curso_id}/{catalogoCurso_id}',[AreaController::class,'saveFinal_Curso'])->name('area.final.curso');
-Route::post('/area/finals/{profesor_id}/{curso_id}/{catalogoCurso_id}',[AreaController::class,'saveFinal_Seminario'])->name('area.final.curso');
+Route::post('/area/finals/{profesor_id}/{curso_id}/{catalogoCurso_id}',[AreaController::class,'saveFinal_Seminario'])->name('area.seminario.curso');
+
+Route::post('/area/finalc/cambio/{profesor_id}/{curso_id}/{catalogoCurso_id}',[AreaController::class,'changeFinal_Curso'])->name('area.final.change');
+Route::post('/area/finals/cambio/{profesor_id}/{curso_id}/{catalogoCurso_id}',[AreaController::class,'changeFinal_Seminario'])->name('area.final.seminario.change');

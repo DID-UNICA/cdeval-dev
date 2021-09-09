@@ -757,6 +757,7 @@ $promedio_p4=[
     }
 
 	public function modificarEvaluacion(Request $request, int $curso_id, int $profesor_id){
+		$profesor = Profesor::find($profesor_id);
         $participante_id = DB::table('participante_curso')
 			->select('id','curso_id')
 			->where([['curso_id','=',$curso_id],['profesor_id','=',$profesor_id]])->get();
@@ -768,7 +769,76 @@ $promedio_p4=[
 			$evaluacion_final_curso = EvaluacionFinalCurso::where('participante_curso_id',$participante_id[0]->id)->get();
 		}
 
-        return [$evaluacion_final_curso[0]->id,$participante_id[0]->id];
+		if(sizeof($evaluacion_final_curso) == 0){
+            Session::flash('message','El curso no ha sido evaluado, favor de evaluarlo.');
+			Session::flash('alert-class', 'alert-danger'); 
+
+			return redirect()->back()->withInput($request->input());
+        }
+
+		$catalogoCurso = CatalogoCurso::find(Curso::find($participante_id[0]->curso_id)->catalogo_id);
+        $curso = Curso::find($curso_id);
+        $count = DB::table('profesor_curso')
+			->where('curso_id',$curso_id)
+			->count();
+
+        if(strcmp($catalogoCurso->tipo,"S") == 0){
+            if($count==1){
+                return view("pages.final_seminario_1")
+					->with("profesor",$profesor)
+                    ->with("curso",$curso)
+                    ->with('catalogoCurso',$catalogoCurso)
+                    ->with('evaluacion',$evaluacion_final_curso[0]);
+			}elseif($count==2){
+                return view("pages.final_seminario_2")
+					->with("profesor",$profesor)
+                    ->with("curso",$curso)
+                    ->with('catalogoCurso',$catalogoCurso)
+                    ->with('evaluacion',$evaluacion_final_curso[0]);
+			}elseif($count==3){
+                return view("pages.final_seminario_3")
+                    ->with("profesor",$profesor)
+                    ->with("curso",$curso)
+                    ->with('catalogoCurso',$catalogoCurso)
+                    ->with('evaluacion',$evaluacion_final_curso[0]);
+			}
+        }else{
+			if($count==1){
+				return view("pages.final_curso_1")
+					->with("profesor",$profesor)
+					->with("curso",$curso)
+					->with('catalogoCurso',$catalogoCurso)
+                    ->with('evaluacion',$evaluacion_final_curso[0]);
+			}elseif($count==2){
+				return view("pages.final_curso_2")
+					->with("profesor",$profesor)
+					->with("curso",$curso)
+					->with('catalogoCurso',$catalogoCurso)
+                    ->with('evaluacion',$evaluacion_final_curso[0]);
+			}elseif($count==3){
+				return view("pages.final_curso_3")
+					->with("profesor",$profesor)
+					->with("curso",$curso)
+					->with('catalogoCurso',$catalogoCurso)
+                    ->with('evaluacion',$evaluacion_final_curso[0]);
+			}
+        
+        }
+
+    }
+
+	public function changeFinal_Curso(Request $request,$profesor_id,$curso_id, $catalogoCurso_id){
+        $participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
+        $evaluacion_id = DB::table('_evaluacion_final_curso')
+            ->select('id')
+            ->where([['participante_curso_id',$participante[0]->id],['curso_id',$curso_id]])
+            ->get();
+
+        $eval_fcurso = EvaluacionFinalCurso::find($evaluacion_id[0]->id);
+
+        $eval_fcurso->delete();
+        
+        return $this->saveFinal_Curso($request,$profesor_id,$curso_id, $catalogoCurso_id);
     }
 
 

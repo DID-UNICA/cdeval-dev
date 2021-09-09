@@ -18,6 +18,9 @@
     <section class="content-inner">
       <br>
       <div class="panel panel-default">
+      @if(session()->has('message'))
+        <div class="alert alert-success" role='alert' style='text-align:center'>{{session('message')}}</div>
+    @endif
         <div class="panel-heading">
           <h3>Coodinación del Centro de Docencia</h3> <!-- Obtener valor de BD-->
         </div>

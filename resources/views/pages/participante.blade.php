@@ -57,7 +57,6 @@ td{
             <div class="panel-heading">
                 <h3>Lista de participantes de {{$curso->getNombreCurso()}}</h3>
                 <h4>Instructores(es): {{ $curso->getProfesores()}}</h4>
-                <button type="submit" class="btn btn-primary">Lista de verificación</button>
 
             </div>
         </div>
