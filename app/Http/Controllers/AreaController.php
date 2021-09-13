@@ -99,7 +99,7 @@ class AreaController extends Controller
         $fecha=$request->get('semestre');
         $semestre=explode('-',$fecha);
         $periodo=$request->get('periodo');
-        $coordinacion_nombre = 'Formación de Desarrollo Humano';
+        $coordinacion_nombre = 'Área Didáctico Pedagógica';
 
         $cursos = DB::table('cursos')
             ->join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
