@@ -29,7 +29,7 @@ class AreaController extends Controller
      */
     public function index(){
 
-        $coordinacion_nombre = 'Área Didáctico pedagógica';
+        $coordinacion_nombre = 'Área Didáctico Pedagógica';
 
         $semestre_anio = DB::table('cursos')
             ->select('semestre_anio')
@@ -52,7 +52,7 @@ class AreaController extends Controller
         $fecha="2020-1";
         $semestre=explode('-',$fecha);
         $periodo="s";
-        $coordinacion_nombre = 'Área Didáctico pedagógica';
+        $coordinacion_nombre = 'Área Didáctico Pedagógica';
 
         $cursos = DB::table('cursos')
             ->join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
