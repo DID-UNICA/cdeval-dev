@@ -29,7 +29,7 @@ class AreaController extends Controller
      */
     public function index(){
 
-        $coordinacion_nombre = 'Formación de Desarrollo Humano';
+        $coordinacion_nombre = 'Área de Desarrollo Humano';
 
         $semestre_anio = DB::table('cursos')
             ->select('semestre_anio')
@@ -52,7 +52,7 @@ class AreaController extends Controller
         $fecha="2018-2";
         $semestre=explode('-',$fecha);
         $periodo="s";
-        $coordinacion_nombre = 'Formación de Desarrollo Humano';
+        $coordinacion_nombre = 'Área de Desarrollo Humano';
 
         $cursos = DB::table('cursos')
             ->join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
@@ -105,7 +105,7 @@ class AreaController extends Controller
     }
 
 	public function nuevaFecha(Request $request, $fecha){
-		$coordinacion_nombre = 'Formación de Desarrollo Humano';
+		$coordinacion_nombre = 'Área de Desarrollo Humano';
 		$semestre = explode('-',$fecha);
 
         $cursos = DB::table('cursos')
@@ -198,6 +198,8 @@ class AreaController extends Controller
 			$curso_prof = array();
 			$aux = array();
 		
+			return $profesores;
+
 			foreach($profesores as $profesor_aux){
 				foreach($profesor_aux as $profesor){
 					$prof = DB::table('profesor_curso')
@@ -215,7 +217,7 @@ class AreaController extends Controller
 					$curso = DB::table('cursos as c')
 						->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
 						->join('coordinacions as co','co.id','=','cc.coordinacion_id')
-						->where([['c.id','=',$prof->curso_id],['co.id',$coordinacion_id]])
+						->where([['c.id','=',$prof->curso_id],['co.id','=',$coordinacion_id]])
 						->get();
 							
 					if(sizeof($curso) > 0){
