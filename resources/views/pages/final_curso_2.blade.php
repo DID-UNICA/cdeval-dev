@@ -15,9 +15,6 @@
 @endif
 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
   <div class="content">
-    @if(session()->has('message'))
-        <div class="alert alert-success" role='alert' style='text-align:center'>{{session('message')}}</div>
-    @endif
     <div class="top-bar">       
       <a href="#menu" class="side-menu-link burger"> 
         <span class='burger_inside' id='bgrOne'></span>
@@ -28,6 +25,9 @@
     <section class="content-inner">
     
       <div class="panel panel-default">
+      @if(session()->has('message'))
+        <div class="alert alert-success" role='alert' style='text-align:center'>{{session('message')}}</div>
+    @endif
                 <div class="panel-heading">
                     <h2><span class="fa fa-check-square-o"></span>    Evaluación final de curso </h3>
                 </div>

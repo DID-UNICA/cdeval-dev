@@ -2,12 +2,6 @@
 @extends('layouts.principal')
 
 @section('contenido')
-  <!--Body content-->
-
-  <!--@if (\Session::has('msj'))
-  <p align="center" style="color:green;">{!! \Session::get('msj') !!}<strong></strong></p>
-  @endif -->
-  <!--<div class="content" style="max-width:fit-content;">-->
     <br>
     <br>
     <br>
@@ -17,13 +11,40 @@
     <section class="content-inner">
       <br>
       <div class="panel panel-default">
-      @if(session()->has('message'))
-        <div class="alert alert-success" role='alert'>{{session('message')}}</div>
-  @endif
+        @if(session()->has('message'))
+          <div class="alert alert-success" role='alert'>{{session('message')}}</div>
+        @endif
         <div class="panel-heading">
           <h3>Coodinación del Centro de Docencia</h3> <!-- Obtener valor de BD-->
         </div>
-
+        <br>
+        <br>
+        <div class="panel-body">
+        {!! Form::open(["route" => ["cd.buscar.instructor",$id], "method" => "POST"]) !!}
+              <table>
+                <tr>
+                  <div class="input-group">
+                    <td>
+                      {!!Form::text("pattern", null, [ "class" => "form-control", "placeholder" => "Buscar Profesor"])!!}
+                    </td>
+                    <td>
+                      {!! Form::select('type', array(
+                            'instructor' => 'Por instructor'),
+                            null,['class' => 'btn dropdown-toggle pull-left'] ) !!}
+                    </td>
+                    <td>
+                      <span class="input-group-btn col-md-2">
+                        <button class="btn btn-search " type="submit">Buscar</button>
+                    </span>
+                    </td>
+                    <input type="hidden" name="periodo_anio" value="{{isset($periodo_anio)? $periodo_anio:null}}">
+                    <input type="hidden" name="periodo_pi" value="{{isset($periodo_pi)? $periodo_pi:null}}">
+                    <input type="hidden" name="periodo_si" value="{{isset($periodo_si)? $periodo_si:null}}">
+                  </div>
+                </tr>
+              </table>
+            {!! Form::close() !!}
+        </div>
         <div class="panel-body">
             <h3>{{$datos[0]->nombre_curso}}</h3> <!-- Obtener valor de BD-->
               <br>
@@ -47,7 +68,7 @@
                                 <tr>
                                     <td>
                                     
-                                         <p>{{$dato->apellido_paterno}} {{$dato->apellido_materno}} {{$dato->nombres}}</p>
+                                        <p>{{$dato->apellido_paterno}} {{$dato->apellido_materno}} {{$dato->nombres}}</p>
                                         <!-- Ordenados por apellido paterno -->
                                     </td>
                                     <td>

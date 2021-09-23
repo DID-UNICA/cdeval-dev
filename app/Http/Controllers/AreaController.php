@@ -29,7 +29,7 @@ class AreaController extends Controller
      */
     public function index(){
 
-        $coordinacion_nombre = 'Área Didáctico Pedagógica';
+        $coordinacion_nombre = 'Área de Desarrollo Humano';
 
         $semestre_anio = DB::table('cursos')
             ->select('semestre_anio')
@@ -49,10 +49,10 @@ class AreaController extends Controller
         $reversed = array_reverse($semestres);
 
 
-        $fecha="2020-1";
+        $fecha="2018-2";
         $semestre=explode('-',$fecha);
         $periodo="s";
-        $coordinacion_nombre = 'Área Didáctico Pedagógica';
+        $coordinacion_nombre = 'Área de Desarrollo Humano';
 
         $cursos = DB::table('cursos')
             ->join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
@@ -97,15 +97,22 @@ class AreaController extends Controller
     public function cambioFecha(Request $request){
 
         $fecha=$request->get('semestre');
-        $semestre=explode('-',$fecha);
         $periodo=$request->get('periodo');
-        $coordinacion_nombre = 'Área Didáctico Pedagógica';
+
+		$toRedirect = $fecha.'-'.$periodo;
+		return redirect()->to('/area/'.$toRedirect.'');
+
+    }
+
+	public function nuevaFecha(Request $request, $fecha){
+		$coordinacion_nombre = 'Área de Desarrollo Humano';
+		$semestre = explode('-',$fecha);
 
         $cursos = DB::table('cursos')
             ->join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
             ->join('coordinacions','coordinacions.id','=','coordinacion_id')
             ->select('catalogo_cursos.nombre_curso','cursos.id')
-            ->where([['cursos.semestre_anio',$semestre[0]],['cursos.semestre_pi',$semestre[1]],['cursos.semestre_si',$periodo],['coordinacions.nombre_coordinacion',$coordinacion_nombre]])
+            ->where([['cursos.semestre_anio',$semestre[0]],['cursos.semestre_pi',$semestre[1]],['cursos.semestre_si',$semestre[2]],['coordinacions.nombre_coordinacion',$coordinacion_nombre]])
             ->get();
 
         $datos = array();
@@ -147,12 +154,16 @@ class AreaController extends Controller
             ->with('semestre_anio',$reversed)
             ->with('coordinacion',$coordinacion_nombre)
 			->with('coordinacion_id',$id[0]->id);
-
-    }
+	}
 
     public function buscarCurso(Request $request, $coordinacion_id){
 		$busqueda = $request->get('pattern');
 		$tipo = $request->get('type');
+
+		return redirect()->route('area.nuevoCurso',['busqueda'=>$busqueda,'tipo'=>$tipo,'coordinacion_id'=>$coordinacion_id]);
+    }
+
+	public function nuevoCurso(Request $request, $coordinacion_id, $busqueda, $tipo){
 
 		$datos = array();
 		$cursos;
@@ -177,44 +188,52 @@ class AreaController extends Controller
 					}
 
 		}else{
-			$nombres = explode(" ", $busqueda);
-            if(sizeof($nombres) < 3){
-                //En caso de que no se haya evaluado correctamente el curso regresamos a la vista anterior indicando que la evaluación fue errónea
-			    Session::flash('message','Sucedió un error al contestar el formulario. Favor de llenar todas las preguntas o revisar que el usuario en cuestión no lo haya contestado');
-			    Session::flash('alert-class', 'alert-danger'); 
+			$profesores = array();
+		
+			$words=explode(" ", $request->pattern);
+			foreach($words as $word){
+				$profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(lower(nombres) LIKE lower('%".$word."%')) OR (lower(apellido_paterno) LIKE lower('%".$word."%')) OR (lower(apellido_materno) LIKE lower('%".$word."%'))")->get();
+				array_push($profesores, $profesor);
+			}
+			$curso_prof = array();
+			$aux = array();
+		
+			return $profesores;
 
-			    return $this->index();
-            }
-			if(sizeof($nombres) == 3){
-				$cursos = DB::table('cursos as c')
-				->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
-				->join('coordinacions as co','co.id','=','cc.coordinacion_id')
-				->join('profesor_curso as pc','pc.curso_id','=','c.id')
-				->join('profesors as p','p.id','=','pc.profesor_id')
-				->where([['p.nombres','like','%'.$nombres[0].'%'],['p.apellido_paterno','like','%'.$nombres[1].'%'],['p.apellido_materno','like','%'.$nombres[2].'%'],['co.id','=',$coordinacion_id]])
-				->get();
-			}if(sizeof($nombres) == 4){
-				$cursos = DB::table('cursos as c')
-				->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
-				->join('coordinacions as co','co.id','=','cc.coordinacion_id')
-				->join('profesor_curso as pc','pc.curso_id','=','c.id')
-				->join('profesors as p','p.id','=','pc.profesor_id')
-				->where([['p.nombres','like','%'.$nombres[0].'%'],['p.apellido_paterno','like','%'.$nombres[2].'%'],['p.apellido_materno','like','%'.$nombres[3].'%'],['co.id','=',$coordinacion_id]])
-				->get();
+			foreach($profesores as $profesor_aux){
+				foreach($profesor_aux as $profesor){
+					$prof = DB::table('profesor_curso')
+						->select('curso_id')
+						->where('profesor_id', $profesor->id)
+						->get();
+					if(sizeof($prof) > 0)
+						array_push($curso_prof, $prof);
+				}
 			}
 
-            foreach($cursos as $curso){
-                $tupla = array();
-                $profesores = DB::table('profesor_curso')
-                    ->join('profesors','profesors.id','=','profesor_curso.profesor_id')
-                    ->select('profesors.nombres','profesors.apellido_paterno','profesors.apellido_materno')
-                    ->where('profesor_curso.curso_id','=',$curso->curso_id)
-                    ->get();
-                array_push($tupla, $curso);
-                array_push($tupla, $profesores);
-                array_push($datos, $tupla);
-                }
+			foreach($curso_prof as $prof_aux){
+				foreach($prof_aux as $prof){
+					$tupla = array();
+					$curso = DB::table('cursos as c')
+						->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
+						->join('coordinacions as co','co.id','=','cc.coordinacion_id')
+						->where([['c.id','=',$prof->curso_id],['co.id','=',$coordinacion_id]])
+						->get();
+							
+					if(sizeof($curso) > 0){
+						$profesores = DB::table('profesor_curso')
+							->join('profesors','profesors.id','=','profesor_curso.profesor_id')
+							->select('profesors.nombres','profesors.apellido_paterno','profesors.apellido_materno')
+							->where('profesor_curso.curso_id','=',$prof->curso_id)
+							->get();
+						array_push($tupla, $curso[0]);
+						array_push($tupla, $profesores);
+						array_push($datos, $tupla);
+						}
+					}
+			}
 		}
+
 
 		$semestre_anio = DB::table('cursos')
             ->select('semestre_anio')
@@ -236,21 +255,27 @@ class AreaController extends Controller
 			->select(['id','nombre_coordinacion'])
             ->where([['id',$coordinacion_id]])
             ->get();
-		
 
         return view('pages.homeArea')
             ->with('datos',$datos)
             ->with('semestre_anio',$reversed)
             ->with('coordinacion',$datos_coordinacion[0]->nombre_coordinacion)
             ->with('coordinacion_id',$datos_coordinacion[0]->id);
-    }
 
-    public function participantes($curso_id){
+	}
+
+    public function participantes(Request $request,$curso_id){
         $participantes = DB::table('participante_curso')
             ->where([['curso_id',$curso_id]])
             ->get();
         $curso = Curso::find($curso_id);
         $users = array();
+        if(sizeof($participantes) == 0){
+            Session::flash('message','Por el momento no hay alumnos inscritos en el curso');
+			Session::flash('alert-class', 'alert-danger'); 
+
+			return redirect()->back()->withInput($request->input());
+        }
         foreach($participantes as $participante){
             $user = DB::table('profesors')
                 ->where([['id',$participante->profesor_id]])
@@ -263,7 +288,50 @@ class AreaController extends Controller
             ->with('participantes',$participantes);
     }
 
-    public function evaluacion(int $id){
+	public function buscarInstructor (Request $request, int $curso_id){
+        $profesores = array();
+
+            $words=explode(" ", $request->pattern);
+            foreach($words as $word){
+                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(lower(nombres) LIKE lower('%".$word."%')) OR (lower(apellido_paterno) LIKE lower('%".$word."%')) OR (lower(apellido_materno) LIKE lower('%".$word."%'))")->get();
+                array_push($profesores, $profesor);
+            }
+
+            $curso_prof = array();
+            $aux = array();
+
+            foreach($profesores as $profesor_aux){
+                foreach($profesor_aux as $profesor){
+                    $prof = DB::table('participante_curso')
+                        ->where([['profesor_id', $profesor->id],['curso_id',$curso_id]])
+                        ->get();
+                    if(sizeof($prof) > 0)
+                        array_push($curso_prof, $prof);
+                }
+            }
+
+            $datos = array();
+
+            foreach($curso_prof as $prof_aux){
+                foreach($prof_aux as $prof){
+                    $dato = DB::table('participante_curso as pc')    
+                        ->join('profesors as p', 'p.id', '=', 'pc.profesor_id')
+                        ->join('cursos as c', 'c.id', '=', 'pc.curso_id')
+                        ->join('catalogo_cursos as cc','cc.id', '=', 'c.catalogo_id')
+                        ->select('cc.nombre_curso', 'c.id','p.id', 'p.nombres','p.apellido_paterno','p.apellido_materno')
+                        ->where( [['pc.id','=',$prof->id],['cc.coordinacion_id']])
+                        ->get();
+                    
+                    array_push($datos, $dato[0]);
+                }
+            }
+    
+            return view('pages.eval')
+                ->with('datos',$datos)
+                ->with('id',$curso_id);
+    }
+
+    public function evaluacion(Request $request, int $id){
 
         $datos = DB::table('cursos')
             ->join('participante_curso','cursos.id','=','participante_curso.curso_id')
@@ -272,6 +340,19 @@ class AreaController extends Controller
             ->select('catalogo_cursos.nombre_curso','profesors.id','profesors.nombres','profesors.apellido_paterno','profesors.apellido_materno')
             ->where([['cursos.id',$id]])
             ->get();
+
+		$catalogo_curso = DB::table('cursos as c')
+            ->join('catalogo_cursos as cc','cc.id','=','c.catalogo_id')
+            ->select('cc.nombre_curso')
+            ->where('c.id',$id)
+            ->get();
+        
+        if(sizeof($datos) == 0){
+			Session::forget('message');
+            Session::flash('message','No es posible realizar alguna evaluación, el curso '.$catalogo_curso[0]->nombre_curso.' no cuenta con participantes inscritos');
+			Session::flash('alert-class', 'alert-danger'); 
+            return redirect()->back()->withInput($request->input());
+        }
 
         return view('pages.eval')
             ->with('datos',$datos)
