@@ -190,15 +190,13 @@ class AreaController extends Controller
 		}else{
 			$profesores = array();
 		
-			$words=explode(" ", $request->pattern);
+			$words=explode(" ", $busqueda);
 			foreach($words as $word){
 				$profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(lower(nombres) LIKE lower('%".$word."%')) OR (lower(apellido_paterno) LIKE lower('%".$word."%')) OR (lower(apellido_materno) LIKE lower('%".$word."%'))")->get();
 				array_push($profesores, $profesor);
 			}
 			$curso_prof = array();
 			$aux = array();
-		
-			return $profesores;
 
 			foreach($profesores as $profesor_aux){
 				foreach($profesor_aux as $profesor){
