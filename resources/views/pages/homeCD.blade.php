@@ -57,7 +57,7 @@
                 <h3>Área</h3>
 
                 <div class="panel-body">
-                  <select id='area' name='area'> 
+                  <select class='' id='area' name='area'> 
                     @foreach($coordinaciones as $coordinacion)
                       <option value="{{$coordinacion->nombre_coordinacion}}">{{$coordinacion->nombre_coordinacion}}</option>
                     @endforeach
