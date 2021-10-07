@@ -48,7 +48,7 @@
                 </div>
                 </tr>
                 <tr style=>
-                <button id="boton1" type="button" class="btn btn-primary" >Reporte Global de cursos impartidos</button>
+                <!--<button id="boton1" type="button" class="btn btn-primary" >Reporte Global de cursos impartidos</button>-->
                 </tr>
               </table>      
           </div>
@@ -102,10 +102,10 @@
         window.location.href = url;
       }
 
-      var boton = document.getElementById("boton1");
-      boton.addEventListener("click", ()=>{
-        sendGlobal();
-      })
+      //var boton = document.getElementById("boton1");
+      //boton.addEventListener("click", ()=>{
+        //sendGlobal();
+      //})
 
 
       var boton = document.getElementById("boton2");

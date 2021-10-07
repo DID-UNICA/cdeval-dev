@@ -883,19 +883,19 @@ $promedio_p4=[
 			}
         }else{
 			if($count==1){
-				return view("pages.final_curso_1")
+				return view("pages.final_curso_1_modificar")
 					->with("profesor",$profesor)
 					->with("curso",$curso)
 					->with('catalogoCurso',$catalogoCurso)
                     ->with('evaluacion',$evaluacion_final_curso[0]);
 			}elseif($count==2){
-				return view("pages.final_curso_2")
+				return view("pages.final_curso_2_modificar")
 					->with("profesor",$profesor)
 					->with("curso",$curso)
 					->with('catalogoCurso',$catalogoCurso)
                     ->with('evaluacion',$evaluacion_final_curso[0]);
 			}elseif($count==3){
-				return view("pages.final_curso_3")
+				return view("pages.final_curso_3_modificar")
 					->with("profesor",$profesor)
 					->with("curso",$curso)
 					->with('catalogoCurso',$catalogoCurso)

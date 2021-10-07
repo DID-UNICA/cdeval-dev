@@ -3184,19 +3184,19 @@ $promedio_p4=[
 			}
         }else{
 			if($count==1){
-				return view("pages.final_curso_1")
+				return view("pages.final_curso_1_modificar")
 					->with("profesor",$profesor)
 					->with("curso",$curso)
 					->with('catalogoCurso',$catalogoCurso)
                     ->with('evaluacion',$evaluacion_final_curso[0]);
 			}elseif($count==2){
-				return view("pages.final_curso_2")
+				return view("pages.final_curso_2_modificar")
 					->with("profesor",$profesor)
 					->with("curso",$curso)
 					->with('catalogoCurso',$catalogoCurso)
                     ->with('evaluacion',$evaluacion_final_curso[0]);
 			}elseif($count==3){
-				return view("pages.final_curso_3")
+				return view("pages.final_curso_3_modificar")
 					->with("profesor",$profesor)
 					->with("curso",$curso)
 					->with('catalogoCurso',$catalogoCurso)
@@ -3260,7 +3260,7 @@ $promedio_p4=[
 		$mejor = array(); //mejor
 		$sugerencias = array(); //sug
 		$lugar = 'pages.reporte_final_instructores_1';
-        $nombre = 'reporte_instructores_'.$catalogoCurso[0]->nombre_curso;
+        $nombre = 'reporte_instructores_'.$catalogoCurso[0]->nombre_curso.'pdf';
 		$experiencia1 = 0; //4_1
 		$planeacion1 = 0;	//4_2
 		$puntualidad1 = 0;	//4_3
@@ -3429,6 +3429,44 @@ $promedio_p4=[
 		$pdf = PDF::loadView($lugar,array('experiencia1'=>$experiencia1,'planeacion1'=>$planeacion1,'puntualidad1'=>$puntualidad1,'materiales1'=>$materiales1,'dudas1'=>$dudas1,'control1'=>$control1,'interes1'=>$interes1,'actitud1'=>$actitud1,'experiencia2'=>$experiencia2,'planeacion2'=>$planeacion2,'puntualidad2'=>$puntualidad2,'materiales2'=>$materiales2,'dudas2'=>$dudas2,'control2'=>$control2,'interes2'=>$interes2,'actitud2'=>$actitud2,'experiencia3'=>$experiencia3,'planeacion3'=>$planeacion3,'puntualidad3'=>$puntualidad3,'materiales3'=>$materiales3,'dudas3'=>$dudas3,'control3'=>$control3,'interes3'=>$interes3,'actitud3'=>$actitud3,'mejor'=>$mejor,'sugerencias'=>$sugerencias,'catalogo'=>$catalogoCurso[0],'curso'=>$curso[0],'cursos'=>$curso[0],'profesors'=>$profesors,'date'=>$date,'dia'=>$dia, 'mes'=>$mes));	
 
         return $pdf->download($nombre);
+
+    }
+
+    public function asistentesGlobal(String $semestreEnv, String $periodo){
+
+        $fecha=$semestreEnv;
+        $semestre=explode('-',$fecha);
+        $periodo=$periodo;
+
+        $cursos = DB::table('cursos as c')
+            ->join('catalogo_cursos as cc','cc.id','=','c.catalogo_id')
+            ->select('cid','cc.nombre_curso')
+            ->where([['c.semestre_anio',$semestre[0]],['c.semestre_pi',$semestre[1]],['c.semestre_si',$periodo]])
+            ->get();
+        
+        $asistentes = array();
+        foreach($cursos as $curso){
+            $profesors = DB::table('participante_curso')
+            ->join('profesors as p','p.id','=','participante_curso.profesor_id')
+            ->select('p.unam','p.procedencia')
+            ->where([['participante_curso.curso_id',$curso->id]])
+            ->get();
+            foreach($profesors as $profesor){
+                array_push($asistentes,$profesor);
+            }
+        }
+        $unam = 0;
+        $externos = 0;
+
+        foreach($asistentes as $asistente){
+            if($asistente->unam == 1){
+                $unam++;
+            }else{
+                $externos++;
+            }
+        }
+
+        $total = $unam+$externos;
 
     }
 

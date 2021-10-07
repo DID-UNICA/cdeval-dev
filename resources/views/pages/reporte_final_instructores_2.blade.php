@@ -181,6 +181,8 @@ body {
 				</tr>
             @endforeach
 		</table>
+		<br>
+		<br>
 		<table width="100%">
 			<tr>
 				<th class="f1">Comentarios y sugerencias</th>
