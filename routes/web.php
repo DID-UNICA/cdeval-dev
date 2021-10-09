@@ -20,6 +20,7 @@ Route::get('/',[CoordinadorGeneralController::class,'index'])->name('cd.index');
 
 Route::get('/CD',[CoordinadorGeneralController::class,'index'])->name('cd.index');
 Route::get('/CD/area/{semestre}/{periodo}/',[CoordinadorGeneralController::class,'global'])->name('cd.global');
+Route::get('/CD/participantes/{semestre}/',[CoordinadorGeneralController::class,'asistentesGlobal'])->name('cd.participantes');
 Route::get('/CD/area/{semestre}/{periodo}/{division}',[CoordinadorGeneralController::class,'area'])->name('cd.area');
 Route::post('CD/area/buscar/curso/{id}/{semestreEnv}/{periodo}',[CoordinadorGeneralController::class,'buscarCurso'])->name('cd.buscar.curso');
 Route::get('/CD/evaluacion/{id}',[CoordinadorGeneralController::class,'evaluacion'])->name('cd.evaluacion');

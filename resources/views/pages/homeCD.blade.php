@@ -48,7 +48,7 @@
                 </div>
                 </tr>
                 <tr style=>
-                <!--<button id="boton1" type="button" class="btn btn-primary" >Reporte Global de cursos impartidos</button>-->
+                  <button id="boton1" type="button" class="btn btn-primary" >Reporte participantes periodo</button>
                 </tr>
               </table>      
           </div>
@@ -82,9 +82,10 @@
 				var date = select.value
         var select2 = document.getElementById('periodo');
 				var periodo = select2.value;
-        var url = '{{route("cd.global",[":var1",":var2"])}}'
+        //var url = '{{route("cd.participantes",[":var1",":var2"])}}'
+        var url = '{{route("cd.participantes",[":var1"])}}'
         url = url.replace(":var1",date);
-        url = url.replace(":var2",periodo);
+        //url = url.replace(":var2",periodo);
         window.location.href = url;
       }
 
@@ -102,10 +103,10 @@
         window.location.href = url;
       }
 
-      //var boton = document.getElementById("boton1");
-      //boton.addEventListener("click", ()=>{
-        //sendGlobal();
-      //})
+      var boton = document.getElementById("boton1");
+      boton.addEventListener("click", ()=>{
+        sendGlobal();
+      })
 
 
       var boton = document.getElementById("boton2");

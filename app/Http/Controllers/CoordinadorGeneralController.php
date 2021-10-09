@@ -3432,44 +3432,44 @@ $promedio_p4=[
 
     }
 
-    public function asistentesGlobal(String $semestreEnv, String $periodo){
+    public function asistentesGlobal(String $semestreEnv){
 
         $fecha=$semestreEnv;
         $semestre=explode('-',$fecha);
-        $periodo=$periodo;
 
         $cursos = DB::table('cursos as c')
             ->join('catalogo_cursos as cc','cc.id','=','c.catalogo_id')
-            ->select('cid','cc.nombre_curso')
-            ->where([['c.semestre_anio',$semestre[0]],['c.semestre_pi',$semestre[1]],['c.semestre_si',$periodo]])
+            ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
+            ->select('c.id','cc.nombre_curso','co.abreviatura','c.semestre_si')
+            ->where([['c.semestre_anio',$semestre[0]],['c.semestre_pi',$semestre[1]]])
+            ->orderBy('c.semestre_si', 'desc')
             ->get();
         
         $asistentes = array();
         foreach($cursos as $curso){
+            $unam = 0;
+            $externos = 0;
             $profesors = DB::table('participante_curso')
             ->join('profesors as p','p.id','=','participante_curso.profesor_id')
             ->select('p.unam','p.procedencia')
             ->where([['participante_curso.curso_id',$curso->id]])
             ->get();
             foreach($profesors as $profesor){
-                array_push($asistentes,$profesor);
+                if($profesor->unam == 1){
+                    $unam++;
+                }else{
+                    $externos++;
+                }
             }
+            $total = $unam+$externos;
+            array_push($asistentes, [$curso, $unam, $externos, $total]);
         }
-        $unam = 0;
-        $externos = 0;
+        
+        $pdf = PDF::loadView('pages.participantes',array('semestre'=>$semestreEnv,'cursos'=>$asistentes));	
 
-        foreach($asistentes as $asistente){
-            if($asistente->unam == 1){
-                $unam++;
-            }else{
-                $externos++;
-            }
-        }
-
-        $total = $unam+$externos;
-
+        $download='participantes_'.$semestre[0].'-'.$semestre[1].'.pdf';
+        //Retornamos la descarga del pdf
+        return $pdf->download($download);
     }
 
 }   
-
-
