@@ -4,11 +4,6 @@
 
 @section('contenido')
   <!--Body content-->
-
-  <!-- @if (session()->has('msj'))
-    <p align="center" style="color:green;">{{ session('msj') }}<strong></strong></p>
-  @endif -->
-  <!--<div class="content" style="max-width:fit-content;">-->
     <br>
     <br>
     <br>
@@ -48,7 +43,8 @@
                 </div>
                 </tr>
                 <tr style=>
-                  <button id="boton1" type="button" class="btn btn-primary" >Reporte participantes periodo</button>
+                  <td><button id="boton1" type="button" class="btn btn-primary" >Reporte participantes periodo</button></td>
+                  <td><button id="boton3" type="button" class="btn btn-warning" >Criterio de aceptación de coordinación de cursos</button></td>
                 </tr>
               </table>      
           </div>
@@ -103,6 +99,16 @@
         window.location.href = url;
       }
 
+      function sendCriterio(){
+        var select = document.getElementById('semestre');
+				var date = select.value
+        var select2 = document.getElementById('periodo');
+				var periodo = select2.value;
+        var url = '{{route("cd.criterio",[":var1"])}}'
+        url = url.replace(":var1",date);
+        window.location.href = url;
+      }
+
       var boton = document.getElementById("boton1");
       boton.addEventListener("click", ()=>{
         sendGlobal();
@@ -112,6 +118,11 @@
       var boton = document.getElementById("boton2");
       boton.addEventListener("click", ()=>{
         sendArea();
+      })
+
+      var boton = document.getElementById("boton3");
+      boton.addEventListener("click", ()=>{
+        sendCriterio();
       })
   
 

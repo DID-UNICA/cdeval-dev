@@ -1,20 +1,17 @@
 <!-- Guardado en resources/views/pages/xsesion.blade.php -->
+
 @extends('layouts.principal')
 
 @section('contenido')
 
   <!--Body content-->
-@if(Session::get('sesion') == 'cd' && isset($evaluacion) == false)
-    <form method="POST" action="{{ action('CoordinadorGeneralController@saveFinal_Curso',['profesor_id' => $profesor->id,'curso_id'=> $curso->id,  'catalogoCurso_id'=>$catalogoCurso->id ]) }}">
-@elseif(Session::get('sesion') == 'area' && isset($evaluacion) == false)
-    <form method="POST" action="{{ action('AreaController@saveFinal_Curso',['profesor_id' => $profesor->id,'curso_id'=> $curso->id,  'catalogoCurso_id'=>$catalogoCurso->id ]) }}">
-@elseif(Session::get('sesion') == 'cd' && isset($evaluacion))
-    <form method="POST" action="{{ action('CoordinadorGeneralController@changeFinal_Curso',['profesor_id' => $profesor->id,'curso_id'=> $curso->id,  'catalogoCurso_id'=>$catalogoCurso->id ]) }}">
+@if(Session::get('sesion') == 'cd')
+  <form method="POST" action="{{ action('CoordinadorGeneralController@changeFinal_Seminario',['profesor_id' => $profesor->id,'curso_id'=> $curso->id,  'catalogoCurso_id'=>$catalogoCurso->id ]) }}">
 @else
-    <form method="POST" action="{{ action('AreaController@changeFinal_Curso',['profesor_id' => $profesor->id,'curso_id'=> $curso->id,  'catalogoCurso_id'=>$catalogoCurso->id ]) }}">
+<form method="POST" action="{{ action('AreaController@changeFinal_Seminario',['profesor_id' => $profesor->id,'curso_id'=> $curso->id,  'catalogoCurso_id'=>$catalogoCurso->id ]) }}">
 @endif
-<input type="hidden" name="_token" value="{!! csrf_token() !!}">
-    @if(session()->has('message'))
+  <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+  @if(session()->has('message'))
         <div class="alert alert-success" role='alert' style='text-align:center'>{{session('message')}}</div>
     @endif
   <div class="content">
@@ -32,19 +29,19 @@
         <div class="alert alert-success" role='alert'>{{session('msj')}}</div>
       @endif
                 <div class="panel-heading">
-                    <h2><span class="fa fa-check-square-o"></span>    Evaluación final de curso </h3>
+                    <h2><span class="fa fa-check-square-o"></span>    Evaluación final de seminario </h3>
                 </div>
 
                 <div class="panel-body">
                     <br>
                     <div class="form-group row">
                         <div class="col-sm-10">
-                        <h4> Curso:  {{ $catalogoCurso->nombre_curso }}</h4>
+                        <h4> Seminario:  {{ $catalogoCurso->nombre_curso }}</h4>
                         </div>
                     </div>
                     <div class="form-group row">
                             <div class="col-sm-10">
-                                <h4>Instructor: {{ $curso->getProfesores() }}</h4>
+                                <h4>Facilitador: {{ $curso->getProfesores() }}</h4>
                             </div> 
                     </div>
                     <div class="form-group row">
@@ -65,8 +62,7 @@
                     <br>   
                     <table class="table table-hover">
                     <tr>
-                        <th width="42%" align="justify">1. DESAROLLO DEL CURSO</th>
-                        <th align="right">SR</th>
+                        <th width="42%" align="justify">1. DESAROLLO DEL SEMINARIO</th>
                         <th align="right">Mala</th>
                         <th align="right">Regular</th>
                         <th align="right">Buena</th>
@@ -74,7 +70,7 @@
                         <th align="right">Excelente</th>
                     </tr>
                     <tr>
-                        <td align="justify">Las actividades de aprendizaje estuvieron vinculadas a los objetivos y contenidos de manera </td>
+                        <td align="justify">La participación de los asistentes fue </td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="radio" name="p1_1" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p1_1 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
@@ -107,7 +103,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="justify">La suficiencia de los contenidos para el logro de los objetivos propuestos fue</td>
+                        <td align="justify">La temática central del seminario fue</td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="radio" name="p1_2" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p1_2 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
@@ -140,7 +136,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="justify">La utilidad del material proporcionado durante el curso fue</td>
+                        <td align="justify">La información útil que aportó el seminario a su práctica docente fue</td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="radio" name="p1_3" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p1_3 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
@@ -173,7 +169,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="justify">La motivación para el estudio independiente de las sesiones fue</td>
+                        <td align="justify">La moderación del seminario se desarrolló de manera</td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="radio" name="p1_4" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p1_4 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
@@ -206,7 +202,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="justify">La aplicación de los temas tratados en mi desarrollo académico es</td>
+                        <td align="justify">Las conclusiones a las que se llegó en el seminario son aplicables en mi desarrollo académico de forma</td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="radio" name="p1_5" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p1_5 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
@@ -237,13 +233,12 @@
                                 <input type="radio" name="p1_5" value="100"  {{ (isset($evaluacion)) ? (($evaluacion->p1_5 == 100) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
-                        </tr>
+                    </tr>
                     </table>
                     <br>
                     <table class="table table-hover">
                     <tr>
                         <th width="42%" align="justify">2. AUTOEVALUACIÓN</th>
-                        <th align="right">SR</th>
                         <th align="right">Mala</th>
                         <th align="right">Regular</th>
                         <th align="right">Buena</th>
@@ -317,7 +312,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="justify">Mi actitud durante el curso fue</td>
+                        <td align="justify">Mi actitud durante el seminario fue</td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="radio" name="p2_3" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p2_3 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
@@ -350,7 +345,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="justify">La forma en la que aprovecharé este curso será</td>
+                        <td align="justify">Mi asimilación en este seminario</td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="radio" name="p2_4" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p2_4 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
@@ -386,8 +381,7 @@
                     <br>
                     <table class="table table-hover">
                     <tr>
-                        <th width="42%" align="justify">3. COORDINACIÓN DEL CURSO</th>
-                        <th align="right">SR</th>
+                        <th width="42%" align="justify">3. COORDINACIÓN DEL SEMINARIO</th>
                         <th align="right">Mala</th>
                         <th align="right">Regular</th>
                         <th align="right">Buena</th>
@@ -395,7 +389,7 @@
                         <th align="right">Excelente</th>
                     </tr>
                     <tr>
-                        <td align="justify">La coordinación del curso desde su difusión, inscripción, hasta el cierre fue </td>
+                        <td align="justify">La coordinación del seminario desde su difusión, inscripción, hasta el cierre fue </td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="radio" name="p3_1" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p3_1 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
@@ -462,6 +456,7 @@
                     </tr>
                     <tr>
                         <td align="justify">La calidad del servicio en cuanto a instalaciones, ventilación, ilumniación, mobiliario y equipo fue</td>
+                        <td align="center">
                         <td align="center">
                             <div class="form-check">
                                 <input type="radio" name="p3_3" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p3_3 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
@@ -530,8 +525,7 @@
                     <br>
                     <table class="table table-hover">
                     <tr>
-                        <th width="42%" align="justify">4. INSTRUCTOR(A) UNO</th>
-                        <th align="right">SR</th>
+                        <th width="42%" align="justify">4. FACILITADOR(A) DEL SEMINARIO</th>
                         <th align="right">Mala</th>
                         <th align="right">Regular</th>
                         <th align="right">Buena</th>
@@ -539,7 +533,7 @@
                         <th align="right">Excelente</th>
                     </tr>
                     <tr>
-                        <td align="justify">Considero la experiencia del instructor como </td>
+                        <td align="justify">Considero la experiencia del facilitador como </td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="radio" name="p4_1" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p4_1 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
@@ -605,7 +599,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="justify">La puntualidad del instructor fue</td>
+                        <td align="justify">La puntualidad del facilitador fue</td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="radio" name="p4_3" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p4_3 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
@@ -638,7 +632,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="justify">La forma de utilizar el equipo y materiales de apoyo al curso fue</td>
+                        <td align="justify">La forma de utilizar el equipo y materiales de apoyo al seminario fue</td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="radio" name="p4_4" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p4_4 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
@@ -704,7 +698,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="justify">Las técnicas grupales utilizadas por el (la) instructor(a) fueron</td>
+                        <td align="justify">El manejo del control de grupo por parte del facilitador fue</td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="radio" name="p4_6" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p4_6 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
@@ -770,7 +764,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="justify">La actitud del (de la) instructor(a) fue</td>
+                        <td align="justify">La actitud del facilitador(a) fue</td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="radio" name="p4_8" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p4_8 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
@@ -803,7 +797,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="justify">El manejo de las relaciones interpersonales del instructor(a) fue</td>
+                        <td align="justify">El manejo de las relaciones interpersonales del facilitador(a) fue</td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="radio" name="p4_9" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p4_9 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
@@ -869,7 +863,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="justify">El manejo de las emociones en las sesiones por parte del instructor(a) fue</td>
+                        <td align="justify">El manejo de las emociones en las sesiones por parte del facilitador(a) fue</td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="radio" name="p4_11" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p4_11 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
@@ -903,15 +897,386 @@
                     </tr>
                     </table>
                     <br>
-                    
                     <table class="table table-hover">
                     <tr>
-                        <th align="center">5. ¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?</th>  
-                        <th></th>
-                        <th></th>
+                        <th width="42%" align="justify">5. FACILITADOR(A) DOS DEL SEMINARIO</th>
+                        <th align="right">Mala</th>
+                        <th align="right">Regular</th>
+                        <th align="right">Buena</th>
+                        <th align="right">Muy buena</th>
+                        <th align="right">Excelente</th>
                     </tr>
                     <tr>
+                        <td align="justify">Considero la experiencia del facilitador como </td>
                         <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_1" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p5_1 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_1" value="50"  {{ (isset($evaluacion)) ? (($evaluacion->p5_1 == 50) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_1" value="60"  {{ (isset($evaluacion)) ? (($evaluacion->p5_1 == 60) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_1" value="80"  {{ (isset($evaluacion)) ? (($evaluacion->p5_1 == 80) ? 'checked' : '') : ''}}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_1" value="95"  {{ (isset($evaluacion)) ? (($evaluacion->p5_1 == 95) ? 'checked' : '') : ''  }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_1" value="100"  {{ (isset($evaluacion)) ? (($evaluacion->p5_1 == 100) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="justify">La planeación y organización de las sesiones y lecturas de acuerdo a los temas fue</td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_2" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p5_2 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_2" value="50"  {{ (isset($evaluacion)) ? (($evaluacion->p5_2 == 50) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_2" value="60"  {{ (isset($evaluacion)) ? (($evaluacion->p5_2 == 60) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_2" value="80"  {{ (isset($evaluacion)) ? (($evaluacion->p5_2 == 80) ? 'checked' : '') : ''}}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_2" value="95"  {{ (isset($evaluacion)) ? (($evaluacion->p5_2 == 95) ? 'checked' : '') : ''  }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_2" value="100"  {{ (isset($evaluacion)) ? (($evaluacion->p5_2 == 100) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="justify">La puntualidad del facilitador fue</td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_3" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p5_3 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_3" value="50"  {{ (isset($evaluacion)) ? (($evaluacion->p5_3 == 50) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_3" value="60"  {{ (isset($evaluacion)) ? (($evaluacion->p5_3 == 60) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_3" value="80"  {{ (isset($evaluacion)) ? (($evaluacion->p5_3 == 80) ? 'checked' : '') : ''}}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_3" value="95"  {{ (isset($evaluacion)) ? (($evaluacion->p5_3 == 95) ? 'checked' : '') : ''  }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_3" value="100"  {{ (isset($evaluacion)) ? (($evaluacion->p5_3 == 100) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="justify">La forma de utilizar el equipo y materiales de apoyo al seminario fue</td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_4" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p5_4 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_4" value="50"  {{ (isset($evaluacion)) ? (($evaluacion->p5_4 == 50) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_4" value="60"  {{ (isset($evaluacion)) ? (($evaluacion->p5_4 == 60) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_4" value="80"  {{ (isset($evaluacion)) ? (($evaluacion->p5_4 == 80) ? 'checked' : '') : ''}}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_4" value="95"  {{ (isset($evaluacion)) ? (($evaluacion->p5_4 == 95) ? 'checked' : '') : ''  }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_4" value="100"  {{ (isset($evaluacion)) ? (($evaluacion->p5_4 == 100) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="justify">La manera de aclarar las dudas planteadas por los participantes fue</td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_5" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p5_5 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_5" value="50"  {{ (isset($evaluacion)) ? (($evaluacion->p5_5 == 50) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_5" value="60"  {{ (isset($evaluacion)) ? (($evaluacion->p5_5 == 60) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_5" value="80"  {{ (isset($evaluacion)) ? (($evaluacion->p5_5 == 80) ? 'checked' : '') : ''}}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_5" value="95"  {{ (isset($evaluacion)) ? (($evaluacion->p5_5 == 95) ? 'checked' : '') : ''  }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_5" value="100"  {{ (isset($evaluacion)) ? (($evaluacion->p5_5 == 100) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="justify">El manejo del control de grupo por parte del facilitador fue</td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_6" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p5_6 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_6" value="50"  {{ (isset($evaluacion)) ? (($evaluacion->p5_6 == 50) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_6" value="60"  {{ (isset($evaluacion)) ? (($evaluacion->p5_6 == 60) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_6" value="80"  {{ (isset($evaluacion)) ? (($evaluacion->p5_6 == 80) ? 'checked' : '') : ''}}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_6" value="95"  {{ (isset($evaluacion)) ? (($evaluacion->p5_6 == 95) ? 'checked' : '') : ''  }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_6" value="100"  {{ (isset($evaluacion)) ? (($evaluacion->p5_6 == 100) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="justify">La forma de interesar a los participantes durante el curso fue</td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_7" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p5_7 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_7" value="50"  {{ (isset($evaluacion)) ? (($evaluacion->p5_7 == 50) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_7" value="60"  {{ (isset($evaluacion)) ? (($evaluacion->p5_7 == 60) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_7" value="80"  {{ (isset($evaluacion)) ? (($evaluacion->p5_7 == 80) ? 'checked' : '') : ''}}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_7" value="95"  {{ (isset($evaluacion)) ? (($evaluacion->p5_7 == 95) ? 'checked' : '') : ''  }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_7" value="100"  {{ (isset($evaluacion)) ? (($evaluacion->p5_7 == 100) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="justify">La actitud del facilitador(a) fue</td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_8" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p5_8 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_8" value="50"  {{ (isset($evaluacion)) ? (($evaluacion->p5_8 == 50) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_8" value="60"  {{ (isset($evaluacion)) ? (($evaluacion->p5_8 == 60) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_8" value="80"  {{ (isset($evaluacion)) ? (($evaluacion->p5_8 == 80) ? 'checked' : '') : ''}}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_8" value="95"  {{ (isset($evaluacion)) ? (($evaluacion->p5_8 == 95) ? 'checked' : '') : ''  }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_8" value="100"  {{ (isset($evaluacion)) ? (($evaluacion->p5_8 == 100) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="justify">El manejo de las relaciones interpersonales del facilitador(a) fue</td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_9" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p5_9 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_9" value="50"  {{ (isset($evaluacion)) ? (($evaluacion->p5_9 == 50) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_9" value="60"  {{ (isset($evaluacion)) ? (($evaluacion->p5_9 == 60) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_9" value="80"  {{ (isset($evaluacion)) ? (($evaluacion->p5_9 == 80) ? 'checked' : '') : ''}}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_9" value="95"  {{ (isset($evaluacion)) ? (($evaluacion->p5_9 == 95) ? 'checked' : '') : ''  }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_9" value="100"  {{ (isset($evaluacion)) ? (($evaluacion->p5_9 == 100) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="justify">La calidad del trato humano hacia los participantes fue</td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_10" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p5_10 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_10" value="50"  {{ (isset($evaluacion)) ? (($evaluacion->p5_10 == 50) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_10" value="60"  {{ (isset($evaluacion)) ? (($evaluacion->p5_10 == 60) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_10" value="80"  {{ (isset($evaluacion)) ? (($evaluacion->p5_10 == 80) ? 'checked' : '') : ''}}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_10" value="95"  {{ (isset($evaluacion)) ? (($evaluacion->p5_10 == 95) ? 'checked' : '') : ''  }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_10" value="100"  {{ (isset($evaluacion)) ? (($evaluacion->p5_10 == 100) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="justify">El manejo de las emociones en las sesiones por parte del facilitador(a) fue</td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_11" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p5_11 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_11" value="50"  {{ (isset($evaluacion)) ? (($evaluacion->p5_11 == 50) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_11" value="60"  {{ (isset($evaluacion)) ? (($evaluacion->p5_11 == 60) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_11" value="80"  {{ (isset($evaluacion)) ? (($evaluacion->p5_11 == 80) ? 'checked' : '') : ''}}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_11" value="95"  {{ (isset($evaluacion)) ? (($evaluacion->p5_11 == 95) ? 'checked' : '') : ''  }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="form-check">
+                                <input type="radio" name="p5_11" value="100"  {{ (isset($evaluacion)) ? (($evaluacion->p5_11 == 100) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
+                            </div>
+                        </td>
+                    </tr>
+                    </table>
+                    <br>
+                    <table class="table table-hover">
+                    <tr>
+                        <th align="center">6. ¿RECOMENDARÍA EL SEMINARIO A OTROS PROFESORES?</th>  
+                    </tr>
+                    <tr>
+                    <td align="center">
                             <div class="form-check">
                                 <input type="radio" name="p7" value="1" {{ (isset($evaluacion)) ? (($evaluacion->p7 == 1) ? 'checked' : '') : ''}} class="form-check-input" id="materialUnchecked"> Sí
                             </div>
@@ -926,12 +1291,12 @@
                                 <input type="radio" name="p7" value="-1" {{ (isset($evaluacion)) ? (($evaluacion->p7 == -1) ? 'checked' : '') : '' }} class="form-check-input" id="materialUnchecked"> No contestó
                             </div>
                         </td>
-                    </tr>
+                        </tr>
                     </table>
                     <br>
                     <table class="table table-hover">
                         <tr>
-                        <th align="center">6. ¿CÓMO SE ENTERÓ DEL CURSO?</th>
+                        <th align="center">7. ¿CÓMO SE ENTERÓ DEL CURSO?</th>
                         </tr>
                         <tr>
                         <td>
@@ -962,8 +1327,8 @@
                     </table>
                     <table class="table table-hover">
                         <tr>
-                            <td width="40%" align="justify">Lo mejor del curso fue: </td>
-                            <td><textarea name="mejor" class="form-control" id="contenido" rows="2" value={{old('mejor')}}>{{(isset($evaluacion))?$evaluacion->mejor : ''}}</textarea></td>
+                            <td width="40%" align="justify">Lo que me aportó el seminario fue: </td>
+                            <td><textarea name="mejor" class="form-control" id="contenido" rows="2" value={{old('aporto')}}>{{(isset($evaluacion))?$evaluacion->aporto : ''}}</textarea></td>
                         </tr>
                         <tr>
                             <td width="40%" align="justify">Sugerencias y recomendaciones: </td>
@@ -995,7 +1360,7 @@
                                 <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="5" {{(is_array($evaluacion->conocimiento) && in_array('5', $evaluacion->conocimiento)) ? 'checked':'' }}> Otro
                             </div></td>
                         </tr>
-                    </table>     
+                    </table>   
                     <br>
                     <table class="table table-hover">
                         <tr>
@@ -1019,8 +1384,8 @@
                     <br>
                     <button type="submit" class="btn btn-primary active">Enviar evaluación</button>
                 </div>
-    
      </section>
      <br>
      </form>
-     @endsection
+   
+@endsection

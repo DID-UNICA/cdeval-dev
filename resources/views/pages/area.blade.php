@@ -64,7 +64,12 @@
                 </tr>
               </table>
             {!! Form::close() !!}
-            <a onclick="window.location='{{ route("cd.reporte.area",[$semestre,$periodo,$coordinacion_id]) }}'" class="btn btn-primary">Reporte de Evaluación Global de Área</a>
+            <table>
+              <tr>
+                <td><a onclick="window.location='{{ route("cd.reporte.area",[$semestre,$periodo,$coordinacion_id]) }}'" class="btn btn-primary">Reporte de Evaluación Global de Área</a></td>
+                <td><a onclick="window.location='{{ route("cd.participantes.area",[$semestre,$coordinacion_id]) }}'" class="btn btn-primary">Reporte participantes periodo</a></td>
+            </tr>
+            </table>
             <div class="div_info">
               <table class="table table-hover">
                             <thead>

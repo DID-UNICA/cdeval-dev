@@ -633,18 +633,27 @@ class AreaController extends Controller
 			->where('curso_id',$curso_id)
 			->update(['contesto_hoja_evaluacion' => true]);
 
-	 
+	
         return redirect()->route('area.evaluacion',[$curso_id]);
     }
 
     public function saveFinal_Seminario(Request $request,$profesor_id,$curso_id, $catalogoCurso_id){
         $eval_fseminario = new EvaluacionFinalSeminario;
-          $promedio_p1 = new EvaluacionFinalSeminario;
-		  
-          $correo = new EvaluacionController(); 
-		  $participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
-		  try{
-		  	$eval_fseminario->participante_curso_id=$participante[0]->id;
+        $promedio_p1 = new EvaluacionFinalSeminario;
+		
+        $correo = new EvaluacionController(); 
+		$participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
+		$evaluacion_id = DB::table('_evaluacion_final_seminario')
+            ->select('id')
+            ->where([['participante_curso_id',$participante[0]->id],['curso_id',$curso_id]])
+            ->get();
+
+        if(sizeof($evaluacion_id) > 0){
+            $eval_fcurso = EvaluacionFinalSeminario::find($evaluacion_id[0]->id);
+            $eval_fcurso->delete();
+        }
+		try{
+			$eval_fseminario->participante_curso_id=$participante[0]->id;
 			$eval_fseminario->curso_id = $curso_id;
 			
 			
@@ -748,83 +757,83 @@ class AreaController extends Controller
 			//Horarios Intersemestrales:
 			$eval_fseminario->horarioi = $request->horarioi;
 			$eval_fseminario->save();
-		  } catch(\Exception $e){
+		} catch(\Exception $e){
 
 			//En caso de que no se haya evaluado correctamente el curso regresamos a la vista anterior indicando que la evaluación fue errónea
 			Session::flash('message','Favor de contestar todas las preguntas del formulario');
 			Session::flash('alert-class', 'alert-danger'); 
 
 			return redirect()->back()->withInput($request->input());
-		  }
+		}
 
 		  //Pasos despreciados en la version actual, usados para obtener el promedio de toda la evaluación del curso
-          $promedio_p1 = [
-               $eval_fseminario->p1_1,
-               $eval_fseminario->p1_2,
-               $eval_fseminario->p1_3,
-               $eval_fseminario->p1_4,
-               $eval_fseminario->p1_5];
+        $promedio_p1 = [
+            $eval_fseminario->p1_1,
+            $eval_fseminario->p1_2,
+            $eval_fseminario->p1_3,
+            $eval_fseminario->p1_4,
+            $eval_fseminario->p1_5];
 $promedio_p2 =[
-               $eval_fseminario->p2_1,
-               $eval_fseminario->p2_2,
-               $eval_fseminario->p2_3,
-               $eval_fseminario->p2_4];
- $promedio_p3=[
-               $eval_fseminario->p3_1,
-               $eval_fseminario->p3_2,
-               $eval_fseminario->p3_3,
-               $eval_fseminario->p3_4];
+            $eval_fseminario->p2_1,
+            $eval_fseminario->p2_2,
+            $eval_fseminario->p2_3,
+            $eval_fseminario->p2_4];
+$promedio_p3=[
+            $eval_fseminario->p3_1,
+            $eval_fseminario->p3_2,
+            $eval_fseminario->p3_3,
+            $eval_fseminario->p3_4];
 $promedio_p4=[
-               $eval_fseminario->p4_1,
-               $eval_fseminario->p4_2,
-               $eval_fseminario->p4_3,
-               $eval_fseminario->p4_4,
-               $eval_fseminario->p4_5,
-               $eval_fseminario->p4_6,
-               $eval_fseminario->p4_7,
-               $eval_fseminario->p4_8,
-               $eval_fseminario->p4_9,
-               $eval_fseminario->p4_10,
-               $eval_fseminario->p4_11];
-               $promedio=[
-               $eval_fseminario->p1_1,
-               $eval_fseminario->p1_2,
-               $eval_fseminario->p1_3,
-               $eval_fseminario->p1_4,
-               $eval_fseminario->p1_5,
-               $eval_fseminario->p2_1,
-               $eval_fseminario->p2_2,
-               $eval_fseminario->p2_3,
-               $eval_fseminario->p2_4,
-               $eval_fseminario->p3_1,
-               $eval_fseminario->p3_2,
-               $eval_fseminario->p3_3,
-               $eval_fseminario->p3_4,
-               $eval_fseminario->p4_1,
-               $eval_fseminario->p4_2,
-               $eval_fseminario->p4_3,
-               $eval_fseminario->p4_4,
-               $eval_fseminario->p4_5,
-               $eval_fseminario->p4_6,
-               $eval_fseminario->p4_7,
-               $eval_fseminario->p4_8,
-               $eval_fseminario->p4_9,
-               $eval_fseminario->p4_10,
-               $eval_fseminario->p4_11
-               ];
+            $eval_fseminario->p4_1,
+            $eval_fseminario->p4_2,
+            $eval_fseminario->p4_3,
+            $eval_fseminario->p4_4,
+            $eval_fseminario->p4_5,
+            $eval_fseminario->p4_6,
+            $eval_fseminario->p4_7,
+            $eval_fseminario->p4_8,
+            $eval_fseminario->p4_9,
+            $eval_fseminario->p4_10,
+            $eval_fseminario->p4_11];
+        $promedio=[
+            $eval_fseminario->p1_1,
+            $eval_fseminario->p1_2,
+            $eval_fseminario->p1_3,
+            $eval_fseminario->p1_4,
+            $eval_fseminario->p1_5,
+            $eval_fseminario->p2_1,
+            $eval_fseminario->p2_2,
+            $eval_fseminario->p2_3,
+            $eval_fseminario->p2_4,
+            $eval_fseminario->p3_1,
+            $eval_fseminario->p3_2,
+            $eval_fseminario->p3_3,
+            $eval_fseminario->p3_4,
+            $eval_fseminario->p4_1,
+            $eval_fseminario->p4_2,
+            $eval_fseminario->p4_3,
+            $eval_fseminario->p4_4,
+            $eval_fseminario->p4_5,
+            $eval_fseminario->p4_6,
+            $eval_fseminario->p4_7,
+            $eval_fseminario->p4_8,
+            $eval_fseminario->p4_9,
+            $eval_fseminario->p4_10,
+            $eval_fseminario->p4_11
+        ];
 
-          $p1=collect($promedio_p1)->average()*2*10;
-          $p2=collect($promedio_p2)->average()*2*10;
-          $p3=collect($promedio_p3)->average()*2*10;
-          $p4=collect($promedio_p4)->average()*2*10;
-          $pg=collect($promedio)->average()*2*10;
-		  
+        $p1=collect($promedio_p1)->average()*2*10;
+        $p2=collect($promedio_p2)->average()*2*10;
+        $p3=collect($promedio_p3)->average()*2*10;
+        $p4=collect($promedio_p4)->average()*2*10;
+        $pg=collect($promedio)->average()*2*10;
+		
           //Actualizar tabla en la bd
-          DB::table('participante_curso')
-          ->where('id', $participante[0]->id)
-          ->where('curso_id',$curso_id)
-		  ->update(['contesto_hoja_evaluacion' => true]);
-		  
+        DB::table('participante_curso')
+        	->where('id', $participante[0]->id)
+        	->where('curso_id',$curso_id)
+			->update(['contesto_hoja_evaluacion' => true]);
+		
 		//Actualizar campo de hoja de evaluacion
 		DB::table('participante_curso')
 			->where('id', $participante[0]->id)
@@ -918,6 +927,12 @@ $promedio_p4=[
         $eval_fcurso->delete();
         
         return $this->saveFinal_Curso($request,$profesor_id,$curso_id, $catalogoCurso_id);
+    }
+
+	public function changeFinal_Seminario(Request $request,$profesor_id,$curso_id, $catalogoCurso_id){
+        
+        $participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
+        return $this->saveFinal_Seminario($request,$profesor_id,$curso_id, $catalogoCurso_id);
     }
 
 
