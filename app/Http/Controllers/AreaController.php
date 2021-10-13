@@ -16,6 +16,7 @@ use App\EvaluacionFinalSeminario;
 use App\EvaluacionXSeminario;
 use App\Coordinacion;*/
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use Mail;
 use PDF;
 use DB; 
@@ -29,7 +30,9 @@ class AreaController extends Controller
      */
     public function index(){
 
-        $coordinacion_nombre = 'Área de Desarrollo Humano';
+        $coordinacion = Auth::user();
+        $coordinacion_nombre = $coordinacion->nombre_coordinacion;
+        // $coordinacion_nombre = 'Área de Desarrollo Humano';
 
         $semestre_anio = DB::table('cursos')
             ->select('semestre_anio')
@@ -52,7 +55,6 @@ class AreaController extends Controller
         $fecha="2018-2";
         $semestre=explode('-',$fecha);
         $periodo="s";
-        $coordinacion_nombre = 'Área de Desarrollo Humano';
 
         $cursos = DB::table('cursos')
             ->join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
@@ -90,7 +92,7 @@ class AreaController extends Controller
             ->with('datos',$datos)
             ->with('semestre_anio',$reversed)
             ->with('coordinacion',$coordinacion_nombre)
-            ->with('coordinacion_id',$id[0]->id);
+            ->with('coordinacion_id',$coordinacion->id);
 
     }
 
