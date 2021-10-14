@@ -3617,13 +3617,21 @@ $promedio_p4=[
             }
         }
 
+        $promedio1 = 0;
         foreach ($aux1 as $key => $value) {
-            $aux1[$key] = ($aux1[$key]/$tam1[$key])*100;
+            $aux1[$key] = round(($aux1[$key]/$tam1[$key])*100,2);
+            $promedio1 += $aux1[$key];
         }
+        $promedio1 = round($promedio1/sizeof($aux1),2);
+        $aux1['Promedio: '] = $promedio1;
 
+        $promedio2 = 0;
         foreach ($aux2 as $key => $value) {
-            $aux2[$key] = ($aux2[$key]/$tam2[$key])*100;
+            $aux2[$key] = round(($aux2[$key]/$tam2[$key])*100,2);
+            $promedio2 += $aux2[$key];
         }
+        $promedio2 = round($promedio2/sizeof($aux2),2);
+        $aux2['Promedio: '] = $promedio2;
 
         $pdf = PDF::loadView('pages.criterio_aceptacion',array('semestre'=>$semestreEnv,'criterio_s'=>$aux1,'criterio_i'=>$aux2));	
 
