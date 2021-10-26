@@ -184,13 +184,14 @@ body {
 
     </div>
 
-</div>
-<br>
 <br>
 
+<br>
 <p>_______________________________________</p>
 <p>SAD,CDD</p>
 <p>{{$dia}}, {{$date["mday"]}} de {{$mes}} de {{$date["year"]}}</p>
+
+</div>
 
 </body>
 </html>

@@ -368,9 +368,15 @@ class CoordinadorGeneralController extends Controller
             ->where([['participante_curso_id',$participante[0]->id],['curso_id',$curso_id]])
             ->get();
 
-        if(sizeof($evaluacion_id) > 0){
-            $eval_fcurso = EvaluacionFinalCurso::find($evaluacion_id[0]->id);
-            $eval_fcurso->delete();
+        if(sizeof($participante) > 0){
+            $evaluacion_id = DB::table('_evaluacion_final_curso')
+                ->select('id')
+                ->where([['participante_curso_id',$participante[0]->id],['curso_id',$curso_id]])
+                ->get();
+            if(sizeof($evaluacion_id) > 0){
+                $eval_fcurso = EvaluacionFinalSeminario::find($evaluacion_id[0]->id);
+                $eval_fcurso->delete();
+            }
         }
 
         $eval_fcurso = new EvaluacionFinalCurso;
@@ -528,7 +534,6 @@ class CoordinadorGeneralController extends Controller
                     }else if(in_array($key,$string_vals,TRUE)){
                         $eval_fcurso->$key = '';
                     }else if($key == 'p8[0]'){
-                        return 'hola';
                         $eval_fcurso->$key = [''];
                     }else{
                         $eval_fcurso->$key = 0;
@@ -600,12 +605,22 @@ class CoordinadorGeneralController extends Controller
     }
 
     public function saveFinal_Seminario(Request $request,$profesor_id,$curso_id, $catalogoCurso_id){
+        $promedio_p1 = new EvaluacionFinalSeminario;
+        $correo = new EvaluacionFinalSeminario;
+
+		$participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
+        if(sizeof($participante) > 0){
+            $evaluacion_id = DB::table('_evaluacion_final_seminario')
+                ->select('id')
+                ->where([['participante_curso_id',$participante[0]->id],['curso_id',$curso_id]])
+                ->get();
+            if(sizeof($evaluacion_id) > 0){
+                $eval_fcurso = EvaluacionFinalSeminario::find($evaluacion_id[0]->id);
+                $eval_fcurso->delete();
+            }
+        }
         $eval_fseminario = new EvaluacionFinalSeminario;
-          $promedio_p1 = new EvaluacionFinalSeminario;
-		  
-          $correo = new EvaluacionController(); 
-		  $participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
-		  try{
+		try{
 		  	$eval_fseminario->participante_curso_id=$participante[0]->id;
 			$eval_fseminario->curso_id = $curso_id;
 			
@@ -709,7 +724,26 @@ class CoordinadorGeneralController extends Controller
 			$eval_fseminario->horarios = $request->horarios;	
 			//Horarios Intersemestrales:
 			$eval_fseminario->horarioi = $request->horarioi;
+
+            $string_vals = ['mejor','sug','otros','conocimiento','tematica','horarios','horarioi'];
+
+            foreach($eval_fseminario->getAttributes() as $key => $value){
+                if($value == null){
+                    if($key == 'p7'){
+                        $eval_fseminario->$key = -1;
+                    }else if(in_array($key,$string_vals,TRUE)){
+                        $eval_fseminario->$key = '';
+                    }else if($key == 'p8[0]'){
+                        $eval_fseminario->$key = [''];
+                    }else{
+                        $eval_fseminario->$key = 0;
+                    }
+                }
+            }
+
+
 			$eval_fseminario->save();
+
 		} catch(\Exception $e){
 
 			//En caso de que no se haya evaluado correctamente el curso regresamos a la vista anterior indicando que la evaluación fue errónea
@@ -3164,19 +3198,19 @@ $promedio_p4=[
 
         if(strcmp($catalogoCurso->tipo,"S") == 0){
             if($count==1){
-                return view("pages.final_seminario_1")
+                return view("pages.final_seminario_1_modificar")
 					->with("profesor",$profesor)
                     ->with("curso",$curso)
                     ->with('catalogoCurso',$catalogoCurso)
                     ->with('evaluacion',$evaluacion_final_curso[0]);
 			}elseif($count==2){
-                return view("pages.final_seminario_2")
+                return view("pages.final_seminario_2_modificar")
 					->with("profesor",$profesor)
                     ->with("curso",$curso)
                     ->with('catalogoCurso',$catalogoCurso)
                     ->with('evaluacion',$evaluacion_final_curso[0]);
 			}elseif($count==3){
-                return view("pages.final_seminario_3")
+                return view("pages.final_seminario_3_modificar")
                     ->with("profesor",$profesor)
                     ->with("curso",$curso)
                     ->with('catalogoCurso',$catalogoCurso)
@@ -3184,19 +3218,19 @@ $promedio_p4=[
 			}
         }else{
 			if($count==1){
-				return view("pages.final_curso_1")
+				return view("pages.final_curso_1_modificar")
 					->with("profesor",$profesor)
 					->with("curso",$curso)
 					->with('catalogoCurso',$catalogoCurso)
                     ->with('evaluacion',$evaluacion_final_curso[0]);
 			}elseif($count==2){
-				return view("pages.final_curso_2")
+				return view("pages.final_curso_2_modificar")
 					->with("profesor",$profesor)
 					->with("curso",$curso)
 					->with('catalogoCurso',$catalogoCurso)
                     ->with('evaluacion',$evaluacion_final_curso[0]);
 			}elseif($count==3){
-				return view("pages.final_curso_3")
+				return view("pages.final_curso_3_modificar")
 					->with("profesor",$profesor)
 					->with("curso",$curso)
 					->with('catalogoCurso',$catalogoCurso)
@@ -3212,6 +3246,12 @@ $promedio_p4=[
             $participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
             return $this->saveFinal_Curso($request,$profesor_id,$curso_id, $catalogoCurso_id);
 
+    }
+
+    public function changeFinal_Seminario(Request $request,$profesor_id,$curso_id, $catalogoCurso_id){
+        
+        $participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
+        return $this->saveFinal_Seminario($request,$profesor_id,$curso_id, $catalogoCurso_id);
     }
 
     public function reporteFinalInstructor($curso_id){
@@ -3260,7 +3300,7 @@ $promedio_p4=[
 		$mejor = array(); //mejor
 		$sugerencias = array(); //sug
 		$lugar = 'pages.reporte_final_instructores_1';
-    $nombre = 'reporte_instructores_'.$catalogoCurso[0]->nombre_curso.'.pdf';
+        $nombre = 'reporte_instructores_'.$catalogoCurso[0]->nombre_curso.'.pdf';
 		$experiencia1 = 0; //4_1
 		$planeacion1 = 0;	//4_2
 		$puntualidad1 = 0;	//4_3
@@ -3432,6 +3472,194 @@ $promedio_p4=[
 
     }
 
+    public function asistentesGlobal(String $semestreEnv){
+
+        $fecha=$semestreEnv;
+        $semestre=explode('-',$fecha);
+
+        $cursos = DB::table('cursos as c')
+            ->join('catalogo_cursos as cc','cc.id','=','c.catalogo_id')
+            ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
+            ->select('c.id','cc.nombre_curso','co.abreviatura','c.semestre_si')
+            ->where([['c.semestre_anio',$semestre[0]],['c.semestre_pi',$semestre[1]]])
+            ->orderBy('c.semestre_si', 'desc')
+            ->get();
+
+        if(sizeof($cursos) == 0){
+            Session::flash('message','No hay cursos dados de alta en el periodo '.$semestreEnv);
+			Session::flash('alert-class', 'alert-danger'); 
+            return redirect()->back();
+        }
+        
+        $asistentes = array();
+        foreach($cursos as $curso){
+            $unam = 0;
+            $externos = 0;
+            $profesors = DB::table('participante_curso')
+            ->join('profesors as p','p.id','=','participante_curso.profesor_id')
+            ->select('p.unam','p.procedencia')
+            ->where([['participante_curso.curso_id',$curso->id]])
+            ->get();
+            foreach($profesors as $profesor){
+                if($profesor->unam == 1){
+                    $unam++;
+                }else{
+                    $externos++;
+                }
+            }
+            $total = $unam+$externos;
+            array_push($asistentes, [$curso, $unam, $externos, $total]);
+        }
+
+        $pdf = PDF::loadView('pages.participantes',array('semestre'=>$semestreEnv,'cursos'=>$asistentes));	
+
+        $download='participantes_'.$semestre[0].'-'.$semestre[1].'.pdf';
+        //Retornamos la descarga del pdf
+        return $pdf->download($download);
+    }
+
+    public function asistentesArea(String $semestreEnv, String $division){
+        
+        $fecha=$semestreEnv;
+        $semestre=explode('-',$fecha);
+
+        $coordinacion = DB::table('coordinacions')
+            ->select('abreviatura')
+            ->where([['id',$division]])
+            ->get();
+
+        $cursos = DB::table('cursos as c')
+            ->join('catalogo_cursos as cc','cc.id','=','c.catalogo_id')
+            ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
+            ->select('c.id','cc.nombre_curso','co.abreviatura','c.semestre_si')
+            ->where([['c.semestre_anio',$semestre[0]],['c.semestre_pi',$semestre[1]],['co.id',$division]])
+            ->orderBy('c.semestre_si', 'desc')
+            ->get();
+        
+        $asistentes = array();
+        foreach($cursos as $curso){
+            $unam = 0;
+            $externos = 0;
+            $profesors = DB::table('participante_curso')
+            ->join('profesors as p','p.id','=','participante_curso.profesor_id')
+            ->select('p.unam','p.procedencia')
+            ->where([['participante_curso.curso_id',$curso->id]])
+            ->get();
+            foreach($profesors as $profesor){
+                if($profesor->unam == 1){
+                    $unam++;
+                }else{
+                    $externos++;
+                }
+            }
+            $total = $unam+$externos;
+            array_push($asistentes, [$curso, $unam, $externos, $total]);
+        }
+        
+        $pdf = PDF::loadView('pages.participantes',array('semestre'=>$semestreEnv,'cursos'=>$asistentes));	
+
+        $download='participantes_'.$coordinacion[0]->abreviatura.'-'.$semestre[0].'-'.$semestre[1].'pdf';
+        //Retornamos la descarga del pdf
+        return $pdf->download($download);
+    }
+
+    public function criterioAceptacion(String $semestreEnv){
+        $fecha=$semestreEnv;
+        $semestre=explode('-',$fecha);
+
+        $cursos = DB::table('cursos as c')
+            ->join('catalogo_cursos as cc','cc.id','=','c.catalogo_id')
+            ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
+            ->select('c.id','cc.nombre_curso','co.abreviatura','c.semestre_si')
+            ->where([['c.semestre_anio',$semestre[0]],['c.semestre_pi',$semestre[1]]])
+            ->orderBy('semestre_si', 'desc')
+            ->get();
+
+
+        $criterios_s=array();
+        $criterios_i=array();
+
+        foreach($cursos as $curso){
+            $criterio=DB::table('_evaluacion_final_curso as e')
+                ->join('cursos as c','e.curso_id','=','c.id')
+                ->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
+                ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
+                ->select('e.p7','co.abreviatura')
+                ->where('e.curso_id',$curso->id)
+                ->get();
+
+            if($curso->semestre_si == 's' && $criterio != null){
+                array_push($criterios_s, $criterio);
+            }else if ($curso->semestre_si == 'i' && $criterio != null){
+                array_push($criterios_i, $criterio);
+            }
+        }
+
+        $aux1=array();
+        $tam1=array();
+        foreach($criterios_s as $criterios){
+            foreach($criterios as $criterio){
+                if(!array_key_exists($criterio->abreviatura,$aux1)){
+                    $aux1[$criterio->abreviatura]=$criterio->p7;
+                    $tam1[$criterio->abreviatura] = 1;
+                }else{
+                    $aux1[$criterio->abreviatura]+=$criterio->p7;
+                    $tam1[$criterio->abreviatura] += 1;
+                }
+            }
+        }
+
+        $aux2=array();
+        $tam2=array();
+        foreach($criterios_i as $criterios){
+            foreach($criterios as $criterio){
+                if(!array_key_exists($criterio->abreviatura,$aux2)){
+                    $aux2[$criterio->abreviatura]=$criterio->p7;
+                    $tam2[$criterio->abreviatura] = 1;
+                }else{
+                    $aux2[$criterio->abreviatura]+=$criterio->p7;
+                    $tam2[$criterio->abreviatura] += 1;
+                }
+            }
+        }
+
+        $aux1_empty = false;
+        $promedio1 = 0;
+        foreach ($aux1 as $key => $value) {
+            $aux1[$key] = round(($aux1[$key]/$tam1[$key])*100,2);
+            $promedio1 += $aux1[$key];
+        }
+        if(sizeof($aux1)==0){
+            $aux1_empty = true;
+        }else{
+            $promedio1 = round($promedio1/sizeof($aux1),2);
+            $aux1['Promedio: '] = $promedio1;
+        }
+
+        $aux2_empty = false;
+        $promedio2 = 0;
+        foreach ($aux2 as $key => $value) {
+            $aux2[$key] = round(($aux2[$key]/$tam2[$key])*100,2);
+            $promedio2 += $aux2[$key];
+        }
+        if(sizeof($aux2) == 0){
+            $aux2_empty = true;
+        }else{
+            $promedio2 = round($promedio2/sizeof($aux2),2);
+            $aux2['Promedio: '] = $promedio2;
+        }
+
+        if($aux1_empty && $aux2_empty){
+            Session::flash('message','El periodo '.$semestreEnv.' no ha sido evaluado');
+			Session::flash('alert-class', 'alert-danger'); 
+            return redirect()->back();
+        }
+
+        $pdf = PDF::loadView('pages.criterio_aceptacion',array('semestre'=>$semestreEnv,'criterio_s'=>$aux1,'criterio_i'=>$aux2,'criterio_s_empty'=>$aux1_empty,'criterio_i_empty'=>$aux2_empty));	
+
+        $download='criterio_aceptacion'.$semestre[0].'-'.$semestre[1].'.pdf';
+        //Retornamos la descarga del pdf
+        return $pdf->download($download);
+    }
+
 }   
-
-

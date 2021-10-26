@@ -64,7 +64,12 @@
                 </tr>
               </table>
             {!! Form::close() !!}
-            <a onclick="window.location='{{ route("cd.reporte.area",[$semestre,$periodo,$coordinacion_id]) }}'" class="btn btn-primary">Reporte de Evaluación Global de Área</a>
+            <table>
+              <tr>
+                <td><a onclick="window.location='{{ route("cd.reporte.area",[$semestre,$periodo,$coordinacion_id]) }}'" class="btn btn-primary">Reporte de Evaluación Global de Área</a></td>
+                <td><a onclick="window.location='{{ route("cd.participantes.area",[$semestre,$coordinacion_id]) }}'" class="btn btn-primary">Reporte participantes periodo</a></td>
+            </tr>
+            </table>
             <div class="div_info">
               <table class="table table-hover">
                             <thead>
@@ -95,7 +100,7 @@
                                       <a href="{{url("/CD/global/{$curso[0]->id}")}}" class="btn btn-info" id="btn_reporte">Reporte de Evaluación final de curso</a><br>
                                       <a href="{{url("/CD/global/instructores/{$curso[0]->id}")}}" class="btn btn-primary" id="btn_reporte">Reporte de Instructores</a>
                                     </td>
-                                    <td><button onclick="window.location='{{ route("cd.participantes",[$curso[0]->id])}}'" class="btn btn-warning" id="btn_participantes">Visualizar participantes inscritos</button>
+                                    <td><button onclick="window.location='{{ route("cd.participantes.curso",[$curso[0]->id])}}'" class="btn btn-warning" id="btn_participantes">Visualizar participantes inscritos</button>
                                   </td>
                                 </tr>
                               @endforeach
