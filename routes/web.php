@@ -22,7 +22,8 @@ Route::get('/CD',[CoordinadorGeneralController::class,'index'])->name('cd.index'
 Route::get('/CD/area/{semestre}/{periodo}/',[CoordinadorGeneralController::class,'global'])->name('cd.global');
 Route::get('/CD/participantes/{semestre}/',[CoordinadorGeneralController::class,'asistentesGlobal'])->name('cd.participantes');
 Route::get('/CD/criterio/{semestre}/',[CoordinadorGeneralController::class,'criterioAceptacion'])->name('cd.criterio');
-Route::get('/CD/participantes/{semestre}/{division}',[CoordinadorGeneralController::class,'asistentesArea'])->name('cd.participantes.area');
+Route::get('/CD/participantes/area/{semestre}/{division}',[CoordinadorGeneralController::class,'asistentesArea'])->name('cd.participantes.area');
+Route::get('/CD/participantes/curso/{curso_id}',[CoordinadorGeneralController::class,'participantes'])->name('cd.participantes.curso');
 Route::get('/CD/area/{semestre}/{periodo}/{division}',[CoordinadorGeneralController::class,'area'])->name('cd.area');
 Route::post('CD/area/buscar/curso/{id}/{semestreEnv}/{periodo}',[CoordinadorGeneralController::class,'buscarCurso'])->name('cd.buscar.curso');
 Route::get('/CD/evaluacion/{id}',[CoordinadorGeneralController::class,'evaluacion'])->name('cd.evaluacion');

@@ -118,6 +118,7 @@
 		</td>
 	</table>
 
+    @if(!$criterio_s_empty)
     <table class="tabla_lista">
         <thead>
             <tr>
@@ -125,17 +126,19 @@
                 <th>Criterio de aceptación de la coordinación de cursos</th>
             </tr>
         </thead>
-        @foreach($criterio_s as $key => $value)
-            <tr>
-                <td>{{$key}}</td>
-                <td>{{$value}}</td>
-            </tr>
-        @endforeach
+            @foreach($criterio_s as $key => $value)
+                <tr>
+                    <td>{{$key}}</td>
+                    <td>{{$value}}</td>
+                </tr>
+            @endforeach
         <tbody>
         </tbody>
     </table>
+    @endif
     <br>
     <br>
+    @if(!$criterio_i_empty)
     <table class="tabla_lista">
         <thead>
             <tr>
@@ -143,6 +146,7 @@
                 <th>Criterio de aceptación de la coordinación de cursos</th>
             </tr>
         </thead>
+
         @foreach($criterio_i as $key => $value)
             <tr>
                 <td>{{$key}}</td>
@@ -152,6 +156,6 @@
         <tbody>
         </tbody>
     </table>
-
+    @endif
 </body>
 
