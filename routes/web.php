@@ -1,6 +1,8 @@
 <?php
 use App\Http\Controllers\CoordinadorGeneralController;
 use App\Http\Controllers\AreaController;
+use App\Http\Controllers\HomeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,8 +18,11 @@ Route::post('/coordinador/login', 'Auth\CoordinacionLoginController@login')->nam
 Route::get('/coordinador/logout', 'Auth\CoordinacionLoginController@logout')->name('coordinador.logout');
 
 Route::group(['middleware'=>'coordinador'], function() {
-  Route::get('/area',[AreaController::class,'index'])->name('area.index');
+  Route::get('/home',[HomeController::class,'index'])->name('home.index');
 });
+
+Route::get('/area', [AreaController::class, 'index'])->name('area.index');
+Route::get('/admin', [CoordinadorGeneralController::class, 'index'])->name('admin.index');
 
 // Rutas anteriores
 Route::get('/', function() { return redirect()->route('coordinador.login');});

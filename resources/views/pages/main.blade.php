@@ -39,7 +39,7 @@
               <input name="password" type="password" class="form-control" id="password" required>
             </div>
             <div class="mb-3">
-              <button type="submit" class="btn login_btn">Submit</button>
+              <button type="submit" class="btn login_btn">Enviar</button>
             </div>
           </form>
         </div>

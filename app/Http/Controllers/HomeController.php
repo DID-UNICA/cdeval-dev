@@ -6,14 +6,20 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+
 
 use App\Coordinacion;
 
 class HomeController extends Controller
 {
     public function index(){
-    $coordinaciones = Coordinacion::all()->pluck('abreviatura','nombre_coordinacion');
-        return view('pages.main')
-            ->with('coordinaciones',$coordinaciones);
-    }
+    $coordinacion = Auth::user();
+    if($coordinacion->es_admin === True)
+      return redirect()->route('admin.index');
+    elseif($coordinacion->es_admin === False)
+      return redirect()->route('area.index');
+    else
+      return "ERROR 404";
+  }
 }

@@ -11,7 +11,7 @@ class CoordinacionLoginController extends Controller
 {
     use AuthenticatesUsers;
 
-    protected $redirectTo = '/area';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
