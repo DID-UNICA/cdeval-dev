@@ -101,24 +101,12 @@
 			FACULTAD DE INGENIERÍA, UNAM<br/>
 			Secretaria de Apoyo a la Docencia<br>
 		    Centro de Docencia "Ing. Gilberto Borja Navarrete"<br/>
-			Sistema de Gestión de la Calidad<br/>
-			Norma ISO 9001-2015<br/>
-			Formato
 		</td>
 		<td width= 12% class="margen">
             <img id="imagen_derecha" src="img/cdd.png" height="80">
 		</td>
     </table>
     <table id="tabla_encabezado_debajo">
-		<td width="20%" class="margen">
-			2730-SGC-IC-FO-11
-		</td>
-		<td  class="margen">
-			Fecha de emisión:
-		</td>
-		<td class="margen">
-            2017-06-08
-		</td>
 		<td class="margen">
 			Versión
 		</td>
@@ -130,6 +118,7 @@
 		</td>
 	</table>
 
+    @if(!$criterio_s_empty)
     <table class="tabla_lista">
         <thead>
             <tr>
@@ -137,17 +126,19 @@
                 <th>Criterio de aceptación de la coordinación de cursos</th>
             </tr>
         </thead>
-        @foreach($criterio_s as $key => $value)
-            <tr>
-                <td>{{$key}}</td>
-                <td>{{$value}}</td>
-            </tr>
-        @endforeach
+            @foreach($criterio_s as $key => $value)
+                <tr>
+                    <td>{{$key}}</td>
+                    <td>{{$value}}</td>
+                </tr>
+            @endforeach
         <tbody>
         </tbody>
     </table>
+    @endif
     <br>
     <br>
+    @if(!$criterio_i_empty)
     <table class="tabla_lista">
         <thead>
             <tr>
@@ -155,6 +146,7 @@
                 <th>Criterio de aceptación de la coordinación de cursos</th>
             </tr>
         </thead>
+
         @foreach($criterio_i as $key => $value)
             <tr>
                 <td>{{$key}}</td>
@@ -164,6 +156,6 @@
         <tbody>
         </tbody>
     </table>
-
+    @endif
 </body>
 

@@ -29,7 +29,7 @@ class AreaController extends Controller
      */
     public function index(){
 
-        $coordinacion_nombre = 'Área de Desarrollo Humano';
+        $coordinacion_nombre = 'Área de cómputo';
 
         $semestre_anio = DB::table('cursos')
             ->select('semestre_anio')
@@ -52,7 +52,7 @@ class AreaController extends Controller
         $fecha="2018-2";
         $semestre=explode('-',$fecha);
         $periodo="s";
-        $coordinacion_nombre = 'Área de Desarrollo Humano';
+        $coordinacion_nombre = 'Área de cómputo';
 
         $cursos = DB::table('cursos')
             ->join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
@@ -105,7 +105,7 @@ class AreaController extends Controller
     }
 
 	public function nuevaFecha(Request $request, $fecha){
-		$coordinacion_nombre = 'Área de Desarrollo Humano';
+		$coordinacion_nombre = 'Área de cómputo';
 		$semestre = explode('-',$fecha);
 
         $cursos = DB::table('cursos')
@@ -423,11 +423,11 @@ class AreaController extends Controller
 					->with('catalogoCurso',$catalogoCurso);
 			}          
 		}
-        
-    }
+	}
 
     public function saveFinal_Curso(Request $request,$profesor_id,$curso_id, $catalogoCurso_id){
         $participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
+		return $participante;
         $evaluacion_id = DB::table('_evaluacion_final_curso')
             ->select('id')
             ->where([['participante_curso_id',$participante[0]->id],['curso_id',$curso_id]])

@@ -3484,6 +3484,12 @@ $promedio_p4=[
             ->where([['c.semestre_anio',$semestre[0]],['c.semestre_pi',$semestre[1]]])
             ->orderBy('c.semestre_si', 'desc')
             ->get();
+
+        if(sizeof($cursos) == 0){
+            Session::flash('message','No hay cursos dados de alta en el periodo '.$semestreEnv);
+			Session::flash('alert-class', 'alert-danger'); 
+            return redirect()->back();
+        }
         
         $asistentes = array();
         foreach($cursos as $curso){
@@ -3504,7 +3510,7 @@ $promedio_p4=[
             $total = $unam+$externos;
             array_push($asistentes, [$curso, $unam, $externos, $total]);
         }
-        
+
         $pdf = PDF::loadView('pages.participantes',array('semestre'=>$semestreEnv,'cursos'=>$asistentes));	
 
         $download='participantes_'.$semestre[0].'-'.$semestre[1].'.pdf';
@@ -3513,7 +3519,7 @@ $promedio_p4=[
     }
 
     public function asistentesArea(String $semestreEnv, String $division){
-
+        
         $fecha=$semestreEnv;
         $semestre=explode('-',$fecha);
 
@@ -3617,17 +3623,41 @@ $promedio_p4=[
             }
         }
 
+        $aux1_empty = false;
+        $promedio1 = 0;
         foreach ($aux1 as $key => $value) {
-            $aux1[$key] = ($aux1[$key]/$tam1[$key])*100;
+            $aux1[$key] = round(($aux1[$key]/$tam1[$key])*100,2);
+            $promedio1 += $aux1[$key];
+        }
+        if(sizeof($aux1)==0){
+            $aux1_empty = true;
+        }else{
+            $promedio1 = round($promedio1/sizeof($aux1),2);
+            $aux1['Promedio: '] = $promedio1;
         }
 
+        $aux2_empty = false;
+        $promedio2 = 0;
         foreach ($aux2 as $key => $value) {
-            $aux2[$key] = ($aux2[$key]/$tam2[$key])*100;
+            $aux2[$key] = round(($aux2[$key]/$tam2[$key])*100,2);
+            $promedio2 += $aux2[$key];
+        }
+        if(sizeof($aux2) == 0){
+            $aux2_empty = true;
+        }else{
+            $promedio2 = round($promedio2/sizeof($aux2),2);
+            $aux2['Promedio: '] = $promedio2;
         }
 
-        $pdf = PDF::loadView('pages.criterio_aceptacion',array('semestre'=>$semestreEnv,'criterio_s'=>$aux1,'criterio_i'=>$aux2));	
+        if($aux1_empty && $aux2_empty){
+            Session::flash('message','El periodo '.$semestreEnv.' no ha sido evaluado');
+			Session::flash('alert-class', 'alert-danger'); 
+            return redirect()->back();
+        }
 
-        $download='criterio_aceptacion'.$semestre[0].'-'.$semestre[1].'pdf';
+        $pdf = PDF::loadView('pages.criterio_aceptacion',array('semestre'=>$semestreEnv,'criterio_s'=>$aux1,'criterio_i'=>$aux2,'criterio_s_empty'=>$aux1_empty,'criterio_i_empty'=>$aux2_empty));	
+
+        $download='criterio_aceptacion'.$semestre[0].'-'.$semestre[1].'.pdf';
         //Retornamos la descarga del pdf
         return $pdf->download($download);
     }
