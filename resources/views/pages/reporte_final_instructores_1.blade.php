@@ -71,7 +71,7 @@ body {
 }
 </style>
 <body>
-<div style="height: 90%">
+<div style="height: 70%">
 	<div height="10%">
 		<table style="width: 100%" align="center"  id="tabla_encabezado" height="5%">
 			<tr id="normal">
@@ -184,12 +184,14 @@ body {
 
     </div>
 
-</div>
-
 <br>
+
 <br>
 <p>_______________________________________</p>
 <p>SAD,CDD</p>
+<p>{{$dia}}, {{$date["mday"]}} de {{$mes}} de {{$date["year"]}}</p>
+
+</div>
 
 </body>
 </html>

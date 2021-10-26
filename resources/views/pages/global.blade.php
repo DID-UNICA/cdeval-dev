@@ -126,7 +126,11 @@
 					Página 1 de 1
 				</td>
 		</table>
-        <h5 class="inicial">Reporte global de los cursos impartidos</h5>
+        @if(Session::get('tipos') == 'CD')
+            <h5 class="inicial">Reporte de Evaluación global</h5>
+        @else
+            <h5 class="inicial">Reporte de Evaluación global de Área</h5>
+        @endif
 
         <br>
         <table style="width: 100%">

@@ -41,7 +41,7 @@ body {
 	width: 20%;
 }
 </style>
-@extends('layouts.app')
+@extends('layouts.principal')
 
 @section('contenido')
 
@@ -293,7 +293,7 @@ body {
         </div>
     </div>
 
-    <button id="dia"  type="button" class="btn btn-primary active"><a href="{{route('global.pdf',[$periodo, $semestral])}}" style="color:white">Descargar PDF</a></button>
+    <button id="dia"  type="button" class="btn btn-primary active"><a href="{{route('cd.global.pdf',[$periodo, $semestral])}}" style="color:white">Descargar PDF</a></button>
                                                                                                         
     <?php
         

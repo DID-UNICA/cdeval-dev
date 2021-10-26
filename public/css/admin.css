@@ -48,18 +48,18 @@ body{
 .wrap .nav-bar .nav .dropdown-menu > li > a:hover {
   background: #3355ff;
 }
-.wrap .side-menu-link {
-  left: 21em;
-}
-.wrap .burger {
+/* .wrap .side-menu-link {
+  left: 0em;
+} */
+/* .wrap .burger {
   position: relative;
   width: 35px;
   height: 30px;
   left: 10px;
   top: 5px;
   z-index: 500000;
-}
-.wrap .burger .burger_inside {
+} */
+/* .wrap .burger .burger_inside {
   position: absolute;
   background-color: #222;
   width: 30px;
@@ -70,8 +70,8 @@ body{
   -ms-transition: all 0.5s ease-out;
   -o-transition: all 0.5s ease-out;
   transition: all 0.5s ease-out;
-}
-.wrap .burger #bgrOne {
+} */
+/* .wrap .burger #bgrOne {
   top: 0;
 }
 .wrap .burger #bgrTwo {
@@ -79,9 +79,9 @@ body{
 }
 .wrap .burger #bgrThree {
   top: 20px;
-}
-.wrap #side-menu { /*#043858*/
-  position: fixed;
+} */
+  /* .wrap #side-menu { /*#043858
+position: fixed;
   background: #d9cb9e;
   width: 22em;
   margin-top: 2%;
@@ -92,7 +92,7 @@ body{
   display: block;
   left: 0;
   height: 100%;
-}
+} */
 #top-menu{
   background: #00305a;
   position: fixed;
@@ -103,7 +103,7 @@ body{
 .wrap .content {
   position: absolute;
   right: 0;
-  min-width: 400px;
+  min-width: 40px;
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
   -ms-transition: all 0.3s ease-out;
@@ -119,7 +119,7 @@ body{
   margin: 0;
   height: 100%;
   background: #fff;
-  padding-left: 20px;
+  padding-left: 0px;
   padding-right: 10px;
   display: block;
   width: 100%;
@@ -206,9 +206,9 @@ body{
     margin-top: 0;
     padding-left: 0;
   }
-  .wrap .side-menu-link {
+  /* .wrap .side-menu-link {
     display: inline-block;
-  }
+  } */
   .wrap #side-menu #qform {
     position: absolute;
     top: 10px;
@@ -323,4 +323,38 @@ body{
 
 .panel-default{
   margin-top: 2%;
+}
+.panel-body{
+
+}
+.div_periodo{
+  float: left;
+  width: 45%;
+  height: 150px;
+}
+
+.div_area{
+  float: left;
+  width: 50%;
+  height: 150px;
+}
+
+#area{
+  margin-left: 40px;
+}
+
+#btn_eval{
+  width: 100px;
+  white-space: normal;
+  text-align: center;
+}
+#btn_reporte{
+  width: 100px;
+  white-space: normal;
+  text-align: center;
+}
+#btn_participantes{
+  width: 120px;
+  white-space: normal;
+  text-align: center;
 }

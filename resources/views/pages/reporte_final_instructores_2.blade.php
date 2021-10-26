@@ -71,7 +71,7 @@ body {
 }
 </style>
 <body>
-<div style="height: 90%">
+<div style="height: 70%">
 	<div height="10%">
 		<table style="width: 100%" align="center"  id="tabla_encabezado" height="5%">
 			<tr id="normal">
@@ -181,6 +181,8 @@ body {
 				</tr>
             @endforeach
 		</table>
+		<br>
+		<br>
 		<table width="100%">
 			<tr>
 				<th class="f1">Comentarios y sugerencias</th>
@@ -192,11 +194,12 @@ body {
             @endforeach
 		</table>
     </div>
+	<br>
+<br>
 
-	<br>
-	<br>
-	<p>_______________________________________</p>
-	<p>SAD,CDD</p>
+<p>_______________________________________</p>
+<p>SAD,CDD</p>
+<p>{{$dia}}, {{$date["mday"]}} de {{$mes}} de {{$date["year"]}}</p>
 
 </div>
 

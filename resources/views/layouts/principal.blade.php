@@ -1,5 +1,16 @@
 <!-- Guardado en resources/views/layouts/principal.blade.php -->
 
+<style>
+  #outer {
+    width:100%
+  }
+  #inner {
+    display: table;
+    margin: 0 auto;
+    width:85%;
+  }
+</style>
+
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
@@ -19,13 +30,16 @@
         <strong>{!! trans('main.message') !!}</strong>{{ session('success') }}
     </div>
 @endif-->
-<div class="wrap">
+<div class="wrap" style="width:100%">
     <nav class="nav-bar navbar-inverse" role="navigation">
         <div id ="top-menu" class="container-fluid active">
+<<<<<<< HEAD
+                <a class="navbar-brand" id="nav-a" href="/{{Session::get('url')}}">Centro de Docencia - Evaluaciones</a>
+=======
             <!--<a class="navbar-brand" id="nav-a" href="{{ route('evaluacion.admin', [$profesor->id]) }}">Centro de Docencia - Evaluaciones</a>-->
             <a class="navbar-brand" id="nav-a" href="{{ route('home.profesor', [$profesor->id]) }}">Centro de Docencia - Evaluaciones</a>
+>>>>>>> master
             <ul class="nav navbar-nav">
-
                 <li class="dropdown movable">
                     <!--Boton de usuario esquina superior derecha-->
                     <a href="#"  class="dropdown-toggle" data-toggle="dropdown">
@@ -33,14 +47,13 @@
                         <i id="usericon" class="fa fa-2x fa-user-circle"></i>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                    <a href="{{ route('logout') }}" class="btn btn-logout"> Cerrar sesión </a>
+                        <a href="" class="btn btn-logout"> Cerrar sesión </a>
                     </ul>
-
-            </ul>
-            </li>
+                </li>
             </ul>
         </div>
     </nav>
+
 
     <aside id="side-menu" class="aside" role="navigation">
         <ul class="nav nav-list accordion">
@@ -59,14 +72,13 @@
             
         </ul>
     </aside>
-
     @yield('contenido')
 
-    <footer class="content-inner">
+    <footer class="content-inner" id="inner">
         <div class="panel panel-default">
             <div class="panel-heading">
                 Hecho en México, Universidad Nacional Autónoma de México, Facultad de Ingeniería, Unidad de servicios de cómputo académico, Departamento de Investigación y Desarrollo.
-                Todos los derechos reservados 2019.
+                Todos los derechos reservados 2021.
             </div>
         </div>
     </footer>
