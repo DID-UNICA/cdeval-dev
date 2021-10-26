@@ -1,6 +1,8 @@
 <?php
 use App\Http\Controllers\CoordinadorGeneralController;
 use App\Http\Controllers\AreaController;
+use App\Http\Controllers\HomeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,12 +13,20 @@ use App\Http\Controllers\AreaController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/coordinador/login', 'Auth\CoordinacionLoginController@showLoginForm')->name('coordinador.login');
+Route::post('/coordinador/login', 'Auth\CoordinacionLoginController@login')->name('coordinador.login.post');
+Route::get('/coordinador/logout', 'Auth\CoordinacionLoginController@logout')->name('coordinador.logout');
 
-/*Route::get('/', function () {
-    return view('pages.main');
-});*/
+Route::group(['middleware'=>'coordinador'], function() {
+  Route::get('/home',[HomeController::class,'index'])->name('home.index');
+});
 
-Route::get('/',[CoordinadorGeneralController::class,'index'])->name('cd.index');
+Route::get('/area', [AreaController::class, 'index'])->name('area.index');
+Route::get('/admin', [CoordinadorGeneralController::class, 'index'])->name('admin.index');
+
+// Rutas anteriores
+Route::get('/', function() { return redirect()->route('coordinador.login');});
+// Route::get('/',[CoordinadorGeneralController::class,'index'])->name('cd.index');
 
 Route::get('/CD',[CoordinadorGeneralController::class,'index'])->name('cd.index');
 Route::get('/CD/area/{semestre}/{periodo}/',[CoordinadorGeneralController::class,'global'])->name('cd.global');
@@ -43,7 +53,6 @@ Route::post('/finalc/cambio/{profesor_id}/{curso_id}/{catalogoCurso_id}',[Coordi
 Route::post('/finals/cambio{profesor_id}/{curso_id}/{catalogoCurso_id}',[CoordinadorGeneralController::class,'changeFinal_Seminario'])->name('final.seminario.change');
 
 
-Route::get('/area',[AreaController::class,'index'])->name('area.index');
 Route::post('/area/buscar/fecha',[AreaController::class,'cambioFecha'])->name('area.cambioFecha');
 Route::get('/area/{fecha}',[AreaController::class,'nuevaFecha'])->name('area.nuevaFecha');
 Route::post('/area/buscar/curso/{id}',[AreaController::class,'buscarCurso'])->name('area.buscar.curso');

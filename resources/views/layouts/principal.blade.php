@@ -47,7 +47,7 @@
                         <i id="usericon" class="fa fa-2x fa-user-circle"></i>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <a href="" class="btn btn-logout"> Cerrar sesión </a>
+                        <a href="{{route('coordinador.logout')}}" class="btn btn-logout"> Cerrar sesión </a>
                     </ul>
                 </li>
             </ul>
