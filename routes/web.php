@@ -1,60 +1,80 @@
 <?php
-use App\Http\Controllers\CoordinadorGeneralController;
-use App\Http\Controllers\AreaController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::get('/', function () {
 
-/*Route::get('/', function () {
-    return view('pages.main');
-});*/
-
-Route::get('/',[CoordinadorGeneralController::class,'index'])->name('cd.index');
-
-Route::get('/CD',[CoordinadorGeneralController::class,'index'])->name('cd.index');
-Route::get('/CD/area/{semestre}/{periodo}/',[CoordinadorGeneralController::class,'global'])->name('cd.global');
-Route::get('/CD/participantes/{semestre}/',[CoordinadorGeneralController::class,'asistentesGlobal'])->name('cd.participantes');
-Route::get('/CD/criterio/{semestre}/',[CoordinadorGeneralController::class,'criterioAceptacion'])->name('cd.criterio');
-Route::get('/CD/participantes/{semestre}/{division}',[CoordinadorGeneralController::class,'asistentesArea'])->name('cd.participantes.area');
-Route::get('/CD/area/{semestre}/{periodo}/{division}',[CoordinadorGeneralController::class,'area'])->name('cd.area');
-Route::post('CD/area/buscar/curso/{id}/{semestreEnv}/{periodo}',[CoordinadorGeneralController::class,'buscarCurso'])->name('cd.buscar.curso');
-Route::get('/CD/evaluacion/{id}',[CoordinadorGeneralController::class,'evaluacion'])->name('cd.evaluacion');
-Route::get('CD/evaluacion/final/{curso_id}/{profesor_id}',[CoordinadorGeneralController::class,'evaluacionVista'])->name('cd.evaluacion.vista');
-Route::get('CD/modificar/final/{curso_id}/{profesor_id}',[CoordinadorGeneralController::class,'modificarEvaluacion'])->name('cd.modificar.evaluacion');
-Route::get('/CD/participantes/{curso_id}',[CoordinadorGeneralController::class,'participantes'])->name('cd.participantes');
-Route::get('descargar/global/{fecha}/{semestral}',[CoordinadorGeneralController::class,'globalPDF'])->name('cd.global_pdf');
-Route::get('/CD/global/{semestre}/{periodo}/{coordinacion_id}',[CoordinadorGeneralController::class,'enviarArea'])->name('cd.reporte.area');
-Route::get('/CD/global/{curso_id}',[CoordinadorGeneralController::class,'reporteFinalCurso'])->name('cd.reporte.curso');
-Route::get('/CD/global/instructores/{curso_id}',[CoordinadorGeneralController::class,'reporteFinalInstructor'])->name('cd.instructores.curso');
-Route::post('/CD/participantes/buscar/{curso_id}',[CoordinadorGeneralController::class,'buscarInstructor'])->name('cd.buscar.instructor');
-
-Route::post('/finalc/{profesor_id}/{curso_id}/{catalogoCurso_id}',[CoordinadorGeneralController::class,'saveFinal_Curso'])->name('final.curso');
-Route::post('/finals/{profesor_id}/{curso_id}/{catalogoCurso_id}',[CoordinadorGeneralController::class,'saveFinal_Seminario'])->name('final.seminario');
-
-Route::post('/finalc/cambio/{profesor_id}/{curso_id}/{catalogoCurso_id}',[CoordinadorGeneralController::class,'changeFinal_Curso'])->name('final.change');
-Route::post('/finals/cambio{profesor_id}/{curso_id}/{catalogoCurso_id}',[CoordinadorGeneralController::class,'changeFinal_Seminario'])->name('final.seminario.change');
+    //return view('layouts.principal');
+    return view('welcome');
+});
 
 
-Route::get('/area',[AreaController::class,'index'])->name('area.index');
-Route::post('/area/buscar/fecha',[AreaController::class,'cambioFecha'])->name('area.cambioFecha');
-Route::get('/area/{fecha}',[AreaController::class,'nuevaFecha'])->name('area.nuevaFecha');
-Route::post('/area/buscar/curso/{id}',[AreaController::class,'buscarCurso'])->name('area.buscar.curso');
-Route::get('/area/{coordinacion_id}/{busqueda}/{tipo}',[AreaController::class,'nuevoCurso'])->name('area.nuevoCurso');
-Route::get('/area/evaluacion/{id}',[AreaController::class,'evaluacion'])->name('area.evaluacion');
-Route::get('/area/evaluacion/{id}/{profesor_id}',[AreaController::class,'evaluacionVista'])->name('area.evaluacion.vista');
-Route::get('/area/modificar/final/{id}/{profesor_id}',[AreaController::class,'modificarEvaluacion'])->name('area.modificar.evaluacion');
-Route::get('/area/participantes/{id}',[AreaController::class,'participantes'])->name('area.participantes');
-Route::get('/area/final/{id}',[AreaController::class,'reporteFinalCurso'])->name('area.curso');
-Route::post('/area/finalc/{profesor_id}/{curso_id}/{catalogoCurso_id}',[AreaController::class,'saveFinal_Curso'])->name('area.final.curso');
-Route::post('/area/finals/{profesor_id}/{curso_id}/{catalogoCurso_id}',[AreaController::class,'saveFinal_Seminario'])->name('area.seminario.curso');
+Route::get('/area/{coordinacion_id}/{message}',['uses'=>'CoordinadorController@area_pdf','as'=>'coordinacion.pdf']);
 
-Route::post('/area/finalc/cambio/{profesor_id}/{curso_id}/{catalogoCurso_id}',[AreaController::class,'changeFinal_Curso'])->name('area.final.change');
-Route::post('/area/finals/cambio/{profesor_id}/{curso_id}/{catalogoCurso_id}',[AreaController::class,'changeFinal_Seminario'])->name('area.final.seminario.change');
-Route::post('/area/participantes/buscar/{curso_id}',[CoordinadorGeneralController::class,'buscarInstructor'])->name('area.buscar.instructor');
+
+Route::post('/autentificar', "AutentificarController@index")->name("autentificar");
+
+//Vistas home
+Route::get('/home/{profesor_id}', "ProfesorController@index")->name("home.profesor");
+Route::get('/home/{coordinador_id}', "CoordinadorController@index")->name("home.coordinador");
+Route::get('/home/root', "RootController@index")->name("home.root");
+
+//Vista de coordinador
+
+//Route::post('/coordinador', "AutentificarController@index")->name("coordinador");
+Route::get('/cursos',"CoordinadorController@cursos")->name("cursos");
+//Route::get('/cursosCoordinacion/{id}/{message}',"CoordinadorController@cursosCoordinaciones")->name("cursos.coordinacion");
+Route::get('/cursosCoordinacion/{id}/{message}/',"CoordinadorController@cursosCoordinaciones")->name("cursos.coordinacion");
+Route::get('/instructores',"CoordinadorController@instructores")->name("instructores");
+Route::get('cursos/buscar/{id}/{message}/',"CoordinadorController@searchCursos")->name("buscar.curso");
+Route::get('sesion',"CoordinadorController@sesiones")->name("ver.sesion");
+Route::get('global',"CoordinadorController@globales")->name("ver.global");
+Route::get('global/{curso_id}/{pdf}/{encargado_id}',"CoordinadorController@globalFinal")->name("ver.global.final");
+Route::get('global/sesion/{curso_id}/{pdf}/{encargado_id}',"CoordinadorController@globalSesion")->name("ver.sesion.final");
+
+//Para enviar correos
+Route::get('evaluarCurso/{profesor_id}/{curso_id}','EvaluacionController@enviarCorreo')->name('evaluacion.correo');
+//Guardar evaluaciones en la BD
+Route::get('evaluar/{profesor_id}/{curso_id}/{catalogoCurso_id}','EvaluacionController@index')->name('evaluacion.index');
+Route::get('evaluarSesion/{profesor_id}/{curso_id}/{catalogoCurso_id}/{count}','EvaluacionController@evaluacionPorSesion')->name('evaluacion.porSesion');
+Route::get('evaluarCurso/{profesor_id}/{curso_id}/{catalogoCurso_id}/{count}','EvaluacionController@evaluacionPorCurso')->name('evaluacion.porCurso');
+
+//Eran post
+Route::post('evaluar/finalc/{profesor_id}/{curso_id}/{catalogoCurso_id}',"EvaluacionController@saveFinal_Curso")->name('final.curso');
+Route::post('/finals/{profesor_id}/{curso_id}/{catalogoCurso_id}','EvaluacionController@saveFinal_Seminario')->name('final.seminario');
+Route::post('evaluar/xcurso/{profesor_id}/{curso_id}/{catalogoCurso_id}',"EvaluacionController@saveXCurso")->name('x.curso');
+Route::post('evaluar/xseminario/{profesor_id}/{curso_id}/{catalogoCurso_id}',"EvaluacionController@saveXSeminario")->name('x.seminario');
+
+Route::get('enviar/{profesor_id}',"EvaluacionController@enviarClaveCursoHistorico")->name('evaluacion.enviarClaveCursoHistorico');
+Route::get('enviarFecha/{profesor_id}',"EvaluacionController@redirigirAEnviar")->name('evaluacion.enviarClaveFecha');
+Route::post('enviarFechaArchivo/{profesor}',"EvaluacionController@enviarClaveFecha")->name('evaluacion.enviarClaveFechaArchivo');
+Route::get('admin/{profesor_id}',"EvaluacionController@admin")->name('evaluacion.admin');
+
+Route::post('/area/pdf/','CoordinadorController@enviarArea')->name('enviar.area.pdf');
+/*Route::post('/area/pdf/{$coordinacion_id}',function($coordinacion_id){
+    return 'Hola '.$coordinacion_id;
+})->name('enviar.area');*/
+
+Route::get('fecha_global/{message}/', "CoordinadorController@elegirFecha")->name('elegir.fecha');
+Route::get('fecha_coordinacion/{message}/', "CoordinadorController@elegirFechaCoordinacion")->name('elegir.coordinacion');
+
+Route::get('admin/','CoordinadorController@index')->name('superadmin');
+
+Route::post('enviar_global',"CoordinadorController@enviarGlobal")->name('enviar.global');
+Route::post('enviar_coordinacion',"CoordinadorController@enviarCoordinacion")->name('enviar.coordinacion');
+Route::get('descargar/global/{fecha}/{semestral}','CoordinadorController@globalPDF')->name('global.pdf');
+Route::get('descargar/area/{fecha}/{nombreCoordinacion}/{semestral}','CoordinadorController@areaPDF')->name('area.pdf');
+
+Route::get('area',function(){
+    return view('pages.area');
+})->name('area');
+
+Route::get('global',function(){
+    return view('pages.global');
+})->name('global');
+
+Route::get('instructores',function(){
+    return view('pages.reporte_instructores');
+})->name('instructores');
+
+Route::get('logout','\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+
+Route::get('coordinador/{coordinacion_id}','CoordinadorController@superadmin')->name('superadminCoordinacion');
+Route::get('coordinador/realizarEvaluacion/{encargado_id}/{curso_id}',"CoordinadorController@realizarEvaluaciones")->name("realizar.evaluaciones");
