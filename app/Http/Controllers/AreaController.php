@@ -29,39 +29,37 @@ class AreaController extends Controller
      * @return Vista super usuario
      */
     public function index(){
-
-
         $coordinacion = Auth::user();
         $coordinacion_nombre = $coordinacion->nombre_coordinacion;
-        // $coordinacion_nombre = 'Área de Desarrollo Humano';
 
-        $semestre_anio = DB::table('cursos')
-            ->select('semestre_anio')
-            ->get();
+        // $semestre_anio = DB::table('cursos')
+        //     ->select('semestre_anio')
+        //     ->get();
         
-        $coordinaciones = DB::table('coordinacions')
-            ->select('nombre_coordinacion')
-            ->get();
+        // $coordinaciones = DB::table('coordinacions')
+        //     ->select('nombre_coordinacion')
+        //     ->get();
 
-        $semestres = array();
-        foreach($semestre_anio as $semestre){
-            if(!in_array($semestre,$semestres)){
-                array_push($semestres,$semestre);
-            }
-        }
-        sort($semestres);
-        $reversed = array_reverse($semestres);
+        // $semestres = array();
+        // foreach($semestre_anio as $semestre){
+        //     if(!in_array($semestre,$semestres)){
+        //         array_push($semestres,$semestre);
+        //     }
+        // }
+        // sort($semestres);
+        // $reversed = array_reverse($semestres);
 
 
-        $fecha="2018-2";
-        $semestre=explode('-',$fecha);
-        $periodo="s";
+        // $fecha="2018-2";
+        // $semestre=explode('-',$fecha);
+        // $periodo="s";
         $cursos = DB::table('cursos')
             ->join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
-            ->join('coordinacions','coordinacions.id','=','coordinacion_id')
+            ->join('coordinacions','coordinacions.id','=','catalogo_cursos.coordinacion_id')
             ->select('catalogo_cursos.nombre_curso','cursos.id')
-            ->where([['cursos.semestre_anio',$semestre[0]],['cursos.semestre_pi',$semestre[1]],['cursos.semestre_si',$periodo],['coordinacions.nombre_coordinacion',$coordinacion_nombre]])
+            ->where('coordinacions.nombre_coordinacion', $coordinacion->nombre_coordinacion)
             ->get();
+        return $cursos;
 
         $datos = array();
         foreach($cursos as $curso){

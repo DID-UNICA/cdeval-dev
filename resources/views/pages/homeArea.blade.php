@@ -57,15 +57,22 @@
                 <table>
                   <tr>
                     <td>
-                      <select name="semestre" id="">
+                      <input width= '25%' min=1960 max=3000 type="number" placeholder="Año">
+                      <!-- <select name="semestre" id="">
                         @foreach($semestre_anio as $anio)
                           <option value="{{$anio->semestre_anio.'-1'}}">{{$anio->semestre_anio}}-1</option>
                           <option value="{{$anio->semestre_anio.'-2'}}">{{$anio->semestre_anio}}-2</option>
                         @endforeach
+                      </select> -->
+                    </td>
+                    <td>
+                      <select name='semestre_pi' width = '25%'>
+                        <option value='1'>1</option>
+                        <option value='2'>2</option>
                       </select>
                     </td>
                     <td>
-                      <select name='periodo' width = '25%'>
+                      <select name='semestre_si' width = '25%'>
                         <option value='s'>s</option>
                         <option value='i'>i</option>
                       </select>

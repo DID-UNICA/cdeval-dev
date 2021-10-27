@@ -15,7 +15,7 @@ class Curso extends Model
      * @var array
      */
     protected $fillable = [
-        'id','semestre_imparticion','fecha_inicio','fecha_fin','hora_inicio','hora_fin','dias_semana',
+        'id','semestre_anio','semestre_pi','semestre_si','fecha_inicio','fecha_fin','hora_inicio','hora_fin','dias_semana',
         'numero_sesiones','texto_diploma','profesor_id','costo','orden','fecha_disenio','cupo_maximo',
         'cupo_minimo','status','catalogo_id','salon_id'
     ];
