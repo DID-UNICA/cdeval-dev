@@ -30,22 +30,20 @@
                 <tr>
                   <div class="input-group">
                     <td>
-                      {!!Form::text("pattern", null, [ "class" => "form-control", "placeholder" => "Buscar Curso"])!!}
+                      {!!Form::text("pattern", null, [ "required","class" => "form-control", "placeholder" => "Buscar Curso"])!!}
                     </td>
                     <td>
                       {!! Form::select('type', array(
                             'nombre' => 'Por nombre',
                             'instructor' => 'Por instructor'),
-                            null,['class' => 'btn dropdown-toggle pull-left'] ) !!}
+                            null,['class' => 'form-select',
+                            'style' => 'margin-left: 5%'] ) !!}
                     </td>
                     <td>
-                      <span class="input-group-btn col-md-2">
-                        <button class="btn btn-search " type="submit">Buscar</button>
+                      <span class=" col-md-2">
+                        <button class="btn btn-success" type="submit">Buscar</button>
                       </span>
                     </td>
-                    <input type="hidden" name="periodo_anio" value="{{isset($periodo_anio)? $periodo_anio:null}}">
-                    <input type="hidden" name="periodo_pi" value="{{isset($periodo_pi)? $periodo_pi:null}}">
-                    <input type="hidden" name="periodo_si" value="{{isset($periodo_si)? $periodo_si:null}}">
                   </div>
                 </tr>
               </table>
@@ -53,21 +51,20 @@
             <br>
             <h4>Periodo</h4>
             <br>
-            <form method="POST" action="{{action('AreaController@cambioFecha')}}">
+            {!! Form::open(["route" => ["area.buscar.curso.periodo",$coordinacion->id], "method" => "POST"]) !!}
                 <table>
                   <tr>
                     <td>
-                      <input width= '25%' min=1960 max=3000 type="number" placeholder="Año">
-
+                      <input name="semestre_anio" width= '25%' min=1960 max=3000 type="number" placeholder="Año" required>
                     </td>
                     <td>
-                      <select name='semestre_pi' width = '25%'>
+                      <select class='form-select' style= 'margin-left: 5%' name='semestre_pi' width = '25%'>
                         <option value='1'>1</option>
                         <option value='2'>2</option>
                       </select>
                     </td>
                     <td>
-                      <select name='semestre_si' width = '25%'>
+                      <select class='form-select' style= 'margin-left: 5%' name='semestre_si' width = '25%'>
                         <option value='s'>s</option>
                         <option value='i'>i</option>
                       </select>
@@ -95,7 +92,7 @@
                               @foreach($cursos as $curso)
                                 <tr>
                                     <td style="width:350px;">{{$curso->getCatalogoCurso()->nombre_curso}}</td>
-                                    <td style="width:550px;">                                    
+                                    <td style="width:550px;">
                                       <p>{{$curso->getCadenaInstructores()}}</p>
                                     </td>
                                     <td>
@@ -108,6 +105,7 @@
                       
               </table>   
             </div>
+          {!! Form::close() !!}
 		  		<br>
 			  	<br>
         </div> <!--Cierre panel-body-->

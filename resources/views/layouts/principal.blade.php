@@ -50,6 +50,11 @@
         </div>
     </nav>
 
+
+    <aside id="side-menu" class="aside" role="navigation">
+        <ul class="nav nav-list accordion">
+        </ul>
+    </aside>
     @yield('contenido')
 
     <footer class="content-inner" id="inner">

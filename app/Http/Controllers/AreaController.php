@@ -45,15 +45,15 @@ class AreaController extends Controller
             ->with('coordinacion',$coordinacion);
     }
 
-    public function cambioFecha(Request $request){
+    // public function cambioFecha(Request $request){
 
-        $fecha=$request->get('semestre');
-        $periodo=$request->get('periodo');
+    //     $fecha=$request->get('semestre');
+    //     $periodo=$request->get('periodo');
 
-		$toRedirect = $fecha.'-'.$periodo;
-		return redirect()->to('/area/'.$toRedirect.'');
+		// $toRedirect = $fecha.'-'.$periodo;
+		// return redirect()->to('/area/'.$toRedirect.'');
 
-    }
+    // }
 
 	public function nuevaFecha(Request $request, $fecha){
 		$coordinacion_nombre = 'Área de cómputo';
@@ -108,10 +108,39 @@ class AreaController extends Controller
 	}
 
     public function buscarCurso(Request $request, $coordinacion_id){
-		$busqueda = $request->get('pattern');
-		$tipo = $request->get('type');
-
-		return redirect()->route('area.nuevoCurso',['busqueda'=>$busqueda,'tipo'=>$tipo,'coordinacion_id'=>$coordinacion_id]);
+      $coordinacion = Auth::user();
+      if($request->type === 'nombre')
+        $cursos = Curso::join('catalogo_cursos','catalogo_cursos.id','=','cursos.catalogo_id')
+        ->whereRaw("lower(unaccent(nombre_curso)) ILIKE lower(unaccent('%".$request->pattern."%'))")
+        ->where('catalogo_cursos.coordinacion_id',$coordinacion->id)
+        ->get();
+      elseif($request->type === 'instructor'){
+        $profesores = Profesor::select('id')->whereRaw("lower(unaccent(nombres)) ILIKE lower(unaccent('%".$request->pattern."%'))")
+                  ->orWhereRaw("lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$request->pattern."%'))")
+                  ->orWhereRaw("lower(unaccent(apellido_materno)) ILIKE lower(unaccent('%".$request->pattern."%'))")
+                  ->orderByRaw("lower(unaccent(apellido_paterno)),lower(unaccent(apellido_materno)),lower(unaccent(nombres))")
+                  ->get();
+        $curso_prof = ProfesoresCurso::select('curso_id')->whereIn('profesor_id', $profesores)->get();
+        $cursos = Curso::join('catalogo_cursos','catalogo_cursos.id', '=','cursos.catalogo_id')
+                  ->where('catalogo_cursos.coordinacion_id',$coordinacion->id)
+                  ->whereIn('cursos.id',$curso_prof)->get();
+      }
+      return view('pages.homeArea')
+           ->with('cursos',$cursos)
+           ->with('coordinacion',$coordinacion);
+    }
+    
+    public function buscarCursoPeriodo(Request $request, $coordinacion_id){
+      $coordinacion = Auth::user();
+      $cursos = Curso::join('catalogo_cursos','catalogo_cursos.id','=','cursos.catalogo_id')
+                     ->where('semestre_si', $request->semestre_si)
+                     ->where('semestre_pi', $request->semestre_pi)
+                     ->where('semestre_anio', $request->semestre_anio)
+                     ->where('catalogo_cursos.coordinacion_id',$coordinacion->id)
+                     ->get();
+      return view('pages.homeArea')
+           ->with('cursos',$cursos)
+           ->with('coordinacion',$coordinacion);
     }
 
 	public function nuevoCurso(Request $request, $coordinacion_id, $busqueda, $tipo){
