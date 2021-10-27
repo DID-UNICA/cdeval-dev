@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Db;
+use Illuminate\Support\Facades\DB;
 
 class Curso extends Model
 {
@@ -15,141 +15,58 @@ class Curso extends Model
      * @var array
      */
     protected $fillable = [
-        'id','semestre_anio','semestre_pi','semestre_si','fecha_inicio','fecha_fin','hora_inicio','hora_fin','dias_semana',
-        'numero_sesiones','texto_diploma','profesor_id','costo','orden','fecha_disenio','cupo_maximo',
-        'cupo_minimo','status','catalogo_id','salon_id'
+        'id','semestre_anio','semestre_pi','semestre_si','fecha_inicio',
+        'fecha_fin','hora_inicio','hora_fin','dias_semana','numero_sesiones',
+        'sesiones','acreditacion','costo','cupo_maximo','cupo_minimo',
+        'fecha_envio_constancia', 'fecha_envio_reconocimiento','num_modulo',
+        'catalogo_id','salon_id', 'diplomado_id'
     ];
 
-    public function getNombreCurso(){
-        return CatalogoCurso::findOrFail($this->catalogo_id)->nombre_curso;
-    }
-    
-    public function getSalon(){
-        $salon = Salon::findOrFail($this->salon_id)->sede;
-        return $salon;
-    }
-		// TODO Eliminar este metodo, el curso tiene profesores no solo un profesor
-    public function getProfesor(){
-        $nombre = Profesor::findOrFail($this->profesor_id)->nombres;
-        $ap_pat = Profesor::findOrFail($this->profesor_id)->apellido_paterno;
-        $ap_mat = Profesor::findOrFail($this->profesor_id)->apellido_materno;
-
-        return $nombre." ".$ap_pat." ".$ap_mat;
-    }
-
-		// TODO Eliminar estos metodos, se puede acceder a los atributos por medio del operador ->atributo
-    public function getIdCatalogo(){
-        return $this->catalogo_id;
-    }
-    
-    public function getIdProfesor(){
-        return  $this->profesor_id;
-    }
-    
-    public function getIdSalon(){
-        
-        return $this->salon_id;
+    public function getCatalogoCurso(){
+      $catalogo = CatalogoCurso::find($this->catalogo_id);
+      return $catalogo;
     }
 
     public function getSemestre(){
-        $semestre = Curso::findOrFail($this->id)->semestre_imparticion;
-        return $semestre;
+        return $this->semestre_anio."-".$this->semestre_pi." ".$this->semestre_si." ";
     }
 
-    public function allNombreCurso(){
-        $nombre = CatalogoCurso::all('nombre_curso','id');
-        return $nombre;
+    public function getInstructores(){
+       $instructores = Profesor::join('profesor_curso', 'profesors.id', '=', 'profesor_curso.profesor_id')
+       ->join('cursos', 'cursos.id', '=', 'profesor_curso.curso_id')
+       ->where('cursos.id', '=', $this->id)
+       ->get();
+        return $instructores;
     }
-    public function allProfesor(){
-        $profesors = Profesor::all();
-        return $profesors;
-    }
-    public function allSalon(){
-        $salon = Salon::all();
-        return $salon;
-    }
-    public function getProfesores(){
-        $profesoresCurso = ProfesoresCurso::where('curso_id',$this->id)->get();
-        
+
+    public function getCadenaInstructores(){
+        $instructores = ProfesoresCurso::where('curso_id',$this->id)->get();
+
         $cadena="";
 
-        if ( count($profesoresCurso) == 1 ){
-            $profesor=Profesor::find($profesoresCurso[0]->profesor_id);
-            $cadena.=$profesor->nombres." ";
-            $cadena.=$profesor->apellido_paterno." ";
-            $cadena.=$profesor->apellido_materno;
+        if ( count($instructores) == 1 ){
+            $profesor = Profesor::findOrFail($instructores[0]->profesor_id);
+            $cadena .= $profesor->nombres." ";
+            $cadena .= $profesor->apellido_paterno." ";
+            $cadena .= $profesor->apellido_materno;
             return $cadena;
         }
-        foreach($profesoresCurso as $profesorCurso){
-            $profesor=Profesor::find($profesorCurso->id);
-            $cadena.=$profesor->nombres." ";
-            $cadena.=$profesor->apellido_paterno." ";
-            $cadena.=$profesor->apellido_materno." / ";
+        foreach($instructores as $instructor){
+            $profesor = Profesor::find($instructor->profesor_id);
+            $cadena .= $profesor->nombres." ";
+            $cadena .= $profesor->apellido_paterno." ";
+            $cadena .= $profesor->apellido_materno."/";
         }
-        $cadena= substr($cadena, 0, -2);
+        $cadena = substr($cadena, 0, -1);
         return $cadena;
     }
-    public function getProfesores2(){
-        $profesoresCurso = ProfesoresCurso::where('curso_id',$this->id)->get();
 
-        $cadena="";
-
-        if ( count($profesoresCurso) == 1 ){
-            $profesor=Profesor::find($profesoresCurso[0]->id);
-            $cadena.=$profesor->nombres." ";
-            $cadena.=$profesor->apellido_paterno." ";
-            $cadena.=$profesor->apellido_materno;
-            return $cadena;
-        }
-        foreach($profesoresCurso as $profesorCurso){
-            $profesor=Profesor::find($profesorCurso->profesor_id);
-            $cadena.=$profesor->nombres." ";
-            $cadena.=$profesor->apellido_paterno." ";
-            $cadena.=$profesor->apellido_materno."/";
-        }
-        $cadena= substr($cadena, 0, -1);
-        return $cadena;
-    }
-    public function getCorreo(){
-        $profesoresCurso = ProfesoresCurso::where('curso_id',$this->id)->get();
-
-        $cadena="";
-
-        if ( count($profesoresCurso) == 1 ){
-            $profesor=Profesor::find($profesoresCurso[0]->id);
-            $cadena.=$profesor->email;
-            return $profesor->email;
-        }
-        foreach($profesoresCurso as $profesorCurso){
-            $profesor=Profesor::find($profesorCurso->id);
-            $cadena.="'".$profesor->email."',";
-        }
-        $cadena= substr($cadena, 0, -1);
-        return $cadena;
-    }
-	
-	public function getSender(){
-		$profesoresCurso = ProfesoresCurso::where('curso_id',$this->id)->get();
-
-        $cadena="";
-
-        if ( count($profesoresCurso) == 1 ){
-            $profesor=Profesor::find($profesoresCurso[0]->id);
-            $cadena.=$profesor->getNombre();
-            return $cadena;
-        }
-        foreach($profesoresCurso as $profesorCurso){
-            $profesor=Profesor::find($profesorCurso->id);
-            $cadena.="'".$profesor->getNombre()."',";
-        }
-        $cadena= substr($cadena, 0, -1);
-        return $cadena;
-	}
-
-    public function getToday(){
-        $date = \Carbon\Carbon::now()->locale('es_MX');
-
-        return $date->isoFormat('dddd, DD MMMM YYYY');
+    public function getParticipantes(){
+        return ParticipantesCurso::where('cursos.id', '=', $this->id)->get();
     }
 
+    public function getDiplomado(){
+      return Diplomado::find($this->diplomado_id);
+    }
 }
+
