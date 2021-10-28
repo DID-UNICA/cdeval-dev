@@ -243,27 +243,27 @@ class AreaController extends Controller
 	}
 
     public function participantes(Request $request,$curso_id){
-        $participantes = DB::table('participante_curso')
-            ->where([['curso_id',$curso_id]])
-            ->get();
-        $curso = Curso::find($curso_id);
-        $users = array();
-        if(sizeof($participantes) == 0){
-            Session::flash('message','Por el momento no hay alumnos inscritos en el curso');
-			Session::flash('alert-class', 'alert-danger'); 
+      $participantes = DB::table('participante_curso')
+          ->where([['curso_id',$curso_id]])
+          ->get();
+      $curso = Curso::findOrFail($curso_id);
+      $users = array();
+      if(sizeof($participantes) == 0){
+        Session::flash('message','Por el momento no hay alumnos inscritos en el curso');
+        Session::flash('alert-class', 'alert-danger'); 
 
-			return redirect()->back()->withInput($request->input());
-        }
-        foreach($participantes as $participante){
-            $user = DB::table('profesors')
-                ->where([['id',$participante->profesor_id]])
-                ->get();
-            array_push($users, $user[0]);
-        }
-        return view('pages.participante')
-            ->with('curso',$curso)
-            ->with('users',$users)
-            ->with('participantes',$participantes);
+        return redirect()->back()->withInput($request->input());
+      }
+      foreach($participantes as $participante){
+          $user = DB::table('profesors')
+              ->where([['id',$participante->profesor_id]])
+              ->get();
+          array_push($users, $user[0]);
+      }
+      return view('pages.participante')
+          ->with('curso',$curso)
+          ->with('users',$users)
+          ->with('participantes',$participantes);
     }
 
 	public function buscarInstructor (Request $request, int $curso_id){
@@ -271,10 +271,10 @@ class AreaController extends Controller
 
             $words=explode(" ", $request->pattern);
             foreach($words as $word){
-                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(lower(nombres) LIKE lower('%".$word."%')) OR (lower(apellido_paterno) LIKE lower('%".$word."%')) OR (lower(apellido_materno) LIKE lower('%".$word."%'))")->get();
-                array_push($profesores, $profesor);
+                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(nombres)) LIKE unaccent(lower('%".$word."%'))) OR (unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".$word."%'))) OR (unaccent(lower(apellido_materno)) LIKE unaccent(lower('%".$word."%')))")->get();
+                if($profesor->isNotEmpty())
+                  array_push($profesores, $profesor);
             }
-
             $curso_prof = array();
             $aux = array();
 
@@ -297,13 +297,11 @@ class AreaController extends Controller
                         ->join('cursos as c', 'c.id', '=', 'pc.curso_id')
                         ->join('catalogo_cursos as cc','cc.id', '=', 'c.catalogo_id')
                         ->select('cc.nombre_curso', 'c.id','p.id', 'p.nombres','p.apellido_paterno','p.apellido_materno')
-                        ->where( [['pc.id','=',$prof->id],['cc.coordinacion_id']])
+                        ->where('pc.id','=',$prof->id)
                         ->get();
-                    
                     array_push($datos, $dato[0]);
                 }
             }
-    
             return view('pages.eval')
                 ->with('datos',$datos)
                 ->with('id',$curso_id);

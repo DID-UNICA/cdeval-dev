@@ -60,6 +60,8 @@ Route::post('/area/buscar_periodo/curso/{id}',[AreaController::class,'buscarCurs
 Route::get('/area/{coordinacion_id}/{busqueda}/{tipo}',[AreaController::class,'nuevoCurso'])->name('area.nuevoCurso');
 Route::get('/area/evaluacion/{id}',[AreaController::class,'evaluacion'])->name('area.evaluacion');
 Route::get('/area/evaluacion/{id}/{profesor_id}',[AreaController::class,'evaluacionVista'])->name('area.evaluacion.vista');
+Route::post('/area/evaluacion/buscar/{curso_id}',[AreaController::class,'buscarInstructor'])->name('area.buscar.instructor');
+
 Route::get('/area/modificar/final/{id}/{profesor_id}',[AreaController::class,'modificarEvaluacion'])->name('area.modificar.evaluacion');
 Route::get('/area/participantes/{id}',[AreaController::class,'participantes'])->name('area.participantes');
 Route::get('/area/final/{id}',[AreaController::class,'reporteFinalCurso'])->name('area.curso');
@@ -68,4 +70,3 @@ Route::post('/area/finals/{profesor_id}/{curso_id}/{catalogoCurso_id}',[AreaCont
 
 Route::post('/area/finalc/cambio/{profesor_id}/{curso_id}/{catalogoCurso_id}',[AreaController::class,'changeFinal_Curso'])->name('area.final.change');
 Route::post('/area/finals/cambio/{profesor_id}/{curso_id}/{catalogoCurso_id}',[AreaController::class,'changeFinal_Seminario'])->name('area.final.seminario.change');
-Route::post('/area/participantes/buscar/{curso_id}',[CoordinadorGeneralController::class,'buscarInstructor'])->name('area.buscar.instructor');

@@ -53,11 +53,10 @@ td{
     <section class="content-inner">
         <br> 
         <!--//@ include ('partials.messages')-->
-        <div class="panel panel-default">
+        <div style='margin-top: 5%' class="panel panel-default">
             <div class="panel-heading">
-                <h3>Lista de participantes de {{$curso->getNombreCurso()}}</h3>
-                <h4>Instructores(es): {{ $curso->getProfesores()}}</h4>
-
+                <h3>Lista de participantes de {{$curso->getCatalogoCurso()->nombre_curso}}</h3>
+                <h4>Instructores(es): {{ $curso->getCadenaInstructores()}}</h4>
             </div>
         </div>
         <!--<form class="form-horizontal" method="POST" action=" route('curso.ver-respuesta') ">
