@@ -53,19 +53,6 @@
 
     <aside id="side-menu" class="aside" role="navigation">
         <ul class="nav nav-list accordion">
-    
-
-            <li class="nav-header">
-                <div class="link"><i class="fa fa-pencil"></i>Cursos Inscritos<i class="fa fa-chevron-down"></i></div>
-                <ul class="submenu">
-                <!--@if(isset($cursos))-->
-                @foreach($cursos as $curso)
-                    <li><a href="{{ route('evaluacion.index',['profesor_id'=> $profesor->id,'curso_id'=>$curso->id,'catalogoCurso_id'=>$curso->catalogo_id] ) }}">{{ $curso->getNombreCurso() }} {{$curso->semestre_imparticion}}</a></li>
-                @endforeach 
-                <!--@endif-->
-                </ul>
-            </li>
-            
         </ul>
     </aside>
     @yield('contenido')

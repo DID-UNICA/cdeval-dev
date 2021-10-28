@@ -20,7 +20,11 @@
         <br>
         <br>
         <div class="panel-body">
-        {!! Form::open(["route" => ["cd.buscar.instructor",$id], "method" => "POST"]) !!}
+        @if(Auth::user()->es_admin === True)
+          {!! Form::open(["route" => ["cd.buscar.instructor",$id], "method" => "POST"]) !!}
+        @else
+          {!! Form::open(["route" => ["area.buscar.instructor",$id], "method" => "POST"]) !!}
+        @endif
               <table>
                 <tr>
                   <div class="input-group">
@@ -72,14 +76,14 @@
                                         <!-- Ordenados por apellido paterno -->
                                     </td>
                                     <td>
-                                      @if(Session::get('sesion')=='cd')
+                                      @if(Auth::user()->es_admin === True)
                                         <button onclick="window.location='{{route("cd.evaluacion.vista",[$id, $dato->id])}}'" class="btn btn-success">Evaluación final de curso</button>
                                       @else
-                                      <button onclick="window.location='{{route("area.evaluacion.vista",[$id, $dato->id])}}'" class="btn btn-success">Evaluación final de curso</button>
+                                        <button onclick="window.location='{{route("area.evaluacion.vista",[$id, $dato->id])}}'" class="btn btn-success">Evaluación final de curso</button>
                                       @endif
                                     </td>
                                     <td>
-                                    @if(Session::get('sesion')=='cd')
+                                    @if(Auth::user()->es_admin === True)
                                         <button onclick="window.location='{{route("cd.modificar.evaluacion",[$id, $dato->id])}}'" class="btn btn-warning">Modificar evaluación final de curso</button>
                                       @else
                                       <button onclick="window.location='{{route("area.modificar.evaluacion",[$id, $dato->id])}}'" class="btn btn-warning">Modificar evaluación final de curso</button>

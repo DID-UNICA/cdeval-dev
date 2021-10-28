@@ -19,14 +19,15 @@ class Coordinacion extends Authenticatable
 
     protected $hidden = ['password', 'remember_token'];
     
-    // public function getAuthIdentifierName()
-    // {
-    //     return "abreviatura";
-    // }
+    public function getCursos(){
+      return Curso::join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
+                  ->where('catalogo_cursos.coordinacion_id', $this->id)
+                  ->select('cursos.*')
+                  ->get();
+    }
 
-    // public function getAuthIdentifier()
-    // {
-    //     return $this->abreviatura;
-    // }
-
+    public function getCatalogos(){
+      return CatalogoCurso::where('catalogo_cursos.coordinacion_id', $this->id)
+                            ->get();
+    }
 }

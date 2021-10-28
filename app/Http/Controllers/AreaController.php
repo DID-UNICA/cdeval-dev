@@ -30,79 +30,30 @@ class AreaController extends Controller
      */
     public function index(){
         $coordinacion = Auth::user();
-        $coordinacion_nombre = $coordinacion->nombre_coordinacion;
-
-        // $semestre_anio = DB::table('cursos')
-        //     ->select('semestre_anio')
-        //     ->get();
         
-        // $coordinaciones = DB::table('coordinacions')
-        //     ->select('nombre_coordinacion')
-        //     ->get();
-
-        // $semestres = array();
-        // foreach($semestre_anio as $semestre){
-        //     if(!in_array($semestre,$semestres)){
-        //         array_push($semestres,$semestre);
-        //     }
-        // }
-        // sort($semestres);
-        // $reversed = array_reverse($semestres);
-
-
-        // $fecha="2018-2";
-        // $semestre=explode('-',$fecha);
-        // $periodo="s";
-        $cursos = DB::table('cursos')
-            ->join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
-            ->join('coordinacions','coordinacions.id','=','catalogo_cursos.coordinacion_id')
-            ->select('catalogo_cursos.nombre_curso','cursos.id')
-            ->where('coordinacions.nombre_coordinacion', $coordinacion->nombre_coordinacion)
-            ->get();
-        return $cursos;
-
-        $datos = array();
-        foreach($cursos as $curso){
-            $tupla = array();
-            $profesores = DB::table('profesor_curso')
-                ->join('profesors','profesors.id','=','profesor_curso.profesor_id')
-                ->select('profesors.nombres','profesors.apellido_paterno','profesors.apellido_materno')
-                ->where('profesor_curso.curso_id','=',$curso->id)
-                ->get();
-            array_push($tupla, $curso);
-            array_push($tupla, $profesores);
-            array_push($datos, $tupla);
-        }
-
-        $id = DB::table('coordinacions')
-            ->where([['nombre_coordinacion',$coordinacion_nombre]])
-            ->get();
+        $cursos = $coordinacion->getCursos();
 
         Session::put('sesion','area');
         Session::put('url','area');
 
-		if(Session::has('message')){
-            Session::flash('message','Sucedió un error al contestar el formulario. Favor de llenar todas las preguntas o revisar que el usuario en cuestión no lo haya contestado');
-			Session::flash('alert-class', 'alert-danger');
+        if(Session::has('message')){
+          Session::flash('message','Sucedió un error al contestar el formulario. Favor de llenar todas las preguntas o revisar que el usuario en cuestión no lo haya contestado');
+          Session::flash('alert-class', 'alert-danger');
         }
-
         return view('pages.homeArea')
-            ->with('datos',$datos)
-            ->with('semestre_anio',$reversed)
-            ->with('coordinacion',$coordinacion_nombre)
-            ->with('coordinacion_id',$coordinacion->id);
-
+            ->with('cursos',$cursos)
+            ->with('coordinacion',$coordinacion);
     }
 
-    public function cambioFecha(Request $request){
+    // public function cambioFecha(Request $request){
 
-        $fecha=$request->get('semestre');
-        $periodo=$request->get('periodo');
+    //     $fecha=$request->get('semestre');
+    //     $periodo=$request->get('periodo');
 
-		$toRedirect = $fecha.'-'.$periodo;
-		return redirect()->to('/area/'.$toRedirect.'');
+		// $toRedirect = $fecha.'-'.$periodo;
+		// return redirect()->to('/area/'.$toRedirect.'');
 
-    }
+    // }
 
 	public function nuevaFecha(Request $request, $fecha){
 		$coordinacion_nombre = 'Área de cómputo';
@@ -157,10 +108,39 @@ class AreaController extends Controller
 	}
 
     public function buscarCurso(Request $request, $coordinacion_id){
-		$busqueda = $request->get('pattern');
-		$tipo = $request->get('type');
-
-		return redirect()->route('area.nuevoCurso',['busqueda'=>$busqueda,'tipo'=>$tipo,'coordinacion_id'=>$coordinacion_id]);
+      $coordinacion = Auth::user();
+      if($request->type === 'nombre')
+        $cursos = Curso::join('catalogo_cursos','catalogo_cursos.id','=','cursos.catalogo_id')
+        ->whereRaw("lower(unaccent(nombre_curso)) ILIKE lower(unaccent('%".$request->pattern."%'))")
+        ->where('catalogo_cursos.coordinacion_id',$coordinacion->id)
+        ->get();
+      elseif($request->type === 'instructor'){
+        $profesores = Profesor::select('id')->whereRaw("lower(unaccent(nombres)) ILIKE lower(unaccent('%".$request->pattern."%'))")
+                  ->orWhereRaw("lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$request->pattern."%'))")
+                  ->orWhereRaw("lower(unaccent(apellido_materno)) ILIKE lower(unaccent('%".$request->pattern."%'))")
+                  ->orderByRaw("lower(unaccent(apellido_paterno)),lower(unaccent(apellido_materno)),lower(unaccent(nombres))")
+                  ->get();
+        $curso_prof = ProfesoresCurso::select('curso_id')->whereIn('profesor_id', $profesores)->get();
+        $cursos = Curso::join('catalogo_cursos','catalogo_cursos.id', '=','cursos.catalogo_id')
+                  ->where('catalogo_cursos.coordinacion_id',$coordinacion->id)
+                  ->whereIn('cursos.id',$curso_prof)->get();
+      }
+      return view('pages.homeArea')
+           ->with('cursos',$cursos)
+           ->with('coordinacion',$coordinacion);
+    }
+    
+    public function buscarCursoPeriodo(Request $request, $coordinacion_id){
+      $coordinacion = Auth::user();
+      $cursos = Curso::join('catalogo_cursos','catalogo_cursos.id','=','cursos.catalogo_id')
+                     ->where('semestre_si', $request->semestre_si)
+                     ->where('semestre_pi', $request->semestre_pi)
+                     ->where('semestre_anio', $request->semestre_anio)
+                     ->where('catalogo_cursos.coordinacion_id',$coordinacion->id)
+                     ->get();
+      return view('pages.homeArea')
+           ->with('cursos',$cursos)
+           ->with('coordinacion',$coordinacion);
     }
 
 	public function nuevoCurso(Request $request, $coordinacion_id, $busqueda, $tipo){
@@ -263,27 +243,27 @@ class AreaController extends Controller
 	}
 
     public function participantes(Request $request,$curso_id){
-        $participantes = DB::table('participante_curso')
-            ->where([['curso_id',$curso_id]])
-            ->get();
-        $curso = Curso::find($curso_id);
-        $users = array();
-        if(sizeof($participantes) == 0){
-            Session::flash('message','Por el momento no hay alumnos inscritos en el curso');
-			Session::flash('alert-class', 'alert-danger'); 
+      $participantes = DB::table('participante_curso')
+          ->where([['curso_id',$curso_id]])
+          ->get();
+      $curso = Curso::findOrFail($curso_id);
+      $users = array();
+      if(sizeof($participantes) == 0){
+        Session::flash('message','Por el momento no hay alumnos inscritos en el curso');
+        Session::flash('alert-class', 'alert-danger'); 
 
-			return redirect()->back()->withInput($request->input());
-        }
-        foreach($participantes as $participante){
-            $user = DB::table('profesors')
-                ->where([['id',$participante->profesor_id]])
-                ->get();
-            array_push($users, $user[0]);
-        }
-        return view('pages.participante')
-            ->with('curso',$curso)
-            ->with('users',$users)
-            ->with('participantes',$participantes);
+        return redirect()->back()->withInput($request->input());
+      }
+      foreach($participantes as $participante){
+          $user = DB::table('profesors')
+              ->where([['id',$participante->profesor_id]])
+              ->get();
+          array_push($users, $user[0]);
+      }
+      return view('pages.participante')
+          ->with('curso',$curso)
+          ->with('users',$users)
+          ->with('participantes',$participantes);
     }
 
 	public function buscarInstructor (Request $request, int $curso_id){
@@ -291,10 +271,10 @@ class AreaController extends Controller
 
             $words=explode(" ", $request->pattern);
             foreach($words as $word){
-                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(lower(nombres) LIKE lower('%".$word."%')) OR (lower(apellido_paterno) LIKE lower('%".$word."%')) OR (lower(apellido_materno) LIKE lower('%".$word."%'))")->get();
-                array_push($profesores, $profesor);
+                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(nombres)) LIKE unaccent(lower('%".$word."%'))) OR (unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".$word."%'))) OR (unaccent(lower(apellido_materno)) LIKE unaccent(lower('%".$word."%')))")->get();
+                if($profesor->isNotEmpty())
+                  array_push($profesores, $profesor);
             }
-
             $curso_prof = array();
             $aux = array();
 
@@ -317,13 +297,11 @@ class AreaController extends Controller
                         ->join('cursos as c', 'c.id', '=', 'pc.curso_id')
                         ->join('catalogo_cursos as cc','cc.id', '=', 'c.catalogo_id')
                         ->select('cc.nombre_curso', 'c.id','p.id', 'p.nombres','p.apellido_paterno','p.apellido_materno')
-                        ->where( [['pc.id','=',$prof->id],['cc.coordinacion_id']])
+                        ->where('pc.id','=',$prof->id)
                         ->get();
-                    
                     array_push($datos, $dato[0]);
                 }
             }
-    
             return view('pages.eval')
                 ->with('datos',$datos)
                 ->with('id',$curso_id);
