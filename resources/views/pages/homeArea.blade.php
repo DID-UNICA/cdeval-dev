@@ -8,44 +8,42 @@
     <br>
     <br>
     <div id="inner">
-    <div class="top-bar">            
+    <div class="top-bar">
     </div>
     <section class="content-inner">
       <br>
       <div class="panel panel-default">
 
         <div class="panel-heading">
-          <h3>{{$coordinacion}}</h3> <!-- Obtener valor de BD-->
+          <h3>{{$coordinacion->nombre_coordinacion}}</h3> <!-- Obtener valor de BD-->
         </div>
 
         @if(session()->has('message'))
-        <div class="alert alert-success" role='alert'>{{session('message')}}</div>
+          <div class="alert alert-success" role='alert'>{{session('message')}}</div>
         @endif
 
         <div class="panel-body">
             <h4>Buscar</h4>
             <br>
-            {!! Form::open(["route" => ["area.buscar.curso",$coordinacion_id], "method" => "POST"]) !!}
+            {!! Form::open(["route" => ["area.buscar.curso",$coordinacion->id], "method" => "POST"]) !!}
               <table>
                 <tr>
                   <div class="input-group">
                     <td>
-                      {!!Form::text("pattern", null, [ "class" => "form-control", "placeholder" => "Buscar Curso"])!!}
+                      {!!Form::text("pattern", null, [ "required","class" => "form-control", "placeholder" => "Buscar Curso"])!!}
                     </td>
                     <td>
                       {!! Form::select('type', array(
                             'nombre' => 'Por nombre',
                             'instructor' => 'Por instructor'),
-                            null,['class' => 'btn dropdown-toggle pull-left'] ) !!}
+                            null,['class' => 'form-select',
+                            'style' => 'margin-left: 5%'] ) !!}
                     </td>
                     <td>
-                      <span class="input-group-btn col-md-2">
-                        <button class="btn btn-search " type="submit">Buscar</button>
-                    </span>
+                      <span class=" col-md-2">
+                        <button class="btn btn-success" type="submit">Buscar</button>
+                      </span>
                     </td>
-                    <input type="hidden" name="periodo_anio" value="{{isset($periodo_anio)? $periodo_anio:null}}">
-                    <input type="hidden" name="periodo_pi" value="{{isset($periodo_pi)? $periodo_pi:null}}">
-                    <input type="hidden" name="periodo_si" value="{{isset($periodo_si)? $periodo_si:null}}">
                   </div>
                 </tr>
               </table>
@@ -53,19 +51,20 @@
             <br>
             <h4>Periodo</h4>
             <br>
-            <form method="POST" action="{{action('AreaController@cambioFecha')}}">
+            {!! Form::open(["route" => ["area.buscar.curso.periodo",$coordinacion->id], "method" => "POST"]) !!}
                 <table>
                   <tr>
                     <td>
-                      <select name="semestre" id="">
-                        @foreach($semestre_anio as $anio)
-                          <option value="{{$anio->semestre_anio.'-1'}}">{{$anio->semestre_anio}}-1</option>
-                          <option value="{{$anio->semestre_anio.'-2'}}">{{$anio->semestre_anio}}-2</option>
-                        @endforeach
+                      <input name="semestre_anio" width= '25%' min=1960 max=3000 type="number" placeholder="Año" required>
+                    </td>
+                    <td>
+                      <select class='form-select' style= 'margin-left: 5%' name='semestre_pi' width = '25%'>
+                        <option value='1'>1</option>
+                        <option value='2'>2</option>
                       </select>
                     </td>
                     <td>
-                      <select name='periodo' width = '25%'>
+                      <select class='form-select' style= 'margin-left: 5%' name='semestre_si' width = '25%'>
                         <option value='s'>s</option>
                         <option value='i'>i</option>
                       </select>
@@ -90,26 +89,23 @@
                             </thead>
                             
                             <tbody>
-                              @foreach($datos as $curso)
+                              @foreach($cursos as $curso)
                                 <tr>
-                                    <td style="width:350px;">{{$curso[0]->nombre_curso}}</td>
-                                    <td>
-                                    @foreach($curso[1] as $profesors)
-                                    
-                                         <p>{{$profesors->nombres}} {{$profesors->apellido_paterno}} {{$profesors->apellido_materno}}</p>
-                                        
-                                    @endforeach
+                                    <td style="width:350px;">{{$curso->getCatalogoCurso()->nombre_curso}}</td>
+                                    <td style="width:550px;">
+                                      <p>{{$curso->getCadenaInstructores()}}</p>
                                     </td>
                                     <td>
-                                      <button class="btn btn-success" id="btn_eval" onclick="window.location='{{ route("area.evaluacion",[$curso[0]->id]) }}'">Capturar evaluación final de curso</button>
+                                      <button class="btn btn-success" id="btn_eval" onclick="window.location='{{ route("area.evaluacion",[$curso->id]) }}'">Capturar evaluación final de curso</button>
                                     </td>
-                                    <td><button href="" class="btn btn-warning" id="btn_participantes" onclick="window.location='{{ route("area.participantes",[$curso[0]->id]) }}'">Visualizar participantes inscritos</button></td>
+                                    <td><button href="" class="btn btn-warning" id="btn_participantes" onclick="window.location='{{ route("area.participantes",[$curso->id]) }}'">Visualizar participantes inscritos</button></td>
                                 </tr>
                               @endforeach
                             </tbody>
                       
               </table>   
             </div>
+          {!! Form::close() !!}
 		  		<br>
 			  	<br>
         </div> <!--Cierre panel-body-->

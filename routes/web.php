@@ -1,6 +1,8 @@
 <?php
 use App\Http\Controllers\CoordinadorGeneralController;
 use App\Http\Controllers\AreaController;
+use App\Http\Controllers\HomeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,12 +13,20 @@ use App\Http\Controllers\AreaController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/coordinador/login', 'Auth\CoordinacionLoginController@showLoginForm')->name('coordinador.login');
+Route::post('/coordinador/login', 'Auth\CoordinacionLoginController@login')->name('coordinador.login.post');
+Route::get('/coordinador/logout', 'Auth\CoordinacionLoginController@logout')->name('coordinador.logout');
 
-/*Route::get('/', function () {
-    return view('pages.main');
-});*/
+Route::group(['middleware'=>'coordinador'], function() {
+  Route::get('/home',[HomeController::class,'index'])->name('home.index');
+});
 
-Route::get('/',[CoordinadorGeneralController::class,'index'])->name('cd.index');
+
+Route::get('/admin', [CoordinadorGeneralController::class, 'index'])->name('admin.index');
+
+// Rutas anteriores
+Route::get('/', function() { return redirect()->route('coordinador.login');});
+// Route::get('/',[CoordinadorGeneralController::class,'index'])->name('cd.index');
 
 Route::get('/CD',[CoordinadorGeneralController::class,'index'])->name('cd.index');
 Route::get('/CD/area/{semestre}/{periodo}/',[CoordinadorGeneralController::class,'global'])->name('cd.global');
@@ -42,14 +52,16 @@ Route::post('/finals/{profesor_id}/{curso_id}/{catalogoCurso_id}',[CoordinadorGe
 Route::post('/finalc/cambio/{profesor_id}/{curso_id}/{catalogoCurso_id}',[CoordinadorGeneralController::class,'changeFinal_Curso'])->name('final.change');
 Route::post('/finals/cambio{profesor_id}/{curso_id}/{catalogoCurso_id}',[CoordinadorGeneralController::class,'changeFinal_Seminario'])->name('final.seminario.change');
 
-
-Route::get('/area',[AreaController::class,'index'])->name('area.index');
+Route::get('/area', [AreaController::class, 'index'])->name('area.index');
 Route::post('/area/buscar/fecha',[AreaController::class,'cambioFecha'])->name('area.cambioFecha');
 Route::get('/area/{fecha}',[AreaController::class,'nuevaFecha'])->name('area.nuevaFecha');
 Route::post('/area/buscar/curso/{id}',[AreaController::class,'buscarCurso'])->name('area.buscar.curso');
-Route::get('/area/{coordinacion_id}/{busqueda}/{tipo}',[AreaController::class,'nuevoCurso'])->name('area.nuevoCurso');
+Route::post('/area/buscar_periodo/curso/{id}',[AreaController::class,'buscarCursoPeriodo'])->name('area.buscar.curso.periodo');
+Route::get('/area/{coordinacion_id}/nuevo/{busqueda}/{tipo}',[AreaController::class,'nuevoCurso'])->name('area.nuevoCurso');
 Route::get('/area/evaluacion/{id}',[AreaController::class,'evaluacion'])->name('area.evaluacion');
 Route::get('/area/evaluacion/{id}/{profesor_id}',[AreaController::class,'evaluacionVista'])->name('area.evaluacion.vista');
+Route::post('/area/evaluacion/buscar/{curso_id}',[AreaController::class,'buscarInstructor'])->name('area.buscar.instructor');
+
 Route::get('/area/modificar/final/{id}/{profesor_id}',[AreaController::class,'modificarEvaluacion'])->name('area.modificar.evaluacion');
 Route::get('/area/participantes/{id}',[AreaController::class,'participantes'])->name('area.participantes');
 Route::get('/area/final/{id}',[AreaController::class,'reporteFinalCurso'])->name('area.curso');
@@ -58,4 +70,3 @@ Route::post('/area/finals/{profesor_id}/{curso_id}/{catalogoCurso_id}',[AreaCont
 
 Route::post('/area/finalc/cambio/{profesor_id}/{curso_id}/{catalogoCurso_id}',[AreaController::class,'changeFinal_Curso'])->name('area.final.change');
 Route::post('/area/finals/cambio/{profesor_id}/{curso_id}/{catalogoCurso_id}',[AreaController::class,'changeFinal_Seminario'])->name('area.final.seminario.change');
-Route::post('/area/participantes/buscar/{curso_id}',[CoordinadorGeneralController::class,'buscarInstructor'])->name('area.buscar.instructor');

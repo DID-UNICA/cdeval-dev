@@ -33,12 +33,8 @@
 <div class="wrap" style="width:100%">
     <nav class="nav-bar navbar-inverse" role="navigation">
         <div id ="top-menu" class="container-fluid active">
-<<<<<<< HEAD
+
                 <a class="navbar-brand" id="nav-a" href="/{{Session::get('url')}}">Centro de Docencia - Evaluaciones</a>
-=======
-            <!--<a class="navbar-brand" id="nav-a" href="{{ route('evaluacion.admin', [$profesor->id]) }}">Centro de Docencia - Evaluaciones</a>-->
-            <a class="navbar-brand" id="nav-a" href="{{ route('home.profesor', [$profesor->id]) }}">Centro de Docencia - Evaluaciones</a>
->>>>>>> master
             <ul class="nav navbar-nav">
                 <li class="dropdown movable">
                     <!--Boton de usuario esquina superior derecha-->
@@ -47,7 +43,7 @@
                         <i id="usericon" class="fa fa-2x fa-user-circle"></i>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <a href="" class="btn btn-logout"> Cerrar sesión </a>
+                        <a href="{{route('coordinador.logout')}}" class="btn btn-logout"> Cerrar sesión </a>
                     </ul>
                 </li>
             </ul>
@@ -57,19 +53,6 @@
 
     <aside id="side-menu" class="aside" role="navigation">
         <ul class="nav nav-list accordion">
-    
-
-            <li class="nav-header">
-                <div class="link"><i class="fa fa-pencil"></i>Cursos Inscritos<i class="fa fa-chevron-down"></i></div>
-                <ul class="submenu">
-                <!--@if(isset($cursos))-->
-                @foreach($cursos as $curso)
-                    <li><a href="{{ route('evaluacion.index',['profesor_id'=> $profesor->id,'curso_id'=>$curso->id,'catalogoCurso_id'=>$curso->catalogo_id] ) }}">{{ $curso->getNombreCurso() }} {{$curso->semestre_imparticion}}</a></li>
-                @endforeach 
-                <!--@endif-->
-                </ul>
-            </li>
-            
         </ul>
     </aside>
     @yield('contenido')

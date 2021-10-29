@@ -19,9 +19,10 @@ class CreateCoordinacionTable extends Migration
             $table->string('nombre_coordinacion');
             $table->string('coordinador');
             $table->string('grado');
-            $table->string('usuario')->unique();
+            // $table->string('usuario')->unique();
             $table->string('password');
             $table->string('comentarios')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

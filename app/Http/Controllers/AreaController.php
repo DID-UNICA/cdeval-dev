@@ -16,6 +16,7 @@ use App\EvaluacionFinalSeminario;
 use App\EvaluacionXSeminario;
 use App\Coordinacion;*/
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use Mail;
 use PDF;
 use DB; 
@@ -28,81 +29,31 @@ class AreaController extends Controller
      * @return Vista super usuario
      */
     public function index(){
-
-        $coordinacion_nombre = 'Área de cómputo';
-
-        $semestre_anio = DB::table('cursos')
-            ->select('semestre_anio')
-            ->get();
+        $coordinacion = Auth::user();
         
-        $coordinaciones = DB::table('coordinacions')
-            ->select('nombre_coordinacion')
-            ->get();
-
-        $semestres = array();
-        foreach($semestre_anio as $semestre){
-            if(!in_array($semestre,$semestres)){
-                array_push($semestres,$semestre);
-            }
-        }
-        sort($semestres);
-        $reversed = array_reverse($semestres);
-
-
-        $fecha="2018-2";
-        $semestre=explode('-',$fecha);
-        $periodo="s";
-        $coordinacion_nombre = 'Área de cómputo';
-
-        $cursos = DB::table('cursos')
-            ->join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
-            ->join('coordinacions','coordinacions.id','=','coordinacion_id')
-            ->select('catalogo_cursos.nombre_curso','cursos.id')
-            ->where([['cursos.semestre_anio',$semestre[0]],['cursos.semestre_pi',$semestre[1]],['cursos.semestre_si',$periodo],['coordinacions.nombre_coordinacion',$coordinacion_nombre]])
-            ->get();
-
-        $datos = array();
-        foreach($cursos as $curso){
-            $tupla = array();
-            $profesores = DB::table('profesor_curso')
-                ->join('profesors','profesors.id','=','profesor_curso.profesor_id')
-                ->select('profesors.nombres','profesors.apellido_paterno','profesors.apellido_materno')
-                ->where('profesor_curso.curso_id','=',$curso->id)
-                ->get();
-            array_push($tupla, $curso);
-            array_push($tupla, $profesores);
-            array_push($datos, $tupla);
-        }
-
-        $id = DB::table('coordinacions')
-            ->where([['nombre_coordinacion',$coordinacion_nombre]])
-            ->get();
+        $cursos = $coordinacion->getCursos();
 
         Session::put('sesion','area');
         Session::put('url','area');
 
-		if(Session::has('message')){
-            Session::flash('message','Sucedió un error al contestar el formulario. Favor de llenar todas las preguntas o revisar que el usuario en cuestión no lo haya contestado');
-			Session::flash('alert-class', 'alert-danger');
+        if(Session::has('message')){
+          Session::flash('message','Sucedió un error al contestar el formulario. Favor de llenar todas las preguntas o revisar que el usuario en cuestión no lo haya contestado');
+          Session::flash('alert-class', 'alert-danger');
         }
-
         return view('pages.homeArea')
-            ->with('datos',$datos)
-            ->with('semestre_anio',$reversed)
-            ->with('coordinacion',$coordinacion_nombre)
-            ->with('coordinacion_id',$id[0]->id);
-
+            ->with('cursos',$cursos)
+            ->with('coordinacion',$coordinacion);
     }
 
-    public function cambioFecha(Request $request){
+    // public function cambioFecha(Request $request){
 
-        $fecha=$request->get('semestre');
-        $periodo=$request->get('periodo');
+    //     $fecha=$request->get('semestre');
+    //     $periodo=$request->get('periodo');
 
-		$toRedirect = $fecha.'-'.$periodo;
-		return redirect()->to('/area/'.$toRedirect.'');
+		// $toRedirect = $fecha.'-'.$periodo;
+		// return redirect()->to('/area/'.$toRedirect.'');
 
-    }
+    // }
 
 	public function nuevaFecha(Request $request, $fecha){
 		$coordinacion_nombre = 'Área de cómputo';
@@ -157,10 +108,39 @@ class AreaController extends Controller
 	}
 
     public function buscarCurso(Request $request, $coordinacion_id){
-		$busqueda = $request->get('pattern');
-		$tipo = $request->get('type');
-
-		return redirect()->route('area.nuevoCurso',['busqueda'=>$busqueda,'tipo'=>$tipo,'coordinacion_id'=>$coordinacion_id]);
+      $coordinacion = Auth::user();
+      if($request->type === 'nombre')
+        $cursos = Curso::join('catalogo_cursos','catalogo_cursos.id','=','cursos.catalogo_id')
+        ->whereRaw("lower(unaccent(nombre_curso)) ILIKE lower(unaccent('%".$request->pattern."%'))")
+        ->where('catalogo_cursos.coordinacion_id',$coordinacion->id)
+        ->get();
+      elseif($request->type === 'instructor'){
+        $profesores = Profesor::select('id')->whereRaw("lower(unaccent(nombres)) ILIKE lower(unaccent('%".$request->pattern."%'))")
+                  ->orWhereRaw("lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$request->pattern."%'))")
+                  ->orWhereRaw("lower(unaccent(apellido_materno)) ILIKE lower(unaccent('%".$request->pattern."%'))")
+                  ->orderByRaw("lower(unaccent(apellido_paterno)),lower(unaccent(apellido_materno)),lower(unaccent(nombres))")
+                  ->get();
+        $curso_prof = ProfesoresCurso::select('curso_id')->whereIn('profesor_id', $profesores)->get();
+        $cursos = Curso::join('catalogo_cursos','catalogo_cursos.id', '=','cursos.catalogo_id')
+                  ->where('catalogo_cursos.coordinacion_id',$coordinacion->id)
+                  ->whereIn('cursos.id',$curso_prof)->get();
+      }
+      return view('pages.homeArea')
+           ->with('cursos',$cursos)
+           ->with('coordinacion',$coordinacion);
+    }
+    
+    public function buscarCursoPeriodo(Request $request, $coordinacion_id){
+      $coordinacion = Auth::user();
+      $cursos = Curso::join('catalogo_cursos','catalogo_cursos.id','=','cursos.catalogo_id')
+                     ->where('semestre_si', $request->semestre_si)
+                     ->where('semestre_pi', $request->semestre_pi)
+                     ->where('semestre_anio', $request->semestre_anio)
+                     ->where('catalogo_cursos.coordinacion_id',$coordinacion->id)
+                     ->get();
+      return view('pages.homeArea')
+           ->with('cursos',$cursos)
+           ->with('coordinacion',$coordinacion);
     }
 
 	public function nuevoCurso(Request $request, $coordinacion_id, $busqueda, $tipo){
@@ -250,7 +230,7 @@ class AreaController extends Controller
         Session::put('url','area');
 
 		$datos_coordinacion = DB::table('coordinacions')
-			->select(['id','nombre_coordinacion'])
+			      ->select(['id','nombre_coordinacion'])
             ->where([['id',$coordinacion_id]])
             ->get();
 
@@ -263,27 +243,27 @@ class AreaController extends Controller
 	}
 
     public function participantes(Request $request,$curso_id){
-        $participantes = DB::table('participante_curso')
-            ->where([['curso_id',$curso_id]])
-            ->get();
-        $curso = Curso::find($curso_id);
-        $users = array();
-        if(sizeof($participantes) == 0){
-            Session::flash('message','Por el momento no hay alumnos inscritos en el curso');
-			Session::flash('alert-class', 'alert-danger'); 
+      $participantes = DB::table('participante_curso')
+          ->where([['curso_id',$curso_id]])
+          ->get();
+      $curso = Curso::findOrFail($curso_id);
+      $users = array();
+      if(sizeof($participantes) == 0){
+        Session::flash('message','Por el momento no hay alumnos inscritos en el curso');
+        Session::flash('alert-class', 'alert-danger'); 
 
-			return redirect()->back()->withInput($request->input());
-        }
-        foreach($participantes as $participante){
-            $user = DB::table('profesors')
-                ->where([['id',$participante->profesor_id]])
-                ->get();
-            array_push($users, $user[0]);
-        }
-        return view('pages.participante')
-            ->with('curso',$curso)
-            ->with('users',$users)
-            ->with('participantes',$participantes);
+        return redirect()->back()->withInput($request->input());
+      }
+      foreach($participantes as $participante){
+          $user = DB::table('profesors')
+              ->where([['id',$participante->profesor_id]])
+              ->get();
+          array_push($users, $user[0]);
+      }
+      return view('pages.participante')
+          ->with('curso',$curso)
+          ->with('users',$users)
+          ->with('participantes',$participantes);
     }
 
 	public function buscarInstructor (Request $request, int $curso_id){
@@ -291,10 +271,10 @@ class AreaController extends Controller
 
             $words=explode(" ", $request->pattern);
             foreach($words as $word){
-                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(lower(nombres) LIKE lower('%".$word."%')) OR (lower(apellido_paterno) LIKE lower('%".$word."%')) OR (lower(apellido_materno) LIKE lower('%".$word."%'))")->get();
-                array_push($profesores, $profesor);
+                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(nombres)) LIKE unaccent(lower('%".$word."%'))) OR (unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".$word."%'))) OR (unaccent(lower(apellido_materno)) LIKE unaccent(lower('%".$word."%')))")->get();
+                if($profesor->isNotEmpty())
+                  array_push($profesores, $profesor);
             }
-
             $curso_prof = array();
             $aux = array();
 
@@ -317,13 +297,11 @@ class AreaController extends Controller
                         ->join('cursos as c', 'c.id', '=', 'pc.curso_id')
                         ->join('catalogo_cursos as cc','cc.id', '=', 'c.catalogo_id')
                         ->select('cc.nombre_curso', 'c.id','p.id', 'p.nombres','p.apellido_paterno','p.apellido_materno')
-                        ->where( [['pc.id','=',$prof->id],['cc.coordinacion_id']])
+                        ->where('pc.id','=',$prof->id)
                         ->get();
-                    
                     array_push($datos, $dato[0]);
                 }
             }
-    
             return view('pages.eval')
                 ->with('datos',$datos)
                 ->with('id',$curso_id);
@@ -357,71 +335,34 @@ class AreaController extends Controller
             ->with('id',$id);
     }
 
-    public function evaluacionVista(Request $request, int $curso_id, int $profesor_id){
-        $profesor = Profesor::find($profesor_id);
-		$curso = Curso::find($curso_id);
-		$catalogoCurso = CatalogoCurso::find($curso->catalogo_id);
-		$count = DB::table('profesor_curso')
-			->where('curso_id',$curso_id)
-			->count();
-        $participante_curo = DB::table('participante_curso')
-            ->select('id')
-            ->where([['profesor_id',$profesor_id],['curso_id',$curso_id]])
-            ->get();
-		//Se busca mandar a pages.evaluacionIndex las encuestas realizadas por el usuario para manejar los botones
-		//Se busca evitar que el usuario realice una evaluación por segunda vez
-		$evaluacion_final_curso = 0;
-		if(strcmp($catalogoCurso->tipo,"S") == 0){
-			$evaluacion_final_curso = DB::table('_evaluacion_final_seminario')
-				->select('_evaluacion_final_seminario.participante_curso_id')
-				->where([['participante_curso_id',$participante_curo[0]->id],['curso_id',$curso_id]])
-				->get();
+    public function evaluacionVista(Request $request, $curso_id, $profesor_id){
+      $profesor = Profesor::findOrFail($profesor_id);
+      $curso = Curso::findOrFail($curso_id);
+      $catalogoCurso = CatalogoCurso::findOrFail($curso->catalogo_id);
+      $participante_curso = ParticipantesCurso::where([
+                                                  ['profesor_id',$profesor_id],
+                                                  ['curso_id',$curso_id]
+                                                ])->get()->first();
+		if($catalogoCurso->tipo === "S"){
+			$evaluacion_final_curso = EvaluacionFinalSeminario::where('participante_curso_id',$participante_curso->id)->get();
 		}
 		else{
-			$evaluacion_final_curso = DB::table('_evaluacion_final_curso')
-			->select('_evaluacion_final_curso.participante_curso_id','_evaluacion_final_curso.curso_id')
-			->where([['curso_id',$curso_id],['participante_curso_id',$participante_curo[0]->id]])
-			->get();
+			$evaluacion_final_curso = EvaluacionFinalCurso::where('participante_curso_id',$participante_curso->id)->get();
 		}
-
-        if(sizeof($evaluacion_final_curso) > 0){
-            Session::flash('message','Usuario '.$profesor->apellido_paterno.' '.$profesor->apellido_materno.' '.$profesor->nombres.' ya respondió la evaluación');
-			Session::flash('alert-class', 'alert-danger'); 
-            return redirect()->back();
-        }else if(strcmp($catalogoCurso->tipo,"S") == 0){
-            if($count==1){
-                return view("pages.final_seminario_1")
-					->with("profesor",$profesor)
-                    ->with("curso",$curso)
-                    ->with('catalogoCurso',$catalogoCurso);
-			}elseif($count==2){
-                return view("pages.final_seminario_2")
-					->with("profesor",$profesor)
-                    ->with("curso",$curso)
-                    ->with('catalogoCurso',$catalogoCurso);
-			}elseif($count==3){
-                return view("pages.final_seminario_3")
-                    ->with("profesor",$profesor)
-                    ->with("curso",$curso)
-                    ->with('catalogoCurso',$catalogoCurso);
-			}
-        }else{
-			if($count==1){
-				return view("pages.final_curso_1")
-					->with("profesor",$profesor)
-					->with("curso",$curso)
-					->with('catalogoCurso',$catalogoCurso);
-			}elseif($count==2){
-				return view("pages.final_curso_2")
-					->with("profesor",$profesor)
-					->with("curso",$curso)
-					->with('catalogoCurso',$catalogoCurso);
-			}elseif($count==3){
-				return view("pages.final_curso_3")
-					->with("profesor",$profesor)
-					->with("curso",$curso)
-					->with('catalogoCurso',$catalogoCurso);
-			}          
+    if($evaluacion_final_curso->isNotEmpty()){
+      Session::flash('message','Usuario '.$profesor->apellido_paterno.' '.$profesor->apellido_materno.' '.$profesor->nombres.' ya respondió la evaluación');
+      Session::flash('alert-class', 'alert-danger'); 
+      return redirect()->back();
+    }else if($catalogoCurso->tipo === "S"){
+      return view("pages.final_seminario")
+      ->with("profesor",$profesor)
+      ->with("curso",$curso)
+      ->with('catalogoCurso',$catalogoCurso);
+    }else{
+      return view("pages.final_curso")
+        ->with("profesor",$profesor)
+        ->with("curso",$curso)
+        ->with('catalogoCurso',$catalogoCurso);
 		}
 	}
 

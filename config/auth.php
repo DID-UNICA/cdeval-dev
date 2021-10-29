@@ -14,8 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
-        'passwords' => 'users',
+        'guard' => 'coordinador',
+        'passwords' => 'coordinador',
     ],
 
     /*
@@ -38,7 +38,7 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'coordinador',
         ],
 
         'api' => [
@@ -46,6 +46,11 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'coordinador' => [
+          'driver' => 'session',
+          'provider' => 'coordinador'
+        ]
     ],
 
     /*
@@ -66,9 +71,9 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\User::class,
+        'coordinador' => [
+          'driver' => 'eloquent',
+          'model' => App\Coordinacion::class,
         ],
 
         // 'users' => [
@@ -93,11 +98,16 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
-            'table' => 'password_resets',
-            'expire' => 60,
-        ],
+        // 'users' => [
+        //     'provider' => 'users',
+        //     'table' => 'password_resets',
+        //     'expire' => 60,
+        // ],
+        'coordinador' => [
+          'provider' => 'coordinador',
+          'table' => 'password_resets',
+          'expire' => 60,
+      ],
     ],
 
 ];
