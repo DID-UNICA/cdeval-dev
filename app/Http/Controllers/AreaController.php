@@ -230,7 +230,7 @@ class AreaController extends Controller
         Session::put('url','area');
 
 		$datos_coordinacion = DB::table('coordinacions')
-			->select(['id','nombre_coordinacion'])
+			      ->select(['id','nombre_coordinacion'])
             ->where([['id',$coordinacion_id]])
             ->get();
 
@@ -335,71 +335,34 @@ class AreaController extends Controller
             ->with('id',$id);
     }
 
-    public function evaluacionVista(Request $request, int $curso_id, int $profesor_id){
-        $profesor = Profesor::find($profesor_id);
-		$curso = Curso::find($curso_id);
-		$catalogoCurso = CatalogoCurso::find($curso->catalogo_id);
-		$count = DB::table('profesor_curso')
-			->where('curso_id',$curso_id)
-			->count();
-        $participante_curo = DB::table('participante_curso')
-            ->select('id')
-            ->where([['profesor_id',$profesor_id],['curso_id',$curso_id]])
-            ->get();
-		//Se busca mandar a pages.evaluacionIndex las encuestas realizadas por el usuario para manejar los botones
-		//Se busca evitar que el usuario realice una evaluación por segunda vez
-		$evaluacion_final_curso = 0;
-		if(strcmp($catalogoCurso->tipo,"S") == 0){
-			$evaluacion_final_curso = DB::table('_evaluacion_final_seminario')
-				->select('_evaluacion_final_seminario.participante_curso_id')
-				->where([['participante_curso_id',$participante_curo[0]->id],['curso_id',$curso_id]])
-				->get();
+    public function evaluacionVista(Request $request, $curso_id, $profesor_id){
+      $profesor = Profesor::findOrFail($profesor_id);
+      $curso = Curso::findOrFail($curso_id);
+      $catalogoCurso = CatalogoCurso::findOrFail($curso->catalogo_id);
+      $participante_curso = ParticipantesCurso::where([
+                                                  ['profesor_id',$profesor_id],
+                                                  ['curso_id',$curso_id]
+                                                ])->get()->first();
+		if($catalogoCurso->tipo === "S"){
+			$evaluacion_final_curso = EvaluacionFinalSeminario::where('participante_curso_id',$participante_curso->id)->get();
 		}
 		else{
-			$evaluacion_final_curso = DB::table('_evaluacion_final_curso')
-			->select('_evaluacion_final_curso.participante_curso_id','_evaluacion_final_curso.curso_id')
-			->where([['curso_id',$curso_id],['participante_curso_id',$participante_curo[0]->id]])
-			->get();
+			$evaluacion_final_curso = EvaluacionFinalCurso::where('participante_curso_id',$participante_curso->id)->get();
 		}
-
-        if(sizeof($evaluacion_final_curso) > 0){
-            Session::flash('message','Usuario '.$profesor->apellido_paterno.' '.$profesor->apellido_materno.' '.$profesor->nombres.' ya respondió la evaluación');
-			Session::flash('alert-class', 'alert-danger'); 
-            return redirect()->back();
-        }else if(strcmp($catalogoCurso->tipo,"S") == 0){
-            if($count==1){
-                return view("pages.final_seminario_1")
-					->with("profesor",$profesor)
-                    ->with("curso",$curso)
-                    ->with('catalogoCurso',$catalogoCurso);
-			}elseif($count==2){
-                return view("pages.final_seminario_2")
-					->with("profesor",$profesor)
-                    ->with("curso",$curso)
-                    ->with('catalogoCurso',$catalogoCurso);
-			}elseif($count==3){
-                return view("pages.final_seminario_3")
-                    ->with("profesor",$profesor)
-                    ->with("curso",$curso)
-                    ->with('catalogoCurso',$catalogoCurso);
-			}
-        }else{
-			if($count==1){
-				return view("pages.final_curso_1")
-					->with("profesor",$profesor)
-					->with("curso",$curso)
-					->with('catalogoCurso',$catalogoCurso);
-			}elseif($count==2){
-				return view("pages.final_curso_2")
-					->with("profesor",$profesor)
-					->with("curso",$curso)
-					->with('catalogoCurso',$catalogoCurso);
-			}elseif($count==3){
-				return view("pages.final_curso_3")
-					->with("profesor",$profesor)
-					->with("curso",$curso)
-					->with('catalogoCurso',$catalogoCurso);
-			}          
+    if($evaluacion_final_curso->isNotEmpty()){
+      Session::flash('message','Usuario '.$profesor->apellido_paterno.' '.$profesor->apellido_materno.' '.$profesor->nombres.' ya respondió la evaluación');
+      Session::flash('alert-class', 'alert-danger'); 
+      return redirect()->back();
+    }else if($catalogoCurso->tipo === "S"){
+      return view("pages.final_seminario")
+      ->with("profesor",$profesor)
+      ->with("curso",$curso)
+      ->with('catalogoCurso',$catalogoCurso);
+    }else{
+      return view("pages.final_curso")
+        ->with("profesor",$profesor)
+        ->with("curso",$curso)
+        ->with('catalogoCurso',$catalogoCurso);
 		}
 	}
 

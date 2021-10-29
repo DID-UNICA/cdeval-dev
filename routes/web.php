@@ -57,7 +57,7 @@ Route::post('/area/buscar/fecha',[AreaController::class,'cambioFecha'])->name('a
 Route::get('/area/{fecha}',[AreaController::class,'nuevaFecha'])->name('area.nuevaFecha');
 Route::post('/area/buscar/curso/{id}',[AreaController::class,'buscarCurso'])->name('area.buscar.curso');
 Route::post('/area/buscar_periodo/curso/{id}',[AreaController::class,'buscarCursoPeriodo'])->name('area.buscar.curso.periodo');
-Route::get('/area/{coordinacion_id}/{busqueda}/{tipo}',[AreaController::class,'nuevoCurso'])->name('area.nuevoCurso');
+Route::get('/area/{coordinacion_id}/nuevo/{busqueda}/{tipo}',[AreaController::class,'nuevoCurso'])->name('area.nuevoCurso');
 Route::get('/area/evaluacion/{id}',[AreaController::class,'evaluacion'])->name('area.evaluacion');
 Route::get('/area/evaluacion/{id}/{profesor_id}',[AreaController::class,'evaluacionVista'])->name('area.evaluacion.vista');
 Route::post('/area/evaluacion/buscar/{curso_id}',[AreaController::class,'buscarInstructor'])->name('area.buscar.instructor');

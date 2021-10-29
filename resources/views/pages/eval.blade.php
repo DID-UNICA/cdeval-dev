@@ -86,7 +86,7 @@
                                     @if(Auth::user()->es_admin === True)
                                         <button onclick="window.location='{{route("cd.modificar.evaluacion",[$id, $dato->id])}}'" class="btn btn-warning">Modificar evaluación final de curso</button>
                                       @else
-                                      <button onclick="window.location='{{route("area.modificar.evaluacion",[$id, $dato->id])}}'" class="btn btn-warning">Modificar evaluación final de curso</button>
+                                        <button onclick="window.location='{{route("area.modificar.evaluacion",[$id, $dato->id])}}'" class="btn btn-warning">Modificar evaluación final de curso</button>
                                       @endif
                                   </td>
                                 </tr>

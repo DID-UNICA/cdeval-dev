@@ -68,5 +68,10 @@ class Curso extends Model
     public function getDiplomado(){
       return Diplomado::find($this->diplomado_id);
     }
+
+    public function getToday(){
+      $date = \Carbon\Carbon::now()->locale('es_MX');
+      return $date->isoFormat('dddd, DD MMMM YYYY');
+  }
 }
 
