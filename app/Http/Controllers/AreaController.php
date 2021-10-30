@@ -233,7 +233,7 @@ class AreaController extends Controller
 			->select(['id','nombre_coordinacion'])
             ->where([['id',$coordinacion_id]])
             ->get();
-
+		
         return view('pages.homeArea')
             ->with('datos',$datos)
             ->with('semestre_anio',$reversed)
