@@ -4,22 +4,16 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCoordinacionGeneral extends Migration
+class CreateDiplomados extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
-        Schema::create('coordinador_general', function (Blueprint $table) {
+        Schema::create('diplomados', function (Blueprint $table) {
             $table->increments('id')->unique();
-            $table->String('coordinador');
-            $table->String('grado');
-            $table->String('comentarios')->nullable();
+            $table->string('nombre_diplomado');
             $table->timestamps();
         });
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -29,6 +23,6 @@ class CreateCoordinacionGeneral extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('coordinador_general');
+        Schema::dropIfExists('diplomados');
     }
 }

@@ -17,7 +17,6 @@ class CreateCategoriaNivel extends Migration
             $table->increments('id')->unique();
             $table->String('categoria');
             $table->String('abreviatura');
-
             $table->timestamps();
         });
 

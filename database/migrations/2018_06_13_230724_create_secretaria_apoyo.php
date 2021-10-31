@@ -16,6 +16,7 @@ class CreateSecretariaApoyo extends Migration
         Schema::create('secretario_apoyo', function (Blueprint $table) {
             $table->increments('id')->unique();
             $table->String('secretario');
+            $table->String('genero');
             $table->String('comentarios')->nullable();
             $table->String('grado');
             $table->timestamps();

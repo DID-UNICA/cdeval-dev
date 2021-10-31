@@ -13,8 +13,6 @@ class CreateParticipanteCurso extends Migration
     {
         Schema::create('participante_curso', function (Blueprint $table) {
             $table->increments('id')->unique();
-            $table->Integer('curso_id')->unsigned();
-            $table->Integer('profesor_id')->unsigned();
             $table->boolean('confirmacion')->nullable();
             $table->boolean('asistencia')->nullable();
             $table->boolean('pago_curso')->nullable();
@@ -31,7 +29,10 @@ class CreateParticipanteCurso extends Migration
             $table->boolean('inscrito')->nullable();
             $table->string('comentario')->nullable();
             $table->boolean('adicional')->nullable();
-
+            $table->string('folio_inst')->nullable();
+            $table->string('folio_peque')->nullable();
+            $table->Integer('curso_id')->unsigned();
+            $table->Integer('profesor_id')->unsigned();
             $table->foreign('curso_id')->references('id')->on('cursos');
             $table->foreign('profesor_id')->references('id')->on('profesors');
 
