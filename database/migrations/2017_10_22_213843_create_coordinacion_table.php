@@ -15,14 +15,14 @@ class CreateCoordinacionTable extends Migration
     {
         Schema::create('coordinacions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('abreviatura');
+            $table->string('abreviatura')->nullable();
             $table->string('nombre_coordinacion');
             $table->string('coordinador');
-            $table->string('grado');
-            // $table->string('usuario')->unique();
+            $table->string('grado')->nullable();
+						$table->string('genero');
+            $table->boolean('es_admin');
             $table->string('password');
             $table->string('comentarios')->nullable();
-            $table->rememberToken();
             $table->timestamps();
         });
     }

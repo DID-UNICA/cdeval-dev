@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use App\Curso;
 use App\CatalogoCurso;
+use App\Coordinacion;
+
 use App\Profesor;
 use App\ProfesoresCurso;
 use App\ParticipantesCurso;
@@ -128,96 +130,56 @@ class CoordinadorGeneralController extends Controller
     }
 
     public function buscarCurso(Request $request, $coordinacion_id,$semestreEnv,$periodo){
-        $fecha=$semestreEnv;
-        $busqueda = $request->get('pattern');
-		$tipo = $request->get('type');
+      $fecha = $semestreEnv;
+      $busqueda = $request->get('pattern');
+      $tipo = $request->get('type');
 
-		$datos = array();
-        $cursos = '';
+      $datos = array();
+      $cursos = '';
 
-        $datos_coordinacion = DB::table('coordinacions')
-			->select(['id','nombre_coordinacion'])
-            ->where([['id',$coordinacion_id]])
-            ->get();
+      $coordinacion = Coordinacion::findOrFail($coordinacion_id);
+      $fecha = Carbon::now();
+      $fecha = ($fecha->month==8)? $fecha->subWeek() : (($fecha->month==1)? $fecha->addWeek() : $fecha);
 
-        $fecha = Carbon::now();
-        
-        $fecha = ($fecha->month==8)? $fecha->subWeek() : (($fecha->month==1)? $fecha->addWeek() : $fecha);
-
-        $periodo_si = $request->filled('periodo_anio')? $request->periodo_si : (in_array($fecha->month,array(1, 6, 7, 12))? 'i':'s');
-        $periodo_pi = $request->filled('periodo_anio')? $request->periodo_pi : (in_array($fecha->month,array(2, 3, 4, 5, 6, 7))? '2':'1');
-        $periodo_anio = $request->filled('periodo_anio')? $request->periodo_anio : (in_array($fecha->month,array(8, 9, 10, 11, 12))? $fecha->year+1:$fecha->year);
+      $periodo_si = $request->filled('periodo_anio')? $request->periodo_si : (in_array($fecha->month,array(1, 6, 7, 12))? 'i':'s');
+      $periodo_pi = $request->filled('periodo_anio')? $request->periodo_pi : (in_array($fecha->month,array(2, 3, 4, 5, 6, 7))? '2':'1');
+      $periodo_anio = $request->filled('periodo_anio')? $request->periodo_anio : (in_array($fecha->month,array(8, 9, 10, 11, 12))? $fecha->year+1:$fecha->year);
 
 		if($tipo == 'nombre'){
 			$cursos = DB::table('cursos as c')
-				->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
-				->join('coordinacions as co','co.id','=','cc.coordinacion_id')
-				->where([['cc.nombre_curso','like','%'.$busqueda.'%'],['co.id','=',$coordinacion_id]])
-				->get();
+        ->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
+        ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
+        ->whereRaw("lower(unaccent(nombre_curso)) ILIKE lower(unaccent('%".$request->pattern."%'))")
+        ->where('co.id','=',$coordinacion_id)
+        ->get(); 
+    }else{
+      $profesores = array();
+      $words=explode(" ", $request->pattern);
+      foreach($words as $word){
+        $profesores = Profesor::select('id')->whereRaw("lower(unaccent(nombres)) ILIKE lower(unaccent('%".$request->pattern."%'))")
+            ->orWhereRaw("lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$request->pattern."%'))")
+            ->orWhereRaw("lower(unaccent(apellido_materno)) ILIKE lower(unaccent('%".$request->pattern."%'))")
+            ->orderByRaw("lower(unaccent(apellido_paterno)),lower(unaccent(apellido_materno)),lower(unaccent(nombres))")
+            ->get();
+        $curso_prof = ProfesoresCurso::select('curso_id')->whereIn('profesor_id', $profesores)->get();
+        $cursos = Curso::join('catalogo_cursos','catalogo_cursos.id', '=','cursos.catalogo_id')
+            ->where('catalogo_cursos.coordinacion_id',$coordinacion_id)
+            ->whereIn('cursos.id',$curso_prof)->get();
+      }
+    }
 
-                foreach($cursos as $curso){
-                    $tupla = array();
-                    $profesores = DB::table('profesor_curso')
-                        ->join('profesors','profesors.id','=','profesor_curso.profesor_id')
-                        ->select('profesors.nombres','profesors.apellido_paterno','profesors.apellido_materno')
-                        ->where('profesor_curso.curso_id','=',$curso->id)
-                        ->get();
-                    array_push($tupla, $curso);
-                    array_push($tupla, $profesores);
-                    array_push($datos, $tupla);
-                    }
-		}else{
-            $profesores = array();
-
-            $words=explode(" ", $request->pattern);
-            foreach($words as $word){
-                /*$profesores = Profesor::select('id')->whereRaw("lower(unaccent(nombres)) ILIKE lower(unaccent('%".$word."%')) or lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$word."%'))")
-                ->orWhereRaw("lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$word."%'))")
-                ->orWhereaw("lower(unaccent(apellido_materno)) ILIKE lower(unaccent('%".$word."%'))")
-                ->get();*/
-                //$profesores = Profesor::select('id')->where(DB::raw("(lower(unaccent(nombres)) LIKE lower(unaccent('%".$word."%'))) OR (lower(unaccent(apellido_paterno)) LIKE lower(unaccent('%".$word."%'))) OR (lower(unaccent(apellido_materno)) LIKE lower(unaccent('%".$word."%')))"))->get();
-                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(lower(nombres) LIKE lower('%".$word."%')) OR (lower(apellido_paterno) LIKE lower('%".$word."%')) OR (lower(apellido_materno) LIKE lower('%".$word."%'))")->get();
-                array_push($profesores, $profesor);
-            }
-
-            $curso_prof = array();
-            $aux = array();
-
-            foreach($profesores as $profesor_aux){
-                foreach($profesor_aux as $profesor){
-                    $prof = DB::table('profesor_curso')
-                        ->select('curso_id')
-                        ->where('profesor_id', $profesor->id)
-                        ->get();
-                    if(sizeof($prof) > 0)
-                        array_push($curso_prof, $prof);
-                }
-            }
-
-            foreach($curso_prof as $prof_aux){
-                foreach($prof_aux as $prof){
-                    $tupla = array();
-                    $curso = DB::table('cursos as c')
-                        ->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
-				        ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
-                        ->where([['c.id','=',$prof->curso_id],['co.id','=',$coordinacion_id]])
-                        ->get();
-                    if(sizeof($curso) > 0){
-                        $profesores = DB::table('profesor_curso')
-                            ->join('profesors','profesors.id','=','profesor_curso.profesor_id')
-                            ->select('profesors.nombres','profesors.apellido_paterno','profesors.apellido_materno')
-                            ->where('profesor_curso.curso_id','=',$prof->curso_id)
-                            ->get();
-                        array_push($tupla, $curso[0]);
-                        array_push($tupla, $profesores);
-                        array_push($datos, $tupla);
-                        }
-                    }
-                }
-		}
-
-
-		$semestre_anio = DB::table('cursos')
+      foreach($cursos as $curso){
+        $tupla = array();
+        $profesores = DB::table('profesor_curso')
+            ->join('profesors','profesors.id','=','profesor_curso.profesor_id')
+            ->select('profesors.nombres','profesors.apellido_paterno','profesors.apellido_materno')
+            ->where('profesor_curso.curso_id','=',$curso->id)
+            ->get();
+        array_push($tupla, $curso);
+        array_push($tupla, $profesores);
+        array_push($datos, $tupla);
+      }
+    $semestre_anio = DB::table('cursos')
             ->select('semestre_anio')
             ->get();
 
@@ -240,8 +202,8 @@ class CoordinadorGeneralController extends Controller
             ->with('periodo',$periodo)
             ->with('semestre',$semestreEnv)
             ->with('semestre_anio',$reversed)
-            ->with('coordinacion',$datos_coordinacion[0]->nombre_coordinacion)
-            ->with('coordinacion_id',$datos_coordinacion[0]->id);
+            ->with('coordinacion',$coordinacion->nombre_coordinacion)
+            ->with('coordinacion_id',$coordinacion->id);
     }
 
     public function buscarInstructor (Request $request, int $curso_id){
@@ -249,13 +211,13 @@ class CoordinadorGeneralController extends Controller
 
             $words=explode(" ", $request->pattern);
             foreach($words as $word){
-                /*$profesores = Profesor::select('id')->whereRaw("lower(unaccent(nombres)) ILIKE lower(unaccent('%".$word."%')) or lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$word."%'))")
+                $profesor = Profesor::select('id')->whereRaw("lower(unaccent(nombres)) ILIKE lower(unaccent('%".$word."%')) or lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$word."%'))")
                 ->orWhereRaw("lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$word."%'))")
-                ->orWhereaw("lower(unaccent(apellido_materno)) ILIKE lower(unaccent('%".$word."%'))")
-                ->get();*/
+                ->orWhereRaw("lower(unaccent(apellido_materno)) ILIKE lower(unaccent('%".$word."%'))")
+                ->get();
                 //$profesores = Profesor::select('id')->where(DB::raw("(lower(unaccent(nombres)) LIKE lower(unaccent('%".$word."%'))) OR (lower(unaccent(apellido_paterno)) LIKE lower(unaccent('%".$word."%'))) OR (lower(unaccent(apellido_materno)) LIKE lower(unaccent('%".$word."%')))"))->get();
-                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(lower(unaccent(nombres)) LIKE unaccent(lower('%".$word."%'))) OR (unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".$word."%'))) OR (unaccent(lower(apellido_materno)) LIKE unaccent(lower('%".$word."%'))")->get();
-                return 'hola';
+                //$profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(lower(unaccent(nombres)) LIKE unaccent(lower('%".$word."%'))) OR (unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".$word."%'))) OR (unaccent(lower(apellido_materno)) LIKE unaccent(lower('%".$word."%'))")->get();
+                //return 'hola';
                 array_push($profesores, $profesor);
             }
 
@@ -309,14 +271,16 @@ class CoordinadorGeneralController extends Controller
 		$evaluacion_final_curso = 0;
 		if(strcmp($catalogoCurso->tipo,"S") == 0){
 			$evaluacion_final_curso = DB::table('_evaluacion_final_seminario')
-				->select('_evaluacion_final_seminario.participante_curso_id')
-				->where([['participante_curso_id',$participante_curo[0]->id],['curso_id',$curso_id]])
+                ->join('participante_curso','participante_curso.id','=','_evaluacion_final_seminario.participante_curso_id')
+				->select('_evaluacion_final_seminario.participante_curso_id','participante_curso.curso_id')
+				->where([['_evaluacion_final_seminario.participante_curso_id',$participante_curo[0]->id],['participante_curso.curso_id',$curso_id]])
 				->get();
 		}
 		else{
 			$evaluacion_final_curso = DB::table('_evaluacion_final_curso')
-			->select('_evaluacion_final_curso.participante_curso_id','_evaluacion_final_curso.curso_id')
-			->where([['curso_id',$curso_id],['participante_curso_id',$participante_curo[0]->id]])
+            ->join('participante_curso','participante_curso.id','=','_evaluacion_final_curso.participante_curso_id')
+			->select('_evaluacion_final_curso.participante_curso_id','participante_curso.curso_id')
+			->where([['participante_curso.curso_id',$curso_id],['_evaluacion_final_curso.participante_curso_id',$participante_curo[0]->id]])
 			->get();
 		}
 
@@ -364,18 +328,15 @@ class CoordinadorGeneralController extends Controller
 
     public function saveFinal_Curso(Request $request,$profesor_id,$curso_id, $catalogoCurso_id){
         $participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
-        $evaluacion_id = DB::table('_evaluacion_final_curso')
-            ->select('id')
-            ->where([['participante_curso_id',$participante[0]->id],['curso_id',$curso_id]])
-            ->get();
 
         if(sizeof($participante) > 0){
-            $evaluacion_id = DB::table('_evaluacion_final_curso')
-                ->select('id')
-                ->where([['participante_curso_id',$participante[0]->id],['curso_id',$curso_id]])
+            $evaluacion_id = DB::table('_evaluacion_final_curso as e')
+                ->join('participante_curso as p','p.id','=','e.participante_curso_id')
+                ->select('e.id')
+                ->where([['e.participante_curso_id',$participante[0]->id],['p.curso_id',$curso_id]])
                 ->get();
             if(sizeof($evaluacion_id) > 0){
-                $eval_fcurso = EvaluacionFinalSeminario::find($evaluacion_id[0]->id);
+                $eval_fcurso = EvaluacionFinalCurso::find($evaluacion_id[0]->id);
                 $eval_fcurso->delete();
             }
         }
@@ -524,7 +485,6 @@ class CoordinadorGeneralController extends Controller
 			$eval_fcurso->horarios = $request->horarios;	
 			//Horarios Intersemestrales:
 			$eval_fcurso->horarioi = $request->horarioi;
-			$eval_fcurso->curso_id = $curso_id;
 
             $string_vals = ['mejor','sug','otros','conocimiento','tematica','horarios','horarioi'];
 
@@ -610,10 +570,12 @@ class CoordinadorGeneralController extends Controller
         $correo = new EvaluacionFinalSeminario;
 
 		$participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
+
         if(sizeof($participante) > 0){
-            $evaluacion_id = DB::table('_evaluacion_final_seminario')
-                ->select('id')
-                ->where([['participante_curso_id',$participante[0]->id],['curso_id',$curso_id]])
+            $evaluacion_id = DB::table('_evaluacion_final_seminario as e')
+                ->join('participante_curso as p','p.id','=','e.participante_curso_id')
+                ->select('e.id')
+                ->where([['e.participante_curso_id',$participante[0]->id],['p.curso_id',$curso_id]])
                 ->get();
             if(sizeof($evaluacion_id) > 0){
                 $eval_fcurso = EvaluacionFinalSeminario::find($evaluacion_id[0]->id);
@@ -621,7 +583,7 @@ class CoordinadorGeneralController extends Controller
             }
         }
         $eval_fseminario = new EvaluacionFinalSeminario;
-		try{
+	    try{
 		  	$eval_fseminario->participante_curso_id=$participante[0]->id;
 			$eval_fseminario->curso_id = $curso_id;
 			
@@ -900,14 +862,18 @@ $promedio_p4=[
             array_push($nombresCursos,$catalogo[0]->nombre_curso);
 
             //Las evaluaciones finales de los cursos
-            $eval = DB::table('_evaluacion_final_curso')
-                ->where('curso_id',$curso->id)
+            $eval = DB::table('_evaluacion_final_curso as ec')
+                ->join('participante_curso as pc', 'pc.id', '=', 'ec.participante_curso_id')
+                ->where('pc.curso_id',$curso->id)
+                ->select('ec.*')
                 ->get();
             
             //Las evaluaciones finales de los seminarios
-            $eval2 = DB::table('_evaluacion_final_seminario')
-                ->where('curso_id',$curso->id)
-                ->get();
+            $eval2 = DB::table('_evaluacion_final_seminario as es')
+              ->join('participante_curso as pc', 'pc.id', '=', 'es.participante_curso_id')
+              ->where('curso_id',$curso->id)
+              ->select('es.*')
+              ->get();
 
             //Obtenemos los participantes de los cursos
             $participantes = DB::table('participante_curso')
@@ -1000,7 +966,7 @@ $promedio_p4=[
         $desempenioProfesores = array(); 
 
         foreach($evaluacionesCursos as $curso){
-            $curso_id = $curso[0]->curso_id;
+            $curso_id = ParticipantesCurso::findOrFail($curso[0]->participante_curso_id)->curso_id;
             $profesores = DB::table('profesor_curso')
                 ->where('curso_id',$curso_id)
                 ->get();
@@ -1862,15 +1828,18 @@ $promedio_p4=[
                 $num_cursos++;
                 $evals = 0;
                 //Obtenemos las evaluaciones
-                if(strcmp($curso->tipo,'S')==0){
-                    $evals = DB::table('_evaluacion_final_seminario')
-                        ->where('curso_id',$curso->id)
-                        ->get();
-                }else{
-                    $evals = DB::table('_evaluacion_final_curso')
-                        ->where('curso_id',$curso->id)
-                        ->get();   
-                }
+                if(strcmp($catalogo_curso[0]->tipo,'S') == 0)
+                $evals = DB::table('_evaluacion_final_curso as ec')
+                  ->join('participante_curso as pc', 'pc.id', '=', 'ec.participante_curso_id')
+                  ->where('pc.curso_id',$curso->id)
+                  ->select('ec.*')
+                  ->get();
+                else            
+                  $evals = DB::table('_evaluacion_final_curso as es')
+                    ->join('participante_curso as pc', 'pc.id', '=', 'es.participante_curso_id')
+                    ->where('pc.curso_id',$curso->id)
+                    ->select('es.*')
+                    ->get();
 
                 $tam += sizeof($evals);
 
@@ -2128,13 +2097,17 @@ $promedio_p4=[
                 ->where('id',$curso->catalogo_id)
                 ->get();
             if(strcmp($catalogo_curso[0]->tipo,'S') == 0)
-                $evals = DB::table('_evaluacion_final_seminario')
-                    ->where('curso_id',$curso->id)
-                    ->get();
+              $evals = DB::table('_evaluacion_final_curso as ec')
+                ->join('participante_curso as pc', 'pc.id', '=', 'ec.participante_curso_id')
+                ->where('pc.curso_id',$curso->id)
+                ->select('ec.*')
+                ->get();
             else            
-                $evals = DB::table('_evaluacion_final_curso')
-                    ->where('curso_id',$curso->id)
-                    ->get();    
+              $evals = DB::table('_evaluacion_final_curso as es')
+                ->join('participante_curso as pc', 'pc.id', '=', 'es.participante_curso_id')
+                ->where('pc.curso_id',$curso->id)
+                ->select('es.*')
+                ->get();
 
             $tam_curso = 0;
             $contenido_curso = 0;
@@ -2406,14 +2379,18 @@ $promedio_p4=[
         foreach($cursos as $curso){
 
             //Las evaluaciones finales de los cursos
-            $eval = DB::table('_evaluacion_final_curso')
-                ->where('curso_id',$curso->id)
+            $eval = DB::table('_evaluacion_final_curso as ec')
+                ->join('participante_curso as pc', 'pc.id', '=', 'ec.participante_curso_id')
+                ->where('pc.curso_id',$curso->id)
+                ->select('ec.*')
                 ->get();
             
             //Las evaluaciones finales de los seminarios
-            $eval2 = DB::table('_evaluacion_final_seminario')
-                ->where('curso_id',$curso->id)
-                ->get();
+            $eval2 = DB::table('_evaluacion_final_seminario as es')
+              ->join('participante_curso as pc', 'pc.id', '=', 'es.participante_curso_id')
+              ->where('curso_id',$curso->id)
+              ->select('es.*')
+              ->get();
 
             //Si hay evaluacions finales de cursos los incluimos en el arreglo de evaluacionesCursos
             if(sizeof($eval)>0){
@@ -2449,13 +2426,15 @@ $promedio_p4=[
 
 		//Checamos si el usuario desea los reportes de los cursos o de los seminarios
 		if(strcmp($catalogoCurso[0]->tipo,'S')==0){
-            $evals = DB::table('_evaluacion_final_seminario')
-			    ->where("curso_id",$curso_id)
+            $evals = DB::table('_evaluacion_final_seminario as e')
+                ->join('participante_curso as p','p.id','=','e.participante_curso_id')
+			    ->where("p.curso_id",$curso_id)
                 ->get();
 
 		}else{
-			$evals = DB::table('_evaluacion_final_curso')
-			    ->where("curso_id",$curso_id)
+			$evals = DB::table('_evaluacion_final_curso as e')
+                ->join('participante_curso as p','p.id','=','e.participante_curso_id')
+			    ->where("p.curso_id",$curso_id)
                 ->get();
         }
 
@@ -3268,10 +3247,20 @@ $promedio_p4=[
 		$catalogoCurso = DB::table('catalogo_cursos')
 			->where('id',$curso[0]->catalogo_id)
 			->get();
+        $evals = 0;
 		//Obtenemos todas las evaluaciones del curso
-		$evals = DB::table('_evaluacion_final_curso')
-			->where('curso_id',$curso_id)
+        if(strcmp($catalogoCurso[0]->tipo,'S')==0){
+		    $evals = DB::table('_evaluacion_final_seminario as e')
+            ->join('participante_curso as p','p.id','=','e.participante_curso_id')
+			->where('p.curso_id',$curso_id)
 			->get();
+        } else {
+            $evals = DB::table('_evaluacion_final_curso as e')
+            ->join('participante_curso as p','p.id','=','e.participante_curso_id')
+			->where('p.curso_id',$curso_id)
+			->get();
+        }
+
 
         if(sizeof($evals) == 0){
             Session::flash('message','Curso no cuenta con evaluación');
@@ -3571,23 +3560,34 @@ $promedio_p4=[
         $cursos = DB::table('cursos as c')
             ->join('catalogo_cursos as cc','cc.id','=','c.catalogo_id')
             ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
-            ->select('c.id','cc.nombre_curso','co.abreviatura','c.semestre_si')
+            ->select('c.id','cc.nombre_curso','co.abreviatura','c.semestre_si','cc.tipo')
             ->where([['c.semestre_anio',$semestre[0]],['c.semestre_pi',$semestre[1]]])
             ->orderBy('semestre_si', 'desc')
             ->get();
-
 
         $criterios_s=array();
         $criterios_i=array();
 
         foreach($cursos as $curso){
-            $criterio=DB::table('_evaluacion_final_curso as e')
-                ->join('cursos as c','e.curso_id','=','c.id')
-                ->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
-                ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
-                ->select('e.p7','co.abreviatura')
-                ->where('e.curso_id',$curso->id)
-                ->get();
+            $criterio = 0;
+            if(strcmp($curso->tipo,'S')==0)
+                $criterio=DB::table('_evaluacion_final_seminario as e')
+                    ->join('participante_curso as p','p.id','=','e.participante_curso_id')
+                    ->join('cursos as c','p.curso_id','=','c.id')
+                    ->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
+                    ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
+                    ->select('e.p7','co.abreviatura')
+                    ->where('c.id',$curso->id)
+                    ->get();
+            else
+                $criterio=DB::table('_evaluacion_final_curso as e')
+                    ->join('participante_curso as p','p.id','=','e.participante_curso_id')
+                    ->join('cursos as c','p.curso_id','=','c.id')
+                    ->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
+                    ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
+                    ->select('e.p7','co.abreviatura')
+                    ->where('c.id',$curso->id)
+                    ->get();
 
             if($curso->semestre_si == 's' && $criterio != null){
                 array_push($criterios_s, $criterio);
