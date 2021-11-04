@@ -3,7 +3,8 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-class DatosPrueba extends Seeder
+
+class SeederCDEval extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,23 +13,5923 @@ class DatosPrueba extends Seeder
      */
     public function run()
     {
+        
+        DB::table('users')->insert([
+            'nombres'=> 'Mauricio',
+            'apellido_paterno' => 'Ramos',
+            'apellido_materno' => 'Villaseñor',
+            'email' => 'mauri334455@gmail.com',
+            'usuario' => 'mauri334455',
+            'password' => Hash::make('amores334455')
+        ]);
+        DB::table('salons')->insert([
+            'sede'=> 'Salon 213',
+            'capacidad' => 50,
+            'ubicacion' => 'FI',
+        ]);
+        DB::table('salons')->insert([
+            'sede'=> 'Salon 321',
+            'capacidad' => 50,
+            'ubicacion' => 'FI',
+        ]);
+        DB::table('salons')->insert([
+            'sede'=> 'Salon J102',
+            'capacidad' => 50,
+            'ubicacion' => 'FI',
+        ]);
+        DB::table('salons')->insert([
+            'sede'=> 'Salon Y001',
+            'capacidad' => 50,
+            'ubicacion' => 'FI',
+        ]);
+
+        DB::table('divisions')->insert([
+            'nombre' => 'División de Ciencias Básicas'
+        ]);
+        
+        DB::table('divisions')->insert([
+          'nombre' => 'División de Ingeniería Civil y Geomática'
+        ]);
+
+        DB::table('divisions')->insert([
+            'nombre' => 'División de Ingeniería Eléctrica'
+        ]);
+
+        DB::table('divisions')->insert([
+          'nombre' => 'División de Ingeniería en Ciencias de la Tierra'
+        ]);
+
+        DB::table('divisions')->insert([
+          'nombre' => 'División de Ingeniería Mecánica e Industrial'
+        ]);
+
+        DB::table('divisions')->insert([
+            'nombre' => 'División de Ciencias Sociales y Humanidades'
+        ]);
+
+        DB::table('divisions')->insert([
+          'nombre' => 'División de Educación Continua y a Distancia'
+        ]);
+
+        DB::table('divisions')->insert([
+          'nombre' => 'Becarios de UNICA'
+        ]);
+
+        DB::table('divisions')->insert([
+          'nombre' => 'Servicio social'
+        ]);
+
+        DB::table('divisions')->insert([
+          'nombre' => 'Externos'
+        ]);
+
+        DB::table('divisions')->insert([
+            'nombre' => 'Secretarias'
+          ]);
+
+        DB:: table('facultads')->insert([
+            'id' => 1,
+            'nombre' =>'Facultad de Arquitectura'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 2,
+            'nombre' =>'Facultad de Artes y Diseño'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 3,
+            'nombre' =>'Facultad de Ciencias'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 4,
+            'nombre' =>'Facultad de Ciencias Políticas y Sociales'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 5,
+            'nombre' =>'Facultad de Contaduría y Administración'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 6,
+            'nombre' =>'Facultad de Derecho'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 7,
+            'nombre' =>'Facultad de Economía'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 8,
+            'nombre' =>'Facultad de Estudios Superiores (FES) Acatlán'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 9,
+            'nombre' =>'Facultad de Estudios Superiores (FES) Aragón'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 10,
+            'nombre' =>'Facultad de Estudios Superiores (FES) Cuautitlán'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 11,
+            'nombre' =>'Facultad de Estudios Superiores (FES) Iztacala'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 12,
+            'nombre' =>'Facultad de Estudios Superiores (FES) Zaragoza'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 13,
+            'nombre' =>'Facultad de Filosofía y Letras'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 14,
+            'nombre' =>'Facultad de Ingeniería'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 15,
+            'nombre' =>'Facultad de Medicina'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 16,
+            'nombre' =>'Facultad de Medicina Veterinaria y Zootecnia'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 17,
+            'nombre' =>'Facultad de Música'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 18,
+            'nombre' =>'Facultad de Odontología'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 19,
+            'nombre' =>'Facultad de Psicología'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 20,
+            'nombre' =>'Facultad de Química'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 21,
+            'nombre' =>'Centro de Física Aplicada y Tecnología Avanzada'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 22,
+            'nombre' =>'Instituo de Energías Renovables'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 23,
+            'nombre' =>'Centro de Nanociencias y Nanotecnología'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 24,
+            'nombre' =>'Escuela Nacional de Estudios Superiores,Unidad Mérida'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 25,
+            'nombre' =>'Escuela Nacional de Estudios Superiores,Unidad Morelia'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 26,
+            'nombre' =>'Instituto de Investigaciones en Matemáticas y en Sistemas'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 27,
+            'nombre' =>'Escuela Nacional de Enfermería y Obstetricia'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 28,
+            'nombre' =>'Escuela Nacional de Estudios Superiores, Unidad León'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 29,
+            'nombre' =>'Centro de Ciencias Genómicas'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 30,
+            'nombre' =>'Escuela Nacional de Estudios Superiores, Unidad Juriquilla'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 31,
+            'nombre' =>'Escuela Nacional de Trabajo Social'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 32,
+            'nombre' =>'Centro Universitarios de Estudios Cinematográficos'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 33,
+            'nombre' =>'Centro Universitario de Teatro'
+        ]);
+        DB:: table('facultads')->insert([
+            'id' => 34,
+            'nombre' =>'Escuela Nacional de Lenguas, Lingúistica y Traducción'
+        ]);
+
+        DB::table('carreras')->insert([
+          'nombre' => 'Ingeniería Aeroespacial',
+          'clave' => 107
+        ]);
+
+        DB::table('carreras')->insert([
+            'nombre' => 'Ingeniería Civil',
+            'clave' => 107
+        ]);
+
+        DB::table('carreras')->insert([
+          'nombre' => 'Ingeniería Geomática',
+          'clave' => 107
+        ]);
+
+      DB::table('carreras')->insert([
+        'nombre' => 'Ingeniería Ambiental',
+        'clave' => 107
+      ]);
+
+      DB::table('carreras')->insert([
+        'nombre' => 'Ingeniería Eléctrica y Eletrónica',
+        'clave' => 109
+      ]);
+
+      DB::table('carreras')->insert([
+        'nombre' => 'Ingeniería de Minas y Metalurgía',
+        'clave' => 108
+      ]);
+
+      DB::table('carreras')->insert([
+        'nombre' => 'Ingeniería en Computación',
+        'clave' => 110
+      ]);
+      
+      DB::table('carreras')->insert([
+        'nombre' => 'Ingeniería en Telecomunicaciones',
+        'clave' => 111
+      ]);
+      
+      DB::table('carreras')->insert([
+        'nombre' => 'Ingeniería Geofísica',
+        'clave' => 112
+      ]);
+      
+      DB::table('carreras')->insert([
+        'nombre' => 'Ingeniería Geológica',
+        'clave' => 113
+      ]);
+      
+      DB::table('carreras')->insert([
+        'nombre' => 'Ingeniería Industrial',
+        'clave' => 114
+      ]);
+      
+      DB::table('carreras')->insert([
+        'nombre' => 'Ingeniería Mecánica',
+        'clave' => 115
+      ]);
+    
+      DB::table('carreras')->insert([
+        'nombre' => 'Ingeniería Mecatrónica',
+        'clave' => 116
+      ]);
+      
+      DB::table('carreras')->insert([
+        'nombre' => 'Ingeniería Petrolera',
+        'clave' => 117
+      ]);
+
+      DB::table('carreras')->insert([
+        'nombre' => 'Ingenieria en Sistemas Biomédicos',
+        'clave' => 1231
+      ]);
+
+        DB::table('categoria_nivel')->insert(['categoria' => 'Administrativo', 'abreviatura' => 'Adm']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Ayudante de profesor A', 'abreviatura' => 'AYTE PROF A']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Ayudante de profesor B', 'abreviatura' => 'AYTE PROF B']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Funcionario', 'abreviatura' => 'FUNC']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Investigador Asociado B TC', 'abreviatura' => 'INV ASOC B TC']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Investigador titular A TC', 'abreviatura' => 'INV TIT A T C']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Investigador titular B MT', 'abreviatura' => 'INV TIT B M  T']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Investigador titular B TC', 'abreviatura' => 'INV TIT B T  C']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Investigador titular C MT', 'abreviatura' => 'INV TIT C M  T']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Investigador titular C TC', 'abreviatura' => 'INV TIT C T  C']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Profesor Emérito', 'abreviatura' => 'PROF EMERITO']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Profesor de Asignatura A', 'abreviatura' => 'PROF ASG A']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Profesor de Asignatura B', 'abreviatura' => 'PROF ASG B']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Profesor Titular A TC', 'abreviatura' => 'PROF TIT A T C']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Profesor Titular B TC', 'abreviatura' => 'PROF TIT B T C']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Profesor Titular C TC', 'abreviatura' => 'PROF TIT C T C']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Técnico Asociado A TC', 'abreviatura' => 'TEC ASOC A T C']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Técnico Asociado B TC', 'abreviatura' => 'TEC ASOC B T C']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Técnico Asociado C TC', 'abreviatura' => 'TEC ASOC C T C']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Técnico Auxiliar A TC', 'abreviatura' => 'TEC AUX A T C']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Técnico Auxiliar B MT', 'abreviatura' => 'TEC AUX B M T']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Técnico Auxiliar B TC', 'abreviatura' => 'TEC AUX B T C']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Técnico Auxiliar C TC', 'abreviatura' => 'TEC AUX C T C']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Técnico Titular A TC', 'abreviatura' => 'TEC TIT A T C']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Técnico Titular B TC', 'abreviatura' => 'TEC TIT B T C']);
+        DB::table('categoria_nivel')->insert(['categoria' => 'Técnico Titular C TC', 'abreviatura' => 'TEC TIT C T C']);
+
+        DB::table('profesors')->insert([
+            'nombres' => 'Juan',
+            'apellido_paterno' => 'Ramirez',
+            'apellido_materno' => 'Gonzales',
+            'rfc' => 'RAGJ720101T72',
+            'numero_trabajador' => '12143231',
+            'categoria_nivel_id'=>1,
+            'fecha_nacimiento' => '1972-01-01',
+            'telefono' => '55664487',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtro.',
+            'email' => 'carosiim.sdco@gmail.com',
+            'semblanza_corta'=> 'Doctorado en Inteligencia Artificial,
+                             su carrera es respaldada por 25 años de 
+                             ejercer la doctrina de profesor. Ganó el premio
+                             S@T por el código más pequeño del mundo',
+            'genero' => 'masculino',
+            'comentarios' => 'hombre alto, de tez blanca, cabello negro y ojos marrones. ',
+            'facebook' => 'Juan Ramirez',
+            'unam' => false,
+            'procedencia'=> 'Universidad Miskatonic'
+
+        ]);
+        
+
+        DB::table('profesors')->insert([
+            'nombres' => 'Marta',
+            'apellido_paterno' => 'Suarez',
+            'apellido_materno' => 'Prados',
+            'rfc' => 'SUPM720101D11',
+            'numero_trabajador' => '12143232',
+            'categoria_nivel_id'=>1,
+            'fecha_nacimiento' => '1972-01-01',
+            'telefono' => '557458963',
+            'grado' => 'Licenciatura',
+            'abreviatura_grado' => 'Lic.',
+            'email' => 'MSP@gmail.com',
+            'semblanza_corta' => 'Profesora de la facultad de ingeniería,
+                             fundó la asociación de mujeres programadoras
+                             con el fin de impulsar los derechos y la presencia
+                             de la mujer en el ámbito profesional de las Tecnologías
+                             de la Información. Es egresada de la Facultad de Ciencias.
+                             Doctora en análisis de datos.',
+            'genero' => 'femenino',
+            'comentarios' => 'Mujer delgada, de tez morena, cabello negro y ojos cafes.',
+            'facebook' => 'Martha Suarez',
+            'unam' => true,
+            'facultad_id' =>1
+
+        ]);
+        DB::table('profesors')->insert([
+            'nombres' => 'Santiago',
+            'apellido_paterno' => 'Hernández',
+            'apellido_materno' => 'Gonzales',
+            'rfc' => 'HEGS720517RJ3',
+            'numero_trabajador' => '12143233',
+            'categoria_nivel_id'=>1,
+            'fecha_nacimiento' => '1972-05-17',
+            'telefono' => '55664487',
+            'grado' => 'Ingeniería',
+            'abreviatura_grado' => 'Ing.',
+            'email' => 'prof2@gmail.com',
+            'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+            'genero' => 'masculino',
+            'comentarios' => 'Señor alto, edad avanzada, pelo y barba canosas y usa lentes',
+            'facebook' => 'face',
+            'unam' => true,
+            'facultad_id' =>14
+
+        ]);
+        DB::table('profesors')->insert([
+            'nombres' => 'Melina',
+            'apellido_paterno' => 'Pelcastre',
+            'apellido_materno' => 'Prados',
+            'rfc' => 'PEPM720517IW2',
+            'numero_trabajador' => '12143234',
+            
+            'categoria_nivel_id'=>1,
+            'fecha_nacimiento' => '1972-05-017',
+            'telefono' => '557458963',
+            'grado' => 'Licenciatura',
+            'abreviatura_grado' => 'Lic.',
+            'email' => 'MSP2@gmail.com',
+            'semblanza_corta' => 'Licenciada en administracion egresada de la FCyA de la UNAM con honores.',
+            'genero' => 'femenino',
+            'comentarios' => 'Mujer bajita, tez obscura, cabello negro.',
+            'facebook' => 'MyFace',
+            'unam' => true,
+            'facultad_id' =>5
+
+        ]);
+        DB::table('profesors')->insert([
+            'nombres' => 'Mateo',
+            'apellido_paterno' => 'Juarez',
+            'apellido_materno' => 'Fernández',
+            'rfc' => 'JUFM720101M74',
+            'numero_trabajador' => '12143235',
+            
+            'categoria_nivel_id'=>5,
+            'fecha_nacimiento' => '1972-01-01',
+            'telefono' => '55664487',
+            'grado' => 'Licenciatura',
+            'abreviatura_grado' => 'Lic.',
+            'email' => 'prof3@gmail.com',
+            'semblanza_corta' => 'Ingeniero mecanico con especialidad en diseño mecanico egresado de la unam y con maestria en Alemania.',
+            'genero' => 'masculino',
+            'comentarios' => 'Hombre alto, calvo y con barba muy grande',
+            'facebook' => 'Mateo Juarez',
+            'unam' => true,
+            'facultad_id' =>14
+
+        ]);
+        DB::table('profesors')->insert([
+            'nombres' => 'Gabriela',
+            'apellido_paterno' => 'González',
+            'apellido_materno' => 'Velázquez',
+            'rfc' => 'GOVG720101FZ6',
+            'numero_trabajador' => '12143236',
+            
+            'categoria_nivel_id'=>1,
+            'fecha_nacimiento' => '1972-01-01',
+            'telefono' => '557458963',
+            'grado' => 'Doctorado',
+            'abreviatura_grado' => 'Dra.',
+            'email' => 'MSP3@gmail.com',
+            'semblanza_corta' => 'Ingeniera industrial, con un MBA en inglaterra y tambien trabaja en Coca Cola.',
+            'genero' => 'femenino',
+            'comentarios' => 'Mujer de edad avanzada, cabello negro y orejas grandes',
+            'facebook' => 'Gaby Gonzalez',
+            'unam' => true,
+            'facultad_id' =>14
+        ]);
+        DB::table('profesors')->insert([
+            'nombres' => 'Luis Daniel',
+            'apellido_paterno' => 'Velásquez',
+            'apellido_materno' => 'Velázquez',
+            'rfc' => 'VEVL720101T65',
+            'numero_trabajador' => '12143237',
+            
+            'categoria_nivel_id'=>7,
+            'fecha_nacimiento' => '1972-01-01',
+            'telefono' => '55664487',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtro.',
+            'email' => 'prof4@gmail.com',
+            'semblanza_corta' => 'Ingeniero en telecomunicaciones y estudia actualmente su segunda carrera, en economia.',
+            'genero' => 'masculino',
+            'comentarios' => 'Hombre de mucho peso, estatura promedio y larga cabellera rubia',
+            'facebook' => 'Dani Velásquez',
+            'unam' => true,
+            'facultad_id' =>14
+        ]);
+        DB::table('profesors')->insert([
+            'nombres' => 'Fernanda',
+            'apellido_paterno' => 'Núñez',
+            'apellido_materno' => 'Sandoval',
+            'rfc' => 'NUSF720101I63',
+            'numero_trabajador' => '12143238',
+            
+            'categoria_nivel_id'=>1,
+            'fecha_nacimiento' => '1972-01-01',
+            'telefono' => '557458963',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtra.',
+            'email' => 'MSP4@gmail.com',
+            'semblanza_corta' => 'Ingeniera civil, maestria en puentes y con especialidad en puentes muy grandes.',
+            'genero' => 'femenino',
+            'comentarios' => 'Mujer joven, alta, cabello negro y tez blanca',
+            'facebook' => 'Fer Sandoval',
+            'unam' => true,
+            'facultad_id' =>14
+
+        ]);
+        DB::table('profesors')->insert([
+            'nombres' => 'Ángel',
+            'apellido_paterno' => 'García',
+            'apellido_materno' => 'Casares',
+            'rfc' => 'GACA720101EL4',
+            'numero_trabajador' => '12143239',
+            
+            'categoria_nivel_id'=>11,
+            'fecha_nacimiento' => '1972-01-01',
+            'telefono' => '55664487',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtro.',
+            'email' => 'prof5@gmail.com',
+            'semblanza_corta' => 'Ingeniero petrolero, actualmente se desempeña tambien en cargos altos en PEMEX',
+            'genero' => 'masculino',
+            'comentarios' => 'Hombre de mediana edad, cabello negro y barba de candado',
+            'facebook' => 'Angel García Caseres',
+            'unam' => true,
+            'facultad_id' =>14
+        ]);
+        DB::table('profesors')->insert([
+            'nombres' => 'Vivian',
+            'apellido_paterno' => 'Salcedo',
+            'apellido_materno' => 'Víquez',
+            'rfc' => 'SAVV720101RV2',
+            'numero_trabajador' => '12143240',
+            
+            'categoria_nivel_id'=>4,
+            'fecha_nacimiento' => '1972-01-01',
+            'telefono' => '557458963',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtra.',
+            'email' => 'MSP5@gmail.com',
+            'semblanza_corta' => 'Licenciada en contaduria, con maestria en impuestos empresariales y doctorado en contaduria para Macroempresas.',
+            'genero' => 'femenino',
+            'comentarios' => 'Mujer de baja estatura, delgada y con ojos cafes.',
+            'facebook' => 'Vivi Salcedo',
+            'unam' => true,
+            'facultad_id' =>5
+        ]);
+
+
+        DB::table('profesors')->insert([
+            'nombres' => 'Arturo',
+            'apellido_paterno' => 'Galván',
+            'apellido_materno' => 'Argote',
+            'rfc' => 'GAAA720101HY0',
+            'numero_trabajador' => '12143241',
+            
+            'categoria_nivel_id'=>5,
+            'fecha_nacimiento' => '1972-01-01',
+            'telefono' => '55664487',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtro.',
+            'email' => 'prof6@gmail.com',
+            'semblanza_corta' => 'Arquitecto con especialidad en paisajismo. Actualmente está creando su propia consultura',
+            'genero' => 'masculino',
+            'comentarios' => 'Hombre con rascos asiaticos, tez blanca y ojos rasgados.',
+            'facebook' => 'Arturo Galvan',
+            'unam' => true,
+            'facultad_id' =>1
+
+        ]);
+        DB::table('profesors')->insert([
+            'nombres' => 'Melissa',
+            'apellido_paterno' => 'Valles',
+            'apellido_materno' => 'Hernández',
+            'rfc' => 'VAHM720101Q41',
+            'numero_trabajador' => '12143242',
+            
+            'categoria_nivel_id'=>1,
+            'fecha_nacimiento' => '1972-01-01',
+            'telefono' => '557458963',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtra.',
+            'email' => 'MSP6@gmail.com',
+            'semblanza_corta' => 'Licenciada en arquitectura con maestria en diseño de interiores ',
+            'genero' => 'femenino',
+            'comentarios' => 'Mujer afroamericana de alta estatura y cabello cafe.',
+            'facebook' => 'Melissaa Valles',
+            'unam' => true,
+            'facultad_id' =>1
+
+        ]);
+        DB::table('profesors')->insert([
+            'nombres' => 'Roberto',
+            'apellido_paterno' => 'Sánchez',
+            'apellido_materno' => 'Gonzales',
+            'rfc' => 'SAGR720101JR0',
+            'numero_trabajador' => '12143243',
+            
+            'categoria_nivel_id'=>1,
+            'fecha_nacimiento' => '1972-01-01',
+            'telefono' => '55664487',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtro.',
+            'email' => 'prof7@gmail.com',
+            'semblanza_corta' => 'Ingeniero en Minas, con especialidad en minas de carbon y diamante.',
+            'genero' => 'masculino',
+            'comentarios' => 'Hombre alto, afroamericano con cabello negro.',
+            'facebook' => 'Roberto Sanchez',
+            'unam' => true,
+            'facultad_id' =>14
+
+        ]);
+        DB::table('profesors')->insert([
+            'nombres' => 'Daniela',
+            'apellido_paterno' => 'Arjona',
+            'apellido_materno' => 'Valle',
+            'rfc' => 'AOVD720101DQ6',
+            'numero_trabajador' => '12143244',
+            
+            'categoria_nivel_id'=>1,
+            'fecha_nacimiento' => '1972-05-017',
+            'telefono' => '557458963',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtra.',
+            'email' => 'MSP7@gmail.com',
+            'semblanza_corta' => 'Ingeniera en Sistemas Biómedicos, egresada del ITAM',
+            'genero' => 'femenino',
+            'comentarios' => 'Mujer de corta estatura, ojos azules y cabello color cafe',
+            'facebook' => 'Dani Arjona',
+            'unam' => true,
+            'facultad_id' =>5
+
+        ]);
+        DB::table('profesors')->insert([
+            'nombres' => 'Alejandro',
+            'apellido_paterno' => 'López',
+            'apellido_materno' => 'Mateos',
+            'rfc' => 'LOMA720101EU3',
+            'numero_trabajador' => '12143245',
+            
+            'categoria_nivel_id'=>5,
+            'fecha_nacimiento' => '1972-01-01',
+            'telefono' => '55664487',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtro.',
+            'email' => 'prof8@gmail.com',
+            'semblanza_corta' => 'Ingeniero mecanico con especialidad en termofluidos actualmente trabaja para Ferrari.',
+            'genero' => 'masculino',
+            'comentarios' => 'Hombre de baja estatura, sin cabello y utiliza lentes',
+            'facebook' => 'Alex López Mateos',
+            'unam' => true,
+            'facultad_id' =>14
+
+        ]);
+        DB::table('profesors')->insert([
+            'nombres' => 'Julia',
+            'apellido_paterno' => 'Domínguez',
+            'apellido_materno' => 'Méndez',
+            'rfc' => 'DOMJ7201011Q9',
+            'numero_trabajador' => '12143246',
+            
+            'categoria_nivel_id'=>1,
+            'fecha_nacimiento' => '1972-01-01',
+            'telefono' => '557458963',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtra.',
+            'email' => 'MSP8@gmail.com',
+            'semblanza_corta' => 'Ingeniera insdustrial enfocada al area de logistica con maestry en cadena de suministros en Canada.',
+            'genero' => 'femenino',
+            'comentarios' => 'Mujer de edad avanzada con pelo rubio y orejas grandes.',
+            'facebook' => 'Julia Dominguez',
+            'unam' => true,
+            'facultad_id' =>14
+        ]);
+        DB::table('profesors')->insert([
+            'nombres' => 'Luis Fernando',
+            'apellido_paterno' => 'Méndez',
+            'apellido_materno' => 'Vallesteros',
+            'rfc' => 'MEVL720101GV4',
+            'numero_trabajador' => '12143247',
+            
+            'categoria_nivel_id'=>7,
+            'fecha_nacimiento' => '1972-01-01',
+            'telefono' => '55664487',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtro.',
+            'email' => 'prof9@gmail.com',
+            'semblanza_corta' => 'Ingeniero en telecomunicaciones que trabaja con la super computadora de la UNAM',
+            'genero' => 'masculino',
+            'comentarios' => 'Hombre con enanismo, de tez blanca y pelo negro.',
+            'facebook' => 'Luis Méndez',
+            'unam' => true,
+            'facultad_id' =>14
+        ]);
+        DB::table('profesors')->insert([
+            'nombres' => 'Hilda',
+            'apellido_paterno' => 'Ramírez',
+            'apellido_materno' => 'Ramírez',
+            'rfc' => 'RARH720101DMA',
+            'numero_trabajador' => '12143248',
+            
+            'categoria_nivel_id'=>1,
+            'fecha_nacimiento' => '1972-01-01',
+            'telefono' => '557458963',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtra.',
+            'email' => 'MSP9@gmail.com',
+            'semblanza_corta' => 'Ingeniera civil, socia de Carlos Slim y con maestria en carreteras',
+            'genero' => 'femenino',
+            'comentarios' => 'Mujer alta, delgada, con el pelo pintado de azul.',
+            'facebook' => 'Hilda Ramirez',
+            'unam' => true,
+            'facultad_id' =>14
+
+        ]);
+        DB::table('profesors')->insert([
+            'nombres' => 'Juan',
+            'apellido_paterno' => 'Macedo',
+            'apellido_materno' => 'Jiménez',
+            'rfc' => 'MAJJ720101GF7',
+            'numero_trabajador' => '12143249',
+            
+            'categoria_nivel_id'=>11,
+            'fecha_nacimiento' => '1972-01-01',
+            'telefono' => '55664487',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtro.',
+            'email' => 'prof10@gmail.com',
+            'semblanza_corta' => 'Ingeniero petrolero, trabaja en paises arabes y es de los hombres más ricos del mundo',
+            'genero' => 'masculino',
+            'comentarios' => 'Hombre alto, con mucha musculatura, pelo y barba de color castaño claro.',
+            'facebook' => 'Juan Macedo',
+            'unam' => true,
+            'facultad_id' =>14
+        ]);
+        DB::table('profesors')->insert([
+            'nombres' => 'Viridiana',
+            'apellido_paterno' => 'Valencia',
+            'apellido_materno' => 'Manso',
+            'rfc' => 'VAMV720101HZA',
+            'numero_trabajador' => '12143250',
+            
+            'categoria_nivel_id'=>4,
+            'fecha_nacimiento' => '1972-01-01',
+            'telefono' => '557458963',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtra.',
+            'email' => 'MSP10@gmail.com',
+            'semblanza_corta' => 'Licencidad en contaduria, ella calcula los imppuestos de la unam y tiene maestria en impuestos universitarios.',
+            'genero' => 'femenino',
+            'comentarios' => 'Mujer de estatura promedio, de tez morena con nariz grande y pelo negro',
+            'facebook' => 'Viridiana Valencia',
+            'unam' => true,
+            'facultad_id' =>5
+        ]);
+
+
+        DB::table('profesors')->insert([
+            'nombres' => 'Sebastian',
+            'apellido_paterno' => 'Arjona',
+            'apellido_materno' => 'Mendez Albarran',
+            'rfc' => 'AOMS901010B52',
+            'numero_trabajador' => '76568654',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtro.',
+            'semblanza_corta'=> 'Doctorado en Inteligencia Artificial,
+                             su carrera es respaldada por 25 años de 
+                             ejercer la doctrina de profesor. Ganó el premio
+                             S@T por el código más pequeño del mundo',
+            'genero' => 'masculino',
+            'unam' => true,
+            'facultad_id' =>5
+        ]);
+
+        DB::table('profesors')->insert([
+            'nombres' => 'Francisca',
+            'apellido_paterno' => 'Bonilla',
+            'apellido_materno' => 'Bonilla',
+            'rfc' => 'BOMF900101NQ7',
+            'numero_trabajador' => '1727727272712',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtro.',
+            'semblanza_corta'=> 'Doctorado en Inteligencia Artificial,
+                             su carrera es respaldada por 25 años de 
+                             ejercer la doctrina de profesor. Ganó el premio
+                             S@T por el código más pequeño del mundo',
+            'genero' => 'femenino',
+            'unam' => true,
+            'facultad_id' =>5
+        ]);
+
+        DB::table('profesors')->insert([
+            'nombres' => 'Aurelia',
+            'apellido_paterno' => 'Casas',
+            'apellido_materno' => '',
+            'rfc' => 'CADA900101L5A',
+            'numero_trabajador' => '265244161',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtro.',
+            'semblanza_corta'=> 'Doctorado en Inteligencia Artificial,
+                             su carrera es respaldada por 25 años de 
+                             ejercer la doctrina de profesor. Ganó el premio
+                             S@T por el código más pequeño del mundo',
+            'genero' => 'femenino',
+            'unam' => true,
+            'facultad_id' =>5
+        ]);
+        DB::table('profesors')->insert([
+            'nombres' => 'Mirian',
+            'apellido_paterno' => 'Ceballos',
+            'apellido_materno' => '',
+            'rfc' => 'CEDM900101D40',
+            'numero_trabajador' => '62525267383',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtro.',
+            'semblanza_corta'=> 'Doctorado en Inteligencia Artificial,
+                             su carrera es respaldada por 25 años de 
+                             ejercer la doctrina de profesor. Ganó el premio
+                             S@T por el código más pequeño del mundo',
+            'genero' => 'femenino',
+            'unam' => true,
+            'facultad_id' =>5
+        ]);
+
+        DB::table('profesors')->insert([
+            'nombres' => 'Mauricio',
+            'apellido_paterno' => 'Cercle',
+            'apellido_materno' => '',
+            'rfc' => 'CEUM830101JK1',
+            'numero_trabajador' => '87654321',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtro.',
+            'semblanza_corta'=> 'Doctorado en Inteligencia Artificial,
+                             su carrera es respaldada por 25 años de 
+                             ejercer la doctrina de profesor. Ganó el premio
+                             S@T por el código más pequeño del mundo',
+            'genero' => 'masculino',
+            'unam' => true,
+            'facultad_id' =>5
+        ]);
+
+        DB::table('profesors')->insert([
+            'nombres' => 'Eva',
+            'apellido_paterno' => 'Cerezo',
+            'apellido_materno' => '',
+            'rfc' => 'CEDE9001016J5',
+            'numero_trabajador' => '727628235',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtro.',
+            'semblanza_corta'=> 'Doctorado en Inteligencia Artificial,
+                             su carrera es respaldada por 25 años de 
+                             ejercer la doctrina de profesor. Ganó el premio
+                             S@T por el código más pequeño del mundo',
+            'genero' => 'femenino',
+            'unam' => true,
+            'facultad_id' =>5
+        ]);
+        DB::table('profesors')->insert([
+            'nombres' => 'Eva',
+            'apellido_paterno' => 'Cerezo',
+            'apellido_materno' => '',
+            'rfc' => 'CEDE9001016J5',
+            'numero_trabajador' => '727628235',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtro.',
+            'semblanza_corta'=> 'Doctorado en Inteligencia Artificial,
+                             su carrera es respaldada por 25 años de 
+                             ejercer la doctrina de profesor. Ganó el premio
+                             S@T por el código más pequeño del mundo',
+            'genero' => 'femenino',
+            'unam' => true,
+            'facultad_id' =>5
+        ]);
+        DB::table('profesors')->insert([
+            'nombres' => 'Valentina',
+            'apellido_paterno' => 'Cubero',
+            'apellido_materno' => '',
+            'rfc' => 'CUDV900101QK7',
+            'numero_trabajador' => '727265252',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtro.',
+            'semblanza_corta'=> 'Doctorado en Inteligencia Artificial,
+                             su carrera es respaldada por 25 años de 
+                             ejercer la doctrina de profesor. Ganó el premio
+                             S@T por el código más pequeño del mundo',
+            'genero' => 'femenino',
+            'unam' => true,
+            'facultad_id' =>5
+        ]);
+        DB::table('profesors')->insert([
+            'nombres' => 'Ana Diana Guadalupe',
+            'apellido_paterno' => 'Domínguez',
+            'apellido_materno' => 'Domínguez',
+            'rfc' => 'DODA901201PB8',
+            'numero_trabajador' => '36657567432',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtro.',
+            'semblanza_corta'=> 'Doctorado en Inteligencia Artificial,
+                             su carrera es respaldada por 25 años de 
+                             ejercer la doctrina de profesor. Ganó el premio
+                             S@T por el código más pequeño del mundo',
+            'genero' => 'femenino',
+            'unam' => true,
+            'facultad_id' =>5
+        ]);
+        DB::table('profesors')->insert([
+            'nombres' => 'Nailea',
+            'apellido_paterno' => 'Duque',
+            'apellido_materno' => '',
+            'rfc' => 'DUMN900101422',
+            'numero_trabajador' => '1725715128',
+            'grado' => 'Maestría',
+            'abreviatura_grado' => 'Mtro.',
+            'semblanza_corta'=> 'Doctorado en Inteligencia Artificial,
+                             su carrera es respaldada por 25 años de 
+                             ejercer la doctrina de profesor. Ganó el premio
+                             S@T por el código más pequeño del mundo',
+            'genero' => 'femenino',
+            'unam' => true,
+            'facultad_id' =>5
+        ]);
+
+        
+
+
+
+
+
+
+
+        DB::table('coordinacions')->insert([
+          'abreviatura'=>'CO',
+          'nombre_coordinacion'=>'Área de Cómputo',
+          'coordinador'=>'Gerardo Lopez Gomez',
+          'grado'=>'M.C.C',
+          'usuario'=>'G3rardo1nEZ',
+          'password'=>'$10$Sli0p2.SdjP7JTbyze.RIucCUJA5MOG6AEB40sJG3Ok3Kb33ltibl'
+        ]);
+    
+        DB::table('coordinacions')->insert([
+          'abreviatura'=>'DI',
+          'nombre_coordinacion'=>'Área Disciplinar e Investigación Educativa',
+          'coordinador'=>'Roman Dominguez Perez',
+          'grado'=>'M.E.M.',
+          'usuario'=>'R0m4n1nEZ',
+          'password'=>'$10$Sli0p2.SdjP7JTbyze.RIucCUJA5MOG6AEB40sJG3Ok3Kb33ltibn'
+        ]);
+        
+        DB::table('coordinacions')->insert([
+          'nombre_coordinacion' => 'Área Didáctico Pedagógica',
+          'abreviatura' => 'DP',
+          'coordinador' => 'Daniel Morales',
+          'grado' => 'M.E.M.',
+          'usuario' => 'daniel',
+          'password' => Hash::make('1234'),
+          'comentarios' => '-'
+        ]);
+    
+        DB::table('coordinacions')->insert([
+          'nombre_coordinacion' => 'Área de Desarrollo Humano',
+          'abreviatura' => 'DH',
+          'coordinador' => 'Jacob Hernandez',
+          'grado' => 'M.E.M.',
+          'usuario' => 'jacob',
+          'password' => Hash::make('1234'),
+          'comentarios' => '-'
+      ]);
+        DB::table('catalogo_cursos')->insert([
+            'nombre_curso' =>'Programacion Estructurada',
+            'duracion_curso' => '10',
+            'coordinacion_id' => 1,
+            'tipo' => 'CT',
+            'institucion' => 'CDD',
+            'presentacion' => 'Presentacion',
+            'dirigido' => 'Personas interesadas en el área 
+                            de la programación, desarrollo de software 
+                            y tecnologías de la información',
+            'objetivo' => 'Enseñar las bases de todos los paradigmas de la programación
+                            y mostrar la ventana de oportunidades que libera',
+            'contenido' => '-¿Qué es la programación?
+                            -Paradigmas de programación
+                            -Lenguajes de programación
+                            -Ejercicios
+                            -Ejemplos en la vida diaria
+                            -Temas avanzados',
+            'sintesis' => 'Sintesis',
+            'metodologia' => 'Metodologia',
+            'previo' => 'Conocimientos básicos de informática y tecnologías de información: Qué es una computadora y cómo funciona',
+            'bibliografia' => 'www.paginasobreprogramacion.com
+            A.J. Tyson, Programacion para dummys. Pearson, 2008.',
+            'fecha_disenio' => '2018-05-18',
+            'clave_curso' => 'ADFVJ0911598'
+
+        ]);
+        DB::table('catalogo_cursos')->insert([
+            'nombre_curso' =>'Administración',
+            'duracion_curso' => '20',
+            'coordinacion_id' => 1,
+            'tipo' => 'E',
+            'institucion' => 'DGAPA',
+            'presentacion' => 'Presentacion',
+            'dirigido' => 'Administradores',
+            'objetivo' => 'Que los que tomen el curso refuerzen sus conocimientos administrativos',
+            'contenido' => 'Que es la administracion y sus derivados',
+            'sintesis' => 'Se aprendera sobre la administracion',
+            'metodologia' => 'Presencial',
+            'bibliografia' => 'El libro sobre administracion',
+            'fecha_disenio' => '2018-05-18',
+            'clave_curso' => 'FJHCZC'
+
+        ]);
+        DB::table('catalogo_cursos')->insert([
+            'nombre_curso' =>'Administración',
+            'duracion_curso' => '20',
+            'coordinacion_id' => 1,
+            'tipo' => 'C',
+            'institucion' => 'DGAPA',
+            'presentacion' => 'Presentacion',
+            'dirigido' => 'Gente sin conocimiento en administracion',
+            'objetivo' => 'Aprender lo basico de aministracion',
+            'contenido' => 'Bases de administracion',
+            'sintesis' => 'Se aprendera lo basico de administracion',
+            'metodologia' => 'online',
+            'bibliografia' => 'El libro administratico',
+            'fecha_disenio' => '2018-05-18',
+            'clave_curso' => 'FJHCZB'
+        ]);
+        DB::table('catalogo_cursos')->insert([
+            'nombre_curso' =>'Ecuaciones Diferenciales',
+            'duracion_curso' => '20',
+            'coordinacion_id' => 1,
+            'tipo' => 'S',
+            'institucion' => 'DGAPA',
+            'presentacion' => 'Presentacion',
+            'dirigido' => 'Ingenieros',
+            'objetivo' => 'Aprender sobre ecuaciones diferenciales',
+            'contenido' => 'Lo basico de ecuaciones diferenciales',
+            'sintesis' => 'Aqui se aprenderan las bases para resolver ecuaciones diferenciales',
+            'metodologia' => 'presencial',
+            'bibliografia' => 'Zill',
+            'fecha_disenio' => '2018-05-18',
+            'clave_curso' => 'ED1HCZ12'
+
+        ]);
+        DB::table('catalogo_cursos')->insert([
+            'nombre_curso' =>'Cálculo Integral',
+            'duracion_curso' => '20',
+            'coordinacion_id' => 1,
+            'tipo' => 'D',
+            'institucion' => 'CDD',
+            'presentacion' => 'Presentacion',
+            'dirigido' => 'Alumnos de ingenieria',
+            'objetivo' => 'Aprender a integrar',
+            'contenido' => 'Metodos de integracion',
+            'sintesis' => 'Se aprendera a integrar mub bien en este curso',
+            'metodologia' => 'Presencial',
+            'bibliografia' => 'Libro de Integrales',
+            'fecha_disenio' => '2018-05-18',
+            'clave_curso' => 'CI2HCZA'
+
+        ]);
+        DB::table('catalogo_cursos')->insert([
+            'nombre_curso' =>'Álgebra Lineal',
+            'duracion_curso' => '20',
+            'coordinacion_id' => 1,
+            'tipo' => 'C',
+            'institucion' => 'CDD',
+            'presentacion' => 'Presentacion',
+            'dirigido' => 'Alumno que ya acabaron Algebra',
+            'objetivo' => 'Que la gente aprenda algebra lineal',
+            'contenido' => 'Transformaciones lineales y espacios vectoriales',
+            'sintesis' => 'Aqui se aprendera algebra vectorial',
+            'metodologia' => 'presencial',
+            'bibliografia' => 'Libro de Algebra Lineal',
+            'fecha_disenio' => '2018-05-18',
+            'clave_curso' => 'ALA3HCZ'
+
+        ]);
+        DB::table('catalogo_cursos')->insert([
+            'nombre_curso' =>'Álgebra',
+            'duracion_curso' => '20',
+            'coordinacion_id' => 1,
+            'tipo' => 'C',
+            'institucion' => 'CDD',
+            'presentacion' => 'Presentacion',
+            'dirigido' => 'Todo el publico',
+            'objetivo' => 'Que los que tomen el curso aprendan lo basico de Algebra',
+            'contenido' => 'Matrices y polinomios',
+            'sintesis' => 'Aquí se aprenderá sobre Álgebra',
+            'metodologia' => 'Presencia',
+            'bibliografia' => 'Libro de Álgebra',
+            'fecha_disenio' => '2018-05-18',
+            'clave_curso' => 'A1A27HCZ'
+
+        ]);
+        DB::table('catalogo_cursos')->insert([
+            'nombre_curso' =>'Análisis Numérico',
+            'duracion_curso' => '20',
+            'coordinacion_id' => 1,
+            'tipo' => 'C',
+            'institucion' => 'CDD',
+            'presentacion' => 'Presentacion',
+            'dirigido' => 'Alumno que ya cursaron ecuaciones diferenciales',
+            'objetivo' => 'Aprender sobre analisis numerico',
+            'contenido' => 'Temas de Análisis Numérico',
+            'sintesis' => 'Aqui se aprenderan los temas básicos de Ánalisis numérico',
+            'metodologia' => 'Online',
+            'bibliografia' => 'Libro de Analisis Numerico',
+            'fecha_disenio' => '2018-05-18',
+            'clave_curso' => 'AN412HCZ'
+
+        ]);
+        DB::table('catalogo_cursos')->insert([
+            'nombre_curso' =>'Programación Estructurada',
+            'duracion_curso' => '10',
+            'coordinacion_id' => 1,
+            'tipo' => 'CT',
+            'institucion' => 'CDD',
+            'presentacion' => 'Presentacion',
+            'dirigido' => 'Alumnos de la carrera de ingenieria en computación',
+            'objetivo' => 'Aprender temas avanzados de programacion ',
+            'contenido' => 'Temas Avanzados de programacion',
+            'sintesis' => 'En este curso los alumnos seran capaces al finalizar de programar cualquier cosa',
+            'metodologia' => 'Online',
+            'bibliografia' => 'Libro de super programación',
+            'fecha_disenio' => '2018-05-18',
+            'clave_curso' => 'ADFVJ080578451'
+
+        ]);
+        DB::table('catalogo_cursos')->insert([
+            'nombre_curso' =>'Administración Básica',
+            'duracion_curso' => '20',
+            'coordinacion_id' => 1,
+            'tipo' => 'C',
+            'institucion' => 'DGAPA',
+            'presentacion' => 'Presentacion',
+            'dirigido' => 'Administradores expertos',
+            'objetivo' => 'Aprender todo sobre administracion',
+            'contenido' => 'Temas avanzados de aministracion',
+            'sintesis' => 'En este curso se aprenderan los temas más avanzados de administracion',
+            'metodologia' => 'Presencial', 
+            'bibliografia' => 'Libro super avanzado de Administracion',
+            'fecha_disenio' => '2018-05-18',
+            'clave_curso' => 'FJHCZA'
+        ]);
+	 DB::table('temas_seminarios')->insert([
+            'nombre' => 'Margaret Parsen',
+            'duracion' => 1,
+            'catalogo_id' => 4
+        ]);
+        DB::table('temas_seminarios')->insert([
+            'nombre' => 'Margaret Parsen II',
+            'duracion' => 2,
+            'catalogo_id' => 4
+        ]);
+        DB::table('temas_seminarios')->insert([
+            'nombre' => 'Margaret Parsen III',
+            'duracion' => 3,
+            'catalogo_id' => 4
+        ]);
+        DB::table('cursos')->insert([
+            'semestre_anio' => 2020,
+            'semestre_pi'=>"2",
+            'semestre_si' => "i",
+            'fecha_inicio' => '2019-12-04',
+            'fecha_fin' => '2020-05-30',
+            'hora_inicio' => '14:00',
+            'hora_fin' => '16:00',
+            'dias_semana' => 'Lunes,Martes',
+            'numero_sesiones' => 10,
+            'texto_diploma' => 'Texto diploma',
+            'costo' => 2000,
+            'cupo_maximo' => 5,
+            'cupo_minimo' => 5,
+            'catalogo_id' => 1,
+            'salon_id' => 1
+        ]);
+
+        DB::table('cursos')->insert([
+            'semestre_anio' => 2016,
+            'semestre_pi'=>"2",
+            'semestre_si' => "i",
+            'fecha_inicio' => '2019-12-04',
+            'fecha_fin' => '2019-12-30',
+            'hora_inicio' => '14:00',
+            'hora_fin' => '16:00',
+            'dias_semana' => 'Lunes,Martes',
+            'numero_sesiones' => 10,
+            'texto_diploma' => 'Texto diploma',
+            'costo' => 2000,
+            'cupo_maximo' => 20,
+            'cupo_minimo' => 5,
+            'catalogo_id' => 5,
+            'salon_id' => 1
+        ]);
+        DB::table('cursos')->insert([
+            'semestre_anio' => 2018,
+            'semestre_pi'=>"2",
+            'semestre_si' => "s",
+            'fecha_inicio' => '2019-12-03',
+            'fecha_fin' => '2020-05-30',
+            'hora_inicio' => '14:00',
+            'hora_fin' => '16:00',
+            'dias_semana' => 'Lunes,Martes',
+            'numero_sesiones' => 10,
+            'texto_diploma' => 'Texto diploma',
+            'costo' => 2000,
+            'cupo_maximo' => 20,
+            'cupo_minimo' => 5,
+            'catalogo_id' => 2,
+            'salon_id' => 1
+        ]);
+
+        DB::table('cursos')->insert([
+            'semestre_anio' => 2016,
+            'semestre_pi'=>"2",
+            'semestre_si' => "s",
+            'fecha_inicio' => '2019-12-04',
+            'fecha_fin' => '2018-12-07',
+            'hora_inicio' => '14:00',
+            'hora_fin' => '16:00',
+            'dias_semana' => 'Lunes,Martes',
+            'numero_sesiones' => 10,
+            'texto_diploma' => 'Texto diploma',
+            'costo' => 2000,
+            'cupo_maximo' => 20,
+            'cupo_minimo' => 5,
+            'catalogo_id' => 3,
+            'salon_id' => 2
+        ]);
+        DB::table('cursos')->insert([
+            'semestre_anio' => 2017,
+            'semestre_pi'=>"2",
+            'semestre_si' => "s",
+            'fecha_inicio' => '2019-12-20',
+            'fecha_fin' => '2018-12-30',
+            'hora_inicio' => '14:00',
+            'hora_fin' => '16:00',
+            'dias_semana' => 'Lunes,Miércoles',
+            'numero_sesiones' => 10,
+            'texto_diploma' => 'Texto diploma',
+            'costo' => 2000,
+            'cupo_maximo' => 20,
+            'cupo_minimo' => 5,
+            'catalogo_id' => 6,
+            'salon_id' => 3
+        ]);
+        DB::table('cursos')->insert([
+            'semestre_anio' => 2015,
+            'semestre_pi'=>"1",
+            'semestre_si' => "s",
+            'fecha_inicio' => '2019-12-20',
+            'fecha_fin' => '2019-12-30',
+            'hora_inicio' => '14:00',
+            'hora_fin' => '16:00',
+            'dias_semana' => 'Lunes,Miércoles',
+            'numero_sesiones' => 10,
+            'texto_diploma' => 'Texto diploma',
+            'costo' => 2000,
+            'cupo_maximo' => 20,
+            'cupo_minimo' => 5,
+            'catalogo_id' => 7,
+            'salon_id' => 3
+        ]);
+        DB::table('cursos')->insert([
+            'semestre_anio' => 2019,
+            'semestre_pi'=>"2",
+            'semestre_si' => "s",
+            'fecha_inicio' => '2018-05-20',
+            'fecha_fin' => '2018-05-30',
+            'hora_inicio' => '14:00',
+            'hora_fin' => '16:00',
+            'dias_semana' => 'Lunes,Miércoles',
+            'numero_sesiones' => 10,
+            'texto_diploma' => 'Texto diploma',
+            'costo' => 2000,
+            'cupo_maximo' => 20,
+            'cupo_minimo' => 5,
+            'catalogo_id' => 3,
+            'salon_id' => 2
+        ]);
+        DB::table('cursos')->insert([
+            'semestre_anio' => 2019,
+            'semestre_pi'=>"2",
+            'semestre_si' => "i",
+            'fecha_inicio' => '2018-05-20',
+            'fecha_fin' => '2018-05-30',
+            'hora_inicio' => '14:00',
+            'hora_fin' => '16:00',
+            'dias_semana' => 'Lunes,Miércoles',
+            'numero_sesiones' => 10,
+            'texto_diploma' => 'Texto diploma',
+            'costo' => 2000,
+            'cupo_maximo' => 20,
+            'cupo_minimo' => 5,
+            'catalogo_id' => 7,
+            'salon_id' => 1
+        ]);
+        DB::table('cursos')->insert([
+            'semestre_anio' => 2018,
+            'semestre_pi'=>"2",
+            'semestre_si' => "s",
+            'fecha_inicio' => '2019-12-03',
+            'fecha_fin' => '2020-05-30',
+            'hora_inicio' => '14:00',
+            'hora_fin' => '16:00',
+            'dias_semana' => 'Lunes,Martes',
+            'numero_sesiones' => 10,
+            'texto_diploma' => 'Texto diploma',
+            'costo' => 2000,
+            'cupo_maximo' => 20,
+            'cupo_minimo' => 5,
+            'catalogo_id' => 4,
+            'salon_id' => 1
+        ]);
+        DB::table('profesor_curso')->insert([
+            'curso_id' => "1",
+            'profesor_id' => '1',
+
+        ]);
+        DB::table('profesor_curso')->insert([
+            'curso_id' => "1",
+            'profesor_id' => '2',
+
+        ]);
+        DB::table('profesor_curso')->insert([
+            'curso_id' => "2",
+            'profesor_id' => '3',
+
+        ]);
+        DB::table('profesor_curso')->insert([
+            'curso_id' => "3",
+            'profesor_id' => '4',
+
+        ]);
+        DB::table('profesor_curso')->insert([
+            'curso_id' => "4",
+            'profesor_id' => '5',
+
+        ]);
+        DB::table('profesor_curso')->insert([
+            'curso_id' => "5",
+            'profesor_id' => '6',
+
+        ]);
+        DB::table('profesor_curso')->insert([
+            'curso_id' => "6",
+            'profesor_id' => '7',
+
+        ]);
+        DB::table('profesor_curso')->insert([
+            'curso_id' => "7",
+            'profesor_id' => '1',
+
+        ]);
+        DB::table('profesor_curso')->insert([
+            'curso_id' => "7",
+            'profesor_id' => '2',
+
+        ]);
+        DB::table('profesor_curso')->insert([
+            'curso_id' => "7",
+            'profesor_id' => '3',
+
+        ]);
+        DB::table('profesor_curso')->insert([
+            'curso_id' => "8",
+            'profesor_id' => '2',
+
+        ]);
+        DB::table('profesor_curso')->insert([
+            'curso_id' => "8",
+            'profesor_id' => '4',
+
+        ]);
+        DB::table('profesor_curso')->insert([
+            'curso_id' => "9",
+            'profesor_id' => '3',
+
+        ]);
+        DB::table('secretario_apoyo')->insert([
+            'secretario' => "Javier Arriaga",
+            'comentarios' => 'Licenciado en Administracion, muchos años ha estado en cargos administrativos de la universidad y actualmente se desempeña como secretario.',
+            'grado' => "M.E.M.",
+
+        ]);
+
+        DB::table('direccion')->insert([
+            'director' => "Gabriel Aguilar Luna",
+            'comentarios' => 'Ingeniero en computacion egresado de la UNAM, trabajo mucho tiempo en cargos administraticos en la FI',
+            'grado' => "M.E.M."
+
+        ]);
+
+        DB::table('coordinador_general')->insert([
+            'coordinador' => "Carolina Herrera",
+            'comentarios' => 'Licenciada en derecho, actuelmente se desempeña como coordinadora.',
+            'grado' => "M.E.M."
+
+        ]);
+		
+		//1_RespuestasEvalCursosTodasAreas_2020-1s_4.pdf
+
+
+		DB::table('catalogo_cursos')->insert([
+			'id'=> 50,
+			'nombre_curso'=>'Tecnologías de la Información y la Comunicación (TIC). Parte 1',
+			'duracion_curso' => '20',
+            'coordinacion_id' => 1,
+            'tipo' => 'C',
+            'institucion' => 'DGAPA',
+			'fecha_disenio'=>'2012-12-12',
+			'clave_curso'=>'TICDGAPA'
+		]);
+		
+		DB::table('cursos')->insert([
+			'id'=>50,
+			'semestre_anio'=>2020,
+			'semestre_pi'=>'1',
+			'semestre_si'=>'s',
+			'fecha_inicio' => '2018-05-20',
+            'fecha_fin' => '2018-05-30',
+            'hora_inicio' => '14:00',
+            'hora_fin' => '16:00',
+            'dias_semana' => 'Lunes,Miércoles',
+            'numero_sesiones' => 10,
+            'texto_diploma' => 'Texto diploma',
+            'costo' => 2000,
+            'cupo_maximo' => 20,
+            'cupo_minimo' => 5,
+            'catalogo_id' => 50,
+            'salon_id' => 1
+			
+		]);
+        
+        DB::table('profesors')->insert([
+            'id'=>92,
+			'nombres'=>'Gabriel',
+			'apellido_paterno'=>'Lopez',
+			'apellido_materno'=>'Dominguez',
+			'rfc'=>'LODG720202LODG',
+			'numero_trabajador' => '121432492',
+			'fecha_nacimiento'=>'1972-02-02'
+        ]);
+
+		DB::table('profesor_curso')->insert([
+			'id'=>50,
+			'curso_id'=>50,
+			'profesor_id'=>92,
+        ]);
+        
+        DB::table('profesors')->insert([
+            'id'=>93,
+			'nombres'=>'Guillermo Adolfo',
+			'apellido_paterno'=>'Vignau',
+			'apellido_materno'=>'Esteva',
+			'rfc'=>'VIEG720203VIEG',
+			'numero_trabajador' => '121432493',
+			'fecha_nacimiento'=>'1972-02-03'
+        ]);
+
+		DB::table('profesor_curso')->insert([
+			'id'=>51,
+			'curso_id'=>50,
+			'profesor_id'=>93,
+        ]);
+        
+        DB::table('profesors')->insert([
+            'id'=>500,
+            'nombres'=>'Guillermo Gabriel',
+            'apellido_paterno'=>'Aguilar',
+            'apellido_materno'=>'Lacavex',
+            'rfc'=>'AGLG740101AGLG',
+            'numero_trabajador' => '1214324500',
+            'fecha_nacimiento'=>'1974-01-01'
+        ]);
+
+        DB::table('participante_curso')->insert([
+            'id'=>500,
+            'profesor_id'=>500,
+            'curso_id'=>50
+        ]);
+
+        DB::table('profesors')->insert([
+            'id'=>501,
+            'nombres'=>'Victorino',
+            'apellido_paterno'=>'Garcia',
+            'apellido_materno'=>'Ramos',
+            'rfc'=>'GARV740102GARV',
+            'numero_trabajador' => '1214324501',
+            'fecha_nacimiento'=>'1974-01-02'
+        ]);
+
+        DB::table('participante_curso')->insert([
+            'id'=>501,
+            'profesor_id'=>501,
+            'curso_id'=>50
+        ]);
+
+        DB::table('profesors')->insert([
+            'id'=>502,
+            'nombres'=>'Luis Bruno',
+            'apellido_paterno'=>'Garduño',
+            'apellido_materno'=>'Castro',
+            'rfc'=>'GACL740103GACL',
+            'numero_trabajador' => '1214324502',
+            'fecha_nacimiento'=>'1974-01-03'
+        ]);
+
+        DB::table('participante_curso')->insert([
+            'id'=>502,
+            'profesor_id'=>502,
+            'curso_id'=>50
+        ]);
+
+        DB::table('profesors')->insert([
+            'id'=>504,
+            'nombres'=>'Manuel',
+            'apellido_paterno'=>'Hernandez',
+            'apellido_materno'=>'Gonzalez',
+            'rfc'=>'HEGM740105HEGM',
+            'numero_trabajador' => '1214324504',
+            'fecha_nacimiento'=>'1974-01-05'
+        ]);
+
+        DB::table('participante_curso')->insert([
+            'id'=>504,
+            'profesor_id'=>504,
+            'curso_id'=>50
+        ]);
+
+        DB::table('profesors')->insert([
+            'id'=>505,
+            'nombres'=>'Julieta',
+            'apellido_paterno'=>'Mares',
+            'apellido_materno'=>'Lopez',
+            'rfc'=>'MALJ740106MALJ',
+            'numero_trabajador' => '1214324505',
+            'fecha_nacimiento'=>'1974-01-06'
+        ]);
+
+        DB::table('participante_curso')->insert([
+            'id'=>505,
+            'profesor_id'=>505,
+            'curso_id'=>50
+        ]);
+
+        DB::table('profesors')->insert([
+            'id'=>506,
+            'nombres'=>'Jacquelyn',
+            'apellido_paterno'=>'Martinez',
+            'apellido_materno'=>'Alvarez',
+            'rfc'=>'MAAJ740107MAAJ',
+            'numero_trabajador' => '1214324506',
+            'fecha_nacimiento'=>'1974-01-07'
+        ]);
+
+        DB::table('participante_curso')->insert([
+            'id'=>506,
+            'profesor_id'=>506,
+            'curso_id'=>50
+        ]);
+
+        DB::table('profesors')->insert([
+            'id'=>507,
+            'nombres'=>'Luis Enrique',
+            'apellido_paterno'=>'Quintanar',
+            'apellido_materno'=>'Cortes',
+            'rfc'=>'QUCL740108QUCL',
+            'numero_trabajador' => '1214324507',
+            'fecha_nacimiento'=>'1974-01-08'
+        ]);
+
+        DB::table('participante_curso')->insert([
+            'id'=>507,
+            'profesor_id'=>507,
+            'curso_id'=>50
+        ]);
+
+        DB::table('profesors')->insert([
+            'id'=>508,
+            'nombres'=>'Israel',
+            'apellido_paterno'=>'Rios',
+            'apellido_materno'=>'Mora',
+            'rfc'=>'RIMI740109RIMI',
+            'numero_trabajador' => '1214324508',
+            'fecha_nacimiento'=>'1974-01-09'
+        ]);
+
+        DB::table('participante_curso')->insert([
+            'id'=>508,
+            'profesor_id'=>508,
+            'curso_id'=>50
+        ]);
+
+        DB::table('profesors')->insert([
+            'id'=>509,
+            'nombres'=>'Servando',
+            'apellido_paterno'=>'Ruiz',
+            'apellido_materno'=>'Rodriguez',
+            'rfc'=>'RURS740109RURS',
+            'numero_trabajador' => '1214324509',
+            'fecha_nacimiento'=>'1974-01-09'
+        ]);
+
+        DB::table('participante_curso')->insert([
+            'id'=>509,
+            'profesor_id'=>509,
+            'curso_id'=>50
+        ]);
+
+        DB::table('profesors')->insert([
+            'id'=>510,
+            'nombres'=>'Norma Isela',
+            'apellido_paterno'=>'Vega',
+            'apellido_materno'=>'Deloya',
+            'rfc'=>'VEDM740110VEDM',
+            'numero_trabajador' => '1214324510',
+            'fecha_nacimiento'=>'1974-01-10'
+        ]);
+
+        DB::table('participante_curso')->insert([
+            'id'=>510,
+            'profesor_id'=>510,
+            'curso_id'=>50
+        ]);
+
+		DB::table('profesors')->insert([
+			'id'=>50,
+			'nombres'=>'Voileta Erendira',
+			'apellido_paterno'=>'Escalante',
+			'apellido_materno'=>'Estrada',
+			'rfc'=>'EEEV720102EEE',
+			'numero_trabajador' => '121432450',
+			'fecha_nacimiento'=>'1972-01-02'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>50,
+			'curso_id'=>50,
+			'profesor_id'=>50,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'80',
+			'p1_2'=>'80',
+			'p1_3'=>'80',
+			'p1_4'=>'80',
+			'p1_5'=>'80',
+			'p2_1'=>'80',
+			'p2_2'=>'80',
+			'p2_3'=>'100',
+			'p2_4'=>'80',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["1","null"]',
+			'mejor'=>'El conocimiento de nuevas herramientas',
+			'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'80',
+			'p4_10'=>'100',
+			'p4_11'=>'80',
+			'p5_1'=>'100',
+			'p5_2'=>'100',
+			'p5_3'=>'100',
+			'p5_4'=>'100',
+			'p5_5'=>'100',
+			'p5_6'=>'100',
+			'p5_7'=>'100',
+			'p5_8'=>'100',
+			'p5_9'=>'80',
+			'p5_10'=>'100',
+            'p5_11'=>'80',
+            'otros'=>'programacion',
+			'conocimiento'=>'["2"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>50,
+			'participante_curso_id'=>50
+		]);
+		
+		DB::table('profesors')->insert([
+			'id'=>51,
+			'nombres'=>'Jose',
+			'apellido_paterno'=>'Gonzalez',
+			'apellido_materno'=>'Suarez',
+			'rfc'=>'GOSJ720103GOSJ',
+			'numero_trabajador' => '121432451',
+			'fecha_nacimiento'=>'1972-01-03'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>51,
+			'curso_id'=>50,
+			'profesor_id'=>51,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'80',
+			'p1_3'=>'80',
+			'p1_4'=>'100',
+			'p1_5'=>'60',
+			'p2_1'=>'80',
+			'p2_2'=>'60',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["1","null"]',
+			'mejor'=>'Todo porque me pareció muye buano y que lo puedo aplicar en las clases',
+			'sug'=>'Me pareció bueno así tal y como se impartió',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+			'p5_1'=>'100',
+			'p5_2'=>'100',
+			'p5_3'=>'100',
+			'p5_4'=>'100',
+			'p5_5'=>'100',
+			'p5_6'=>'100',
+			'p5_7'=>'100',
+			'p5_8'=>'100',
+			'p5_9'=>'100',
+			'p5_10'=>'100',
+            'p5_11'=>'100',
+            'otros'=>'administración',
+			'conocimiento'=>'["2"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>50,
+			'participante_curso_id'=>51
+		]);
+		
+		DB::table('profesors')->insert([
+			'id'=>52,
+			'nombres'=>'Patricia',
+			'apellido_paterno'=>'Gonzalez',
+			'apellido_materno'=>'Vega',
+			'rfc'=>'GOPV720104GOPV',
+			'numero_trabajador' => '121432452',
+			'fecha_nacimiento'=>'1972-01-04'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>52,
+			'curso_id'=>50,
+			'profesor_id'=>52,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'80',
+			'p1_2'=>'80',
+			'p1_3'=>'80',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'40',
+			'p2_3'=>'80',
+			'p2_4'=>'100',
+			'p3_1'=>'40',
+			'p3_2'=>'100',
+			'p3_3'=>'60',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'Plataformas educativas',
+			'sug'=>'Sigan dando esto cursos',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+			'p5_1'=>'100',
+			'p5_2'=>'100',
+			'p5_3'=>'100',
+			'p5_4'=>'100',
+			'p5_5'=>'100',
+			'p5_6'=>'100',
+			'p5_7'=>'100',
+			'p5_8'=>'100',
+			'p5_9'=>'100',
+			'p5_10'=>'100',
+            'p5_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>50,
+			'participante_curso_id'=>52
+		]);
+		
+		DB::table('profesors')->insert([
+			'id'=>53,
+			'nombres'=>'Gudelia',
+			'apellido_paterno'=>'Hernandez',
+			'apellido_materno'=>'Molina',
+			'rfc'=>'HEMG720105HEMG',
+			'numero_trabajador' => '121432453',
+			'fecha_nacimiento'=>'1972-01-05'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>53,
+			'curso_id'=>50,
+			'profesor_id'=>53,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'80',
+			'p1_3'=>'100',
+			'p1_4'=>'80',
+			'p1_5'=>'80',
+			'p2_1'=>'80',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'80',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'80',
+			'p7'=>true,
+			'p8'=>'["1","null"]',
+			'mejor'=>'Todo me gusto porque es nuevo para mí y ayuda a construir un curso desde otra perspectiva',
+			'sug'=>'Me ha gustado mucho todo lo visto y creo que me será de utilidad en mis clases',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+			'p5_1'=>'100',
+			'p5_2'=>'100',
+			'p5_3'=>'100',
+			'p5_4'=>'100',
+			'p5_5'=>'100',
+			'p5_6'=>'100',
+			'p5_7'=>'100',
+			'p5_8'=>'100',
+			'p5_9'=>'100',
+			'p5_10'=>'100',
+            'p5_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>50,
+			'participante_curso_id'=>53
+		]);
+		
+		DB::table('profesors')->insert([
+			'id'=>54,
+			'nombres'=>'Jose Gerardo',
+			'apellido_paterno'=>'Lopez',
+			'apellido_materno'=>'Bonifacio',
+			'rfc'=>'LOBJ720106LOBJ',
+			'numero_trabajador' => '121432454',
+			'fecha_nacimiento'=>'1972-01-06'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>54,
+			'curso_id'=>50,
+			'profesor_id'=>54,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'80',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'80',
+			'p7'=>true,
+			'p8'=>'["1","null"]',
+			'mejor'=>'Los temas tratados y la calidad humana por parte de los doscentes',
+			'sug'=>'El temario está muy bien de hecho, si acaso dar un día más de clases a manera personal, aunque se abarcaron muy bien los temas, sobre todo para más',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+			'p5_1'=>'100',
+			'p5_2'=>'100',
+			'p5_3'=>'100',
+			'p5_4'=>'100',
+			'p5_5'=>'100',
+			'p5_6'=>'100',
+			'p5_7'=>'100',
+			'p5_8'=>'100',
+			'p5_9'=>'100',
+			'p5_10'=>'100',
+            'p5_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["3"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>50,
+			'participante_curso_id'=>54
+		]);
+		
+		DB::table('profesors')->insert([
+			'id'=>55,
+			'nombres'=>'Martin',
+			'apellido_paterno'=>'Mejia',
+			'apellido_materno'=>'Ramos',
+			'rfc'=>'MERM720107MERM',
+			'numero_trabajador' => '121432455',
+			'fecha_nacimiento'=>'1972-01-07'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>55,
+			'curso_id'=>50,
+			'profesor_id'=>55,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'80',
+			'p1_2'=>'80',
+			'p1_3'=>'80',
+			'p1_4'=>'80',
+			'p1_5'=>'100',
+			'p2_1'=>'80',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["4","Gaceta"]',
+			'mejor'=>'El trato con los profesores',
+			'sug'=>'Que no esté tan cargado porque no se profundiza',
+			'p4_1'=>'80',
+			'p4_2'=>'80',
+			'p4_3'=>'80',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+			'p5_1'=>'100',
+			'p5_2'=>'100',
+			'p5_3'=>'80',
+			'p5_4'=>'100',
+			'p5_5'=>'100',
+			'p5_6'=>'100',
+			'p5_7'=>'100',
+			'p5_8'=>'100',
+			'p5_9'=>'100',
+			'p5_10'=>'100',
+            'p5_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>50,
+			'participante_curso_id'=>55
+		]);
+		
+		DB::table('profesors')->insert([
+			'id'=>56,
+			'nombres'=>'Javier',
+			'apellido_paterno'=>'Millan',
+			'apellido_materno'=>'Martinez',
+			'rfc'=>'MIMJ720108MIMJ',
+			'numero_trabajador' => '121432456',
+			'fecha_nacimiento'=>'1972-01-08'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>56,
+			'curso_id'=>50,
+			'profesor_id'=>56,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'80',
+			'p2_2'=>'80',
+			'p2_3'=>'80',
+			'p2_4'=>'80',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["1","null"]',
+			'mejor'=>'La disposición',
+			'sug'=>'5mentarios',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+			'p5_1'=>'100',
+			'p5_2'=>'100',
+			'p5_3'=>'100',
+			'p5_4'=>'100',
+			'p5_5'=>'100',
+			'p5_6'=>'100',
+			'p5_7'=>'100',
+			'p5_8'=>'100',
+			'p5_9'=>'100',
+			'p5_10'=>'100',
+            'p5_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>50,
+			'participante_curso_id'=>56
+		]);
+		
+		DB::table('profesors')->insert([
+			'id'=>57,
+			'nombres'=>'Eduardo',
+			'apellido_paterno'=>'Rosas',
+			'apellido_materno'=>'Lira',
+			'rfc'=>'ROLE720109ROLE',
+			'numero_trabajador' => '121432457',
+			'fecha_nacimiento'=>'1972-01-09'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>57,
+			'curso_id'=>50,
+			'profesor_id'=>57,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'80',
+			'p1_2'=>'80',
+			'p1_3'=>'100',
+			'p1_4'=>'80',
+			'p1_5'=>'80',
+			'p2_1'=>'100',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'80',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'El uso de las TIC para las asignaturas',
+			'sug'=>'Debería haber dos sesiones a la semana',
+			'p4_1'=>'80',
+			'p4_2'=>'100',
+			'p4_3'=>'80',
+			'p4_4'=>'100',
+			'p4_5'=>'80',
+			'p4_6'=>'80',
+			'p4_7'=>'80',
+			'p4_8'=>'80',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'80',
+			'p5_1'=>'80',
+			'p5_2'=>'80',
+			'p5_3'=>'100',
+			'p5_4'=>'80',
+			'p5_5'=>'80',
+			'p5_6'=>'80',
+			'p5_7'=>'80',
+			'p5_8'=>'80',
+			'p5_9'=>'80',
+			'p5_10'=>'80',
+            'p5_11'=>'80',
+            'otros'=>'Otros',
+			'conocimiento'=>'["3"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>50,
+			'participante_curso_id'=>57
+		]);
+		
+		DB::table('profesors')->insert([
+			'id'=>58,
+			'nombres'=>'Agustin Gerardo',
+			'apellido_paterno'=>'Ruiz',
+			'apellido_materno'=>'Tamayo',
+			'rfc'=>'RUTA720111RUTA',
+			'numero_trabajador' => '121432458',
+			'fecha_nacimiento'=>'1972-01-11'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>58,
+			'curso_id'=>50,
+			'profesor_id'=>58,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'80',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["4","DGAPA"]',
+			'mejor'=>'Ver herramientas alternas para trabajar con los alumnos',
+			'sug'=>'Tal vez, un poco más de tiempo, que sean al menos unas 30 horas el curso',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+			'p5_1'=>'100',
+			'p5_2'=>'100',
+			'p5_3'=>'100',
+			'p5_4'=>'100',
+			'p5_5'=>'100',
+			'p5_6'=>'100',
+			'p5_7'=>'100',
+			'p5_8'=>'100',
+			'p5_9'=>'100',
+			'p5_10'=>'100',
+            'p5_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["2"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>50,
+			'participante_curso_id'=>58
+		]);
+		
+		
+		DB::table('profesors')->insert([
+			'id'=>59,
+			'nombres'=>'Jaime Juan',
+			'apellido_paterno'=>'Zarza y',
+			'apellido_materno'=>'Teran',
+			'rfc'=>'ZATJ720112ZATJ',
+			'numero_trabajador' => '121432459',
+			'fecha_nacimiento'=>'1972-01-12'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>59,
+			'curso_id'=>50,
+			'profesor_id'=>59,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'80',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'80',
+			'p2_2'=>'80',
+			'p2_3'=>'80',
+			'p2_4'=>'80',
+			'p3_1'=>'80',
+			'p3_2'=>'80',
+			'p3_3'=>'80',
+			'p3_4'=>'80',
+			'p7'=>true,
+			'p8'=>'["1","null"]',
+			'mejor'=>'Conocimiento acerca de nuevas herramientas',
+			'sug'=>'Dar continuidad con otros cursos',
+			'p4_1'=>'80',
+			'p4_2'=>'80',
+			'p4_3'=>'100',
+			'p4_4'=>'80',
+			'p4_5'=>'100',
+			'p4_6'=>'80',
+			'p4_7'=>'80',
+			'p4_8'=>'100',
+			'p4_9'=>'80',
+			'p4_10'=>'80',
+			'p4_11'=>'100',
+			'p5_1'=>'100',
+			'p5_2'=>'80',
+			'p5_3'=>'100',
+			'p5_4'=>'100',
+			'p5_5'=>'80',
+			'p5_6'=>'80',
+			'p5_7'=>'100',
+			'p5_8'=>'100',
+			'p5_9'=>'100',
+			'p5_10'=>'100',
+            'p5_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["2"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>50,
+			'participante_curso_id'=>59
+        ]);
+        
+		//1_RespuestasEvalCursosTodasAreas_2020-1s_33.pdf
+		
+		DB::table('catalogo_cursos')->insert([
+			'id'=> 51,
+			'nombre_curso'=>'Módulo 4. Tendencias y estrategias de comunicación para la docencia',
+			'duracion_curso' => '20',
+            'tipo' => 'C',
+            'institucion' => 'DGAPA',
+			'fecha_disenio'=>'2012-12-12',
+			'coordinacion_id'=>1,
+			'clave_curso'=>'TECDDGAPA'
+		]);
+		
+		DB::table('cursos')->insert([
+			'id'=>51,
+			'semestre_anio'=>2020,
+			'semestre_pi'=>'1',
+			'semestre_si'=>'s',
+			'fecha_inicio' => '2018-05-20',
+            'fecha_fin' => '2018-05-30',
+            'hora_inicio' => '14:00',
+            'hora_fin' => '16:00',
+            'dias_semana' => 'Lunes,Miércoles',
+            'numero_sesiones' => 10,
+            'texto_diploma' => 'Texto diploma',
+            'costo' => 2000,
+            'cupo_maximo' => 20,
+            'cupo_minimo' => 5,
+            'catalogo_id' => 51,
+            'salon_id' => 2
+			
+        ]);
+        
+        DB::table('profesors')->insert([
+            'id'=>94,
+			'nombres'=>'Claudia',
+			'apellido_paterno'=>'Loreto',
+			'apellido_materno'=>'Miranda',
+			'rfc'=>'LOMC720204LOMC',
+			'numero_trabajador' => '121432494',
+			'fecha_nacimiento'=>'1972-02-04'
+        ]);
+		
+		DB::table('profesor_curso')->insert([
+			'id'=>52,
+			'curso_id'=>51,
+			'profesor_id'=>94,
+        ]);
+        
+		DB::table('profesors')->insert([
+			'id'=>60,
+			'nombres'=>'Anayantzin',
+			'apellido_paterno'=>'Almanza',
+			'apellido_materno'=>'Valdez',
+			'rfc'=>'ALVA720112ALVA',
+			'numero_trabajador' => '121432460',
+            'fecha_nacimiento'=>'1972-01-13',
+            'email' => 'anayatzin123@gmail.com',
+            'telefono' => '5566778899'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>60,
+			'curso_id'=>51,
+			'profesor_id'=>60,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'80',
+			'p3_3'=>'80',
+			'p3_4'=>'80',
+			'p7'=>true,
+			'p8'=>'["4","Profesor"]',
+			'mejor'=>'Las técnicas que se nos mostró para mejorar nuestras habilidades de enseñanza',
+			'sug'=>'Variedad de cursos',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>51,
+			'participante_curso_id'=>60
+        ]);
+        
+		DB::table('profesors')->insert([
+			'id'=>61,
+			'nombres'=>'Angel Francisco',
+			'apellido_paterno'=>'Alvarez',
+			'apellido_materno'=>'Herrera',
+			'rfc'=>'ALHA720114ALHA',
+			'numero_trabajador' => '121432461',
+			'fecha_nacimiento'=>'1972-01-14'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>61,
+			'curso_id'=>51,
+			'profesor_id'=>61,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'95',
+			'p2_2'=>'95',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["1","null"]',
+			'mejor'=>'Los contenidos desarrollados y la uinmediata aplicación',
+            'sug'=>'Gracias',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'matematicas',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>51,
+			'participante_curso_id'=>61
+        ]);
+
+        
+		DB::table('profesors')->insert([
+			'id'=>62,
+			'nombres'=>'Gaspar',
+			'apellido_paterno'=>'Franco',
+			'apellido_materno'=>'Hernandez',
+			'rfc'=>'FAHG720115FAHG',
+			'numero_trabajador' => '121432462',
+			'fecha_nacimiento'=>'1972-01-15'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>62,
+			'curso_id'=>51,
+			'profesor_id'=>62,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'80',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["1","null"]',
+			'mejor'=>'La forma en que la instructora presentó los temas aterrizados a la realidad',
+            'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Programacion Estructurada',
+			'conocimiento'=>'["3"]',
+			'tematica'=>'Otro',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>51,
+			'participante_curso_id'=>62
+        ]);
+
+        DB::table('profesors')->insert([
+			'id'=>63,
+			'nombres'=>'Luis Antonio',
+			'apellido_paterno'=>'Garcia',
+			'apellido_materno'=>'Villanueva',
+			'rfc'=>'GAVL720116GAVL',
+			'numero_trabajador' => '121432463',
+			'fecha_nacimiento'=>'1972-01-16'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>63,
+			'curso_id'=>51,
+			'profesor_id'=>63,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'80',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'La estrategia de enseñanza-aprendizaje denominado aula invertida',
+            'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Programacion Estructurada',
+			'conocimiento'=>'["4"]',
+			'tematica'=>'Varias',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>51,
+			'participante_curso_id'=>63
+        ]);
+
+        DB::table('profesors')->insert([
+			'id'=>64,
+			'nombres'=>'Griselda Berenice',
+			'apellido_paterno'=>'Hernandez',
+			'apellido_materno'=>'Cruz',
+			'rfc'=>'HERC720117HERCV',
+			'numero_trabajador' => '121432464',
+			'fecha_nacimiento'=>'1972-01-17'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>64,
+			'curso_id'=>51,
+			'profesor_id'=>64,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'95',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'60',
+			'p2_2'=>'95',
+			'p2_3'=>'95',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'95',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["4","Diplomado"]',
+			'mejor'=>'La forma en como se desarrollaron los contenidos',
+            'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["2"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>51,
+			'participante_curso_id'=>64
+        ]);
+
+        DB::table('profesors')->insert([
+			'id'=>65,
+			'nombres'=>'Miguel Angel',
+			'apellido_paterno'=>'Hofmann',
+			'apellido_materno'=>'Aguirre',
+			'rfc'=>'HOAM720118HOAM',
+			'numero_trabajador' => '121432465',
+			'fecha_nacimiento'=>'1972-01-18'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>65,
+			'curso_id'=>51,
+			'profesor_id'=>65,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'95',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'Aula invertida',
+            'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["2"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>51,
+			'participante_curso_id'=>65
+        ]);
+
+        DB::table('profesors')->insert([
+			'id'=>66,
+			'nombres'=>'Lucia Yazmin',
+			'apellido_paterno'=>'Juarez',
+			'apellido_materno'=>'De la Mora',
+			'rfc'=>'JUDL720119JUDL',
+			'numero_trabajador' => '121432466',
+			'fecha_nacimiento'=>'1972-01-19'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>66,
+			'curso_id'=>51,
+			'profesor_id'=>66,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'95',
+			'p2_2'=>'95',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'5mentarios',
+            'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["2"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>51,
+			'participante_curso_id'=>66
+        ]);
+
+        DB::table('profesors')->insert([
+			'id'=>67,
+			'nombres'=>'Jose Miguel',
+			'apellido_paterno'=>'Martinez',
+			'apellido_materno'=>'Alcazar',
+			'rfc'=>'MAAJ720120MAAJ',
+			'numero_trabajador' => '121432467',
+			'fecha_nacimiento'=>'1972-01-20'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>67,
+			'curso_id'=>51,
+			'profesor_id'=>67,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'80',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'La presentación de los temas',
+            'sug'=>'Que se mejore la red de internet',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>51,
+			'participante_curso_id'=>67
+        ]);
+
+        DB::table('profesors')->insert([
+			'id'=>68,
+			'nombres'=>'Brenda Iveth',
+			'apellido_paterno'=>'Moreno',
+			'apellido_materno'=>'Hurtado',
+			'rfc'=>'MOHB720121MOHB',
+			'numero_trabajador' => '121432468',
+			'fecha_nacimiento'=>'1972-01-21'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>68,
+			'curso_id'=>51,
+			'profesor_id'=>68,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'95',
+			'p2_2'=>'95',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'95',
+			'p3_2'=>'95',
+			'p3_3'=>'95',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["3","null"]',
+			'mejor'=>'Habilidades para la vida y competencias personales y como aplicarlas',
+            'sug'=>'Recalcal el tema del cuál se está hablando',
+			'p4_1'=>'100',
+			'p4_2'=>'95',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["4"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>51,
+			'participante_curso_id'=>68
+        ]);
+
+        DB::table('profesors')->insert([
+			'id'=>69,
+			'nombres'=>'Georgina',
+			'apellido_paterno'=>'Nieto',
+			'apellido_materno'=>'Castañeda',
+			'rfc'=>'NICG720122NICG',
+			'numero_trabajador' => '121432469',
+			'fecha_nacimiento'=>'1972-01-22'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>69,
+			'curso_id'=>51,
+			'profesor_id'=>69,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'95',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'Las relfexiones grupales',
+            'sug'=>'Incluir un ejemplo del formato de las tareas',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["2"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>51,
+			'participante_curso_id'=>69
+        ]);
+
+        DB::table('profesors')->insert([
+			'id'=>70,
+			'nombres'=>'Maria Teresa',
+			'apellido_paterno'=>'Peñuñuri',
+			'apellido_materno'=>'Santoyo',
+			'rfc'=>'PESM720123PESM',
+			'numero_trabajador' => '121432470',
+			'fecha_nacimiento'=>'1972-01-23'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>70,
+			'curso_id'=>51,
+			'profesor_id'=>70,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'95',
+			'p2_3'=>'100',
+			'p2_4'=>'95',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["1","null"]',
+			'mejor'=>'Aula invertida y competencias',
+            'sug'=>'Poner el Diplomado en el sitio de EDUCAFI para tener todos los módulos disponibles a lo larfo del diplomado',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'95',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'95',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>51,
+			'participante_curso_id'=>70
+        ]);
+        
+        DB::table('profesors')->insert([
+			'id'=>71,
+			'nombres'=>'Soledad Alicia',
+			'apellido_paterno'=>'Rivera',
+			'apellido_materno'=>'Rosales',
+			'rfc'=>'RIRS720124RIRS',
+			'numero_trabajador' => '121432471',
+			'fecha_nacimiento'=>'1972-01-24'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>71,
+			'curso_id'=>51,
+			'profesor_id'=>71,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'95',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'95',
+			'p2_2'=>'80',
+			'p2_3'=>'95',
+			'p2_4'=>'95',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'95',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["4","Póster en FCA"]',
+			'mejor'=>'El conocimiento de algunas hailidades que he desarrollado en la práctica docente',
+            'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'95',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>51,
+			'participante_curso_id'=>71
+        ]);
+        
+        DB::table('profesors')->insert([
+			'id'=>72,
+			'nombres'=>'Mario Sinuhe',
+			'apellido_paterno'=>'Sanchez',
+			'apellido_materno'=>'Dominguez',
+			'rfc'=>'SADM720125SADM',
+			'numero_trabajador' => '121432472',
+			'fecha_nacimiento'=>'1972-01-25'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>72,
+			'curso_id'=>51,
+			'profesor_id'=>72,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'95',
+			'p1_2'=>'95',
+			'p1_3'=>'95',
+			'p1_4'=>'95',
+			'p1_5'=>'95',
+			'p2_1'=>'80',
+			'p2_2'=>'80',
+			'p2_3'=>'80',
+			'p2_4'=>'80',
+			'p3_1'=>'80',
+			'p3_2'=>'80',
+			'p3_3'=>'80',
+			'p3_4'=>'80',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'Trabajo y comunicación de trabajo en equipo',
+            'sug'=>'Todo bien',
+			'p4_1'=>'95',
+			'p4_2'=>'95',
+			'p4_3'=>'80',
+			'p4_4'=>'95',
+			'p4_5'=>'95',
+			'p4_6'=>'95',
+			'p4_7'=>'95',
+			'p4_8'=>'95',
+			'p4_9'=>'95',
+			'p4_10'=>'95',
+			'p4_11'=>'95',
+            'otros'=>'Otros',
+			'conocimiento'=>'["2"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>51,
+			'participante_curso_id'=>72
+        ]);
+
+        DB::table('catalogo_cursos')->insert([
+			'id'=> 52,
+			'nombre_curso'=>'Módulo 5. Tendencias y estrategias de comunicación para la docencia',
+			'duracion_curso' => '20',
+            'tipo' => 'C',
+            'institucion' => 'DGAPA',
+			'fecha_disenio'=>'2012-12-12',
+			'coordinacion_id'=>1,
+			'clave_curso'=>'TECDDGAPA5'
+		]);
+		
+		DB::table('cursos')->insert([
+			'id'=>52,
+			'semestre_anio'=>2020,
+			'semestre_pi'=>'1',
+			'semestre_si'=>'s',
+			'fecha_inicio' => '2018-05-20',
+            'fecha_fin' => '2018-05-30',
+            'hora_inicio' => '14:00',
+            'hora_fin' => '16:00',
+            'dias_semana' => 'Lunes,Miércoles',
+            'numero_sesiones' => 10,
+            'texto_diploma' => 'Texto diploma',
+            'costo' => 2000,
+            'cupo_maximo' => 20,
+            'cupo_minimo' => 5,
+            'catalogo_id' => 52,
+            'salon_id' => 2
+			
+        ]);
+
+        DB::table('profesors')->insert([
+            'id'=>96,
+			'nombres'=>'Juan',
+			'apellido_paterno'=>'Varela',
+			'apellido_materno'=>'Juarez',
+			'rfc'=>'VAJJ720205VAJJ',
+			'numero_trabajador' => '121432496',
+			'fecha_nacimiento'=>'1972-02-05'
+        ]);
+
+        DB::table('profesor_curso')->insert([
+			'id'=>62,
+			'curso_id'=>52,
+			'profesor_id'=>96,
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>73,
+			'curso_id'=>52,
+			'profesor_id'=>60,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+        
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["4","Profesor"]',
+			'mejor'=>'Todo bien',
+            'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'Cualquiera',
+			'horarioi'=>'Cualquiera',
+			'curso_id'=>52,
+			'participante_curso_id'=>73
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>74,
+			'curso_id'=>52,
+			'profesor_id'=>61,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'95',
+			'p2_3'=>'95',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'80',
+			'p3_3'=>'80',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["1","null"]',
+			'mejor'=>'La relfexion sobre la inteligencia emocional en nuestros alumnos y en forma personal',
+            'sug'=>', gracias',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'Cualquiera',
+			'horarioi'=>'Cualquiera',
+			'curso_id'=>52,
+			'participante_curso_id'=>74
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>75,
+			'curso_id'=>52,
+			'profesor_id'=>62,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'95',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["1","null"]',
+			'mejor'=>'La relfexion sobre la inteligencia emocional en nuestros alumnos y en forma personal',
+            'sug'=>'Ninguna, gracias',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["2"]',
+			'tematica'=>'tematica',
+			'horarios'=>'Cualquiera',
+			'horarioi'=>'Cualquiera',
+			'curso_id'=>52,
+            'participante_curso_id'=>75
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>76,
+			'curso_id'=>52,
+			'profesor_id'=>63,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'95',
+			'p2_2'=>'95',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'El conocer como se maneja la inteligencia emocional y que puede ser aplicada en el aula. Identificar cada una de las emociones que rige el docente en el aula',
+            'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'Cualquiera',
+			'horarioi'=>'Cualquiera',
+			'curso_id'=>52,
+            'participante_curso_id'=>76
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>77,
+			'curso_id'=>52,
+			'profesor_id'=>64,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'95',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'60',
+			'p2_2'=>'95',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'La temática de la inteligencia emocional',
+            'sug'=>'Este módulo podría ser útil como un cuirso en intersemestral o semestral',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'95',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["3"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-11:00',
+			'horarioi'=>'9:00-13:00',
+			'curso_id'=>52,
+            'participante_curso_id'=>77
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>78,
+			'curso_id'=>52,
+			'profesor_id'=>65,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'El conocer la utilidad de la inteligencia emocional dentro y fuera del aula',
+            'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["2"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-11:00',
+			'horarioi'=>'9:00-13:00',
+			'curso_id'=>52,
+            'participante_curso_id'=>78
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>79,
+			'curso_id'=>52,
+			'profesor_id'=>66,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'95',
+			'p2_2'=>'95',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["null","null"]',
+			'mejor'=>'Todo lo que aportó el instructor y mis compañeros en el tema de Inteligencia emocional',
+            'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["2"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-11:00',
+			'horarioi'=>'9:00-13:00',
+			'curso_id'=>52,
+            'participante_curso_id'=>79
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>80,
+			'curso_id'=>52,
+			'profesor_id'=>67,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["4","Coordinacion del Centro"]',
+			'mejor'=>'La presentación y profundidad de los temas por el instructor',
+            'sug'=>'Ninguna, todo excelente.Desde los detalles, la recomendación de los libros y lecturas',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["2"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-11:00',
+			'horarioi'=>'9:00-13:00',
+			'curso_id'=>52,
+            'participante_curso_id'=>80
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>81,
+			'curso_id'=>52,
+			'profesor_id'=>68,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'95',
+			'p1_5'=>'100',
+			'p2_1'=>'95',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'95',
+			'p3_2'=>'100',
+			'p3_3'=>'95',
+			'p3_4'=>'95',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'El conocer la utilidad de la inteligencia emocional dentro y fuera del aula',
+            'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["2"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-11:00',
+			'horarioi'=>'9:00-13:00',
+			'curso_id'=>52,
+            'participante_curso_id'=>81
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>82,
+			'curso_id'=>52,
+			'profesor_id'=>69,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+        
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'80',
+			'p3_4'=>'80',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'Las reflexiones, los ejercicios de integración y las pruebas',
+            'sug'=>'Es el módulo que más me ha gustaro del Diplomado',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-11:00',
+			'horarioi'=>'9:00-13:00',
+			'curso_id'=>52,
+            'participante_curso_id'=>82
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>83,
+			'curso_id'=>52,
+			'profesor_id'=>70,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+        
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'95',
+			'p2_2'=>'95',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'95',
+			'p3_4'=>'95',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'La proporción de los materiales en tiempo y forma; así también la bibliografía',
+            'sug'=>'Explorar la plataforma de EDUCAFI, uno como docente la administra y tiene espacio para almacenar todo el material de cada módulo. sin problemas de [...]',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["2"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-11:00',
+			'horarioi'=>'9:00-13:00',
+			'curso_id'=>52,
+            'participante_curso_id'=>83
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>84,
+			'curso_id'=>52,
+			'profesor_id'=>71,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+        
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'95',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'95',
+			'p1_5'=>'95',
+			'p2_1'=>'95',
+			'p2_2'=>'80',
+			'p2_3'=>'95',
+			'p2_4'=>'95',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'95',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["4","Póster en FCA"]',
+			'mejor'=>'Conocer mi estilo de pensamiento y las evaluaciones del tipo de pensamiento',
+            'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'95',
+			'p4_6'=>'100',
+			'p4_7'=>'95',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["3"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-11:00',
+			'horarioi'=>'9:00-13:00',
+			'curso_id'=>52,
+            'participante_curso_id'=>84
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>85,
+			'curso_id'=>52,
+			'profesor_id'=>72,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+        
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'95',
+			'p1_2'=>'80',
+			'p1_3'=>'80',
+			'p1_4'=>'95',
+			'p1_5'=>'95',
+			'p2_1'=>'80',
+			'p2_2'=>'80',
+			'p2_3'=>'80',
+			'p2_4'=>'80',
+			'p3_1'=>'95',
+			'p3_2'=>'95',
+			'p3_3'=>'95',
+			'p3_4'=>'95',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'Todo bien',
+            'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'95',
+			'p4_3'=>'95',
+			'p4_4'=>'95',
+			'p4_5'=>'95',
+			'p4_6'=>'95',
+			'p4_7'=>'95',
+			'p4_8'=>'100',
+			'p4_9'=>'95',
+			'p4_10'=>'95',
+			'p4_11'=>'95',
+            'otros'=>'Otros',
+			'conocimiento'=>'["4"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-11:00',
+			'horarioi'=>'9:00-13:00',
+			'curso_id'=>52,
+            'participante_curso_id'=>85
+        ]);
+
+        DB::table('catalogo_cursos')->insert([
+			'id'=> 53,
+			'nombre_curso'=>'Módulo 6. Tendencias y estrategias de comunicación para la docencia',
+			'duracion_curso' => '20',
+            'tipo' => 'C',
+            'institucion' => 'DGAPA',
+			'fecha_disenio'=>'2012-12-12',
+			'coordinacion_id'=>1,
+			'clave_curso'=>'TECDDGAPA6'
+		]);
+		
+		DB::table('cursos')->insert([
+			'id'=>53,
+			'semestre_anio'=>2020,
+			'semestre_pi'=>'1',
+			'semestre_si'=>'s',
+			'fecha_inicio' => '2018-05-20',
+            'fecha_fin' => '2018-05-30',
+            'hora_inicio' => '14:00',
+            'hora_fin' => '16:00',
+            'dias_semana' => 'Lunes,Miércoles',
+            'numero_sesiones' => 10,
+            'texto_diploma' => 'Texto diploma',
+            'costo' => 2000,
+            'cupo_maximo' => 20,
+            'cupo_minimo' => 5,
+            'catalogo_id' => 53,
+            'salon_id' => 2
+			
+        ]);
+
+        DB::table('profesors')->insert([
+            'id'=>97,
+			'nombres'=>'Juan',
+			'apellido_paterno'=>'Tapia',
+			'apellido_materno'=>'Gonzalez',
+			'rfc'=>'TAGJ720206TAGL',
+			'numero_trabajador' => '121432497',
+			'fecha_nacimiento'=>'1972-02-06'
+        ]);
+
+        DB::table('profesor_curso')->insert([
+			'id'=>63,
+			'curso_id'=>53,
+			'profesor_id'=>97,
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>86,
+			'curso_id'=>53,
+			'profesor_id'=>60,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+        
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'80',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["4","Profesor"]',
+			'mejor'=>'Cada clase del método fue única',
+            'sug'=>'Qué continúe el instructor motivando a más profesores a desarrollar su liderazgp para que estos impacten de manera positiva en los futuros',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-11:00',
+			'horarioi'=>'9:00-13:00',
+			'curso_id'=>53,
+            'participante_curso_id'=>86
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>87,
+			'curso_id'=>53,
+			'profesor_id'=>61,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+        
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'95',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'Aprender nuevas estrategias, nuevas metodologías para aplicar en el aula, sin olvidar mi función como líder de mis alumnos',
+            'sug'=>'Más tiempo para los ejercicios',
+			'p4_1'=>'100',
+			'p4_2'=>'95',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-11:00',
+			'horarioi'=>'9:00-13:00',
+			'curso_id'=>53,
+            'participante_curso_id'=>87
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>88,
+			'curso_id'=>53,
+			'profesor_id'=>62,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'80',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["1","null"]',
+			'mejor'=>'Todos los temas de los módulos, y las herramientas de aplicación inmediata',
+            'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["2"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-11:00',
+			'horarioi'=>'9:00-13:00',
+			'curso_id'=>53,
+            'participante_curso_id'=>88
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>89,
+			'curso_id'=>53,
+			'profesor_id'=>63,
+			'asistencia'=>true,
+			'acreditacion'=>true
+        ]);
+        
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'95',
+			'p2_2'=>'95',
+			'p2_3'=>'95',
+			'p2_4'=>'95',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'Las diferentes estrategias didácticas implementadas',
+            'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["4"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-11:00',
+			'horarioi'=>'9:00-13:00',
+			'curso_id'=>53,
+            'participante_curso_id'=>89
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>90,
+			'curso_id'=>53,
+			'profesor_id'=>64,
+			'asistencia'=>true,
+			'acreditacion'=>true
+        ]);
+        
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'95',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'95',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'95',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["1","null"]',
+			'mejor'=>'Las estrategias didácticas novedosas para aplicar en el aula',
+            'sug'=>'Que exista un curso de mayor número de horas de esta temática (liderazgo) con este instructor',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-11:00',
+			'horarioi'=>'9:00-13:00',
+			'curso_id'=>53,
+            'participante_curso_id'=>90
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>91,
+			'curso_id'=>53,
+			'profesor_id'=>65,
+			'asistencia'=>true,
+			'acreditacion'=>true
+        ]);
+        
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'95',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'Todo, cada sesión fue interesante y productiva',
+            'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-11:00',
+			'horarioi'=>'9:00-13:00',
+			'curso_id'=>53,
+            'participante_curso_id'=>91
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>92,
+			'curso_id'=>53,
+			'profesor_id'=>66,
+			'asistencia'=>true,
+			'acreditacion'=>true
+        ]);
+        
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["4","Otros"]',
+			'mejor'=>'Las clases muy dinámicas',
+            'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-11:00',
+			'horarioi'=>'9:00-13:00',
+			'curso_id'=>53,
+            'participante_curso_id'=>92
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>93,
+			'curso_id'=>53,
+			'profesor_id'=>67,
+			'asistencia'=>true,
+			'acreditacion'=>true
+        ]);
+        
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["4","Por la Coordinación"]',
+			'mejor'=>'Las exposiciones y los trabajos aplicativos durante la clase que permitieron la aplicación de la teoría',
+            'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["2"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-11:00',
+			'horarioi'=>'9:00-13:00',
+			'curso_id'=>53,
+            'participante_curso_id'=>93
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>94,
+			'curso_id'=>53,
+			'profesor_id'=>68,
+			'asistencia'=>true,
+			'acreditacion'=>true
+        ]);
+        
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'95',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["3","null"]',
+			'mejor'=>'Aprender estrategias',
+            'sug'=>'Aterrizar y resaltar el tema del que se habla',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'95',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["2"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-11:00',
+			'horarioi'=>'9:00-13:00',
+			'curso_id'=>53,
+            'participante_curso_id'=>94
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>95,
+			'curso_id'=>53,
+			'profesor_id'=>69,
+			'asistencia'=>true,
+			'acreditacion'=>true
+        ]);
+        
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'80',
+			'p1_2'=>'80',
+			'p1_3'=>'80',
+			'p1_4'=>'60',
+			'p1_5'=>'80',
+			'p2_1'=>'95',
+			'p2_2'=>'100',
+			'p2_3'=>'95',
+			'p2_4'=>'80',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'Las dinámicas eran muy buenas, pero en mi opinión, no acordes al módulo',
+            'sug'=>'Este módulo me pareció muy improvisado, el material que nos dejaron leer nunca se discutió en clase y me pareció algo obsoleto',
+			'p4_1'=>'80',
+			'p4_2'=>'60',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'95',
+			'p4_6'=>'95',
+			'p4_7'=>'95',
+			'p4_8'=>'95',
+			'p4_9'=>'95',
+			'p4_10'=>'95',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["2"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-11:00',
+			'horarioi'=>'9:00-13:00',
+			'curso_id'=>53,
+            'participante_curso_id'=>95
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>96,
+			'curso_id'=>53,
+			'profesor_id'=>70,
+			'asistencia'=>true,
+			'acreditacion'=>true
+        ]);
+
+        
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'95',
+			'p1_3'=>'95',
+			'p1_4'=>'100',
+			'p1_5'=>'95',
+			'p2_1'=>'100',
+			'p2_2'=>'95',
+			'p2_3'=>'100',
+			'p2_4'=>'95',
+			'p3_1'=>'95',
+			'p3_2'=>'95',
+			'p3_3'=>'95',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["1","null"]',
+			'mejor'=>'Las actividades en equipo',
+            'sug'=>'Revisar el formato de entrega de tareas, ya que por erro no se plantearon las estrategias de las tareas y el trabajo final.',
+			'p4_1'=>'100',
+			'p4_2'=>'95',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'95',
+			'p4_6'=>'100',
+			'p4_7'=>'95',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-11:00',
+			'horarioi'=>'9:00-13:00',
+			'curso_id'=>53,
+            'participante_curso_id'=>96
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>97,
+			'curso_id'=>53,
+			'profesor_id'=>71,
+			'asistencia'=>true,
+			'acreditacion'=>true
+        ]);
+        
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'95',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'80',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["4","Póster en FCA"]',
+			'mejor'=>'El modo de poder, querer y romper cambiar paradigmas',
+            'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-11:00',
+			'horarioi'=>'9:00-13:00',
+			'curso_id'=>53,
+            'participante_curso_id'=>97
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>98,
+			'curso_id'=>53,
+			'profesor_id'=>72,
+			'asistencia'=>true,
+			'acreditacion'=>true
+        ]);
+        
+        DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'80',
+			'p1_2'=>'80',
+			'p1_3'=>'95',
+			'p1_4'=>'80',
+			'p1_5'=>'95',
+			'p2_1'=>'95',
+			'p2_2'=>'80',
+			'p2_3'=>'80',
+			'p2_4'=>'80',
+			'p3_1'=>'95',
+			'p3_2'=>'95',
+			'p3_3'=>'80',
+			'p3_4'=>'95',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'Experiencias profesionales del instructor',
+            'sug'=>'Todo bien',
+			'p4_1'=>'95',
+			'p4_2'=>'80',
+			'p4_3'=>'95',
+			'p4_4'=>'80',
+			'p4_5'=>'95',
+			'p4_6'=>'80',
+			'p4_7'=>'95',
+			'p4_8'=>'80',
+			'p4_9'=>'80',
+			'p4_10'=>'95',
+			'p4_11'=>'80',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-11:00',
+			'horarioi'=>'9:00-13:00',
+			'curso_id'=>53,
+            'participante_curso_id'=>98
+        ]);
+
+        DB::table('catalogo_cursos')->insert([
+			'id'=> 54,
+			'nombre_curso'=>'Programación de máquinas de control numérico (CNC)',
+			'duracion_curso' => '20',
+            'tipo' => 'C',
+            'institucion' => 'DGAPA',
+			'fecha_disenio'=>'2012-12-12',
+			'coordinacion_id'=>1,
+			'clave_curso'=>'PMCCNC'
+		]);
+		
+		DB::table('cursos')->insert([
+			'id'=>54,
+			'semestre_anio'=>2020,
+			'semestre_pi'=>'1',
+			'semestre_si'=>'s',
+			'fecha_inicio' => '2018-05-20',
+            'fecha_fin' => '2018-05-30',
+            'hora_inicio' => '14:00',
+            'hora_fin' => '16:00',
+            'dias_semana' => 'Lunes,Miércoles',
+            'numero_sesiones' => 10,
+            'texto_diploma' => 'Texto diploma',
+            'costo' => 2000,
+            'cupo_maximo' => 20,
+            'cupo_minimo' => 5,
+            'catalogo_id' => 54,
+            'salon_id' => 2
+			
+        ]);
+        
+        DB::table('profesors')->insert([
+            'id'=>98,
+			'nombres'=>'Jose Javier',
+			'apellido_paterno'=>'Cervantes',
+			'apellido_materno'=>'Cabello',
+			'rfc'=>'CECJ720207CECJ',
+			'numero_trabajador' => '121432498',
+			'fecha_nacimiento'=>'1972-02-07'
+        ]);
+		
+		DB::table('profesor_curso')->insert([
+			'id'=>58,
+			'curso_id'=>54,
+			'profesor_id'=>98,
+        ]);
+
+        DB::table('profesors')->insert([
+            'id'=>512,
+            'nombres'=>'Francisco Javier',
+            'apellido_paterno'=>'Marquez',
+            'apellido_materno'=>'Correo',
+            'rfc'=>'MACF740112MACF',
+            'numero_trabajador' => '1214324512',
+            'fecha_nacimiento'=>'1974-01-12'
+        ]);
+
+        DB::table('participante_curso')->insert([
+            'id'=>512,
+            'profesor_id'=>512,
+            'curso_id'=>54
+        ]);
+
+        DB::table('profesors')->insert([
+            'id'=>513,
+            'nombres'=>'David Abraham',
+            'apellido_paterno'=>'Santoyo',
+            'apellido_materno'=>'Garcia',
+            'rfc'=>'SAGD740113SAGD',
+            'numero_trabajador' => '1214324513',
+            'fecha_nacimiento'=>'1974-01-13'
+        ]);
+
+        DB::table('participante_curso')->insert([
+            'id'=>513,
+            'profesor_id'=>513,
+            'curso_id'=>54
+        ]);
+		
+		DB::table('profesors')->insert([
+			'id'=>73,
+			'nombres'=>'Estefania',
+			'apellido_paterno'=>'Abarca',
+			'apellido_materno'=>'Rodriguez',
+			'rfc'=>'ABRE73102ABRE',
+			'numero_trabajador' => '121432473',
+			'fecha_nacimiento'=>'1973-01-02'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>99,
+			'curso_id'=>54,
+			'profesor_id'=>73,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'95',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'95',
+			'p2_3'=>'95',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'95',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'Ver el maquineo físicamente',
+			'sug'=>'Abrir más cursos de como CAD o CAM',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["3"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>54,
+			'participante_curso_id'=>99
+        ]);
+        
+        DB::table('profesors')->insert([
+            'id'=>306,
+            'nombres'=>'German Ramon',
+            'apellido_paterno'=>'Arconada',
+            'apellido_materno'=>'Rey',
+            'rfc'=>'AORG0101012R1',
+            
+            'numero_trabajador' => '12345703',
+            'fecha_nacimiento'=>'1901-01-01'
+        ]);
+
+        DB::table('participante_curso')->insert([
+			'id'=>701,
+			'curso_id'=>54,
+			'profesor_id'=>306,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+        
+		DB::table('profesors')->insert([
+			'id'=>74,
+			'nombres'=>'Salvador',
+			'apellido_paterno'=>'Centeno',
+			'apellido_materno'=>'Estrada',
+			'rfc'=>'CEES73103CEES',
+			'numero_trabajador' => '121432474',
+			'fecha_nacimiento'=>'1973-01-03'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>100,
+			'curso_id'=>54,
+			'profesor_id'=>74,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'95',
+			'p2_2'=>'95',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["1","2","null"]',
+			'mejor'=>'El contenido en sí y la simulación',
+			'sug'=>'Todo excelente',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>54,
+			'participante_curso_id'=>100
+        ]);
+        
+        
+		DB::table('profesors')->insert([
+			'id'=>75,
+			'nombres'=>'Jesus Javier',
+			'apellido_paterno'=>'Cortes',
+			'apellido_materno'=>'Rosas',
+			'rfc'=>'CORJ73104CORJ',
+			'numero_trabajador' => '121432475',
+			'fecha_nacimiento'=>'1973-01-04'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>101,
+			'curso_id'=>54,
+			'profesor_id'=>75,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'95',
+			'p1_4'=>'100',
+			'p1_5'=>'95',
+			'p2_1'=>'100',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'60',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'60',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'El compañerismo',
+			'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'95',
+			'p4_4'=>'95',
+			'p4_5'=>'95',
+			'p4_6'=>'95',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["3"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>54,
+			'participante_curso_id'=>101
+        ]);
+        
+		DB::table('profesors')->insert([
+			'id'=>76,
+			'nombres'=>'Miguel Eduardo',
+			'apellido_paterno'=>'Gonzalez',
+			'apellido_materno'=>'Cardenas',
+			'rfc'=>'GOCM73105GOCM',
+			'numero_trabajador' => '121432476',
+			'fecha_nacimiento'=>'1973-01-05'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>102,
+			'curso_id'=>54,
+			'profesor_id'=>76,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'80',
+			'p2_3'=>'95',
+			'p2_4'=>'60',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["1","2","null"]',
+			'mejor'=>'Programación',
+			'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["3"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>54,
+			'participante_curso_id'=>102
+        ]);
+        
+        DB::table('profesors')->insert([
+			'id'=>77,
+			'nombres'=>'Jose Luis',
+			'apellido_paterno'=>'Ramirez',
+			'apellido_materno'=>'Cruz',
+			'rfc'=>'RACJ73106RACJ',
+			'numero_trabajador' => '121432477',
+			'fecha_nacimiento'=>'1973-01-06'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>103,
+			'curso_id'=>54,
+			'profesor_id'=>77,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'60',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'La capacidad del instructor',
+			'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>54,
+			'participante_curso_id'=>103
+        ]);
+        
+        DB::table('profesors')->insert([
+			'id'=>78,
+			'nombres'=>'Rodrigo Alberto',
+			'apellido_paterno'=>'Rincon',
+			'apellido_materno'=>'Gomez',
+			'rfc'=>'RIGR73107RIGR',
+			'numero_trabajador' => '121432478',
+			'fecha_nacimiento'=>'1973-01-07'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>104,
+			'curso_id'=>54,
+			'profesor_id'=>78,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'80',
+			'p2_2'=>'95',
+			'p2_3'=>'95',
+			'p2_4'=>'80',
+			'p3_1'=>'95',
+			'p3_2'=>'95',
+			'p3_3'=>'95',
+			'p3_4'=>'95',
+			'p7'=>true,
+			'p8'=>'["4","aquí mismo"]',
+			'mejor'=>'La interacción',
+			'sug'=>'Poner más en alto los pizarrones',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>54,
+			'participante_curso_id'=>104
+		]);
+
+        DB::table('profesors')->insert([
+			'id'=>79,
+			'nombres'=>'Jesus',
+			'apellido_paterno'=>'Castro',
+			'apellido_materno'=>'Rodriguez',
+			'rfc'=>'CARJ73108CARJ',
+			'numero_trabajador' => '121432479',
+			'fecha_nacimiento'=>'1973-01-08'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>105,
+			'curso_id'=>54,
+			'profesor_id'=>79,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["1","null"]',
+			'mejor'=>'Todo',
+			'sug'=>'Sin',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+			'p4_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["4"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>54,
+			'participante_curso_id'=>105
+        ]);
+
+        DB::table('catalogo_cursos')->insert([
+			'id'=> 55,
+			'nombre_curso'=>'Redescubriendo a la vida de Michael Faraday',
+			'duracion_curso' => '20',
+            'tipo' => 'C',
+            'institucion' => 'DGAPA',
+			'fecha_disenio'=>'2012-12-12',
+			'coordinacion_id'=>2,
+			'clave_curso'=>'RVMFEYMEE'
+		]);
+		
+		DB::table('cursos')->insert([
+			'id'=>55,
+			'semestre_anio'=>2020,
+			'semestre_pi'=>'1',
+			'semestre_si'=>'s',
+			'fecha_inicio' => '2018-05-20',
+            'fecha_fin' => '2018-05-30',
+            'hora_inicio' => '14:00',
+            'hora_fin' => '16:00',
+            'dias_semana' => 'Lunes,Miércoles',
+            'numero_sesiones' => 10,
+            'texto_diploma' => 'Texto diploma',
+            'costo' => 2000,
+            'cupo_maximo' => 20,
+            'cupo_minimo' => 5,
+            'catalogo_id' => 55,
+            'salon_id' => 1
+			
+        ]);
+        
+        DB::table('profesors')->insert([
+            'id'=>99,
+			'nombres'=>'Martin',
+			'apellido_paterno'=>'Barcenas',
+			'apellido_materno'=>'Escobar',
+			'rfc'=>'BAEM720208BAEM',
+			'numero_trabajador' => '121432499',
+			'fecha_nacimiento'=>'1972-02-08'
+        ]);
+		
+		DB::table('profesor_curso')->insert([
+			'id'=>59,
+			'curso_id'=>55,
+			'profesor_id'=>99,
+        ]);
+
+        DB::table('profesors')->insert([
+            'id'=>100,
+			'nombres'=>'Rigel',
+			'apellido_paterno'=>'Gamez',
+			'apellido_materno'=>'Lael',
+			'rfc'=>'GALR720209GALR',
+			'numero_trabajador' => '1214324100',
+			'fecha_nacimiento'=>'1972-02-09'
+        ]);
+
+        DB::table('profesor_curso')->insert([
+			'id'=>60,
+			'curso_id'=>55,
+			'profesor_id'=>100,
+        ]);
+
+        DB::table('profesors')->insert([
+            'id'=>101,
+			'nombres'=>'Juan Manuel',
+			'apellido_paterno'=>'Gil',
+			'apellido_materno'=>'Perez',
+			'rfc'=>'GIPJ720210GIPJ',
+			'numero_trabajador' => '1214324101',
+			'fecha_nacimiento'=>'1972-02-10'
+        ]);
+
+        DB::table('profesor_curso')->insert([
+			'id'=>61,
+			'curso_id'=>55,
+			'profesor_id'=>101,
+        ]);
+        
+        DB::table('profesors')->insert([
+			'id'=>514,
+			'nombres'=>'Eli Israel',
+			'apellido_paterno'=>'Hernandez',
+			'apellido_materno'=>'Garcia',
+			'rfc'=>'HEGE740201HEGE',
+			'numero_trabajador' => '1214324514',
+			'fecha_nacimiento'=>'1974-02-01'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>514,
+			'curso_id'=>55,
+			'profesor_id'=>514,
+			'asistencia'=>true,
+			'acreditacion'=>true
+        ]);
+        
+        DB::table('profesors')->insert([
+			'id'=>515,
+			'nombres'=>'M. Del Carmen',
+			'apellido_paterno'=>'Maldonado',
+			'apellido_materno'=>'Susano',
+			'rfc'=>'MASM740202MASM',
+			'numero_trabajador' => '1214324515',
+			'fecha_nacimiento'=>'1974-02-02'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>515,
+			'curso_id'=>55,
+			'profesor_id'=>515,
+			'asistencia'=>true,
+			'acreditacion'=>true
+        ]);
+        
+        DB::table('profesors')->insert([
+			'id'=>516,
+			'nombres'=>'Luis Edgardo',
+			'apellido_paterno'=>'Vigueras',
+			'apellido_materno'=>'Rueda',
+			'rfc'=>'VIRL740203VIRL',
+			'numero_trabajador' => '1214324516',
+			'fecha_nacimiento'=>'1974-02-03'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>516,
+			'curso_id'=>55,
+			'profesor_id'=>516,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('profesors')->insert([
+			'id'=>80,
+			'nombres'=>'Eduardo',
+			'apellido_paterno'=>'Bernal',
+			'apellido_materno'=>'Vargas',
+			'rfc'=>'BEVE74102BEVE',
+			'numero_trabajador' => '121432480',
+			'fecha_nacimiento'=>'1973-01-04'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>106,
+			'curso_id'=>55,
+			'profesor_id'=>80,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'95',
+			'p2_2'=>'95',
+			'p2_3'=>'95',
+			'p2_4'=>'95',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'INTERES SOBRE LA VIDA DE ESTE CIENTIFICO',
+			'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+            'p4_11'=>'100',
+            'p5_1'=>'100',
+			'p5_2'=>'100',
+			'p5_3'=>'100',
+			'p5_4'=>'100',
+			'p5_5'=>'100',
+			'p5_6'=>'100',
+			'p5_7'=>'100',
+			'p5_8'=>'100',
+			'p5_9'=>'100',
+			'p5_10'=>'100',
+            'p5_11'=>'100',
+            'p6_1'=>'100',
+			'p6_2'=>'100',
+			'p6_3'=>'100',
+			'p6_4'=>'100',
+			'p6_5'=>'100',
+			'p6_6'=>'100',
+			'p6_7'=>'100',
+			'p6_8'=>'100',
+			'p6_9'=>'100',
+			'p6_10'=>'100',
+			'p6_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>55,
+			'participante_curso_id'=>106
+        ]);
+
+        DB::table('profesors')->insert([
+			'id'=>81,
+			'nombres'=>'Juan Carlos',
+			'apellido_paterno'=>'Cedeño',
+			'apellido_materno'=>'Vazquez',
+			'rfc'=>'CEVJ740403CEVJ',
+			'numero_trabajador' => '121432481',
+			'fecha_nacimiento'=>'1973-04-03'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>107,
+			'curso_id'=>55,
+			'profesor_id'=>81,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'95',
+			'p2_2'=>'95',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'Conocer más de la vida de Michael Faraday y tratar de leer sobre la vida de otros personajes reconocidos',
+			'sug'=>'Bien este tipo de seminarios de más, impartirse en más tiempo',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+            'p4_11'=>'100',
+            'p5_1'=>'100',
+			'p5_2'=>'100',
+			'p5_3'=>'100',
+			'p5_4'=>'100',
+			'p5_5'=>'100',
+			'p5_6'=>'100',
+			'p5_7'=>'100',
+			'p5_8'=>'100',
+			'p5_9'=>'100',
+			'p5_10'=>'100',
+            'p5_11'=>'100',
+            'p6_1'=>'100',
+			'p6_2'=>'100',
+			'p6_3'=>'100',
+			'p6_4'=>'100',
+			'p6_5'=>'100',
+			'p6_6'=>'100',
+			'p6_7'=>'100',
+			'p6_8'=>'100',
+			'p6_9'=>'100',
+			'p6_10'=>'100',
+			'p6_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>55,
+			'participante_curso_id'=>107
+        ]);
+        
+        DB::table('profesors')->insert([
+			'id'=>82,
+			'nombres'=>'Martha Rosa',
+			'apellido_paterno'=>'Del Moral',
+			'apellido_materno'=>'Nieto',
+			'rfc'=>'DENM740404DENM',
+			'numero_trabajador' => '121432482',
+			'fecha_nacimiento'=>'1973-04-04'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>108,
+			'curso_id'=>55,
+			'profesor_id'=>82,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'Conocimiento de un cientifico tan impoertante como lo fue Michael Faraday las aportaciones que dejo a la fisica y el magnetismo',
+			'sug'=>'Muchas gracias por compartir sus conocimientos a los tres instructores',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+            'p4_11'=>'100',
+            'p5_1'=>'100',
+			'p5_2'=>'100',
+			'p5_3'=>'100',
+			'p5_4'=>'100',
+			'p5_5'=>'100',
+			'p5_6'=>'100',
+			'p5_7'=>'100',
+			'p5_8'=>'100',
+			'p5_9'=>'100',
+			'p5_10'=>'100',
+            'p5_11'=>'100',
+            'p6_1'=>'100',
+			'p6_2'=>'100',
+			'p6_3'=>'100',
+			'p6_4'=>'100',
+			'p6_5'=>'100',
+			'p6_6'=>'100',
+			'p6_7'=>'100',
+			'p6_8'=>'100',
+			'p6_9'=>'100',
+			'p6_10'=>'100',
+			'p6_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>55,
+			'participante_curso_id'=>108
+        ]);
+
+        DB::table('profesors')->insert([
+			'id'=>83,
+			'nombres'=>'Vianey',
+			'apellido_paterno'=>'Franco',
+			'apellido_materno'=>'Garcia',
+			'rfc'=>'FAGV740405FAGV',
+			'numero_trabajador' => '121432483',
+			'fecha_nacimiento'=>'1973-04-05'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>109,
+			'curso_id'=>55,
+			'profesor_id'=>83,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'80',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'Conocimiento histórico de la época de los descubrimientos con los experimentos de Faraday. Aportación a la ciencia y aplicación para los experimentos',
+			'sug'=>'Muchas gracias por compartir sus conocimientos a los tres instructores',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+            'p4_11'=>'100',
+            'p5_1'=>'100',
+			'p5_2'=>'100',
+			'p5_3'=>'100',
+			'p5_4'=>'100',
+			'p5_5'=>'100',
+			'p5_6'=>'100',
+			'p5_7'=>'100',
+			'p5_8'=>'100',
+			'p5_9'=>'100',
+			'p5_10'=>'100',
+            'p5_11'=>'100',
+            'p6_1'=>'100',
+			'p6_2'=>'100',
+			'p6_3'=>'100',
+			'p6_4'=>'100',
+			'p6_5'=>'100',
+			'p6_6'=>'100',
+			'p6_7'=>'100',
+			'p6_8'=>'100',
+			'p6_9'=>'100',
+			'p6_10'=>'100',
+			'p6_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>55,
+			'participante_curso_id'=>109
+        ]);
+
+        DB::table('profesors')->insert([
+			'id'=>84,
+			'nombres'=>'Raymundo',
+			'apellido_paterno'=>'Gaytan',
+			'apellido_materno'=>'Perez',
+			'rfc'=>'GAPR740406GAPR',
+			'numero_trabajador' => '121432484',
+			'fecha_nacimiento'=>'1973-04-06'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>110,
+			'curso_id'=>55,
+			'profesor_id'=>84,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'95',
+			'p1_2'=>'95',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'95',
+			'p2_1'=>'80',
+			'p2_2'=>'80',
+			'p2_3'=>'95',
+			'p2_4'=>'95',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'Conocer la vida y obre de Michael Faraday y sus aportaciones científicas',
+			'sug'=>'Conocer la vida y obra de otros científicos importantes que cambiaron a la humanidad',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+            'p4_11'=>'100',
+            'p5_1'=>'100',
+			'p5_2'=>'100',
+			'p5_3'=>'100',
+			'p5_4'=>'100',
+			'p5_5'=>'100',
+			'p5_6'=>'100',
+			'p5_7'=>'100',
+			'p5_8'=>'100',
+			'p5_9'=>'100',
+			'p5_10'=>'100',
+            'p5_11'=>'100',
+            'p6_1'=>'100',
+			'p6_2'=>'100',
+			'p6_3'=>'100',
+			'p6_4'=>'100',
+			'p6_5'=>'100',
+			'p6_6'=>'100',
+			'p6_7'=>'100',
+			'p6_8'=>'100',
+			'p6_9'=>'100',
+			'p6_10'=>'100',
+			'p6_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>55,
+			'participante_curso_id'=>110
+        ]);
+
+        DB::table('profesors')->insert([
+			'id'=>85,
+			'nombres'=>'Arnulfo',
+			'apellido_paterno'=>'Ortiz',
+			'apellido_materno'=>'Gomez',
+			'rfc'=>'ORGA740407ORGA',
+			'numero_trabajador' => '121432485',
+			'fecha_nacimiento'=>'1973-04-07'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>111,
+			'curso_id'=>55,
+			'profesor_id'=>85,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'95',
+			'p2_2'=>'100',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'La gran capacidad de observación de Faraday',
+			'sug'=>'El tiempo para el curso es el adecuado no lo modifiquen; adecuar el horario para salir a las 18',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+            'p4_11'=>'100',
+            'p5_1'=>'100',
+			'p5_2'=>'100',
+			'p5_3'=>'100',
+			'p5_4'=>'100',
+			'p5_5'=>'100',
+			'p5_6'=>'100',
+			'p5_7'=>'100',
+			'p5_8'=>'100',
+			'p5_9'=>'100',
+			'p5_10'=>'100',
+            'p5_11'=>'100',
+            'p6_1'=>'100',
+			'p6_2'=>'100',
+			'p6_3'=>'100',
+			'p6_4'=>'100',
+			'p6_5'=>'100',
+			'p6_6'=>'100',
+			'p6_7'=>'100',
+			'p6_8'=>'100',
+			'p6_9'=>'100',
+			'p6_10'=>'100',
+			'p6_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>55,
+			'participante_curso_id'=>111
+        ]);
+
+        DB::table('profesors')->insert([
+			'id'=>86,
+			'nombres'=>'Antonia del Carmen',
+			'apellido_paterno'=>'Perez',
+			'apellido_materno'=>'Leon',
+			'rfc'=>'PELA740408PELA',
+			'numero_trabajador' => '121432486',
+			'fecha_nacimiento'=>'1973-04-08'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>112,
+			'curso_id'=>55,
+			'profesor_id'=>86,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'95',
+			'p2_1'=>'95',
+			'p2_2'=>'95',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'Aprendizaje y curiosidad por seguir preparandome, en temas actuales',
+			'sug'=>'Todo bien',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+            'p4_11'=>'100',
+            'p5_1'=>'100',
+			'p5_2'=>'100',
+			'p5_3'=>'100',
+			'p5_4'=>'100',
+			'p5_5'=>'100',
+			'p5_6'=>'100',
+			'p5_7'=>'100',
+			'p5_8'=>'100',
+			'p5_9'=>'100',
+			'p5_10'=>'100',
+            'p5_11'=>'100',
+            'p6_1'=>'100',
+			'p6_2'=>'100',
+			'p6_3'=>'100',
+			'p6_4'=>'100',
+			'p6_5'=>'100',
+			'p6_6'=>'100',
+			'p6_7'=>'100',
+			'p6_8'=>'100',
+			'p6_9'=>'100',
+			'p6_10'=>'100',
+			'p6_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>55,
+			'participante_curso_id'=>112
+        ]);
+        
+        DB::table('profesors')->insert([
+			'id'=>87,
+			'nombres'=>'Jose Luis',
+			'apellido_paterno'=>'Salas',
+			'apellido_materno'=>'Corrales',
+			'rfc'=>'SACOJ740410SACOJ',
+			'numero_trabajador' => '121432487',
+			'fecha_nacimiento'=>'1973-04-10'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>113,
+			'curso_id'=>55,
+			'profesor_id'=>87,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'80',
+			'p2_2'=>'95',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'95',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'Conocimiento sobre Faraday y varias ideas para aplicar en mi labor docente',
+			'sug'=>'Realizar un siguiente taller de elaboración de experimentos',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+            'p4_11'=>'100',
+            'p5_1'=>'100',
+			'p5_2'=>'100',
+			'p5_3'=>'100',
+			'p5_4'=>'100',
+			'p5_5'=>'100',
+			'p5_6'=>'100',
+			'p5_7'=>'100',
+			'p5_8'=>'100',
+			'p5_9'=>'100',
+			'p5_10'=>'100',
+            'p5_11'=>'100',
+            'p6_1'=>'100',
+			'p6_2'=>'100',
+			'p6_3'=>'100',
+			'p6_4'=>'100',
+			'p6_5'=>'100',
+			'p6_6'=>'100',
+			'p6_7'=>'100',
+			'p6_8'=>'100',
+			'p6_9'=>'100',
+			'p6_10'=>'100',
+			'p6_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>55,
+			'participante_curso_id'=>113
+        ]);
+
+        DB::table('profesors')->insert([
+			'id'=>88,
+			'nombres'=>'Victor Manuel',
+			'apellido_paterno'=>'Sanchez',
+			'apellido_materno'=>'Ezquivel',
+			'rfc'=>'SAEV740411SAEV',
+			'numero_trabajador' => '121432488',
+			'fecha_nacimiento'=>'1973-04-11'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>114,
+			'curso_id'=>55,
+			'profesor_id'=>88,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'95',
+			'p1_2'=>'95',
+			'p1_3'=>'95',
+			'p1_4'=>'95',
+			'p1_5'=>'100',
+			'p2_1'=>'95',
+			'p2_2'=>'80',
+			'p2_3'=>'80',
+			'p2_4'=>'80',
+			'p3_1'=>'95',
+			'p3_2'=>'100',
+			'p3_3'=>'95',
+			'p3_4'=>'95',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'Conocimiento de la vida de M. Faraday las características que que tenía',
+			'sug'=>'Realizar al menos un experimento con su teoría de tal manera que ser entendido por todos os asistentes al seminario',
+			'p4_1'=>'95',
+			'p4_2'=>'95',
+			'p4_3'=>'100',
+			'p4_4'=>'95',
+			'p4_5'=>'95',
+			'p4_6'=>'95',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+            'p4_11'=>'95',
+            'p5_1'=>'95',
+			'p5_2'=>'95',
+			'p5_3'=>'95',
+			'p5_4'=>'95',
+			'p5_5'=>'95',
+			'p5_6'=>'95',
+			'p5_7'=>'95',
+			'p5_8'=>'95',
+			'p5_9'=>'100',
+			'p5_10'=>'100',
+            'p5_11'=>'100',
+            'p6_1'=>'95',
+			'p6_2'=>'100',
+			'p6_3'=>'100',
+			'p6_4'=>'100',
+			'p6_5'=>'95',
+			'p6_6'=>'95',
+			'p6_7'=>'100',
+			'p6_8'=>'100',
+			'p6_9'=>'100',
+			'p6_10'=>'100',
+			'p6_11'=>'95',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>55,
+			'participante_curso_id'=>114
+        ]);
+
+        DB::table('profesors')->insert([
+			'id'=>89,
+			'nombres'=>'Jose Alejandor',
+			'apellido_paterno'=>'Sanchez',
+			'apellido_materno'=>'Perez',
+			'rfc'=>'SAPJ40412SAPJ',
+			'numero_trabajador' => '121432489',
+			'fecha_nacimiento'=>'1973-04-12'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>115,
+			'curso_id'=>55,
+			'profesor_id'=>89,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'95',
+			'p2_2'=>'95',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'80',
+			'p3_2'=>'100',
+			'p3_3'=>'80',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'experiencia historica, claridad en conceptos, experiencias experimental',
+			'sug'=>'Hacer uso del clima de forma intermitente para que la temperatura del aula sea más agradable',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'95',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+            'p4_11'=>'100',
+            'p5_1'=>'100',
+			'p5_2'=>'100',
+			'p5_3'=>'100',
+			'p5_4'=>'100',
+			'p5_5'=>'100',
+			'p5_6'=>'100',
+			'p5_7'=>'100',
+			'p5_8'=>'100',
+			'p5_9'=>'100',
+			'p5_10'=>'100',
+            'p5_11'=>'100',
+            'p6_1'=>'100',
+			'p6_2'=>'100',
+			'p6_3'=>'100',
+			'p6_4'=>'100',
+			'p6_5'=>'100',
+			'p6_6'=>'100',
+			'p6_7'=>'100',
+			'p6_8'=>'100',
+			'p6_9'=>'100',
+			'p6_10'=>'100',
+			'p6_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>55,
+			'participante_curso_id'=>115
+        ]);
+        
+        DB::table('profesors')->insert([
+			'id'=>90,
+			'nombres'=>'Enrique',
+			'apellido_paterno'=>'Villalobos',
+			'apellido_materno'=>'Perez',
+			'rfc'=>'VIPE40413VIPE',
+			'numero_trabajador' => '121432490',
+			'fecha_nacimiento'=>'1973-04-13'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>116,
+			'curso_id'=>55,
+			'profesor_id'=>90,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'80',
+			'p2_2'=>'80',
+			'p2_3'=>'80',
+			'p2_4'=>'95',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["2","null"]',
+			'mejor'=>'Conocimiento, experiencia didáctica y trabajo colaborativo',
+			'sug'=>'Felicat a los participantes',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+            'p4_11'=>'100',
+            'p5_1'=>'100',
+			'p5_2'=>'100',
+			'p5_3'=>'100',
+			'p5_4'=>'100',
+			'p5_5'=>'100',
+			'p5_6'=>'100',
+			'p5_7'=>'100',
+			'p5_8'=>'100',
+			'p5_9'=>'100',
+			'p5_10'=>'100',
+            'p5_11'=>'100',
+            'p6_1'=>'100',
+			'p6_2'=>'100',
+			'p6_3'=>'100',
+			'p6_4'=>'100',
+			'p6_5'=>'100',
+			'p6_6'=>'100',
+			'p6_7'=>'100',
+			'p6_8'=>'100',
+			'p6_9'=>'100',
+			'p6_10'=>'100',
+			'p6_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>55,
+			'participante_curso_id'=>116
+        ]);
+
+        
+        DB::table('profesors')->insert([
+			'id'=>91,
+			'nombres'=>'Ricardo',
+			'apellido_paterno'=>'Yañez',
+			'apellido_materno'=>'Valdez',
+			'rfc'=>'YAVR40414YAVR',
+			'numero_trabajador' => '121432491',
+			'fecha_nacimiento'=>'1973-04-14'
+		]);
+		
+		DB::table('participante_curso')->insert([
+			'id'=>117,
+			'curso_id'=>55,
+			'profesor_id'=>91,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
+		DB::table('_evaluacion_final_curso')->insert([
+			'p1_1'=>'100',
+			'p1_2'=>'100',
+			'p1_3'=>'100',
+			'p1_4'=>'100',
+			'p1_5'=>'100',
+			'p2_1'=>'100',
+			'p2_2'=>'95',
+			'p2_3'=>'100',
+			'p2_4'=>'100',
+			'p3_1'=>'100',
+			'p3_2'=>'100',
+			'p3_3'=>'100',
+			'p3_4'=>'100',
+			'p7'=>true,
+			'p8'=>'["4","correo"]',
+			'mejor'=>'Conocer la vida de M. Faraday y que continuaré conociendo más sobre él',
+			'sug'=>'todo me gustó',
+			'p4_1'=>'100',
+			'p4_2'=>'100',
+			'p4_3'=>'100',
+			'p4_4'=>'100',
+			'p4_5'=>'100',
+			'p4_6'=>'100',
+			'p4_7'=>'100',
+			'p4_8'=>'100',
+			'p4_9'=>'100',
+			'p4_10'=>'100',
+            'p4_11'=>'100',
+            'p5_1'=>'100',
+			'p5_2'=>'100',
+			'p5_3'=>'100',
+			'p5_4'=>'100',
+			'p5_5'=>'100',
+			'p5_6'=>'100',
+			'p5_7'=>'100',
+			'p5_8'=>'100',
+			'p5_9'=>'100',
+			'p5_10'=>'100',
+            'p5_11'=>'100',
+            'p6_1'=>'100',
+			'p6_2'=>'100',
+			'p6_3'=>'100',
+			'p6_4'=>'100',
+			'p6_5'=>'100',
+			'p6_6'=>'100',
+			'p6_7'=>'100',
+			'p6_8'=>'100',
+			'p6_9'=>'100',
+			'p6_10'=>'100',
+			'p6_11'=>'100',
+            'otros'=>'Otros',
+			'conocimiento'=>'["1"]',
+			'tematica'=>'tematica',
+			'horarios'=>'9:00-13:00',
+			'horarioi'=>'13:00-15:00',
+			'curso_id'=>55,
+			'participante_curso_id'=>117
+		]);
+		
+		//Parte Kenny
+
         // Primer archivo: 1_RespuestasEvalCursosTodasAreas_2020-1s_1
         //Insertando coordinacion
-        DB::table('coordinacions')->insert([
-            'id' => 201,
-            'nombre_coordinacion' => 'Área Didáctico pedagógica',
-            'abreviatura' => 'DA',
-            'coordinador' => 'Daniel Morales',
-            'grado' => 'M.E.M.',
-            'usuario' => 'daniel',
-            'password' => Hash::make('1234'),
-            'comentarios' => '-'
-        ]);
         DB::table('catalogo_cursos')->insert([
             'id'=> 201,
             'nombre_curso'=>'Aprendizaje a través de dispositivos móviles',
             'duracion_curso' => '20',
-            'coordinacion_id' => 201,
             'tipo' => 'C',
             'institucion' => 'DGAPA',
             'fecha_disenio'=>'2012-12-12',
@@ -63,7 +5964,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno' => 'Camacho',
             'apellido_materno' => 'Villaseñor',
             'rfc' => 'CAVG010101KDA',
-            'curp' =>'CAVG010101MDFMLB05',
+            
             'numero_trabajador' => '12345670',
             'categoria_nivel_id'=>1,
             'fecha_nacimiento' => '1901-01-01',
@@ -78,8 +5979,7 @@ class DatosPrueba extends Seeder
             'comentarios' => 'Comentarios',
             'facebook' => 'Gabriela C. V.',
             'unam' => true,
-            'facultad_id' =>1,
-            'carrera_id' =>1,
+            'facultad_id' =>1
         ]);
         DB::table('profesors')->insert([
             'id'=>202,
@@ -87,7 +5987,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno' => 'Hernández',
             'apellido_materno' => 'Valverde',
             'rfc' => 'HEVA010101AK6',
-            'curp' =>'HEVA010101MDFRLR06',
+            
             'numero_trabajador' => '12345671',
             'categoria_nivel_id'=>1,
             'fecha_nacimiento' => '1901-01-01',
@@ -102,9 +6002,21 @@ class DatosPrueba extends Seeder
             'comentarios' => 'Comentarios',
             'facebook' => 'Arely H. V.',
             'unam' => true,
-            'facultad_id' =>1,
-            'carrera_id' =>1,
+            'facultad_id' =>1
         ]);
+
+        DB::table('profesor_curso')->insert([
+            'id'=>201,
+            'curso_id'=>201,
+            'profesor_id'=>201
+        ]);
+
+        DB::table('profesor_curso')->insert([
+            'id'=>202,
+            'curso_id'=>201,
+            'profesor_id'=>202
+        ]);
+
         //Participantes
         DB::table('profesors')->insert([
             'id'=>203,
@@ -112,7 +6024,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Cano',
             'apellido_materno'=>'Salazar',
             'rfc'=>'CASE0101015J8',
-            'curp' =>'CASE010101MDFNLL08',
+            
             'numero_trabajador' => '12345672',
             'fecha_nacimiento'=>'1901-02-01'
         ]);
@@ -174,21 +6086,11 @@ class DatosPrueba extends Seeder
             'participante_curso_id'=>201
         ]);
 
-        DB::table('profesors')->insert([
-            'id'=>204,
-            'nombres'=>'Juan Carlos',
-            'apellido_paterno'=>'Cedeño',
-            'apellido_materno'=>'Vazquez',
-            'rfc'=>'CEVJ010101651',
-            'curp' =>'CEVJ010101HDFDZN01',
-            'numero_trabajador' => '12345673',
-            'fecha_nacimiento'=>'1901-02-01'
-        ]);
         
         DB::table('participante_curso')->insert([
             'id'=>202,
             'curso_id'=>201,
-            'profesor_id'=>204,
+            'profesor_id'=>81,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -230,21 +6132,11 @@ class DatosPrueba extends Seeder
             'curso_id'=>201,
             'participante_curso_id'=>202
         ]);
-        DB::table('profesors')->insert([
-            'id'=>205,
-            'nombres'=>'Salvador',
-            'apellido_paterno'=>'Centeno',
-            'apellido_materno'=>'Estrada',
-            'rfc'=>'CEES010101ER7',
-            'curp' =>'CEES010101HDFNSL03',
-            'numero_trabajador' => '12345674',
-            'fecha_nacimiento'=>'1901-02-01'
-        ]);
         
         DB::table('participante_curso')->insert([
             'id'=>203,
             'curso_id'=>201,
-            'profesor_id'=>205,
+            'profesor_id'=>74,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -303,7 +6195,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Cortes',
             'apellido_materno'=>'Ochoa',
             'rfc'=>'COOA010101114',
-            'curp' =>'COOA010101HDFRCB08',
+            
             'numero_trabajador' => '12345675',
             'fecha_nacimiento'=>'1901-02-01'
         ]);
@@ -364,22 +6256,11 @@ class DatosPrueba extends Seeder
             'curso_id'=>201,
             'participante_curso_id'=>204
         ]);
-
-        DB::table('profesors')->insert([
-            'id'=>207,
-            'nombres'=>'Jesus Javier',
-            'apellido_paterno'=>'Cortes',
-            'apellido_materno'=>'Rosas',
-            'rfc'=>'CORJ0101013P1',
-            'curp' =>'CORJ010101HDFRSS03',
-            'numero_trabajador' => '12345676',
-            'fecha_nacimiento'=>'1901-02-01'
-        ]);
         
         DB::table('participante_curso')->insert([
             'id'=>205,
             'curso_id'=>201,
-            'profesor_id'=>207,
+            'profesor_id'=>75,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -390,7 +6271,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Chavez',
             'apellido_materno'=>'Mercado',
             'rfc'=>'CAMC010101A58',
-            'curp' =>'CAMC010101HDFHRR01',
+            
             'numero_trabajador' => '12345677',
             'fecha_nacimiento'=>'1901-02-01'
         ]);
@@ -458,7 +6339,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Duran',
             'apellido_materno'=>'Campos',
             'rfc'=>'DUCV010101613',
-            'curp' =>'DUCV010101HDFRMC03',
+            
             'numero_trabajador' => '12345678',
             'fecha_nacimiento'=>'1901-02-01'
         ]);
@@ -515,7 +6396,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Figueroa',
             'apellido_materno'=>'Bustos',
             'rfc'=>'FIBM0101011I5',
-            'curp' =>'FIBM010101HDFGSG04',
+            
             'numero_trabajador' => '12345679',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -545,7 +6426,7 @@ class DatosPrueba extends Seeder
             'p7'=>1,
             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Las apps revisadas',
-            'sug'=>'Ninguna',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -583,7 +6464,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Garcia',
             'apellido_materno'=>'Martinez',
             'rfc'=>'GAME010101NX4',
-            'curp' =>'GAME010101MDFRRM02',
+            
             'numero_trabajador' => '12345680',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -651,7 +6532,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Gomez',
             'apellido_materno'=>'Rodriguez',
             'rfc'=>'GORJ010101PJ4',
-            'curp' =>'GORJ010101MDFMDV06',
+            
             'numero_trabajador' => '12345681',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -664,22 +6545,10 @@ class DatosPrueba extends Seeder
             'acreditacion'=>true
         ]);
 
-
-        DB::table('profesors')->insert([
-            'id'=>213,
-            'nombres'=>'Miguel Eduardo',
-            'apellido_paterno'=>'Gonzalez',
-            'apellido_materno'=>'Cardenas',
-            'rfc'=>'GOCM010101BD9',
-            'curp' =>'GOCM010101HDFNRG00',
-            'numero_trabajador' => '12345682',
-            'fecha_nacimiento'=>'1901-01-01'
-        ]);
-        
         DB::table('participante_curso')->insert([
             'id'=>211,
             'curso_id'=>201,
-            'profesor_id'=>213,
+            'profesor_id'=>76,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -689,7 +6558,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Gutierrez ',
             'apellido_materno'=>'Lopez',
             'rfc'=>'GULE010101DX2',
-            'curp' =>'GULE010101HDFTPF00',
+            
             'numero_trabajador' => '12345683',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -708,7 +6577,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Meza ',
             'apellido_materno'=>'Medina',
             'rfc'=>'MEME010101SN3',
-            'curp' =>'MEME010101HDFZDD03',
+            
             'numero_trabajador' => '12345684',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -727,7 +6596,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Nakagaki ',
             'apellido_materno'=>'Aoki',
             'rfc'=>'NAAC010101AD3',
-            'curp' =>'NAAC010101MDFKKC00',
+            
             'numero_trabajador' => '12345685',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -746,8 +6615,8 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Perez',
             'apellido_materno'=>'Ramirez',
             'rfc'=>'RAPF0101011F8',
-            'curp' =>'RAPF010101MDFMRR09',
-            'numero_trabajador' => '12345686',
+            
+            'numero_trabajador' => '123456217',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
         
@@ -814,8 +6683,8 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Rangel',
             'apellido_materno'=>'Gutierrez',
             'rfc'=>'RAGR010101B42',
-            'curp' =>'	RAGR010101HDFNTY00',
-            'numero_trabajador' => '12345687',
+            
+            'numero_trabajador' => '123456218',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
         
@@ -833,8 +6702,8 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Sanchez',
             'apellido_materno'=>'Vaca',
             'rfc'=>'RASV010101GJ5',
-            'curp' =>'RASV010101HDFNNC09',
-            'numero_trabajador' => '12345686',
+            
+            'numero_trabajador' => '123456219',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
         
@@ -863,7 +6732,7 @@ class DatosPrueba extends Seeder
             'p7'=>1,
             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Las nuevas aplicaciones',
-            'sug'=>'',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -902,8 +6771,8 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Tello',
             'apellido_materno'=>'Paleta',
             'rfc'=>'TEPE0101017L2',
-            'curp' =>'TEPE010101HDFLLD08',
-            'numero_trabajador' => '12345687',
+            
+            'numero_trabajador' => '123456220',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
         
@@ -971,7 +6840,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Torres',
             'apellido_materno'=>'Dominguez',
             'rfc'=>'TODH010101PZ6',
-            'curp' =>'TODH010101HDFRMC08',
+            
             'numero_trabajador' => '12345688',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -990,7 +6859,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Hernandez',
             'apellido_materno'=>'Torres',
             'rfc'=>'HETM0101018V0',
-            'curp' =>'HETM010101MDFRRR00',
+            
             'numero_trabajador' => '12345689',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -1058,7 +6927,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Tovar',
             'apellido_materno'=>'Perez',
             'rfc'=>'TOPV010101N11',
-            'curp' =>'TOPV010101HDFVRC01',
+            
             'numero_trabajador' => '12345690',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -1126,7 +6995,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Vidal',
             'apellido_materno'=>'Garcia',
             'rfc'=>'VIGM010101255',
-            'curp' =>'VIGM010101HDFDRR01',
+            
             'numero_trabajador' => '12345691',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -1145,7 +7014,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Zapata',
             'apellido_materno'=>'Y Rosales',
             'rfc'=>'ZARA010101QU9',
-            'curp' =>'ZARA010101HDFPSR04',
+            
             'numero_trabajador' => '12345692',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -1212,7 +7081,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Zuñiga',
             'apellido_materno'=>'Barragan',
             'rfc'=>'ZUBH010101HMA',
-            'curp' =>'ZUBH010101HDF&RG04',
+            
             'numero_trabajador' => '12345693',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -1227,21 +7096,11 @@ class DatosPrueba extends Seeder
         
         //Segundo curso
 
-        DB::table('coordinacions')->insert([
-            'id' => 202,
-            'nombre_coordinacion' => 'Área de Desarrollo Humano',
-            'abreviatura' => 'DH',
-            'coordinador' => 'Jacob Hernandez',
-            'grado' => 'M.E.M.',
-            'usuario' => 'jacob',
-            'password' => Hash::make('1234'),
-            'comentarios' => '-'
-        ]);
         DB::table('catalogo_cursos')->insert([
             'id'=> 202,
             'nombre_curso'=>'Comunicación asertiva en el aula. Parte 2',
             'duracion_curso' => '20',
-            'coordinacion_id' => 202,
+            'coordinacion_id' => 3,
             'tipo' => 'C',
             'institucion' => 'DGAPA',
             'fecha_disenio'=>'2012-12-12',
@@ -1267,16 +7126,13 @@ class DatosPrueba extends Seeder
             'salon_id' => 1
         ]);
         //Instructor
-        DB::table('profesors')->insert([
-            'id'=>227,
-            'nombres'=>'Juan',
-            'apellido_paterno'=>'Varela',
-            'apellido_materno'=>'Juarez',
-            'rfc'=>'VAJJ010101GHA',
-            'curp' =>'VAJJ010101HDFRRN04',
-            'numero_trabajador' => '12345694',
-            'fecha_nacimiento'=>'1901-01-01'
+
+        DB::table('profesor_curso')->insert([
+            'id'=>204,
+            'curso_id'=>202,
+            'profesor_id'=>96
         ]);
+        
         //Participantes
         DB::table('profesors')->insert([
             'id'=>228,
@@ -1284,13 +7140,13 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Alvarado',
             'apellido_materno'=>'Beatriz',
             'rfc'=>'AABI0101018NA',
-            'curp' =>'ABI010101HDFLTV03',
+            
             'numero_trabajador' => '12345695',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
         
         DB::table('participante_curso')->insert([
-            'id'=>224,
+            'id'=>225,
             'curso_id'=>202,
             'profesor_id'=>228,
             'asistencia'=>true,
@@ -1332,7 +7188,7 @@ class DatosPrueba extends Seeder
             'horarios'=>'9:00-13:00',
             'horarioi'=>'13:00-15:00',
             'curso_id'=>202,
-            'participante_curso_id'=>224
+            'participante_curso_id'=>225
         ]);
 
         DB::table('profesors')->insert([
@@ -1341,13 +7197,13 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Briseño',
             'apellido_materno'=>'Aguirre',
             'rfc'=>'BIAN010101LL3',
-            'curp' =>'BIAN010101HDFRGD08',
+            
             'numero_trabajador' => '12345696',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
         
         DB::table('participante_curso')->insert([
-            'id'=>225,
+            'id'=>226,
             'curso_id'=>202,
             'profesor_id'=>229,
             'asistencia'=>true,
@@ -1389,24 +7245,15 @@ class DatosPrueba extends Seeder
             'horarios'=>'9:00-13:00',
             'horarioi'=>'13:00-15:00',
             'curso_id'=>202,
-            'participante_curso_id'=>225
+            'participante_curso_id'=>226
         ]);
 
-        DB::table('profesors')->insert([
-            'id'=>230,
-            'nombres'=>'Abraham',
-            'apellido_paterno'=>'Cortes',
-            'apellido_materno'=>'Ochoa',
-            'rfc'=>'COOA010101114',
-            'curp' =>'COOA010101HDFRCB08',
-            'numero_trabajador' => '12345697',
-            'fecha_nacimiento'=>'1901-01-01'
-        ]);
+
         
         DB::table('participante_curso')->insert([
-            'id'=>226,
+            'id'=>227,
             'curso_id'=>202,
-            'profesor_id'=>230,
+            'profesor_id'=>206,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -1420,7 +7267,7 @@ class DatosPrueba extends Seeder
             'p2_1'=>'80',
             'p2_2'=>'80',
             'p2_3'=>'80',
-            'p2_4'=>'100',
+            'p2_4'=>'95',
             'p3_1'=>'100',
             'p3_2'=>'100',
             'p3_3'=>'100',
@@ -1428,7 +7275,7 @@ class DatosPrueba extends Seeder
             'p7'=>1,
             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Los ejercicios realizados',
-            'sug'=>'-',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -1446,7 +7293,7 @@ class DatosPrueba extends Seeder
             'horarios'=>'9:00-13:00',
             'horarioi'=>'13:00-15:00',
             'curso_id'=>202,
-            'participante_curso_id'=>226
+            'participante_curso_id'=>227
         ]);
 
         DB::table('profesors')->insert([
@@ -1455,13 +7302,13 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Avila',
             'apellido_materno'=>'Hernandez',
             'rfc'=>'AIHS010101TM4',
-            'curp' =>'AIHS010101MDFVRY00',
+            
             'numero_trabajador' => '12345698',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
         
         DB::table('participante_curso')->insert([
-            'id'=>227,
+            'id'=>228,
             'curso_id'=>202,
             'profesor_id'=>231,
             'asistencia'=>true,
@@ -1503,7 +7350,7 @@ class DatosPrueba extends Seeder
             'horarios'=>'9:00-13:00',
             'horarioi'=>'13:00-15:00',
             'curso_id'=>202,
-            'participante_curso_id'=>227
+            'participante_curso_id'=>228
         ]);
 
         DB::table('profesors')->insert([
@@ -1512,13 +7359,13 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Contreras',
             'apellido_materno'=>'Ordaz',
             'rfc'=>'COOG010101BG5',
-            'curp' =>'COOG010101MDFNRD03',
+            
             'numero_trabajador' => '12345699',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
         
         DB::table('participante_curso')->insert([
-            'id'=>228,
+            'id'=>229,
             'curso_id'=>202,
             'profesor_id'=>232,
             'asistencia'=>true,
@@ -1542,7 +7389,7 @@ class DatosPrueba extends Seeder
             'p7'=>1,
             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Que me permitió reflexionar a tiempo en mi grupo, debido a los intenso del trabajo, había ddejado de lado el grupo, pero afortunaddamente pude retormarlo',
-            'sug'=>'-',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -1560,7 +7407,7 @@ class DatosPrueba extends Seeder
             'horarios'=>'9:00-13:00',
             'horarioi'=>'13:00-15:00',
             'curso_id'=>202,
-            'participante_curso_id'=>228
+            'participante_curso_id'=>229
         ]);
 
         DB::table('profesors')->insert([
@@ -1569,13 +7416,13 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Espinosa',
             'apellido_materno'=>'Villagran',
             'rfc'=>'EIVC0101012G9',
-            'curp' =>'EIVC010101MDFSLL08',
+            
             'numero_trabajador' => '12345600',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
         
         DB::table('participante_curso')->insert([
-            'id'=>229,
+            'id'=>230,
             'curso_id'=>202,
             'profesor_id'=>233,
             'asistencia'=>true,
@@ -1599,7 +7446,7 @@ class DatosPrueba extends Seeder
             'p7'=>1,
             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Las dinámicas grupales',
-            'sug'=>'-',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -1617,7 +7464,7 @@ class DatosPrueba extends Seeder
             'horarios'=>'9:00-13:00',
             'horarioi'=>'13:00-15:00',
             'curso_id'=>202,
-            'participante_curso_id'=>229
+            'participante_curso_id'=>230
         ]);
         
         DB::table('profesors')->insert([
@@ -1626,13 +7473,13 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Garcia',
             'apellido_materno'=>'Arroyo',
             'rfc'=>'GAAN010101JH4',
-            'curp' =>'GAAN010101MDFRRD06',
+            
             'numero_trabajador' => '12345601',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
         
         DB::table('participante_curso')->insert([
-            'id'=>230,
+            'id'=>231,
             'curso_id'=>202,
             'profesor_id'=>234,
             'asistencia'=>true,
@@ -1674,7 +7521,7 @@ class DatosPrueba extends Seeder
             'horarios'=>'9:00-13:00',
             'horarioi'=>'13:00-15:00',
             'curso_id'=>202,
-            'participante_curso_id'=>230
+            'participante_curso_id'=>231
         ]);
 
         DB::table('profesors')->insert([
@@ -1683,13 +7530,13 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Gonzalez',
             'apellido_materno'=>'Anaya',
             'rfc'=>'GOAD010101FX1',
-            'curp' =>'GOAD010101MDFNN04',
+            
             'numero_trabajador' => '12345602',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
         
         DB::table('participante_curso')->insert([
-            'id'=>231,
+            'id'=>232,
             'curso_id'=>202,
             'profesor_id'=>235,
             'asistencia'=>true,
@@ -1702,13 +7549,13 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Mena',
             'apellido_materno'=>'Trigueros',
             'rfc'=>'METD010101GV1',
-            'curp' =>'METD010101MDFNR03',
+            
             'numero_trabajador' => '12345603',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
         
         DB::table('participante_curso')->insert([
-            'id'=>232,
+            'id'=>420,
             'curso_id'=>202,
             'profesor_id'=>236,
             'asistencia'=>true,
@@ -1721,7 +7568,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Peña',
             'apellido_materno'=>'Maciel',
             'rfc'=>'PEMD0101011A5',
-            'curp' =>'PEMD010101HDF&CN00',
+            
             'numero_trabajador' => '12345604',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -1739,11 +7586,11 @@ class DatosPrueba extends Seeder
             'p1_2'=>'100',
             'p1_3'=>'100',
             'p1_4'=>'100',
-            'p1_5'=>'95',
-            'p2_1'=>'95',
-            'p2_2'=>'95',
+            'p1_5'=>'100',
+            'p2_1'=>'100',
+            'p2_2'=>'100',
             'p2_3'=>'100',
-            'p2_4'=>'95',
+            'p2_4'=>'100',
             'p3_1'=>'95',
             'p3_2'=>'100',
             'p3_3'=>'100',
@@ -1751,7 +7598,7 @@ class DatosPrueba extends Seeder
             'p7'=>1,
             'p8'=>'["4","Correo electrónico"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'La interacción del grupo y el instructor',
-            'sug'=>'-',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -1778,7 +7625,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Plata',
             'apellido_materno'=>'Martinez',
             'rfc'=>'PAMJ010101JA5',
-            'curp' =>'PAMJ010101HDFLRS01',
+            
             'numero_trabajador' => '12345605',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -1835,7 +7682,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Tejada',
             'apellido_materno'=>'Malpica',
             'rfc'=>'TEME0101015S3',
-            'curp' =>'TEME010101HDFJLR07',
+            
             'numero_trabajador' => '12345606',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -1865,7 +7712,7 @@ class DatosPrueba extends Seeder
             'p7'=>1,
             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Las técnicas planteadas para el manejo de las conductas disruptivas',
-            'sug'=>'-',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -1883,7 +7730,7 @@ class DatosPrueba extends Seeder
             'horarios'=>'9:00-13:00',
             'horarioi'=>'13:00-15:00',
             'curso_id'=>202,
-            'participante_curso_id'=>234
+            'participante_curso_id'=>235
         ]);
 
         //Tercer curso
@@ -1892,11 +7739,11 @@ class DatosPrueba extends Seeder
             'id'=> 203,
             'nombre_curso'=>'La gimnasia cerebral para el fortalecimiento ddel aprendizaje',
             'duracion_curso' => '20',
-            'coordinacion_id' => 201,
+            'coordinacion_id' => 3,
             'tipo' => 'C',
             'institucion' => 'DGAPA',
             'fecha_disenio'=>'2012-12-12',
-            'clave_curso'=>'CAADGAPA'
+            'clave_curso'=>'GCFAGAPA'
         ]);
         
         DB::table('cursos')->insert([
@@ -1924,10 +7771,17 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Romero',
             'apellido_materno'=>'Garcia',
             'rfc'=>'ROGE010101BG4',
-            'curp' =>'ROGE010101MDFMRS06',
+            
             'numero_trabajador' => '12345607',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
+
+        DB::table('profesor_curso')->insert([
+            'id'=>205,
+            'curso_id'=>203,
+            'profesor_id'=>227
+        ]);
+
         //Participantes
 
         DB::table('profesors')->insert([
@@ -1936,7 +7790,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Barrera',
             'apellido_materno'=>'Hernandez',
             'rfc'=>'BAHB010101RT4',
-            'curp' =>'BAHB010101MDFRRT03',
+            
             'numero_trabajador' => '12345608',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -1955,7 +7809,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Cervantes',
             'apellido_materno'=>'Garcia',
             'rfc'=>'CEGB0101017J6',
-            'curp' =>'CEGB010101MDFRRT03',
+            
             'numero_trabajador' => '12345609',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -1978,14 +7832,14 @@ class DatosPrueba extends Seeder
             'p2_2'=>'100',
             'p2_3'=>'100',
             'p2_4'=>'100',
-            'p3_1'=>'95',
+            'p3_1'=>'100',
             'p3_2'=>'100',
             'p3_3'=>'100',
             'p3_4'=>'60',
             'p7'=>1,
             'p8'=>'["4","Correo"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Todas las dinámicas y convivencia del grupo',
-            'sug'=>'-',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -2012,7 +7866,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Chavira',
             'apellido_materno'=>'Diaz',
             'rfc'=>'CADA010101991',
-            'curp' =>'CADA010101MDFHZD08',
+            
             'numero_trabajador' => '12345610',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -2042,7 +7896,7 @@ class DatosPrueba extends Seeder
             'p7'=>1,
             'p8'=>'["4","Correo"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Todas las dinámicas y convivencia del grupo',
-            'sug'=>'-',
+            'sug'=>'Todo bien',
             'p4_1'=>'95',
             'p4_2'=>'95',
             'p4_3'=>'95',
@@ -2068,7 +7922,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Del Valle',
             'apellido_materno'=>'Hernandez',
             'rfc'=>'VAHS010101178',
-            'curp' =>'VAHS010101MDFLRL07',
+            
             'numero_trabajador' => '12345611',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -2125,7 +7979,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Garcia',
             'apellido_materno'=>'Naranjo',
             'rfc'=>'GANP010101J67',
-            'curp' =>'GANP010101MDFRRT02',
+            
             'numero_trabajador' => '12345612',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -2155,7 +8009,7 @@ class DatosPrueba extends Seeder
             'p7'=>1,
             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'La participación grupal amena y divertida propiciada por las dinámicas indicadas por la instructora',
-            'sug'=>'-',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -2182,7 +8036,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Guevara',
             'apellido_materno'=>'Salazar',
             'rfc'=>'GUSM010101HW0',
-            'curp' =>'GUSM010101HDFVLR03',
+            
             'numero_trabajador' => '12345613',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -2211,8 +8065,8 @@ class DatosPrueba extends Seeder
             'p3_4'=>'100',
             'p7'=>1,
             'p8'=>'[""]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
-            'mejor'=>'-',
-            'sug'=>'-',
+            'mejor'=>'Todo bien',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -2239,7 +8093,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Hernandez',
             'apellido_materno'=>'Lopez',
             'rfc'=>'HELM010101RG5',
-            'curp' =>'HELM010101MDFRPR02',
+            
             'numero_trabajador' => '12345614',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -2268,8 +8122,8 @@ class DatosPrueba extends Seeder
             'p3_4'=>'100',
             'p7'=>1,
             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
-            'mejor'=>'-',
-            'sug'=>'-',
+            'mejor'=>'Todo bien',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -2296,7 +8150,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Isicahua',
             'apellido_materno'=>'Becerril',
             'rfc'=>'IIBA010101EW6',
-            'curp' =>'IIBA010101MDFSCR07',
+            
             'numero_trabajador' => '12345615',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -2326,7 +8180,7 @@ class DatosPrueba extends Seeder
             'p7'=>1,
             'p8'=>'["4","Gaceta"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Aprendi nuevas formas de trabajar con mis alumnos',
-            'sug'=>'-',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -2347,21 +8201,10 @@ class DatosPrueba extends Seeder
             'participante_curso_id'=>243
         ]);
 
-        DB::table('profesors')->insert([
-            'id'=>248,
-            'nombres'=>'Julieta',
-            'apellido_paterno'=>'Mares',
-            'apellido_materno'=>'Lopez',
-            'rfc'=>'MALJ010101487',
-            'curp' =>'MALJ010101MDFRPL06',
-            'numero_trabajador' => '12345616',
-            'fecha_nacimiento'=>'1901-01-01'
-        ]);
-        
         DB::table('participante_curso')->insert([
             'id'=>244,
             'curso_id'=>203,
-            'profesor_id'=>248,
+            'profesor_id'=>505,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -2410,7 +8253,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Miranda',
             'apellido_materno'=>'Trejo',
             'rfc'=>'MITC010101ID6',
-            'curp' =>'MITC010101MDFRRY01',
+            
             'numero_trabajador' => '12345617',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -2440,7 +8283,7 @@ class DatosPrueba extends Seeder
             'p7'=>1,
             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Conceptos nuevos adquiridos para fortalecer mis prácticas docentes',
-            'sug'=>'-',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -2467,7 +8310,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Perez',
             'apellido_materno'=>'Palacios',
             'rfc'=>'PEPD010101CK7',
-            'curp' =>'PEPD010101MDFRLN00',
+            
             'numero_trabajador' => '12345618',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -2486,7 +8329,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Reyes',
             'apellido_materno'=>'Pizano',
             'rfc'=>'REPA010101NL9',
-            'curp' =>'REPA010101HDFYZD04',
+            
             'numero_trabajador' => '12345619',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -2543,7 +8386,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Rosique',
             'apellido_materno'=>'Naranjo',
             'rfc'=>'RONF010101EF9',
-            'curp' =>'RONF010101HDFSRR07',
+            
             'numero_trabajador' => '12345620',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -2600,7 +8443,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Salas',
             'apellido_materno'=>'Alvarado',
             'rfc'=>'SAAA010101GP0',
-            'curp' =>'SAAA010101MDFLLN00',
+            
             'numero_trabajador' => '12345621',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -2630,7 +8473,7 @@ class DatosPrueba extends Seeder
             'p7'=>1,
             'p8'=>'["1","2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Las dinámicas',
-            'sug'=>'-',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -2657,7 +8500,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Sanchez',
             'apellido_materno'=>'Perez',
             'rfc'=>'SAPA010101RF8',
-            'curp' =>'SAPA010101HDFNRL02',
+            
             'numero_trabajador' => '12345622',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -2707,22 +8550,11 @@ class DatosPrueba extends Seeder
             'curso_id'=>203,
             'participante_curso_id'=>250
         ]);
-
-        DB::table('profesors')->insert([
-            'id'=>255,
-            'nombres'=>'Hector Manuel',
-            'apellido_paterno'=>'Torres',
-            'apellido_materno'=>'Dominguez',
-            'rfc'=>'TODH010101PZ6',
-            'curp' =>'TODH010101HDFRMC08',
-            'numero_trabajador' => '12345623',
-            'fecha_nacimiento'=>'1901-01-01'
-        ]);
         
         DB::table('participante_curso')->insert([
             'id'=>251,
             'curso_id'=>203,
-            'profesor_id'=>255,
+            'profesor_id'=>221,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -2733,8 +8565,8 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Velazquez',
             'apellido_materno'=>'Camacho',
             'rfc'=>'VECB0101015E4',
-            'curp' =>'VECB010101MDFLMR02',
-            'numero_trabajador' => '12345623',
+            
+            'numero_trabajador' => '123456256',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
         
@@ -2788,11 +8620,11 @@ class DatosPrueba extends Seeder
             'id'=> 204,
             'nombre_curso'=>'La violencia no visible en el aula: Detección e intervención',
             'duracion_curso' => '20',
-            'coordinacion_id' => 202,
+            'coordinacion_id' => 3,
             'tipo' => 'C',
             'institucion' => 'DGAPA',
             'fecha_disenio'=>'2012-12-12',
-            'clave_curso'=>'CAADGAPA'
+            'clave_curso'=>'VNADIDGAPA'
         ]);
         
         DB::table('cursos')->insert([
@@ -2820,10 +8652,17 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Garcia',
             'apellido_materno'=>'Lopez',
             'rfc'=>'GALA0101019A2',
-            'curp' =>'GALA010101MDFRPL09',
+            
             'numero_trabajador' => '12345624',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
+
+        DB::table('profesor_curso')->insert([
+            'id'=>207,
+            'curso_id'=>204,
+            'profesor_id'=>257
+        ]);
+
         //Participantes
         DB::table('profesors')->insert([
             'id'=>258,
@@ -2831,7 +8670,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Balmori',
             'apellido_materno'=>'Negrete',
             'rfc'=>'BANG010101SRA',
-            'curp' =>'BANG010101HDFLGS08',
+            
             'numero_trabajador' => '12345625',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -2861,7 +8700,7 @@ class DatosPrueba extends Seeder
             'p7'=>1,
             'p8'=>'["4","Centro de Docencia"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Las diversas definiciones de violencia',
-            'sug'=>'-',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -2881,21 +8720,11 @@ class DatosPrueba extends Seeder
             'curso_id'=>204,
             'participante_curso_id'=>253
         ]);
-        DB::table('profesors')->insert([
-            'id'=>259,
-            'nombres'=>'Jose Javier',
-            'apellido_paterno'=>'Cervantes',
-            'apellido_materno'=>'Cabello',
-            'rfc'=>'CECJ010101G70',
-            'curp' =>'CECJ010101HDFRBV09',
-            'numero_trabajador' => '12345626',
-            'fecha_nacimiento'=>'1901-01-01'
-        ]);
         
         DB::table('participante_curso')->insert([
             'id'=>254,
             'curso_id'=>204,
-            'profesor_id'=>259,
+            'profesor_id'=>98,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -2917,7 +8746,7 @@ class DatosPrueba extends Seeder
             'p7'=>1,
             'p8'=>'["1"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'El material y los comentarios sobre el tema por parte de todos los asistentes',
-            'sug'=>'Ninguna',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -2944,7 +8773,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Garcia',
             'apellido_materno'=>'Y Colome',
             'rfc'=>'GACA010101S49',
-            'curp' =>'GACA010101MDFRLN07',
+            
             'numero_trabajador' => '12345627',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -2974,7 +8803,7 @@ class DatosPrueba extends Seeder
             'p7'=>1,
             'p8'=>'[""]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Todo',
-            'sug'=>'-',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -3001,7 +8830,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Juarez',
             'apellido_materno'=>'Cisneros',
             'rfc'=>'JUCR010101MU0',
-            'curp' =>'JUCR010101MDFRSS06',
+            
             'numero_trabajador' => '12345628',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -3058,7 +8887,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Lopez',
             'apellido_materno'=>'Aburto',
             'rfc'=>'LOAV010101L21',
-            'curp' =>'LOAV010101HDFPBC07',
+            
             'numero_trabajador' => '12345629',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -3115,7 +8944,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Mancilla',
             'apellido_materno'=>'Urrea',
             'rfc'=>'MAUM0101018U7',
-            'curp' =>'MAUM010101MDFNRR07',
+            
             'numero_trabajador' => '12345630',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -3165,22 +8994,11 @@ class DatosPrueba extends Seeder
             'curso_id'=>204,
             'participante_curso_id'=>258
         ]);
-
-        DB::table('profesors')->insert([
-            'id'=>264,
-            'nombres'=>'Jose Miguel',
-            'apellido_paterno'=>'Martinez',
-            'apellido_materno'=>'Alcaraz',
-            'rfc'=>'MAAM0101014L6',
-            'curp' =>'MAAM010101HDFRLG02',
-            'numero_trabajador' => '12345631',
-            'fecha_nacimiento'=>'1901-01-01'
-        ]);
         
         DB::table('participante_curso')->insert([
             'id'=>259,
             'curso_id'=>204,
-            'profesor_id'=>264,
+            'profesor_id'=>67,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -3202,7 +9020,7 @@ class DatosPrueba extends Seeder
             'p7'=>1,
             'p8'=>'["4","Coordinacion del Centro"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Las presentaciones en el aula y la exposición del tema. La secuencia del conocimiento y los conceptos.',
-            'sug'=>'-',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -3229,7 +9047,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Martinez',
             'apellido_materno'=>'Lopez',
             'rfc'=>'MALE0101016I9',
-            'curp' =>'MALE010101MDFRPR00',
+            
             'numero_trabajador' => '12345632',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -3279,79 +9097,11 @@ class DatosPrueba extends Seeder
             'curso_id'=>204,
             'participante_curso_id'=>260
         ]);
-
-        DB::table('profesors')->insert([
-            'id'=>266,
-            'nombres'=>'Erika',
-            'apellido_paterno'=>'Martinez',
-            'apellido_materno'=>'Lopez',
-            'rfc'=>'MALE0101016I9',
-            'curp' =>'MALE010101MDFRPR00',
-            'numero_trabajador' => '12345632',
-            'fecha_nacimiento'=>'1901-01-01'
-        ]);
-        
-        DB::table('participante_curso')->insert([
-            'id'=>261,
-            'curso_id'=>204,
-            'profesor_id'=>266,
-            'asistencia'=>true,
-            'acreditacion'=>true
-        ]);
-        //100 (E), 95 (MB), 80 (Bu), 60 (Re), 50 (Ma)
-        DB::table('_evaluacion_final_curso')->insert([
-            'p1_1'=>'100',
-            'p1_2'=>'95',
-            'p1_3'=>'100',
-            'p1_4'=>'100',
-            'p1_5'=>'100',
-            'p2_1'=>'80',
-            'p2_2'=>'80',
-            'p2_3'=>'80',
-            'p2_4'=>'80',
-            'p3_1'=>'95',
-            'p3_2'=>'95',
-            'p3_3'=>'95',
-            'p3_4'=>'95',
-            'p7'=>1,
-            'p8'=>'["4","Correo"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
-            'mejor'=>'Todo',
-            'sug'=>'Ninguna, excelente curso',
-            'p4_1'=>'100',
-            'p4_2'=>'100',
-            'p4_3'=>'100',
-            'p4_4'=>'100',
-            'p4_5'=>'100',
-            'p4_6'=>'100',
-            'p4_7'=>'100',
-            'p4_8'=>'100',
-            'p4_9'=>'100',
-            'p4_10'=>'100',
-            'p4_11'=>'100',
-            'otros'=>'Otros',
-            'conocimiento'=>'["1"]',
-            'tematica'=>'tematica',
-            'horarios'=>'9:00-13:00',
-            'horarioi'=>'13:00-15:00',
-            'curso_id'=>204,
-            'participante_curso_id'=>261
-        ]);
-
-        DB::table('profesors')->insert([
-            'id'=>267,
-            'nombres'=>'Georgina',
-            'apellido_paterno'=>'Nieto',
-            'apellido_materno'=>'Castañeda',
-            'rfc'=>'NICG010101D80',
-            'curp' =>'NICG010101MDFTSR08',
-            'numero_trabajador' => '12345633',
-            'fecha_nacimiento'=>'1901-01-01'
-        ]);
         
         DB::table('participante_curso')->insert([
             'id'=>262,
             'curso_id'=>204,
-            'profesor_id'=>267,
+            'profesor_id'=>69,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -3400,7 +9150,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Nieves',
             'apellido_materno'=>'Saavedra',
             'rfc'=>'NISA010101ID2',
-            'curp' =>'NISA010101MDFVVG00',
+            
             'numero_trabajador' => '12345634',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -3457,7 +9207,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Osorio',
             'apellido_materno'=>'Tai',
             'rfc'=>'OOTE010101I18',
-            'curp' =>'OOTE010101MDFSL06',
+            
             'numero_trabajador' => '12345635',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -3508,13 +9258,127 @@ class DatosPrueba extends Seeder
             'participante_curso_id'=>264
         ]);
 
+        DB::table('profesors')->insert([
+            'id'=>605,
+            'nombres'=>'Victor Manuel',
+            'apellido_paterno'=>'Sanchez',
+            'apellido_materno'=>'Ezquivel',
+            'rfc'=>'SAEV010101I18',
+            
+            'numero_trabajador' => '123456605',
+            'fecha_nacimiento'=>'1901-01-01'
+        ]);
+        
+        DB::table('participante_curso')->insert([
+            'id'=>605,
+            'curso_id'=>204,
+            'profesor_id'=>605,
+            'asistencia'=>true,
+            'acreditacion'=>true
+        ]);
+        //100 (E), 95 (MB), 80 (Bu), 60 (Re), 50 (Ma)
+        DB::table('_evaluacion_final_curso')->insert([
+            'p1_1'=>'95',
+            'p1_2'=>'80',
+            'p1_3'=>'80',
+            'p1_4'=>'95',
+            'p1_5'=>'95',
+            'p2_1'=>'80',
+            'p2_2'=>'80',
+            'p2_3'=>'80',
+            'p2_4'=>'95',
+            'p3_1'=>'80',
+            'p3_2'=>'95',
+            'p3_3'=>'80',
+            'p3_4'=>'80',
+            'p7'=>1,
+            'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
+            'mejor'=>'Resaltar conceptos que había olvidad y recuperar la actitud que se debe tener siempre presenta al trabajar con seres humanos',
+            'sug'=>'Proporcional el material que se presenta en las sesiones de trabajo antes de sder presentada pasra así cmprender y entender los temas de forma clara',
+            'p4_1'=>'95',
+            'p4_2'=>'95',
+            'p4_3'=>'95',
+            'p4_4'=>'80',
+            'p4_5'=>'80',
+            'p4_6'=>'95',
+            'p4_7'=>'80',
+            'p4_8'=>'95',
+            'p4_9'=>'95',
+            'p4_10'=>'100',
+            'p4_11'=>'95',
+            'otros'=>'Otros',
+            'conocimiento'=>'["1"]',
+            'tematica'=>'tematica',
+            'horarios'=>'9:00-13:00',
+            'horarioi'=>'13:00-15:00',
+            'curso_id'=>204,
+            'participante_curso_id'=>605
+        ]);
+
+        DB::table('profesors')->insert([
+            'id'=>606,
+            'nombres'=>'Elvia Angelica',
+            'apellido_paterno'=>'Torres',
+            'apellido_materno'=>'Rojas',
+            'rfc'=>'TORE010101I18',
+            
+            'numero_trabajador' => '123456606',
+            'fecha_nacimiento'=>'1901-01-01'
+        ]);
+        
+        DB::table('participante_curso')->insert([
+            'id'=>606,
+            'curso_id'=>204,
+            'profesor_id'=>606,
+            'asistencia'=>true,
+            'acreditacion'=>true
+        ]);
+        //100 (E), 95 (MB), 80 (Bu), 60 (Re), 50 (Ma)
+        DB::table('_evaluacion_final_curso')->insert([
+            'p1_1'=>'100',
+            'p1_2'=>'100',
+            'p1_3'=>'100',
+            'p1_4'=>'100',
+            'p1_5'=>'100',
+            'p2_1'=>'95',
+            'p2_2'=>'95',
+            'p2_3'=>'100',
+            'p2_4'=>'100',
+            'p3_1'=>'100',
+            'p3_2'=>'100',
+            'p3_3'=>'95',
+            'p3_4'=>'95',
+            'p7'=>1,
+            'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
+            'mejor'=>'La planeación, el manejo del grupo y el contenido del curso',
+            'sug'=>'La sesión 5 me pareció que no estaba muy enfocada en el tema del curso recomendaría otro ripo de dinámica',
+            'p4_1'=>'100',
+            'p4_2'=>'100',
+            'p4_3'=>'100',
+            'p4_4'=>'100',
+            'p4_5'=>'100',
+            'p4_6'=>'95',
+            'p4_7'=>'100',
+            'p4_8'=>'100',
+            'p4_9'=>'100',
+            'p4_10'=>'100',
+            'p4_11'=>'100',
+            'otros'=>'Otros',
+            'conocimiento'=>'["1"]',
+            'tematica'=>'tematica',
+            'horarios'=>'9:00-13:00',
+            'horarioi'=>'13:00-15:00',
+            'curso_id'=>204,
+            'participante_curso_id'=>606
+        ]);
+
         //Segundo documento: 1_RespuestasEvalCursosTodasAreas_2020-1s_2
         //Primer curso
         DB::table('catalogo_cursos')->insert([
             'id'=> 205,
             'nombre_curso'=>'Las rubricas como instrumento de evaluación',
             'duracion_curso' => '20',
-            'coordinacion_id' => 201,
+            'coordinacion_id' => 3,
             'tipo' => 'C',
             'institucion' => 'DGAPA',
             'fecha_disenio'=>'2012-12-12',
@@ -3540,25 +9404,16 @@ class DatosPrueba extends Seeder
             'salon_id' => 1
         ]);
         //Instructores
-        DB::table('profesors')->insert([
-            'id'=>270,
-            'nombres'=>'Claudia',
-            'apellido_paterno'=>'Loreto',
-            'apellido_materno'=>'Miranda',
-            'rfc'=>'LOMC0101019J5',
-            'curp' =>'LOMC010101MDFRRL00',
-            'numero_trabajador' => '12345636',
-            'fecha_nacimiento'=>'1901-01-01'
+        DB::table('profesor_curso')->insert([
+            'id'=>208,
+            'curso_id'=>205,
+            'profesor_id'=>94
         ]);
-        DB::table('profesors')->insert([
-            'id'=>271,
-            'nombres'=>'Juan',
-            'apellido_paterno'=>'Varela',
-            'apellido_materno'=>'Juarez',
-            'rfc'=>'VAJJ010101GHA',
-            'curp' =>'VAJJ010101HDFRRN04',
-            'numero_trabajador' => '12345637',
-            'fecha_nacimiento'=>'1901-01-01'
+
+        DB::table('profesor_curso')->insert([
+            'id'=>209,
+            'curso_id'=>205,
+            'profesor_id'=>96
         ]);
         //Participantes
         DB::table('profesors')->insert([
@@ -3567,7 +9422,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Angeles',
             'apellido_materno'=>'Cervantes',
             'rfc'=>'AECJ010101N24',
-            'curp' =>'AECJ010101HDFNRN09',
+            
             'numero_trabajador' => '12345638',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -3692,7 +9547,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Cuellar',
             'apellido_materno'=>'Gonzalez',
             'rfc'=>'CUGJ010101SJ8',
-            'curp' =>'CUGJ010101HDFLNV03',
+            
             'numero_trabajador' => '12345640',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -3753,22 +9608,11 @@ class DatosPrueba extends Seeder
             'curso_id'=>204,
             'participante_curso_id'=>268
         ]);
-
-        DB::table('profesors')->insert([
-            'id'=>274,
-            'nombres'=>'Miguel',
-            'apellido_paterno'=>'Bustos',
-            'apellido_materno'=>'Figueroa',
-            'rfc'=>'BUFM0101011I0',
-            'curp' =>'BUFM010101HDFSGG08',
-            'numero_trabajador' => '12345641',
-            'fecha_nacimiento'=>'1901-01-01'
-        ]);
         
         DB::table('participante_curso')->insert([
             'id'=>269,
             'curso_id'=>205,
-            'profesor_id'=>274,
+            'profesor_id'=>210,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -3779,7 +9623,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Flores',
             'apellido_materno'=>'Soto',
             'rfc'=>'FOSX010101KRA',
-            'curp' =>'FOSX010101MDFLTC00',
+            
             'numero_trabajador' => '12345642',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -3840,22 +9684,11 @@ class DatosPrueba extends Seeder
             'curso_id'=>204,
             'participante_curso_id'=>270
         ]);
-
-        DB::table('profesors')->insert([
-            'id'=>276,
-            'nombres'=>'Luis Antonio',
-            'apellido_paterno'=>'Garcia',
-            'apellido_materno'=>'Villanueva',
-            'rfc'=>'GAVL0101011Q3',
-            'curp' =>'GAVL010101HDFRLS04',
-            'numero_trabajador' => '12345643',
-            'fecha_nacimiento'=>'1901-01-01'
-        ]);
         
         DB::table('participante_curso')->insert([
             'id'=>271,
             'curso_id'=>205,
-            'profesor_id'=>276,
+            'profesor_id'=>63,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -3864,9 +9697,9 @@ class DatosPrueba extends Seeder
             'id'=>277,
             'nombres'=>'Patricia',
             'apellido_paterno'=>'Guerrero',
-            'apellido_materno'=>'DDiaz',
+            'apellido_materno'=>'Diaz',
             'rfc'=>'GUDP010101ER1',
-            'curp' =>'GUDP010101MDFRZT03',
+            
             'numero_trabajador' => '12345644',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -3891,16 +9724,16 @@ class DatosPrueba extends Seeder
             'p2_4'=>'100',
             'p3_1'=>'100',
             'p3_2'=>'100',
-            'p3_3'=>'95',
+            'p3_3'=>'100',
             'p3_4'=>'100',
             'p7'=>1,
             'p8'=>'["3"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Que me llevo las rúbricas como un nuevo mecanismo de evaluación. No tenía una iddea definida de cómo se utilizaban, sin embargo ahora ya me queda claro.',
-            'sug'=>'Ninguna',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
-            'p4_2'=>'95',
+            'p4_2'=>'100',
             'p4_3'=>'100',
-            'p4_4'=>'95',
+            'p4_4'=>'100',
             'p4_5'=>'100',
             'p4_6'=>'95',
             'p4_7'=>'100',
@@ -3927,22 +9760,11 @@ class DatosPrueba extends Seeder
             'curso_id'=>204,
             'participante_curso_id'=>272
         ]);
-
-        DB::table('profesors')->insert([
-            'id'=>278,
-            'nombres'=>'Miguel Angel',
-            'apellido_paterno'=>'Hofmann',
-            'apellido_materno'=>'Aguirre',
-            'rfc'=>'HOAM010101R47',
-            'curp' =>'HOAM010101HDFFGG02',
-            'numero_trabajador' => '12345645',
-            'fecha_nacimiento'=>'1901-01-01'
-        ]);
         
         DB::table('participante_curso')->insert([
             'id'=>273,
             'curso_id'=>205,
-            'profesor_id'=>278,
+            'profesor_id'=>65,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -4002,7 +9824,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Marin',
             'apellido_materno'=>'Acosta',
             'rfc'=>'MAAR010101R8A',
-            'curp' =>'MAAR010101HDFRCF01',
+            
             'numero_trabajador' => '12345646',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -4031,8 +9853,8 @@ class DatosPrueba extends Seeder
             'p3_4'=>'100',
             'p7'=>1,
             'p8'=>'[""]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
-            'mejor'=>'-',
-            'sug'=>'-',
+            'mejor'=>'Todo bien',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -4069,7 +9891,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Mata',
             'apellido_materno'=>'Hernandedz',
             'rfc'=>'MAHG010101HA5',
-            'curp' =>'MAHG010101MDFTRL07',
+            
             'numero_trabajador' => '12345647',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -4137,7 +9959,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Montoya',
             'apellido_materno'=>'Cervantes',
             'rfc'=>'MOCF0101013A9',
-            'curp' =>'MOCF010101HDFNRR01',
+            
             'numero_trabajador' => '12345648',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -4202,7 +10024,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
             'id'=>277,
             'curso_id'=>205,
-            'profesor_id'=>267,
+            'profesor_id'=>69,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -4213,7 +10035,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Ramirez',
             'apellido_materno'=>'Galindo',
             'rfc'=>'RAGM010101KP2',
-            'curp' =>'RAGM010101MDFMLR02',
+            
             'numero_trabajador' => '12345649',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -4281,7 +10103,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Rodriguez',
             'apellido_materno'=>'Gomez',
             'rfc'=>'ROGJ010101QM4',
-            'curp' =>'ROGJ010101HDFDMN08',
+            
             'numero_trabajador' => '12345650',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -4349,7 +10171,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Salinas',
             'apellido_materno'=>'Calleros',
             'rfc'=>'SACG010101CG5',
-            'curp' =>'SACG010101HDFLLB04',
+            
             'numero_trabajador' => '12345651',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -4416,7 +10238,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Talavera',
             'apellido_materno'=>'Moctezuma',
             'rfc'=>'TAME010101IW4',
-            'curp' =>'TAME010101HDFLCD06',
+            
             'numero_trabajador' => '12345652',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -4436,7 +10258,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Vacio',
             'apellido_materno'=>'Gonzalez',
             'rfc'=>'VAGM010101J72',
-            'curp' =>'VAGM010101HDFCNN07',
+            
             'numero_trabajador' => '12345653',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -4466,7 +10288,7 @@ class DatosPrueba extends Seeder
             'p7'=>1,
             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'El desarrollo de una rúbrica',
-            'sug'=>'Ninguna',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -4504,7 +10326,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Villalobos',
             'apellido_materno'=>'Perez',
             'rfc'=>'VIPS0101014W5',
-            'curp' =>'VIPS010101HDFLRL07',
+            
             'numero_trabajador' => '12345654',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -4565,22 +10387,11 @@ class DatosPrueba extends Seeder
             'curso_id'=>205,
             'participante_curso_id'=>283
         ]);
-
-        DB::table('profesors')->insert([
-            'id'=>288,
-            'nombres'=>'Arturo',
-            'apellido_paterno'=>'Zapata',
-            'apellido_materno'=>'Y Rosales',
-            'rfc'=>'ZARA010101QU9',
-            'curp' =>'ZARA010101HDFPSR04',
-            'numero_trabajador' => '12345655',
-            'fecha_nacimiento'=>'1901-01-01'
-        ]);
         
         DB::table('participante_curso')->insert([
             'id'=>284,
             'curso_id'=>205,
-            'profesor_id'=>288,
+            'profesor_id'=>225,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -4633,22 +10444,11 @@ class DatosPrueba extends Seeder
             'curso_id'=>205,
             'participante_curso_id'=>284
         ]);
-
-        DB::table('profesors')->insert([
-            'id'=>289,
-            'nombres'=>'Hugo',
-            'apellido_paterno'=>'Zuñiga',
-            'apellido_materno'=>'Barragan',
-            'rfc'=>'ZUBH010101HMA',
-            'curp' =>'ZUBH010101HDF&RG04',
-            'numero_trabajador' => '12345656',
-            'fecha_nacimiento'=>'1901-01-01'
-        ]);
         
         DB::table('participante_curso')->insert([
             'id'=>285,
             'curso_id'=>205,
-            'profesor_id'=>289,
+            'profesor_id'=>226,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -4701,24 +10501,12 @@ class DatosPrueba extends Seeder
             'curso_id'=>205,
             'participante_curso_id'=>285
         ]);
-        //Segundo curso
-        //insertar coordinacion y continuar editando los datos
-        DB::table('coordinacions')->insert([
-                'id' => 203,
-                'nombre_coordinacion' => 'Área de Cómputo',
-                'abreviatura' => 'AC',
-                'coordinador' => 'Daniela Galvan',
-                'grado' => 'M.E.M.',
-                'usuario' => 'daniela',
-                'password' => Hash::make('1234'),
-                'comentarios' => '-'
-            ]);
         
         DB::table('catalogo_cursos')->insert([
             'id'=> 206,
             'nombre_curso'=>'Manejo básico de R aplicado a la enseñanza de las matemáticas',
             'duracion_curso' => '20',
-            'coordinacion_id' => 203,
+            'coordinacion_id' => 1,
             'tipo' => 'C',
             'institucion' => 'DGAPA',
             'fecha_disenio'=>'2012-12-12',
@@ -4750,18 +10538,26 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Vargas',
             'apellido_materno'=>'Espinoza de los Monteros',
             'rfc'=>'VAEA010101MX4',
-            'curp' =>'VAEA010101HDFRSL01',
+            
             'numero_trabajador' => '12345657',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
-        //Participantes
-        DB::table('participante_curso')->insert([
-            'id'=>286,
-            'curso_id'=>206,
-            'profesor_id'=>207,
-            'asistencia'=>true,
-            'acreditacion'=>true
+
+        DB::table('profesor_curso')->insert([
+            'id'=>210,
+            'profesor_id'=>290,
+            'curso_id'=>206
         ]);
+
+        //Participantes
+		DB::table('participante_curso')->insert([
+			'id'=>286,
+			'curso_id'=>206,
+			'profesor_id'=>75,
+			'asistencia'=>true,
+			'acreditacion'=>true
+		]);
+		
         //100 (E), 95 (MB), 80 (Bu), 60 (Re), 50 (Ma)
         DB::table('_evaluacion_final_curso')->insert([
             'p1_1'=>'100',
@@ -4807,7 +10603,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Cueva',
             'apellido_materno'=>'Guitron',
             'rfc'=>'CUGI010101345',
-            'curp' =>'CUGI010101HDFVTG03',
+            
             'numero_trabajador' => '12345658',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -4864,7 +10660,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Diaz',
             'apellido_materno'=>'Trueba',
             'rfc'=>'DITL010101GK3',
-            'curp' =>'DITL010101HDFZRS06',
+            
             'numero_trabajador' => '12345659',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -4921,7 +10717,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Gomez',
             'apellido_materno'=>'Gallardo',
             'rfc'=>'GOGW0101014Y8',
-            'curp' =>'GOGW010101HDFMLL09',
+            
             'numero_trabajador' => '12345660',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -4972,21 +10768,10 @@ class DatosPrueba extends Seeder
             'participante_curso_id'=>289
         ]);
 
-        DB::table('profesors')->insert([
-            'id'=>294,
-            'nombres'=>'Miguel Eduardo',
-            'apellido_paterno'=>'Gonzalez',
-            'apellido_materno'=>'Cardenas',
-            'rfc'=>'GOCM010101BD9',
-            'curp' =>'GOCM010101HDFNRG00',
-            'numero_trabajador' => '12345661',
-            'fecha_nacimiento'=>'1901-01-01'
-        ]);
-
         DB::table('participante_curso')->insert([
             'id'=>290,
             'curso_id'=>206,
-            'profesor_id'=>294,
+            'profesor_id'=>76,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -5035,7 +10820,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Lizarraga',
             'apellido_materno'=>'Ramirez',
             'rfc'=>'LIRG0101014H2',
-            'curp' =>'LIRG010101MDFZMB07',
+            
             'numero_trabajador' => '12345662',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -5086,21 +10871,10 @@ class DatosPrueba extends Seeder
             'participante_curso_id'=>291
         ]);
 
-        DB::table('profesors')->insert([
-            'id'=>296,
-            'nombres'=>'Jacquelyn',
-            'apellido_paterno'=>'Martinez',
-            'apellido_materno'=>'Alavez',
-            'rfc'=>'MAAJ010101LW5',
-            'curp' =>'MAAJ010101MDFRLC09',
-            'numero_trabajador' => '12345663',
-            'fecha_nacimiento'=>'1901-01-01'
-        ]);
-
         DB::table('participante_curso')->insert([
             'id'=>292,
             'curso_id'=>206,
-            'profesor_id'=>296,
+            'profesor_id'=>506,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -5149,7 +10923,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Morales',
             'apellido_materno'=>'Acosta',
             'rfc'=>'MOAL0101017NA',
-            'curp' =>'MOAL010101HDFRCZ08',
+            
             'numero_trabajador' => '12345664',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -5206,7 +10980,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Muñoz',
             'apellido_materno'=>'Hernandez',
             'rfc'=>'MUHG0101018F1',
-            'curp' =>'MUHG010101HDF&RN04',
+            
             'numero_trabajador' => '12345665',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -5263,7 +11037,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Ocampo',
             'apellido_materno'=>'Guerrero',
             'rfc'=>'OAGN0101017NA',
-            'curp' =>'OAGN010101MDFCRK07',
+            
             'numero_trabajador' => '12345666',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -5282,18 +11056,18 @@ class DatosPrueba extends Seeder
             'p1_3'=>'100',
             'p1_4'=>'100',
             'p1_5'=>'100',
-            'p2_1'=>'95',
-            'p2_2'=>'95',
+            'p2_1'=>'100',
+            'p2_2'=>'100',
             'p2_3'=>'100',
             'p2_4'=>'100',
             'p3_1'=>'100',
             'p3_2'=>'100',
-            'p3_3'=>'95',
-            'p3_4'=>'95',
+            'p3_3'=>'100',
+            'p3_4'=>'100',
             'p7'=>1,
             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'El abordaje de los temas paso a paso',
-            'sug'=>'-',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -5320,7 +11094,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Palomino',
             'apellido_materno'=>'Merino',
             'rfc'=>'PAMD010101LE7',
-            'curp' =>'PAMD010101HDFLRV02',
+            
             'numero_trabajador' => '12345667',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -5339,7 +11113,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Reyes',
             'apellido_materno'=>'Zarate',
             'rfc'=>'REZF0101011U5',
-            'curp' =>'REZF010101HDFYRR06',
+            
             'numero_trabajador' => '12345668',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -5358,7 +11132,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Segura',
             'apellido_materno'=>'Perez',
             'rfc'=>'SEPE010101L55',
-            'curp' =>'	SEPE010101MDFGRS05',
+            
             'numero_trabajador' => '12345669',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
@@ -5377,8 +11151,8 @@ class DatosPrueba extends Seeder
                     'p1_3'=>'100',
                     'p1_4'=>'100',
                     'p1_5'=>'100',
-                    'p2_1'=>'95',
-                    'p2_2'=>'95',
+                    'p2_1'=>'100',
+                    'p2_2'=>'100',
                     'p2_3'=>'100',
                     'p2_4'=>'100',
                     'p3_1'=>'80',
@@ -5508,11 +11282,10 @@ class DatosPrueba extends Seeder
             'id'=> 207,
             'nombre_curso'=>'Módulo 1. La educación como fundamento del desarrollo humano',
             'duracion_curso' => '20',
-            'coordinacion_id' => 202,
+            'coordinacion_id' => 4,
             'tipo' => 'C',
             'institucion' => 'DGAPA',
             'fecha_disenio'=>'2012-12-12',
-            'coordinacion_id'=>2,
             'clave_curso'=>'MLEFDHDGAPA'
         ]);
         
@@ -5542,25 +11315,22 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Verdejo',
             'apellido_materno'=>'Manzano',
             'rfc'=>'VEMM010101135',
-            'curp' =>'VEMM010101HDFRNR08',
+            
             'numero_trabajador' => '12345700',
             'fecha_nacimiento'=>'1901-01-01'
         ]);
-        //Participantes
-        DB::table('profesors')->insert([
-            'id'=>304,
-            'nombres'=>'Anayantzin',
-            'apellido_paterno'=>'Almanza',
-            'apellido_materno'=>'Valdez',
-            'rfc'=>'AAVA0101017D3',
-            'curp' =>'AAVA010101MDFLLN00',
-            'numero_trabajador' => '12345701',
-            'fecha_nacimiento'=>'1901-01-01'
+
+        DB::table('profesor_curso')->insert([
+            'id'=>211,
+            'profesor_id'=>303,
+            'curso_id'=>207
         ]);
+
+        //Participante
         DB::table('participante_curso')->insert([
             'id'=>301,
             'curso_id'=>207,
-            'profesor_id'=>304,
+            'profesor_id'=>60,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -5582,7 +11352,7 @@ class DatosPrueba extends Seeder
                     'p7'=>1,
                     'p8'=>'["4","Otro profesor"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
                     'mejor'=>'Aprendí cosas nuevas que aunque en un principio me costaban trabajo, perserveré y con la práctica en la siguiente sesión, comentándolo con los [...]',
-                    'sug'=>'-',
+                    'sug'=>'Todo bien',
                     'p4_1'=>'95',
                     'p4_2'=>'95',
                     'p4_3'=>'95',
@@ -5603,20 +11373,11 @@ class DatosPrueba extends Seeder
                     'participante_curso_id'=>301
                 ]);
 
-        DB::table('profesors')->insert([
-                    'id'=>305,
-                    'nombres'=>'Angel Francisco',
-                    'apellido_paterno'=>'Alvarez',
-                    'apellido_materno'=>'Herrera',
-                    'rfc'=>'AAHA010101E32',
-                    'curp' =>'AAHA010101HDFLRN02',
-                    'numero_trabajador' => '12345702',
-                    'fecha_nacimiento'=>'1901-01-01'
-                ]);
+       
         DB::table('participante_curso')->insert([
                     'id'=>302,
                     'curso_id'=>207,
-                    'profesor_id'=>305,
+                    'profesor_id'=>61,
                     'asistencia'=>true,
                     'acreditacion'=>true
                 ]);
@@ -5638,7 +11399,7 @@ class DatosPrueba extends Seeder
                             'p7'=>1,
                             'p8'=>'["4","Gaceta UNAM"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
                             'mejor'=>'La experiencia que me llevo sobre los temas abordados',
-                            'sug'=>'-',
+                            'sug'=>'Todo bien',
                             'p4_1'=>'100',
                             'p4_2'=>'100',
                             'p4_3'=>'100',
@@ -5658,16 +11419,7 @@ class DatosPrueba extends Seeder
                             'curso_id'=>207,
                             'participante_curso_id'=>302
                         ]);
-        DB::table('profesors')->insert([
-                            'id'=>306,
-                            'nombres'=>'German Ramon',
-                            'apellido_paterno'=>'Arconada',
-                            'apellido_materno'=>'Rey',
-                            'rfc'=>'AORG0101012R1',
-                            'curp' =>'AORG010101HDFRYR03',
-                            'numero_trabajador' => '12345703',
-                            'fecha_nacimiento'=>'1901-01-01'
-                        ]);
+
         DB::table('participante_curso')->insert([
                             'id'=>303,
                             'curso_id'=>207,
@@ -5681,14 +11433,14 @@ class DatosPrueba extends Seeder
                             'apellido_paterno'=>'Elorza',
                             'apellido_materno'=>'Lopez',
                             'rfc'=>'EOLN010101RRA',
-                            'curp' =>'EOLN010101HDFLPF08',
+                            
                             'numero_trabajador' => '12345704',
                             'fecha_nacimiento'=>'1901-01-01'
                         ]);
         DB::table('participante_curso')->insert([
                             'id'=>304,
                             'curso_id'=>207,
-                            'profesor_id'=>307,
+                            'profesor_id'=>60,
                             'asistencia'=>true,
                             'acreditacion'=>true
                         ]);
@@ -5730,20 +11482,10 @@ class DatosPrueba extends Seeder
                                     'curso_id'=>207,
                                     'participante_curso_id'=>304
                                 ]);
-        DB::table('profesors')->insert([
-                                    'id'=>308,
-                                    'nombres'=>'Gaspar',
-                                    'apellido_paterno'=>'Franco',
-                                    'apellido_materno'=>'Hernandez',
-                                    'rfc'=>'FAHG010101RI3',
-                                    'curp' =>'FAHG010101HDFRRS09',
-                                    'numero_trabajador' => '12345705',
-                                    'fecha_nacimiento'=>'1901-01-01'
-                                ]);
         DB::table('participante_curso')->insert([
                                     'id'=>305,
                                     'curso_id'=>207,
-                                    'profesor_id'=>308,
+                                    'profesor_id'=>62,
                                     'asistencia'=>true,
                                     'acreditacion'=>true
                                 ]);
@@ -5765,10 +11507,10 @@ class DatosPrueba extends Seeder
                                             'p7'=>1,
                                             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
                                             'mejor'=>'Le puse nombre y apellido a mi forma de enseñar',
-                                            'sug'=>'-',
+                                            'sug'=>'Todo bien',
                                             'p4_1'=>'100',
-                                            'p4_2'=>'95',
-                                            'p4_3'=>'95',
+                                            'p4_2'=>'80',
+                                            'p4_3'=>'80',
                                             'p4_4'=>'100',
                                             'p4_5'=>'100',
                                             'p4_6'=>'100',
@@ -5791,7 +11533,7 @@ class DatosPrueba extends Seeder
     'apellido_paterno'=>'Galvan',
     'apellido_materno'=>'Tapia',
     'rfc'=>'GATM010101GH1',
-    'curp' =>'GATM010101HDFLPR09',
+    
     'numero_trabajador' => '12345706',
     'fecha_nacimiento'=>'1901-01-01'
     ]);
@@ -5805,7 +11547,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
     'id'=>307,
     'curso_id'=>207,
-    'profesor_id'=>276,
+    'profesor_id'=>63,
     'asistencia'=>true,
     'acreditacion'=>true
     ]);
@@ -5827,7 +11569,7 @@ class DatosPrueba extends Seeder
         'p7'=>1,
         'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
         'mejor'=>'Conocer e identificar las deferentes teorías del desarrollo humano',
-        'sug'=>'-',
+        'sug'=>'Todo bien',
         'p4_1'=>'95',
         'p4_2'=>'95',
         'p4_3'=>'95',
@@ -5848,20 +11590,10 @@ class DatosPrueba extends Seeder
         'participante_curso_id'=>307
     ]);
 
-        DB::table('profesors')->insert([
-        'id'=>310,
-        'nombres'=>'Griselda Berenice',
-        'apellido_paterno'=>'Hernandez',
-        'apellido_materno'=>'Cruz',
-        'rfc'=>'HECG0101012N8',
-        'curp' =>'HECG010101MDFRRR08',
-        'numero_trabajador' => '12345707',
-        'fecha_nacimiento'=>'1901-01-01'
-        ]);
         DB::table('participante_curso')->insert([
     'id'=>308,
     'curso_id'=>207,
-    'profesor_id'=>310,
+    'profesor_id'=>64,
     'asistencia'=>true,
     'acreditacion'=>true
     ]);
@@ -5883,7 +11615,7 @@ class DatosPrueba extends Seeder
     'p7'=>1,
     'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
     'mejor'=>'El marco conceptual del humanismo',
-    'sug'=>'-',
+    'sug'=>'Todo bien',
     'p4_1'=>'95',
     'p4_2'=>'95',
     'p4_3'=>'100',
@@ -5907,7 +11639,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
         'id'=>309,
         'curso_id'=>207,
-        'profesor_id'=>278,
+        'profesor_id'=>65,
         'asistencia'=>true,
         'acreditacion'=>true
         ]);
@@ -5924,12 +11656,12 @@ class DatosPrueba extends Seeder
         'p2_4'=>'100',
         'p3_1'=>'100',
         'p3_2'=>'100',
-        'p3_3'=>'95',
+        'p3_3'=>'80',
         'p3_4'=>'100',
         'p7'=>1,
         'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
         'mejor'=>'La aplicación dde las Teorías de Psicología del Aprendizaje',
-        'sug'=>'-',
+        'sug'=>'Todo bien',
         'p4_1'=>'100',
         'p4_2'=>'100',
         'p4_3'=>'100',
@@ -5950,20 +11682,10 @@ class DatosPrueba extends Seeder
         'participante_curso_id'=>309
         ]);
 
-        DB::table('profesors')->insert([
-            'id'=>311,
-            'nombres'=>'Lucia Yazmin',
-            'apellido_paterno'=>'Juarez',
-            'apellido_materno'=>'De la Mora',
-            'rfc'=>'JUML010101AN1',
-            'curp' =>'JUML010101MDFRRC06',
-            'numero_trabajador' => '12345708',
-            'fecha_nacimiento'=>'1901-01-01'
-            ]);
         DB::table('participante_curso')->insert([
         'id'=>310,
         'curso_id'=>207,
-        'profesor_id'=>311,
+        'profesor_id'=>66,
         'asistencia'=>true,
         'acreditacion'=>true
         ]);
@@ -5984,8 +11706,8 @@ class DatosPrueba extends Seeder
         'p3_4'=>'100',
         'p7'=>1,
         'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
-        'mejor'=>'-',
-        'sug'=>'-',
+        'mejor'=>'Todo bien',
+        'sug'=>'Todo bien',
         'p4_1'=>'100',
         'p4_2'=>'100',
         'p4_3'=>'100',
@@ -6009,7 +11731,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
         'id'=>311,
         'curso_id'=>207,
-        'profesor_id'=>264,
+        'profesor_id'=>67,
         'asistencia'=>true,
         'acreditacion'=>true
         ]);
@@ -6031,7 +11753,7 @@ class DatosPrueba extends Seeder
         'p7'=>1,
         'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
         'mejor'=>'La presencia del proceso de enseñanza aprendizaje',
-        'sug'=>'-',
+        'sug'=>'Todo bien',
         'p4_1'=>'100',
         'p4_2'=>'100',
         'p4_3'=>'100',
@@ -6057,7 +11779,7 @@ class DatosPrueba extends Seeder
             'apellido_paterno'=>'Mendoza',
             'apellido_materno'=>'Cano',
             'rfc'=>'MECM010101DJ1',
-            'curp' =>'MECM010101MDFNNR03',
+            
             'numero_trabajador' => '12345709',
             'fecha_nacimiento'=>'1901-01-01'
             ]);
@@ -6086,7 +11808,7 @@ class DatosPrueba extends Seeder
             'p7'=>1,
             'p8'=>'["3"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Conocer qué es la edducación y el ddesarrollo humano en la formación universitaria',
-            'sug'=>'-',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -6107,20 +11829,10 @@ class DatosPrueba extends Seeder
             'participante_curso_id'=>312
             ]);
 
-        DB::table('profesors')->insert([
-                'id'=>313,
-                'nombres'=>'Brenda Iveth',
-                'apellido_paterno'=>'Moreno',
-                'apellido_materno'=>'Hurtado',
-                'rfc'=>'MOHB0101012I3',
-                'curp' =>'MOHB010101MDFRRR06',
-                'numero_trabajador' => '12345710',
-                'fecha_nacimiento'=>'1901-01-01'
-                ]);
         DB::table('participante_curso')->insert([
                 'id'=>313,
                 'curso_id'=>207,
-                'profesor_id'=>313,
+                'profesor_id'=>68,
                 'asistencia'=>true,
                 'acreditacion'=>true
                 ]);
@@ -6166,7 +11878,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
                     'id'=>314,
                     'curso_id'=>207,
-                    'profesor_id'=>267,
+                    'profesor_id'=>69,
                     'asistencia'=>true,
                     'acreditacion'=>true
                     ]);
@@ -6188,7 +11900,7 @@ class DatosPrueba extends Seeder
                     'p7'=>1,
                     'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
                     'mejor'=>'Actualizarme en el desarrollo humano desde la perspectiva educativa. Me gustó mucho, conocer las experiencias docentes de maestros dde otras [...]',
-                    'sug'=>'Ninguna',
+                    'sug'=>'Todo bien',
                     'p4_1'=>'100',
                     'p4_2'=>'100',
                     'p4_3'=>'100',
@@ -6208,20 +11920,11 @@ class DatosPrueba extends Seeder
                     'curso_id'=>207,
                     'participante_curso_id'=>314
                     ]);
-        DB::table('profesors')->insert([
-                        'id'=>314,
-                        'nombres'=>'Maria Teresa',
-                        'apellido_paterno'=>'Peñuñuri',
-                        'apellido_materno'=>'Santoyo',
-                        'rfc'=>'PEST010101UC5',
-                        'curp' =>'PEST010101MDF&NR04',
-                        'numero_trabajador' => '12345711',
-                        'fecha_nacimiento'=>'1901-01-01'
-                        ]);
+        
         DB::table('participante_curso')->insert([
                         'id'=>315,
                         'curso_id'=>207,
-                        'profesor_id'=>314,
+                        'profesor_id'=>70,
                         'asistencia'=>true,
                         'acreditacion'=>true
                         ]);
@@ -6264,20 +11967,10 @@ class DatosPrueba extends Seeder
                         'participante_curso_id'=>315
                         ]);
 
-        DB::table('profesors')->insert([
-                            'id'=>315,
-                            'nombres'=>'Soledad Alicia',
-                            'apellido_paterno'=>'Rivera',
-                            'apellido_materno'=>'Rosales',
-                            'rfc'=>'RIRS010101DI5',
-                            'curp' =>'RIRS010101MDFVSL08',
-                            'numero_trabajador' => '12345712',
-                            'fecha_nacimiento'=>'1901-01-01'
-                            ]);
         DB::table('participante_curso')->insert([
                             'id'=>316,
                             'curso_id'=>207,
-                            'profesor_id'=>315,
+                            'profesor_id'=>72,
                             'asistencia'=>true,
                             'acreditacion'=>true
                             ]);
@@ -6299,7 +11992,7 @@ class DatosPrueba extends Seeder
                             'p7'=>1,
                             'p8'=>'["4","Publicidad en la FCA"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
                             'mejor'=>'La seguridad de que el trabajo docente ha estado por buen camino',
-                            'sug'=>'-',
+                            'sug'=>'Todo bien',
                             'p4_1'=>'100',
                             'p4_2'=>'95',
                             'p4_3'=>'100',
@@ -6326,7 +12019,7 @@ class DatosPrueba extends Seeder
                                 'apellido_paterno'=>'Rodriguez',
                                 'apellido_materno'=>'Tellez',
                                 'rfc'=>'ROTL010101UI2',
-                                'curp' =>'ROTL010101HDFDLS00',
+                                
                                 'numero_trabajador' => '12345713',
                                 'fecha_nacimiento'=>'1901-01-01'
                                 ]);
@@ -6383,20 +12076,10 @@ class DatosPrueba extends Seeder
                                     'acreditacion'=>true
                                 ]);
 
-        DB::table('profesors')->insert([
-                                    'id'=>317,
-                                    'nombres'=>'Mario Sinuhe',
-                                    'apellido_paterno'=>'Sanchez',
-                                    'apellido_materno'=>'Dominguez',
-                                    'rfc'=>'SADM010101JC9',
-                                    'curp' =>'SADM010101HDFNMR03',
-                                    'numero_trabajador' => '12345714',
-                                    'fecha_nacimiento'=>'1901-01-01'
-                                    ]);
         DB::table('participante_curso')->insert([
                                     'id'=>319,
                                     'curso_id'=>207,
-                                    'profesor_id'=>317,
+                                    'profesor_id'=>72,
                                     'asistencia'=>true,
                                     'acreditacion'=>true
                                     ]);
@@ -6418,7 +12101,7 @@ class DatosPrueba extends Seeder
                                     'p7'=>1,
                                     'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
                                     'mejor'=>'El trabajo',
-                                    'sug'=>'-',
+                                    'sug'=>'Todo bien',
                                     'p4_1'=>'95',
                                     'p4_2'=>'95',
                                     'p4_3'=>'80',
@@ -6443,7 +12126,7 @@ class DatosPrueba extends Seeder
                                         'id'=> 208,
                                         'nombre_curso'=>'Módulo 2. La personaliddad e imagen del profesor como piedra angular en la formación del estudiante',
                                         'duracion_curso' => '20',
-                                        'coordinacion_id' => 202,
+                                        'coordinacion_id' => 3,
                                         'tipo' => 'C',
                                         'institucion' => 'DGAPA',
                                         'fecha_disenio'=>'2012-12-12',
@@ -6475,16 +12158,23 @@ class DatosPrueba extends Seeder
                                         'apellido_paterno'=>'Zavala',
                                         'apellido_materno'=>'Ojeda',
                                         'rfc'=>'ZAOA010101F91',
-                                        'curp' =>'ZAOA010101MDFVJL03',
+                                        
                                         'numero_trabajador' => '12345715',
                                         'fecha_nacimiento'=>'1901-01-01'
                                         ]);
+        
+        DB::table('profesor_curso')->insert([
+            'id'=>212,
+            'profesor_id'=>318,
+            'curso_id'=>208
+        ]);
+        
         //Participantes
     
         DB::table('participante_curso')->insert([
             'id'=>320,
             'curso_id'=>208,
-            'profesor_id'=>304,
+            'profesor_id'=>60,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -6506,7 +12196,7 @@ class DatosPrueba extends Seeder
                     'p7'=>1,
                     'p8'=>'["4","Por otro profesor"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
                     'mejor'=>'Interacción entre el grupo, el aprendizaje de conceptos nuevos y experiencia en lo vivido por los demás profesores',
-                    'sug'=>'Ninguna',
+                    'sug'=>'Todo bien',
                     'p4_1'=>'95',
                     'p4_2'=>'95',
                     'p4_3'=>'95',
@@ -6530,7 +12220,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
                     'id'=>321,
                     'curso_id'=>208,
-                    'profesor_id'=>305,
+                    'profesor_id'=>61,
                     'asistencia'=>true,
                     'acreditacion'=>true
                 ]);
@@ -6621,7 +12311,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
                                     'id'=>323,
                                     'curso_id'=>208,
-                                    'profesor_id'=>308,
+                                    'profesor_id'=>62,
                                     'asistencia'=>true,
                                     'acreditacion'=>true
                                 ]);
@@ -6643,7 +12333,7 @@ class DatosPrueba extends Seeder
                                             'p7'=>1,
                                             'p8'=>'["4","Recomendación"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
                                             'mejor'=>'Ambiente',
-                                            'sug'=>'Ninguna',
+                                            'sug'=>'Todo bien',
                                             'p4_1'=>'100',
                                             'p4_2'=>'100',
                                             'p4_3'=>'100',
@@ -6667,7 +12357,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
                                             'id'=>324,
                                             'curso_id'=>208,
-                                            'profesor_id'=>276,
+                                            'profesor_id'=>63,
                                             'asistencia'=>true,
                                             'acreditacion'=>true
                                         ]);
@@ -6712,7 +12402,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
                                                     'id'=>325,
                                                     'curso_id'=>208,
-                                                    'profesor_id'=>310,
+                                                    'profesor_id'=>64,
                                                     'asistencia'=>true,
                                                     'acreditacion'=>true
                                                 ]);
@@ -6757,7 +12447,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
                                                             'id'=>326,
                                                             'curso_id'=>208,
-                                                            'profesor_id'=>278,
+                                                            'profesor_id'=>65,
                                                             'asistencia'=>true,
                                                             'acreditacion'=>true
                                                         ]);
@@ -6802,7 +12492,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
                                                                     'id'=>327,
                                                                     'curso_id'=>208,
-                                                                    'profesor_id'=>311,
+                                                                    'profesor_id'=>66,
                                                                     'asistencia'=>true,
                                                                     'acreditacion'=>true
                                                                 ]);
@@ -6847,7 +12537,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
                                                                             'id'=>328,
                                                                             'curso_id'=>208,
-                                                                            'profesor_id'=>264,
+                                                                            'profesor_id'=>67,
                                                                             'asistencia'=>true,
                                                                             'acreditacion'=>true
                                                                         ]);
@@ -6892,7 +12582,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
                                                                                     'id'=>329,
                                                                                     'curso_id'=>208,
-                                                                                    'profesor_id'=>313,
+                                                                                    'profesor_id'=>68,
                                                                                     'asistencia'=>true,
                                                                                     'acreditacion'=>true
                                                                                 ]);
@@ -6937,7 +12627,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
                                                                                             'id'=>330,
                                                                                             'curso_id'=>208,
-                                                                                            'profesor_id'=>267,
+                                                                                            'profesor_id'=>69,
                                                                                             'asistencia'=>true,
                                                                                             'acreditacion'=>true
                                                                                         ]);
@@ -6982,7 +12672,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
                                                                                                     'id'=>331,
                                                                                                     'curso_id'=>208,
-                                                                                                    'profesor_id'=>314,
+                                                                                                    'profesor_id'=>70,
                                                                                                     'asistencia'=>true,
                                                                                                     'acreditacion'=>true
                                                                                                 ]);
@@ -7027,7 +12717,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
                                                                                                             'id'=>332,
                                                                                                             'curso_id'=>208,
-                                                                                                            'profesor_id'=>315,
+                                                                                                            'profesor_id'=>71,
                                                                                                             'asistencia'=>true,
                                                                                                             'acreditacion'=>true
                                                                                                         ]);
@@ -7086,7 +12776,7 @@ class DatosPrueba extends Seeder
                                                                                                                 DB::table('participante_curso')->insert([
                                                                                                                     'id'=>335,
                                                                                                                     'curso_id'=>208,
-                                                                                                                    'profesor_id'=>317,
+                                                                                                                    'profesor_id'=>72,
                                                                                                                     'asistencia'=>true,
                                                                                                                     'acreditacion'=>true
                                                                                                                 ]);
@@ -7108,7 +12798,7 @@ class DatosPrueba extends Seeder
             'p7'=>1,
             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'El compartir experiencias docentes relacionadas con el conocimiento, control y desarrollo de las diferentes personalidaddes, incluida la propia.',
-            'sug'=>'-',
+            'sug'=>'Todo bien',
             'p4_1'=>'95',
             'p4_2'=>'80',
             'p4_3'=>'80',
@@ -7133,7 +12823,7 @@ class DatosPrueba extends Seeder
             'id'=> 209,
             'nombre_curso'=>'Módulo 3. Habiliddades para la comunicación interpersonal en el proceso docente',
             'duracion_curso' => '20',
-            'coordinacion_id' => 202,
+            'coordinacion_id' => 3,
             'tipo' => 'C',
             'institucion' => 'DGAPA',
             'fecha_disenio'=>'2012-12-12',
@@ -7159,10 +12849,26 @@ class DatosPrueba extends Seeder
             'salon_id' => 1
         ]);
 
+        DB::table('profesors')->insert([
+            'id'=>350,
+            'nombres'=>'Ingrid Marissa',
+            'apellido_paterno'=>'Cabrrera',
+            'apellido_materno'=>'Zamora',
+            'rfc'=>'CAZI820101CAZI',
+            'numero_trabajador' => '12345350',
+            'fecha_nacimiento'=>'1982-01-01'
+        ]);
+
+        DB::table('profesor_curso')->insert([
+            'id'=>220,
+            'curso_id'=>209,
+            'profesor_id'=>350
+        ]);
+
         DB::table('participante_curso')->insert([
             'id'=>336,
             'curso_id'=>209,
-            'profesor_id'=>304,
+            'profesor_id'=>60,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -7177,10 +12883,10 @@ class DatosPrueba extends Seeder
             'p2_2'=>'100',
             'p2_3'=>'100',
             'p2_4'=>'100',
-            'p3_1'=>'100',
-            'p3_2'=>'100',
-            'p3_3'=>'100',
-            'p3_4'=>'100',
+            'p3_1'=>'95',
+            'p3_2'=>'95',
+            'p3_3'=>'95',
+            'p3_4'=>'95',
             'p7'=>1,
             'p8'=>'["4","Por otro profesor"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Temas a abordar y la participación continúa',
@@ -7196,7 +12902,7 @@ class DatosPrueba extends Seeder
             'p4_9'=>'100',
             'p4_10'=>'100',
             'p4_11'=>'100',
-            'otros'=>'Otros',
+            'otros'=>'Programacion estructurada, administracion',
             'conocimiento'=>'["1"]',
             'tematica'=>'tematica',
             'horarios'=>'9:00-13:00',
@@ -7207,7 +12913,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
             'id'=>337,
             'curso_id'=>209,
-            'profesor_id'=>305,
+            'profesor_id'=>61,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -7231,14 +12937,14 @@ class DatosPrueba extends Seeder
             'mejor'=>'Sus contenidos',
             'sug'=>'Mayor tiempo para practicar más las redes sociales',
             'p4_1'=>'100',
-            'p4_2'=>'100',
+            'p4_2'=>'95',
             'p4_3'=>'100',
             'p4_4'=>'100',
             'p4_5'=>'100',
             'p4_6'=>'100',
             'p4_7'=>'100',
             'p4_8'=>'100',
-            'p4_9'=>'100',
+            'p4_9'=>'95',
             'p4_10'=>'100',
             'p4_11'=>'100',
             'otros'=>'Otros',
@@ -7252,7 +12958,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
             'id'=>338,
             'curso_id'=>209,
-            'profesor_id'=>308,
+            'profesor_id'=>62,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -7297,7 +13003,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
             'id'=>339,
             'curso_id'=>209,
-            'profesor_id'=>276,
+            'profesor_id'=>63,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -7342,7 +13048,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
             'id'=>340,
             'curso_id'=>209,
-            'profesor_id'=>310,
+            'profesor_id'=>64,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -7375,7 +13081,7 @@ class DatosPrueba extends Seeder
             'p4_8'=>'100',
             'p4_9'=>'100',
             'p4_10'=>'100',
-            'p4_11'=>'60',
+            'p4_11'=>'80',
             'otros'=>'Otros',
             'conocimiento'=>'["1"]',
             'tematica'=>'tematica',
@@ -7387,7 +13093,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
             'id'=>341,
             'curso_id'=>209,
-            'profesor_id'=>278,
+            'profesor_id'=>65,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -7409,7 +13115,7 @@ class DatosPrueba extends Seeder
             'p7'=>1,
             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Saber acerca de más redes sociales educativas',
-            'sug'=>'Ninguna',
+            'sug'=>'Todo bien',
             'p4_1'=>'95',
             'p4_2'=>'95',
             'p4_3'=>'100',
@@ -7432,7 +13138,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
             'id'=>342,
             'curso_id'=>209,
-            'profesor_id'=>311,
+            'profesor_id'=>66,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -7476,7 +13182,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
             'id'=>343,
             'curso_id'=>209,
-            'profesor_id'=>264,
+            'profesor_id'=>67,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -7520,7 +13226,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
             'id'=>344,
             'curso_id'=>209,
-            'profesor_id'=>313,
+            'profesor_id'=>68,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -7564,7 +13270,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
             'id'=>345,
             'curso_id'=>209,
-            'profesor_id'=>267,
+            'profesor_id'=>69,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -7585,7 +13291,7 @@ class DatosPrueba extends Seeder
             'p7'=>1,
             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'La discusión en clase',
-            'sug'=>'Ninguna',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'100',
             'p4_3'=>'100',
@@ -7608,7 +13314,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
             'id'=>346,
             'curso_id'=>209,
-            'profesor_id'=>314,
+            'profesor_id'=>70,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -7652,7 +13358,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
             'id'=>347,
             'curso_id'=>209,
-            'profesor_id'=>315,
+            'profesor_id'=>71,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -7696,7 +13402,7 @@ class DatosPrueba extends Seeder
         DB::table('participante_curso')->insert([
             'id'=>348,
             'curso_id'=>209,
-            'profesor_id'=>317,
+            'profesor_id'=>72,
             'asistencia'=>true,
             'acreditacion'=>true
         ]);
@@ -7717,7 +13423,7 @@ class DatosPrueba extends Seeder
             'p7'=>1,
             'p8'=>'["2"]', //Internet 1, Publicidad 2, Jefes 3, Otros 4
             'mejor'=>'Intercambio de experiencias sobre los tópicos tratados',
-            'sug'=>'Ninguna',
+            'sug'=>'Todo bien',
             'p4_1'=>'100',
             'p4_2'=>'80',
             'p4_3'=>'95',
@@ -7736,6 +13442,24 @@ class DatosPrueba extends Seeder
             'horarioi'=>'13:00-15:00',
             'curso_id'=>209,
             'participante_curso_id'=>348
+        ]);
+
+        DB::table('participante_curso')->insert([
+            'id'=>511,
+            'profesor_id'=>306,
+            'curso_id'=>54
+        ]);
+
+        DB::table('participante_curso')->insert([
+            'id'=>517,
+            'profesor_id'=>514,
+            'curso_id'=>54
+        ]);
+
+        DB::table('participante_curso')->insert([
+            'id'=>503,
+            'profesor_id'=>245,
+            'curso_id'=>50
         ]);
     }
 }

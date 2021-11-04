@@ -14,6 +14,49 @@ class StartSeeder extends Seeder
     public function run()
     {
         //USUARIOS DE PRUEBA
+        DB::table('users')->insert([
+            'nombres'=> 'Mauricio',
+            'apellido_paterno' => 'Ramos',
+            'apellido_materno' => 'Villaseñor',
+            'email' => 'mauri334455@gmail.com',
+            'usuario' => 'mauri334455',
+            'password' => Hash::make('amores334455')
+        ]);
+
+        DB::table('users')->insert([
+          'nombres'=> 'Margarita',
+          'apellido_paterno' => 'Ramírez',
+          'apellido_materno' => 'Galindo',
+          'email' => 'margarita@ejemplo.com',
+          'usuario' => 'margarita',
+          'password' => Hash::make('margarita')
+        ]);
+
+        DB::table('users')->insert([
+          'nombres'=> 'Jacquelyn',
+          'apellido_paterno' => 'Martinez',
+          'apellido_materno' => 'Alavez',
+          'email' => 'jacquelynmartineza@yahoo.com.mx',
+          'usuario' => 'jacquelyn',
+          'password' => Hash::make('jacquelyn')
+        ]);
+
+        DB::table('users')->insert([
+          'nombres'=> 'Soporte',
+          'apellido_paterno' => 'Soporte',
+          'apellido_materno' => 'Soporte',
+          'email' => 'ejemplo@gmail.com',
+          'usuario' => 'soporte',
+          'password' => Hash::make('soporte')
+        ]);
+
+        DB::table('users')->insert([
+          'nombres'=> 'Francisco',
+          'apellido_paterno' => 'Guzmán',
+          'email' => 'francko_gm@hotmail.com',
+          'usuario' => 'francisco',
+          'password' => Hash::make('francisco')
+        ]);
 
         //SEDES DE PRUEBA
         DB::table('salons')->insert([
@@ -45,8 +88,7 @@ class StartSeeder extends Seeder
 
         DB::table('salons')->insert([
           'sede'=> 'Google Meet',
-          'capacidad' => 50,
-          'ubicacion' => 'FI',
+          'capacidad' => 50
         ]);
 
         //DIVISIONES DE LA FACULTAD DE INGENIERÍA
@@ -377,7 +419,6 @@ class StartSeeder extends Seeder
             'apellido_materno' => 'Gonzales',
             'rfc' => 'RAGJ720101T72',
             'numero_trabajador' => '12143231',
-            'categoria_nivel_id'=>1,
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '55664487',
             'grado' => 'Maestría',
@@ -435,7 +476,6 @@ Está Certificada en:
             'apellido_materno' => 'Prados',
             'rfc' => 'SUPM720101D11',
             'numero_trabajador' => '12143232',
-            'categoria_nivel_id'=>1,
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '557458963',
             'grado' => 'Licenciatura',
@@ -457,7 +497,7 @@ análisis de datos.',
             'apellido_materno' => 'Gonzales',
             'rfc' => 'HEGS720517RJ3',
             'numero_trabajador' => '12143233',
-            'categoria_nivel_id'=>1,
+            
             'fecha_nacimiento' => '1972-05-17',
             'telefono' => '55664487',
             'grado' => 'Ingeniería',
@@ -476,7 +516,7 @@ análisis de datos.',
             'apellido_materno' => 'Prados',
             'rfc' => 'PEPM720517IW2',
             'numero_trabajador' => '12143234',
-            'categoria_nivel_id'=>1,
+            
             'fecha_nacimiento' => '1972-05-017',
             'telefono' => '557458963',
             'grado' => 'Licenciatura',
@@ -495,7 +535,7 @@ análisis de datos.',
             'apellido_materno' => 'Fernández',
             'rfc' => 'JUFM720101M74',
             'numero_trabajador' => '12143235',
-            'categoria_nivel_id'=>5,
+            
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '55664487',
             'grado' => 'Licenciatura',
@@ -515,7 +555,7 @@ maestria en Alemania.',
             'apellido_materno' => 'Velázquez',
             'rfc' => 'GOVG720101FZ6',
             'numero_trabajador' => '12143236',
-            'categoria_nivel_id'=>1,
+            
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '557458963',
             'grado' => 'Doctorado',
@@ -533,7 +573,7 @@ maestria en Alemania.',
             'apellido_materno' => 'Velázquez',
             'rfc' => 'VEVL720101T65',
             'numero_trabajador' => '12143237',
-            'categoria_nivel_id'=>7,
+            
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '55664487',
             'grado' => 'Maestría',
@@ -551,7 +591,7 @@ maestria en Alemania.',
             'apellido_materno' => 'Sandoval',
             'rfc' => 'NUSF720101I63',
             'numero_trabajador' => '12143238',
-            'categoria_nivel_id'=>1,
+            
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '557458963',
             'grado' => 'Maestría',
@@ -570,7 +610,6 @@ maestria en Alemania.',
             'apellido_materno' => 'Casares',
             'rfc' => 'GACA720101EL4',
             'numero_trabajador' => '12143239',
-            'categoria_nivel_id'=>11,
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '55664487',
             'grado' => 'Maestría',
@@ -588,7 +627,7 @@ maestria en Alemania.',
             'apellido_materno' => 'Víquez',
             'rfc' => 'SAVV720101RV2',
             'numero_trabajador' => '12143240',
-            'categoria_nivel_id'=>4,
+            
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '557458963',
             'grado' => 'Maestría',
@@ -609,7 +648,7 @@ contaduria para Macroempresas.',
             'apellido_materno' => 'Argote',
             'rfc' => 'GAAA720101HY0',
             'numero_trabajador' => '12143241',
-            'categoria_nivel_id'=>5,
+            
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '55664487',
             'grado' => 'Maestría',
@@ -628,7 +667,7 @@ contaduria para Macroempresas.',
             'apellido_materno' => 'Hernández',
             'rfc' => 'VAHM720101Q41',
             'numero_trabajador' => '12143242',
-            'categoria_nivel_id'=>1,
+            
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '557458963',
             'grado' => 'Maestría',
@@ -647,7 +686,7 @@ contaduria para Macroempresas.',
             'apellido_materno' => 'Gonzales',
             'rfc' => 'SAGR720101JR0',
             'numero_trabajador' => '12143243',
-            'categoria_nivel_id'=>1,
+            
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '55664487',
             'grado' => 'Maestría',
@@ -666,7 +705,7 @@ contaduria para Macroempresas.',
             'apellido_materno' => 'Valle',
             'rfc' => 'AOVD720101DQ6',
             'numero_trabajador' => '12143244',
-            'categoria_nivel_id'=>1,
+            
             'fecha_nacimiento' => '1972-05-017',
             'telefono' => '557458963',
             'grado' => 'Maestría',
@@ -685,7 +724,7 @@ contaduria para Macroempresas.',
             'apellido_materno' => 'Mateos',
             'rfc' => 'LOMA720101EU3',
             'numero_trabajador' => '12143245',
-            'categoria_nivel_id'=>5,
+            
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '55664487',
             'grado' => 'Maestría',
@@ -704,7 +743,7 @@ contaduria para Macroempresas.',
             'apellido_materno' => 'Méndez',
             'rfc' => 'DOMJ7201011Q9',
             'numero_trabajador' => '12143246',
-            'categoria_nivel_id'=>1,
+            
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '557458963',
             'grado' => 'Maestría',
@@ -723,7 +762,7 @@ en Canada.',
             'apellido_materno' => 'Vallesteros',
             'rfc' => 'MEVL720101GV4',
             'numero_trabajador' => '12143247',
-            'categoria_nivel_id'=>7,
+            
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '55664487',
             'grado' => 'Maestría',
@@ -741,7 +780,7 @@ en Canada.',
             'apellido_materno' => 'Ramírez',
             'rfc' => 'RARH720101DMA',
             'numero_trabajador' => '12143248',
-            'categoria_nivel_id'=>1,
+            
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '557458963',
             'grado' => 'Maestría',
@@ -760,7 +799,6 @@ en Canada.',
             'apellido_materno' => 'Jiménez',
             'rfc' => 'MAJJ720101GF7',
             'numero_trabajador' => '12143249',
-            'categoria_nivel_id'=>11,
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '55664487',
             'grado' => 'Maestría',
@@ -778,7 +816,7 @@ en Canada.',
             'apellido_materno' => 'Manso',
             'rfc' => 'VAMV720101HZA',
             'numero_trabajador' => '12143250',
-            'categoria_nivel_id'=>4,
+            
             'fecha_nacimiento' => '1972-01-01',
             'telefono' => '557458963',
             'grado' => 'Maestría',
@@ -1705,6 +1743,86 @@ en impuestos universitarios.',
         'rfc'=>'CAZI820101CAZI',
         'numero_trabajador' => '12345350',
         'fecha_nacimiento'=>'1982-01-01'
+      ]);
+
+      DB::table('profesores_categorias')->insert([ //id=119
+        'profesor_id'=>1,
+        'categoria_nivel_id'=>1
+      ]);
+
+      DB::table('profesores_categorias')->insert([ //id=119
+        'profesor_id'=>1,
+        'categoria_nivel_id'=>2
+      ]);
+
+      DB::table('profesores_categorias')->insert([ //id=119
+        'profesor_id'=>2,
+        'categoria_nivel_id'=>1
+      ]);
+
+      DB::table('profesores_categorias')->insert([ //id=119
+        'profesor_id'=>2,
+        'categoria_nivel_id'=>1
+      ]);
+
+      DB::table('profesores_categorias')->insert([ //id=119
+        'profesor_id'=>3,
+        'categoria_nivel_id'=>1
+      ]);
+      
+      DB::table('profesores_categorias')->insert([ //id=119
+        'profesor_id'=>3,
+        'categoria_nivel_id'=>1
+      ]);
+
+      DB::table('profesores_categorias')->insert([ //id=119
+        'profesor_id'=>4,
+        'categoria_nivel_id'=>1
+      ]);
+
+      DB::table('profesores_categorias')->insert([ //id=119
+        'profesor_id'=>4,
+        'categoria_nivel_id'=>1
+      ]);
+
+      DB::table('profesores_categorias')->insert([ //id=119
+        'profesor_id'=>5,
+        'categoria_nivel_id'=>1
+      ]);
+
+      DB::table('profesores_categorias')->insert([ //id=119
+        'profesor_id'=>5,
+        'categoria_nivel_id'=>1
+      ]);
+
+      DB::table('profesores_categorias')->insert([ //id=119
+        'profesor_id'=>6,
+        'categoria_nivel_id'=>1
+      ]);
+      
+      DB::table('profesores_categorias')->insert([ //id=119
+        'profesor_id'=>6,
+        'categoria_nivel_id'=>2
+      ]);
+
+      DB::table('profesores_categorias')->insert([ //id=119
+        'profesor_id'=>7,
+        'categoria_nivel_id'=>4
+      ]);
+      
+      DB::table('profesores_categorias')->insert([ //id=119
+        'profesor_id'=>7,
+        'categoria_nivel_id'=>1
+      ]);
+
+      DB::table('profesores_categorias')->insert([ //id=119
+        'profesor_id'=>8,
+        'categoria_nivel_id'=>4
+      ]);
+      
+      DB::table('profesores_categorias')->insert([ //id=119
+        'profesor_id'=>8,
+        'categoria_nivel_id'=>3
       ]);
         
       //COORDINADOR DEL CENTRO DE DOCENCIA
@@ -3809,7 +3927,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>1,
           'participante_curso_id'=>1
         ]);
 
@@ -3858,7 +3975,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>1,
           'participante_curso_id'=>2
         ]);
 
@@ -3907,7 +4023,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>1,
           'participante_curso_id'=>3
         ]);
 
@@ -3956,7 +4071,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>1,
           'participante_curso_id'=>4
         ]);
 
@@ -4005,7 +4119,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>1,
           'participante_curso_id'=>5
         ]);
 
@@ -4054,7 +4167,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>1,
           'participante_curso_id'=>6
         ]);
 
@@ -4103,7 +4215,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>1,
           'participante_curso_id'=>7
         ]);
 
@@ -4152,7 +4263,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>1,
           'participante_curso_id'=>8
         ]);
 
@@ -4201,7 +4311,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>1,
           'participante_curso_id'=>9
         ]);
 
@@ -4250,7 +4359,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>1,
           'participante_curso_id'=>10
         ]);
 
@@ -4299,7 +4407,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>1,
           'participante_curso_id'=>11
         ]);
 
@@ -4348,7 +4455,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>1,
           'participante_curso_id'=>12
         ]);
 
@@ -4397,7 +4503,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>4,
           'participante_curso_id'=>39
         ]);
 
@@ -4446,7 +4551,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>3,
           'participante_curso_id'=>38
         ]);
 
@@ -4495,7 +4599,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>3,
           'participante_curso_id'=>37
         ]);
 
@@ -4544,7 +4647,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>2,
           'participante_curso_id'=>36
         ]);
 
@@ -4593,7 +4695,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>2,
           'participante_curso_id'=>35
         ]);
 
@@ -4642,7 +4743,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>2,
           'participante_curso_id'=>34
         ]);
 
@@ -4691,7 +4791,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>2,
           'participante_curso_id'=>33
         ]);
 
@@ -4740,7 +4839,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>2,
           'participante_curso_id'=>32
         ]);
 
@@ -4789,7 +4887,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>10,
           'participante_curso_id'=>45
         ]);
 
@@ -4838,7 +4935,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>10,
           'participante_curso_id'=>46
         ]);
 
@@ -4887,7 +4983,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>10,
           'participante_curso_id'=>47
         ]);
 
@@ -4936,7 +5031,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>10,
           'participante_curso_id'=>48
         ]);
 
@@ -4985,7 +5079,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>10,
           'participante_curso_id'=>49
         ]);
 
@@ -5034,7 +5127,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>10,
           'participante_curso_id'=>50
         ]);
 
@@ -5083,7 +5175,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>10,
           'participante_curso_id'=>51
         ]);
 
@@ -5132,7 +5223,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>10,
           'participante_curso_id'=>52
         ]);
 
@@ -5181,7 +5271,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>10,
           'participante_curso_id'=>53
         ]);
 
@@ -5230,7 +5319,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>10,
           'participante_curso_id'=>54
             ]);
 
@@ -5268,7 +5356,6 @@ Qué es una computadora y cómo funciona',
               'tematica'=>'tematica',
               'horarios'=>'9:00-13:00',
               'horarioi'=>'13:00-15:00',
-              'curso_id'=>11,
               'participante_curso_id'=>55
                 ]);
 
@@ -5306,7 +5393,6 @@ Qué es una computadora y cómo funciona',
               'tematica'=>'tematica',
               'horarios'=>'9:00-13:00',
               'horarioi'=>'13:00-15:00',
-              'curso_id'=>11,
               'participante_curso_id'=>56
             ]);
             
@@ -5344,7 +5430,6 @@ Qué es una computadora y cómo funciona',
               'tematica'=>'Otro',
               'horarios'=>'9:00-13:00',
               'horarioi'=>'13:00-15:00',
-              'curso_id'=>11,
               'participante_curso_id'=>57
                 ]);
       
@@ -5382,7 +5467,7 @@ Qué es una computadora y cómo funciona',
         //   'tematica'=>'Varias',
         //   'horarios'=>'9:00-13:00',
         //   'horarioi'=>'13:00-15:00',
-        //   'curso_id'=>11,
+        //   
         //   'participante_curso_id'=>59
         //     ]);
 
@@ -5420,7 +5505,6 @@ Qué es una computadora y cómo funciona',
               'tematica'=>'tematica',
               'horarios'=>'9:00-13:00',
               'horarioi'=>'13:00-15:00',
-              'curso_id'=>11,
               'participante_curso_id'=>59
                 ]);
       DB::table('_evaluacion_final_curso')->insert([ //id=36
@@ -5452,12 +5536,11 @@ Qué es una computadora y cómo funciona',
 			'p4_9'=>'100',
 			'p4_10'=>'100',
 			'p4_11'=>'100',
-            'otros'=>'Otros',
+      'otros'=>'Otros',
 			'conocimiento'=>'["2"]',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-13:00',
 			'horarioi'=>'13:00-15:00',
-			'curso_id'=>11,
 			'participante_curso_id'=>60
         ]);
 
@@ -5495,7 +5578,6 @@ Qué es una computadora y cómo funciona',
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>11,
           'participante_curso_id'=>61
             ]);
 
@@ -5533,7 +5615,6 @@ Qué es una computadora y cómo funciona',
               'tematica'=>'tematica',
               'horarios'=>'9:00-13:00',
               'horarioi'=>'13:00-15:00',
-              'curso_id'=>11,
               'participante_curso_id'=>62
                 ]);
 
@@ -5571,7 +5652,6 @@ Qué es una computadora y cómo funciona',
       'tematica'=>'tematica',
       'horarios'=>'9:00-13:00',
       'horarioi'=>'13:00-15:00',
-      'curso_id'=>11,
       'participante_curso_id'=>63
       ]);
             
@@ -5609,7 +5689,6 @@ Qué es una computadora y cómo funciona',
         'tematica'=>'tematica',
         'horarios'=>'9:00-13:00',
         'horarioi'=>'13:00-15:00',
-        'curso_id'=> 11,
         'participante_curso_id'=>64
       ]);
 
@@ -5647,7 +5726,6 @@ Qué es una computadora y cómo funciona',
         'tematica'=>'tematica',
         'horarios'=>'9:00-13:00',
         'horarioi'=>'13:00-15:00',
-        'curso_id'=>11,
         'participante_curso_id'=>65
     ]);
   
@@ -5685,7 +5763,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-13:00',
 			'horarioi'=>'13:00-15:00',
-			'curso_id'=>11,
 			'participante_curso_id'=>66
   ]);
 
@@ -5723,7 +5800,6 @@ Qué es una computadora y cómo funciona',
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>11,
     'participante_curso_id'=>67
   ]);
 
@@ -5761,7 +5837,6 @@ Qué es una computadora y cómo funciona',
     'tematica'=>'tematica',
     'horarios'=>'Cualquiera',
     'horarioi'=>'Cualquiera',
-    'curso_id'=>12,
     'participante_curso_id'=>68
     ]);
 
@@ -5799,7 +5874,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'Cualquiera',
 			'horarioi'=>'Cualquiera',
-			'curso_id'=>12,
 			'participante_curso_id'=>69
     ]);
 
@@ -5837,7 +5911,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'Cualquiera',
 			'horarioi'=>'Cualquiera',
-			'curso_id'=>12,
       'participante_curso_id'=>70
     ]);
 
@@ -5875,7 +5948,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'Cualquiera',
 			'horarioi'=>'Cualquiera',
-			'curso_id'=>12,
       'participante_curso_id'=>71
     ]);
 
@@ -5913,7 +5985,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-11:00',
 			'horarioi'=>'9:00-13:00',
-			'curso_id'=>12,
             'participante_curso_id'=>42
     ]);
 
@@ -5951,7 +6022,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-11:00',
 			'horarioi'=>'9:00-13:00',
-			'curso_id'=>12,
       'participante_curso_id'=>73
     ]);
 
@@ -5989,7 +6059,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-11:00',
 			'horarioi'=>'9:00-13:00',
-			'curso_id'=>12,
             'participante_curso_id'=>74
     ]);
 
@@ -6027,7 +6096,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-11:00',
 			'horarioi'=>'9:00-13:00',
-			'curso_id'=>12,
             'participante_curso_id'=>75
     ]);
 
@@ -6065,7 +6133,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-11:00',
 			'horarioi'=>'9:00-13:00',
-			'curso_id'=>12,
             'participante_curso_id'=>76
     ]);
 
@@ -6103,7 +6170,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-11:00',
 			'horarioi'=>'9:00-13:00',
-			'curso_id'=>12,
             'participante_curso_id'=>77
     ]);
 
@@ -6141,7 +6207,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-11:00',
 			'horarioi'=>'9:00-13:00',
-			'curso_id'=>12,
             'participante_curso_id'=>78
     ]);
 
@@ -6179,7 +6244,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-11:00',
 			'horarioi'=>'9:00-13:00',
-			'curso_id'=>12,
             'participante_curso_id'=>79
     ]);
 
@@ -6217,7 +6281,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-11:00',
 			'horarioi'=>'9:00-13:00',
-			'curso_id'=>12,
             'participante_curso_id'=>80
     ]);
 
@@ -6255,7 +6318,7 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-11:00',
 			'horarioi'=>'9:00-13:00',
-			'curso_id'=>13,
+			
             'participante_curso_id'=>81
     ]);
 
@@ -6293,7 +6356,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-11:00',
 			'horarioi'=>'9:00-13:00',
-			'curso_id'=>13,
             'participante_curso_id'=>82
     ]);
 
@@ -6331,7 +6393,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-11:00',
 			'horarioi'=>'9:00-13:00',
-			'curso_id'=>13,
             'participante_curso_id'=>83
     ]);
 
@@ -6369,7 +6430,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-11:00',
 			'horarioi'=>'9:00-13:00',
-			'curso_id'=>13,
       'participante_curso_id'=>84
     ]);
 
@@ -6407,7 +6467,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-11:00',
 			'horarioi'=>'9:00-13:00',
-			'curso_id'=>13,
             'participante_curso_id'=>85
     ]);
 
@@ -6445,7 +6504,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-11:00',
 			'horarioi'=>'9:00-13:00',
-			'curso_id'=>13,
       'participante_curso_id'=>86
     ]);
 
@@ -6483,7 +6541,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-11:00',
 			'horarioi'=>'9:00-13:00',
-			'curso_id'=>13,
             'participante_curso_id'=>87
     ]);
 
@@ -6521,7 +6578,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-11:00',
 			'horarioi'=>'9:00-13:00',
-			'curso_id'=>13,
             'participante_curso_id'=>88
     ]);
 
@@ -6559,8 +6615,7 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-11:00',
 			'horarioi'=>'9:00-13:00',
-			'curso_id'=>13,
-            'participante_curso_id'=>89
+      'participante_curso_id'=>89
     ]);
 
     DB::table('_evaluacion_final_curso')->insert([ //id=65
@@ -6597,7 +6652,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-11:00',
 			'horarioi'=>'9:00-13:00',
-			'curso_id'=>13,
             'participante_curso_id'=>95
     ]);
 
@@ -6635,7 +6689,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-11:00',
 			'horarioi'=>'9:00-13:00',
-			'curso_id'=>13,
             'participante_curso_id'=>91
     ]);
 
@@ -6673,7 +6726,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-11:00',
 			'horarioi'=>'9:00-13:00',
-			'curso_id'=>13,
             'participante_curso_id'=>92
     ]);
 
@@ -6711,7 +6763,6 @@ Qué es una computadora y cómo funciona',
 			'tematica'=>'tematica',
 			'horarios'=>'9:00-11:00',
 			'horarioi'=>'9:00-13:00',
-			'curso_id'=>13,
             'participante_curso_id'=>93
     ]);
     
@@ -6750,7 +6801,6 @@ Qué es una computadora y cómo funciona',
       'tematica'=>'tematica',
       'horarios'=>'9:00-13:00',
       'horarioi'=>'13:00-15:00',
-      'curso_id'=>14,
       'participante_curso_id'=>89
   ]);
 
@@ -6788,7 +6838,7 @@ Qué es una computadora y cómo funciona',
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>14,
+    
     'participante_curso_id'=>90
   ]);
 
@@ -6827,7 +6877,7 @@ Qué es una computadora y cómo funciona',
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>14,
+    
     'participante_curso_id'=>96
 ]);
 
@@ -6866,7 +6916,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=73
   'tematica'=>'tematica',
   'horarios'=>'9:00-13:00',
   'horarioi'=>'13:00-15:00',
-  'curso_id'=>14,
+  
   'participante_curso_id'=>97
 ]);
   //100 (E), 95 (MB), 80 (Bu), 60 (Re), 50 (Ma)
@@ -6904,7 +6954,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=73
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>14,
+    
     'participante_curso_id'=>98
     ]);
     //100 (E), 95 (MB), 80 (Bu), 60 (Re), 50 (Ma)
@@ -6942,7 +6992,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=73
       'tematica'=>'tematica',
       'horarios'=>'9:00-13:00',
       'horarioi'=>'13:00-15:00',
-      'curso_id'=>14,
+      
       'participante_curso_id'=>99
   ]);
   //100 (E), 95 (MB), 80 (Bu), 60 (Re), 50 (Ma)
@@ -6980,7 +7030,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=73
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>14,
+    
     'participante_curso_id'=>100
   ]);
 
@@ -7019,7 +7069,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=73
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>14,
+    
     'participante_curso_id'=>103
   ]);
 
@@ -7058,7 +7108,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=73
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>14,
+    
     'participante_curso_id'=>104
   ]);
 
@@ -7097,7 +7147,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=73
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>14,
+    
     'participante_curso_id'=>105
   ]);
 
@@ -7136,7 +7186,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=73
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>15,
+    
     'participante_curso_id'=>106
   ]);
 
@@ -7175,7 +7225,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=81
   'tematica'=>'tematica',
   'horarios'=>'9:00-13:00',
   'horarioi'=>'13:00-15:00',
-  'curso_id'=>15,
+  
   'participante_curso_id'=>107
   ]);
 
@@ -7214,7 +7264,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=81
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>15,
+    
     'participante_curso_id'=>108
   ]);
 
@@ -7253,7 +7303,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=81
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>15,
+    
     'participante_curso_id'=>109
   ]);
 
@@ -7292,7 +7342,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=81
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>15,
+    
     'participante_curso_id'=>110
   ]);
 
@@ -7331,7 +7381,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=81
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>15,
+    
     'participante_curso_id'=>111
   ]);
 
@@ -7370,7 +7420,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=81
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>15,
+    
     'participante_curso_id'=>112
   ]);
 
@@ -7409,7 +7459,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=81
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>15,
+    
     'participante_curso_id'=>103
   ]);
 //100 (E), 95 (MB), 80 (Bu), 60 (Re), 50 (Ma)
@@ -7447,7 +7497,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
   'tematica'=>'tematica',
   'horarios'=>'9:00-13:00',
   'horarioi'=>'13:00-15:00',
-  'curso_id'=>15,
+  
   'participante_curso_id'=>113
   ]);
 
@@ -7486,7 +7536,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>15,
+    
     'participante_curso_id'=>114
   ]);
 
@@ -7525,7 +7575,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>15,
+    
     'participante_curso_id'=>115
   ]);
 
@@ -7564,7 +7614,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>15,
+    
     'participante_curso_id'=>116
   ]);
 
@@ -7602,7 +7652,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>15,
+    
     'participante_curso_id'=>117
 ]);
   //100 (E), 95 (MB), 80 (Bu), 60 (Re), 50 (Ma)
@@ -7640,7 +7690,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>16,
+    
     'participante_curso_id'=>118
   ]);
 
@@ -7679,7 +7729,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>16,
+    
     'participante_curso_id'=>119
   ]);
 
@@ -7718,7 +7768,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>16,
+    
     'participante_curso_id'=>121
   ]);
 
@@ -7757,7 +7807,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
     'tematica'=>'tematica',
     'horarios'=>'9:00-13:00',
     'horarioi'=>'13:00-15:00',
-    'curso_id'=>16,
+    
     'participante_curso_id'=>122
   ]);
 
@@ -7797,7 +7847,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>16,
+          
           'participante_curso_id'=>124
         ]);
 
@@ -7837,7 +7887,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>16,
+          
           'participante_curso_id'=>125
         ]);
 
@@ -7875,7 +7925,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>16,
+          
           'participante_curso_id'=>126
         ]);
 
@@ -7914,7 +7964,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>16,
+          
           'participante_curso_id'=>127
         ]);
 
@@ -7954,7 +8004,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>16,
+          
           'participante_curso_id'=>128
         ]);
 
@@ -7993,7 +8043,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>16,
+          
           'participante_curso_id'=>129
         ]);
 
@@ -8032,7 +8082,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>16,
+          
           'participante_curso_id'=>130
         ]);
 
@@ -8071,7 +8121,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>16,
+          
           'participante_curso_id'=>131
         ]);
 
@@ -8110,7 +8160,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>16,
+          
           'participante_curso_id'=>132
         ]);
 
@@ -8149,7 +8199,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>16,
+          
           'participante_curso_id'=>133
         ]);
 
@@ -8188,7 +8238,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>16,
+          
           'participante_curso_id'=>134
         ]);
 
@@ -8227,7 +8277,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>16,
+          
           'participante_curso_id'=>136
         ]);
 
@@ -8266,7 +8316,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>17,
+          
           'participante_curso_id'=>137
         ]);
         //100 (E), 95 (MB), 80 (Bu), 60 (Re), 50 (Ma)
@@ -8304,7 +8354,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>17,
+          
           'participante_curso_id'=>138
         ]);
 
@@ -8343,7 +8393,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>17,
+          
           'participante_curso_id'=>139
         ]);
 
@@ -8382,7 +8432,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>17,
+          
           'participante_curso_id'=>140
         ]);
 
@@ -8421,7 +8471,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>17,
+          
           'participante_curso_id'=>141
         ]);
 
@@ -8459,7 +8509,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>17,
+          
           'participante_curso_id'=>142
         ]);
 
@@ -8498,7 +8548,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>17,
+          
           'participante_curso_id'=>143
         ]);
 
@@ -8537,7 +8587,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>17,
+          
           'participante_curso_id'=>144
         ]);
 
@@ -8576,7 +8626,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>17,
+          
           'participante_curso_id'=>145
         ]);
 
@@ -8615,7 +8665,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>17,
+          
           'participante_curso_id'=>146
         ]);
 
@@ -8654,7 +8704,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>17,
+          
           'participante_curso_id'=>147
         ]);
 
@@ -8693,7 +8743,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>17,
+          
           'participante_curso_id'=>148
         ]);
 
@@ -8732,7 +8782,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>17,
+          
           'participante_curso_id'=>149
         ]);
 
@@ -8770,7 +8820,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>17,
+          
           'participante_curso_id'=>152
         ]);
 
@@ -8808,7 +8858,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>18,
+          
           'participante_curso_id'=>153
         ]);
 
@@ -8846,7 +8896,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>18,
+          
           'participante_curso_id'=>154
         ]);
 
@@ -8884,7 +8934,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>18,
+          
           'participante_curso_id'=>155
         ]);
 
@@ -8922,7 +8972,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>18,
+          
           'participante_curso_id'=>156
         ]);
 
@@ -8960,7 +9010,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>18,
+          
           'participante_curso_id'=>157
         ]);
 
@@ -8998,7 +9048,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>18,
+          
           'participante_curso_id'=>158
         ]);
 
@@ -9036,7 +9086,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>18,
+          
           'participante_curso_id'=>159
         ]);
 
@@ -9074,7 +9124,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>18,
+          
           'participante_curso_id'=>160
         ]);
 
@@ -9112,7 +9162,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>18,
+          
           'participante_curso_id'=>161
         ]);
 
@@ -9150,7 +9200,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>18,
+          
           'participante_curso_id'=>162
         ]);
 
@@ -9188,7 +9238,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>18,
+          
           'participante_curso_id'=>163
         ]);
 
@@ -9226,7 +9276,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>18,
+          
           'participante_curso_id'=>164
         ]);
 
@@ -9264,7 +9314,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'tematica'=>'tematica',
           'horarios'=>'9:00-13:00',
           'horarioi'=>'13:00-15:00',
-          'curso_id'=>18,
+          
           'participante_curso_id'=>165
         ]);
 

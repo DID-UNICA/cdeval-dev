@@ -16,6 +16,7 @@ class CreateDirector extends Migration
         Schema::create('direccion', function (Blueprint $table) {
             $table->increments('id')->unique();
             $table->String('director');
+            $table->String('genero');
             $table->String('comentarios')->nullable();
             $table->String('grado');
             $table->timestamps();
