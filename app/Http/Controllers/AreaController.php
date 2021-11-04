@@ -271,21 +271,21 @@ class AreaController extends Controller
 
             $words=explode(" ", $request->pattern);
             foreach($words as $word){
-                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(nombres)) LIKE unaccent(lower('%".$word."%'))) OR (unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".$word."%'))) OR (unaccent(lower(apellido_materno)) LIKE unaccent(lower('%".$word."%')))")->get();
-                if($profesor->isNotEmpty())
-                  array_push($profesores, $profesor);
+                $profesores = Profesor::select('id')->whereRaw("lower(unaccent(nombres)) ILIKE lower(unaccent('%".$word."%')) or lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$word."%'))")
+                ->orWhereRaw("lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$word."%'))")
+                ->orWhereRaw("lower(unaccent(apellido_materno)) ILIKE lower(unaccent('%".$word."%'))")
+                ->get();
             }
+
             $curso_prof = array();
             $aux = array();
 
-            foreach($profesores as $profesor_aux){
-                foreach($profesor_aux as $profesor){
+            foreach($profesores as $profesor){
                     $prof = DB::table('participante_curso')
                         ->where([['profesor_id', $profesor->id],['curso_id',$curso_id]])
                         ->get();
                     if(sizeof($prof) > 0)
                         array_push($curso_prof, $prof);
-                }
             }
 
             $datos = array();
@@ -297,11 +297,13 @@ class AreaController extends Controller
                         ->join('cursos as c', 'c.id', '=', 'pc.curso_id')
                         ->join('catalogo_cursos as cc','cc.id', '=', 'c.catalogo_id')
                         ->select('cc.nombre_curso', 'c.id','p.id', 'p.nombres','p.apellido_paterno','p.apellido_materno')
-                        ->where('pc.id','=',$prof->id)
+                        ->where( 'pc.id','=',$prof->id)
                         ->get();
+                    
                     array_push($datos, $dato[0]);
                 }
             }
+    
             return view('pages.eval')
                 ->with('datos',$datos)
                 ->with('id',$curso_id);
@@ -368,22 +370,19 @@ class AreaController extends Controller
 
     public function saveFinal_Curso(Request $request,$profesor_id,$curso_id, $catalogoCurso_id){
         $participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
-		return $participante;
-        $evaluacion_id = DB::table('_evaluacion_final_curso')
-            ->select('id')
-            ->where([['participante_curso_id',$participante[0]->id],['curso_id',$curso_id]])
-            ->get();
 
         if(sizeof($participante) > 0){
-            $evaluacion_id = DB::table('_evaluacion_final_curso')
-                ->select('id')
-                ->where([['participante_curso_id',$participante[0]->id],['curso_id',$curso_id]])
+            $evaluacion_id = DB::table('_evaluacion_final_curso as e')
+                ->join('participante_curso as p','p.id','=','e.participante_curso_id')
+                ->select('e.id')
+                ->where([['e.participante_curso_id',$participante[0]->id],['p.curso_id',$curso_id]])
                 ->get();
             if(sizeof($evaluacion_id) > 0){
-                $eval_fcurso = EvaluacionFinalSeminario::find($evaluacion_id[0]->id);
+                $eval_fcurso = EvaluacionFinalCurso::find($evaluacion_id[0]->id);
                 $eval_fcurso->delete();
             }
         }
+
 
         $eval_fcurso = new EvaluacionFinalCurso;
 		try{
@@ -529,7 +528,6 @@ class AreaController extends Controller
 			$eval_fcurso->horarios = $request->horarios;	
 			//Horarios Intersemestrales:
 			$eval_fcurso->horarioi = $request->horarioi;
-			$eval_fcurso->curso_id = $curso_id;
 
             $string_vals = ['mejor','sug','otros','conocimiento','tematica','horarios','horarioi'];
 
