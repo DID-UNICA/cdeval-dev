@@ -70,4 +70,5 @@ class EvaluacionFinalCurso extends Model
       'conocimiento' => 'array'
   ];
   public $timestamps = false;
+
 }
