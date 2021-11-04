@@ -211,7 +211,7 @@ class CoordinadorGeneralController extends Controller
 
             $words=explode(" ", $request->pattern);
             foreach($words as $word){
-                $profesores = Profesor::select('id')->whereRaw("lower(unaccent(nombres)) ILIKE lower(unaccent('%".$word."%')) or lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$word."%'))")
+                $profesor = Profesor::select('id')->whereRaw("lower(unaccent(nombres)) ILIKE lower(unaccent('%".$word."%')) or lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$word."%'))")
                 ->orWhereRaw("lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$word."%'))")
                 ->orWhereRaw("lower(unaccent(apellido_materno)) ILIKE lower(unaccent('%".$word."%'))")
                 ->get();
