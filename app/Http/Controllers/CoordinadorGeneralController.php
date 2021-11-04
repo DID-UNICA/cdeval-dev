@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use App\Curso;
 use App\CatalogoCurso;
+use App\Coordinacion;
+
 use App\Profesor;
 use App\ProfesoresCurso;
 use App\ParticipantesCurso;
@@ -128,96 +130,56 @@ class CoordinadorGeneralController extends Controller
     }
 
     public function buscarCurso(Request $request, $coordinacion_id,$semestreEnv,$periodo){
-        $fecha=$semestreEnv;
-        $busqueda = $request->get('pattern');
-		$tipo = $request->get('type');
+      $fecha = $semestreEnv;
+      $busqueda = $request->get('pattern');
+      $tipo = $request->get('type');
 
-		$datos = array();
-        $cursos = '';
+      $datos = array();
+      $cursos = '';
 
-        $datos_coordinacion = DB::table('coordinacions')
-			->select(['id','nombre_coordinacion'])
-            ->where([['id',$coordinacion_id]])
-            ->get();
+      $coordinacion = Coordinacion::findOrFail($coordinacion_id);
+      $fecha = Carbon::now();
+      $fecha = ($fecha->month==8)? $fecha->subWeek() : (($fecha->month==1)? $fecha->addWeek() : $fecha);
 
-        $fecha = Carbon::now();
-        
-        $fecha = ($fecha->month==8)? $fecha->subWeek() : (($fecha->month==1)? $fecha->addWeek() : $fecha);
-
-        $periodo_si = $request->filled('periodo_anio')? $request->periodo_si : (in_array($fecha->month,array(1, 6, 7, 12))? 'i':'s');
-        $periodo_pi = $request->filled('periodo_anio')? $request->periodo_pi : (in_array($fecha->month,array(2, 3, 4, 5, 6, 7))? '2':'1');
-        $periodo_anio = $request->filled('periodo_anio')? $request->periodo_anio : (in_array($fecha->month,array(8, 9, 10, 11, 12))? $fecha->year+1:$fecha->year);
+      $periodo_si = $request->filled('periodo_anio')? $request->periodo_si : (in_array($fecha->month,array(1, 6, 7, 12))? 'i':'s');
+      $periodo_pi = $request->filled('periodo_anio')? $request->periodo_pi : (in_array($fecha->month,array(2, 3, 4, 5, 6, 7))? '2':'1');
+      $periodo_anio = $request->filled('periodo_anio')? $request->periodo_anio : (in_array($fecha->month,array(8, 9, 10, 11, 12))? $fecha->year+1:$fecha->year);
 
 		if($tipo == 'nombre'){
 			$cursos = DB::table('cursos as c')
-				->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
-				->join('coordinacions as co','co.id','=','cc.coordinacion_id')
-				->where([['cc.nombre_curso','like','%'.$busqueda.'%'],['co.id','=',$coordinacion_id]])
-				->get();
+        ->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
+        ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
+        ->whereRaw("lower(unaccent(nombre_curso)) ILIKE lower(unaccent('%".$request->pattern."%'))")
+        ->where('co.id','=',$coordinacion_id)
+        ->get(); 
+    }else{
+      $profesores = array();
+      $words=explode(" ", $request->pattern);
+      foreach($words as $word){
+        $profesores = Profesor::select('id')->whereRaw("lower(unaccent(nombres)) ILIKE lower(unaccent('%".$request->pattern."%'))")
+            ->orWhereRaw("lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$request->pattern."%'))")
+            ->orWhereRaw("lower(unaccent(apellido_materno)) ILIKE lower(unaccent('%".$request->pattern."%'))")
+            ->orderByRaw("lower(unaccent(apellido_paterno)),lower(unaccent(apellido_materno)),lower(unaccent(nombres))")
+            ->get();
+        $curso_prof = ProfesoresCurso::select('curso_id')->whereIn('profesor_id', $profesores)->get();
+        $cursos = Curso::join('catalogo_cursos','catalogo_cursos.id', '=','cursos.catalogo_id')
+            ->where('catalogo_cursos.coordinacion_id',$coordinacion_id)
+            ->whereIn('cursos.id',$curso_prof)->get();
+      }
+    }
 
-                foreach($cursos as $curso){
-                    $tupla = array();
-                    $profesores = DB::table('profesor_curso')
-                        ->join('profesors','profesors.id','=','profesor_curso.profesor_id')
-                        ->select('profesors.nombres','profesors.apellido_paterno','profesors.apellido_materno')
-                        ->where('profesor_curso.curso_id','=',$curso->id)
-                        ->get();
-                    array_push($tupla, $curso);
-                    array_push($tupla, $profesores);
-                    array_push($datos, $tupla);
-                    }
-		}else{
-            $profesores = array();
-
-            $words=explode(" ", $request->pattern);
-            foreach($words as $word){
-                /*$profesores = Profesor::select('id')->whereRaw("lower(unaccent(nombres)) ILIKE lower(unaccent('%".$word."%')) or lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$word."%'))")
-                ->orWhereRaw("lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$word."%'))")
-                ->orWhereaw("lower(unaccent(apellido_materno)) ILIKE lower(unaccent('%".$word."%'))")
-                ->get();*/
-                //$profesores = Profesor::select('id')->where(DB::raw("(lower(unaccent(nombres)) LIKE lower(unaccent('%".$word."%'))) OR (lower(unaccent(apellido_paterno)) LIKE lower(unaccent('%".$word."%'))) OR (lower(unaccent(apellido_materno)) LIKE lower(unaccent('%".$word."%')))"))->get();
-                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(lower(nombres) LIKE lower('%".$word."%')) OR (lower(apellido_paterno) LIKE lower('%".$word."%')) OR (lower(apellido_materno) LIKE lower('%".$word."%'))")->get();
-                array_push($profesores, $profesor);
-            }
-
-            $curso_prof = array();
-            $aux = array();
-
-            foreach($profesores as $profesor_aux){
-                foreach($profesor_aux as $profesor){
-                    $prof = DB::table('profesor_curso')
-                        ->select('curso_id')
-                        ->where('profesor_id', $profesor->id)
-                        ->get();
-                    if(sizeof($prof) > 0)
-                        array_push($curso_prof, $prof);
-                }
-            }
-
-            foreach($curso_prof as $prof_aux){
-                foreach($prof_aux as $prof){
-                    $tupla = array();
-                    $curso = DB::table('cursos as c')
-                        ->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
-				        ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
-                        ->where([['c.id','=',$prof->curso_id],['co.id','=',$coordinacion_id]])
-                        ->get();
-                    if(sizeof($curso) > 0){
-                        $profesores = DB::table('profesor_curso')
-                            ->join('profesors','profesors.id','=','profesor_curso.profesor_id')
-                            ->select('profesors.nombres','profesors.apellido_paterno','profesors.apellido_materno')
-                            ->where('profesor_curso.curso_id','=',$prof->curso_id)
-                            ->get();
-                        array_push($tupla, $curso[0]);
-                        array_push($tupla, $profesores);
-                        array_push($datos, $tupla);
-                        }
-                    }
-                }
-		}
-
-
-		$semestre_anio = DB::table('cursos')
+      foreach($cursos as $curso){
+        $tupla = array();
+        $profesores = DB::table('profesor_curso')
+            ->join('profesors','profesors.id','=','profesor_curso.profesor_id')
+            ->select('profesors.nombres','profesors.apellido_paterno','profesors.apellido_materno')
+            ->where('profesor_curso.curso_id','=',$curso->id)
+            ->get();
+        array_push($tupla, $curso);
+        array_push($tupla, $profesores);
+        array_push($datos, $tupla);
+      }
+    $semestre_anio = DB::table('cursos')
             ->select('semestre_anio')
             ->get();
 
@@ -240,8 +202,8 @@ class CoordinadorGeneralController extends Controller
             ->with('periodo',$periodo)
             ->with('semestre',$semestreEnv)
             ->with('semestre_anio',$reversed)
-            ->with('coordinacion',$datos_coordinacion[0]->nombre_coordinacion)
-            ->with('coordinacion_id',$datos_coordinacion[0]->id);
+            ->with('coordinacion',$coordinacion->nombre_coordinacion)
+            ->with('coordinacion_id',$coordinacion->id);
     }
 
     public function buscarInstructor (Request $request, int $curso_id){
