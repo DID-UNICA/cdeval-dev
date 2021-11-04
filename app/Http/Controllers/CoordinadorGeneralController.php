@@ -900,14 +900,18 @@ $promedio_p4=[
             array_push($nombresCursos,$catalogo[0]->nombre_curso);
 
             //Las evaluaciones finales de los cursos
-            $eval = DB::table('_evaluacion_final_curso')
-                ->where('curso_id',$curso->id)
+            $eval = DB::table('_evaluacion_final_curso as ec')
+                ->join('participante_curso as pc', 'pc.id', '=', 'ec.participante_curso_id')
+                ->where('pc.curso_id',$curso->id)
+                ->select('ec.*')
                 ->get();
             
             //Las evaluaciones finales de los seminarios
-            $eval2 = DB::table('_evaluacion_final_seminario')
-                ->where('curso_id',$curso->id)
-                ->get();
+            $eval2 = DB::table('_evaluacion_final_seminario as es')
+              ->join('participante_curso as pc', 'pc.id', '=', 'es.participante_curso_id')
+              ->where('curso_id',$curso->id)
+              ->select('es.*')
+              ->get();
 
             //Obtenemos los participantes de los cursos
             $participantes = DB::table('participante_curso')
@@ -1000,7 +1004,7 @@ $promedio_p4=[
         $desempenioProfesores = array(); 
 
         foreach($evaluacionesCursos as $curso){
-            $curso_id = $curso[0]->curso_id;
+            $curso_id = ParticipantesCurso::findOrFail($curso[0]->participante_curso_id)->curso_id;
             $profesores = DB::table('profesor_curso')
                 ->where('curso_id',$curso_id)
                 ->get();
@@ -1862,15 +1866,18 @@ $promedio_p4=[
                 $num_cursos++;
                 $evals = 0;
                 //Obtenemos las evaluaciones
-                if(strcmp($curso->tipo,'S')==0){
-                    $evals = DB::table('_evaluacion_final_seminario')
-                        ->where('curso_id',$curso->id)
-                        ->get();
-                }else{
-                    $evals = DB::table('_evaluacion_final_curso')
-                        ->where('curso_id',$curso->id)
-                        ->get();   
-                }
+                if(strcmp($catalogo_curso[0]->tipo,'S') == 0)
+                $evals = DB::table('_evaluacion_final_curso as ec')
+                  ->join('participante_curso as pc', 'pc.id', '=', 'ec.participante_curso_id')
+                  ->where('pc.curso_id',$curso->id)
+                  ->select('ec.*')
+                  ->get();
+                else            
+                  $evals = DB::table('_evaluacion_final_curso as es')
+                    ->join('participante_curso as pc', 'pc.id', '=', 'es.participante_curso_id')
+                    ->where('pc.curso_id',$curso->id)
+                    ->select('es.*')
+                    ->get();
 
                 $tam += sizeof($evals);
 
@@ -2128,13 +2135,17 @@ $promedio_p4=[
                 ->where('id',$curso->catalogo_id)
                 ->get();
             if(strcmp($catalogo_curso[0]->tipo,'S') == 0)
-                $evals = DB::table('_evaluacion_final_seminario')
-                    ->where('curso_id',$curso->id)
-                    ->get();
+              $evals = DB::table('_evaluacion_final_curso as ec')
+                ->join('participante_curso as pc', 'pc.id', '=', 'ec.participante_curso_id')
+                ->where('pc.curso_id',$curso->id)
+                ->select('ec.*')
+                ->get();
             else            
-                $evals = DB::table('_evaluacion_final_curso')
-                    ->where('curso_id',$curso->id)
-                    ->get();    
+              $evals = DB::table('_evaluacion_final_curso as es')
+                ->join('participante_curso as pc', 'pc.id', '=', 'es.participante_curso_id')
+                ->where('pc.curso_id',$curso->id)
+                ->select('es.*')
+                ->get();
 
             $tam_curso = 0;
             $contenido_curso = 0;
@@ -2406,14 +2417,18 @@ $promedio_p4=[
         foreach($cursos as $curso){
 
             //Las evaluaciones finales de los cursos
-            $eval = DB::table('_evaluacion_final_curso')
-                ->where('curso_id',$curso->id)
+            $eval = DB::table('_evaluacion_final_curso as ec')
+                ->join('participante_curso as pc', 'pc.id', '=', 'ec.participante_curso_id')
+                ->where('pc.curso_id',$curso->id)
+                ->select('ec.*')
                 ->get();
             
             //Las evaluaciones finales de los seminarios
-            $eval2 = DB::table('_evaluacion_final_seminario')
-                ->where('curso_id',$curso->id)
-                ->get();
+            $eval2 = DB::table('_evaluacion_final_seminario as es')
+              ->join('participante_curso as pc', 'pc.id', '=', 'es.participante_curso_id')
+              ->where('curso_id',$curso->id)
+              ->select('es.*')
+              ->get();
 
             //Si hay evaluacions finales de cursos los incluimos en el arreglo de evaluacionesCursos
             if(sizeof($eval)>0){
