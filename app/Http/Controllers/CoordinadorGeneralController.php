@@ -119,8 +119,7 @@ class CoordinadorGeneralController extends Controller
             ->get();
         
         if(sizeof($datos) == 0){
-            Session::flash('message','No es posible realizar alguna evaluación, el curso '.$catalogo_curso[0]->nombre_curso.' no cuenta con participantes inscritos');
-			Session::flash('alert-class', 'alert-danger'); 
+            Session::flash('message-danger','No es posible realizar alguna evaluación, el curso '.$catalogo_curso[0]->nombre_curso.' no cuenta con participantes inscritos');
             return redirect()->back();
         }
 
@@ -285,8 +284,7 @@ class CoordinadorGeneralController extends Controller
 		}
 
         if(sizeof($evaluacion_final_curso) > 0){
-            Session::flash('message','Usuario '.$profesor->apellido_paterno.' '.$profesor->apellido_materno.' '.$profesor->nombres.' ya respondió la evaluación');
-			Session::flash('alert-class', 'alert-danger'); 
+            Session::flash('message-warning','Usuario '.$profesor->apellido_paterno.' '.$profesor->apellido_materno.' '.$profesor->nombres.' ya respondió la evaluación');
             return redirect()->back();
         }else if(strcmp($catalogoCurso->tipo,"S") == 0){
             if($count==1){
@@ -505,8 +503,7 @@ class CoordinadorGeneralController extends Controller
 			$eval_fcurso->save();
 		}catch (\Exception $e){
 			//En caso de que no se haya evaluado correctamente el curso regresamos a la vista anterior indicando que la evaluación fue errónea
-			Session::flash('message','Sucedió un error al contestar el formulario. Favor de llenar todas las preguntas o revisar que el usuario en cuestión no lo haya contestado');
-			Session::flash('alert-class', 'alert-danger'); 
+			Session::flash('message-error','Sucedió un error al contestar el formulario. Favor de llenar todas las preguntas o revisar que el usuario en cuestión no lo haya contestado');
 
 			return redirect()->back()->withInput($request->input());
 		}
@@ -710,8 +707,7 @@ class CoordinadorGeneralController extends Controller
 		} catch(\Exception $e){
 
 			//En caso de que no se haya evaluado correctamente el curso regresamos a la vista anterior indicando que la evaluación fue errónea
-			Session::flash('message','Favor de contestar todas las preguntas del formulario');
-			Session::flash('alert-class', 'alert-danger'); 
+			Session::flash('message-warning','Favor de contestar todas las preguntas del formulario');
 
 			return redirect()->back()->withInput($request->input());
 		}
@@ -801,8 +797,7 @@ $promedio_p4=[
         $curso = Curso::find($curso_id);
         $users = array();
         if(sizeof($participantes) == 0){
-            Session::flash('message','Por el momento no hay alumnos inscritos en el curso');
-			Session::flash('alert-class', 'alert-danger'); 
+            Session::flash('message-warning','Por el momento no hay alumnos inscritos en el curso');
 
 			return redirect()->back();
         }
@@ -906,8 +901,7 @@ $promedio_p4=[
         }
 
         if(sizeof($evaluacionesCursos)==0){
-            Session::flash('message','Periodo seleccionado no cuenta con una evaluacion');
-			Session::flash('alert-class', 'alert-danger'); 
+            Session::flash('message-danger','Periodo seleccionado no cuenta con una evaluacion'); 
 
 			return redirect()->back()->withInput();
         }
@@ -2439,8 +2433,7 @@ $promedio_p4=[
         }
 
         if(sizeof($evals) == 0){
-            Session::flash('message','Curso no cuenta con evaluación');
-			Session::flash('alert-class', 'alert-danger'); 
+            Session::flash('message-danger','Curso no cuenta con evaluación');
 
 			return redirect()->back();
         }
@@ -3161,11 +3154,11 @@ $promedio_p4=[
 			$evaluacion_final_curso = EvaluacionFinalCurso::where('participante_curso_id',$participante_id[0]->id)->get();
 		}
 
-        if(sizeof($evaluacion_final_curso) == 0 && Session::has('message') == false){
-            Session::flash('message','El curso no ha sido evaluado, favor de evaluarlo.');
-			Session::flash('alert-class', 'alert-danger'); 
+        if(sizeof($evaluacion_final_curso) == 0 && Session::has('message-danger') == false){
+            Session::flash('message-danger','El curso no ha sido evaluado, favor de evaluarlo.');
+
 			return redirect()->back()->withInput($request->input());
-        }else if(sizeof($evaluacion_final_curso) == 0 && Session::has('message')){
+        }else if(sizeof($evaluacion_final_curso) == 0 && Session::has('message-success')){
             return redirect()->route('cd.evaluacion.vista',[$curso_id, $profesor_id])->withInput($request->input());
         }
             
@@ -3263,8 +3256,7 @@ $promedio_p4=[
 
 
         if(sizeof($evals) == 0){
-            Session::flash('message','Curso no cuenta con evaluación');
-            Session::flash('alert-class', 'alert-danger'); 
+            Session::flash('message-danger','Curso no cuenta con evaluación');
     
             return redirect()->back();
         }
@@ -3476,8 +3468,7 @@ $promedio_p4=[
             ->get();
 
         if(sizeof($cursos) == 0){
-            Session::flash('message','No hay cursos dados de alta en el periodo '.$semestreEnv);
-			Session::flash('alert-class', 'alert-danger'); 
+            Session::flash('message-danger','No hay cursos dados de alta en el periodo '.$semestreEnv);
             return redirect()->back();
         }
         
@@ -3651,8 +3642,7 @@ $promedio_p4=[
         }
 
         if($aux1_empty && $aux2_empty){
-            Session::flash('message','El periodo '.$semestreEnv.' no ha sido evaluado');
-			Session::flash('alert-class', 'alert-danger'); 
+            Session::flash('message-danger','El periodo '.$semestreEnv.' no ha sido evaluado');
             return redirect()->back();
         }
 

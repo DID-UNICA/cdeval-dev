@@ -25,9 +25,13 @@
     <section class="content-inner">
     
       <div class="panel panel-default">
-      @if(session()->has('message'))
-        <div class="alert alert-success" role='alert' style='text-align:center'>{{session('message')}}</div>
-    @endif
+        @if(session()->has('message-success'))
+        <div class="alert alert-success" role='alert'>{{session('message-success')}}</div>
+      @elseif(session()->has('message-danger'))
+        <div class="alert alert-danger" role='alert'>{{session('message-danger')}}</div>
+      @elseif(session()->has('message-warning'))
+        <div class="alert alert-warning" role='alert'>{{session('message-warning')}}</div>
+      @endif
                 <div class="panel-heading">
                     <h2><span class="fa fa-check-square-o"></span>    Evaluación final de curso </h3>
                 </div>

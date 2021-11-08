@@ -11,7 +11,7 @@
     <form method="POST" action="{{ action('AreaController@saveFinal_Seminario',['profesor_id' => $profesor->id,'curso_id'=> $curso->id,  'catalogoCurso_id'=>$catalogoCurso->id ]) }}">
   @endif
   <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-  @if(session()->has('message'))
+  
         <div class="alert alert-success" role='alert' style='text-align:center'>{{session('message')}}</div>
     @endif
   <div class="content">

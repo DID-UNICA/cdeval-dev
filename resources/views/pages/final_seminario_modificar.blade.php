@@ -11,9 +11,13 @@
 <form method="POST" action="{{ action('AreaController@changeFinal_Seminario',['profesor_id' => $profesor->id,'curso_id'=> $curso->id,  'catalogoCurso_id'=>$catalogoCurso->id ]) }}">
 @endif
   <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-  @if(session()->has('message'))
-        <div class="alert alert-success" role='alert' style='text-align:center'>{{session('message')}}</div>
-    @endif
+  @if(session()->has('message-success'))
+          <div class="alert alert-success" role='alert'>{{session('message-success')}}</div>
+        @elseif(session()->has('message-danger'))
+          <div class="alert alert-danger" role='alert'>{{session('message-danger')}}</div>
+        @elseif(session()->has('message-warning'))
+          <div class="alert alert-warning" role='alert'>{{session('message-warning')}}</div>
+        @endif
   <div class="content">
     <div class="top-bar">       
       <a href="#menu" class="side-menu-link burger"> 
