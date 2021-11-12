@@ -25,11 +25,11 @@
 
 </head>
 <body>
-<!--@if (session()->has('success'))
+{{-- <!--@if (session()->has('success'))
     <div class="alert-success" id="popup_notification">
         <strong>{!! trans('main.message') !!}</strong>{{ session('success') }}
     </div>
-@endif-->
+@endif--> --}}
 <div class="wrap" style="width:100%">
     <nav class="nav-bar navbar-inverse" role="navigation">
         <div id ="top-menu" class="container-fluid active">
