@@ -15,9 +15,13 @@
 @endif
 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
   <div class="content">
-    @if(session()->has('message'))
-        <div class="alert alert-success" role='alert' style='text-align:center'>{{session('message')}}</div>
-    @endif
+    @if(session()->has('message-success'))
+    <div class="alert alert-success" role='alert'>{{session('message-success')}}</div>
+  @elseif(session()->has('message-danger'))
+    <div class="alert alert-danger" role='alert'>{{session('message-danger')}}</div>
+  @elseif(session()->has('message-warning'))
+    <div class="alert alert-warning" role='alert'>{{session('message-warning')}}</div>
+  @endif
     <div class="top-bar">       
       <a href="#menu" class="side-menu-link burger"> 
         <span class='burger_inside' id='bgrOne'></span>

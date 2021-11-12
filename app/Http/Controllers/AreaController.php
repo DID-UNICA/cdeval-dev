@@ -36,9 +36,8 @@ class AreaController extends Controller
         Session::put('sesion','area');
         Session::put('url','area');
 
-        if(Session::has('message')){
-          Session::flash('message','Sucedió un error al contestar el formulario. Favor de llenar todas las preguntas o revisar que el usuario en cuestión no lo haya contestado');
-          Session::flash('alert-class', 'alert-danger');
+        if(Session::has('message-danger')){
+          Session::flash('message-danger','Sucedió un error al contestar el formulario. Favor de llenar todas las preguntas o revisar que el usuario en cuestión no lo haya contestado');
         }
         return view('pages.homeArea')
             ->with('cursos',$cursos)
@@ -249,8 +248,7 @@ class AreaController extends Controller
       $curso = Curso::findOrFail($curso_id);
       $users = array();
       if(sizeof($participantes) == 0){
-        Session::flash('message','Por el momento no hay alumnos inscritos en el curso');
-        Session::flash('alert-class', 'alert-danger'); 
+        Session::flash('message-warning','Por el momento no hay alumnos inscritos en el curso');
 
         return redirect()->back()->withInput($request->input());
       }
@@ -324,9 +322,8 @@ class AreaController extends Controller
             ->get();
         
         if(sizeof($datos) == 0){
-			Session::forget('message');
-            Session::flash('message','No es posible realizar alguna evaluación, el curso '.$catalogo_curso[0]->nombre_curso.' no cuenta con participantes inscritos');
-			Session::flash('alert-class', 'alert-danger'); 
+			Session::forget('message-warning');
+            Session::flash('message-warning','No es posible realizar alguna evaluación, el curso '.$catalogo_curso[0]->nombre_curso.' no cuenta con participantes inscritos');
             return redirect()->back()->withInput($request->input());
         }
 
@@ -350,8 +347,7 @@ class AreaController extends Controller
 			$evaluacion_final_curso = EvaluacionFinalCurso::where('participante_curso_id',$participante_curso->id)->get();
 		}
     if($evaluacion_final_curso->isNotEmpty()){
-      Session::flash('message','Usuario '.$profesor->apellido_paterno.' '.$profesor->apellido_materno.' '.$profesor->nombres.' ya respondió la evaluación');
-      Session::flash('alert-class', 'alert-danger'); 
+      Session::flash('message-warning','Usuario '.$profesor->apellido_paterno.' '.$profesor->apellido_materno.' '.$profesor->nombres.' ya respondió la evaluación');
       return redirect()->back();
     }else if($catalogoCurso->tipo === "S"){
       return view("pages.final_seminario")
