@@ -17,7 +17,7 @@
 @elseif(session()->has('message-warning'))
 <div class="alert alert-warning" role='alert'>{{session('message-warning')}}</div>
 @endif
-  <div class="content">
+  <div style="padding-top: 2cm; padding-left: 0.5cm; padding-right: 0.5cm;">
     <div class="top-bar">       
       <a href="#menu" class="side-menu-link burger"> 
         <span class='burger_inside' id='bgrOne'></span>

@@ -49,7 +49,7 @@ td{
           container.innerHTML= content;
         }
 </script>
-<div class="content">
+<div style="padding-left: 0.5cm;">
     <section class="content-inner">
         <br> 
         <!--//@ include ('partials.messages')-->
