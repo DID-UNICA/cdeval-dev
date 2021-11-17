@@ -11794,5 +11794,822 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'calificacion'=>10,
 					'espera'=>0
         ]);
+        //Asistentes curso 204
+        //Introducción a la perspectiva de género en la práctica docente:estrategias para el cambio
+        DB::table('profesors')->insert([
+          'id' => 285,
+          'nombres' => 'Leticia',
+          'apellido_paterno' => 'Aguilar',
+          'apellido_materno' => 'Prado',
+          'rfc' => 'AUPL701015',
+          //'numero_trabajador' => '870051',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => false,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>285,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>8,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 286,
+          'nombres' => 'Maria Itzel',
+          'apellido_paterno' => 'Barcenas',
+          'apellido_materno' => 'Alonso',
+          'rfc' => 'BAAM940615',
+          //'numero_trabajador' => '870051',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => false,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>286,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>10,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 287,
+          'nombres' => 'Ruth Libia',
+          'apellido_paterno' => 'Benitez',
+          'apellido_materno' => 'Fraustro',
+          'rfc' => 'BEFR700304',
+          //'numero_trabajador' => '870051',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => false,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>287,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>10,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 288,
+          'nombres' => 'Maria de Lourdes',
+          'apellido_paterno' => 'Campos',
+          'apellido_materno' => 'Luna',
+          'rfc' => 'CALL700403',
+          'numero_trabajador' => '800742',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => true,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>288,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>6,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 289,
+          'nombres' => 'Alberto',
+          'apellido_paterno' => 'Campos',
+          'apellido_materno' => 'Sanchez',
+          'rfc' => 'CASA970225',
+          //'numero_trabajador' => '800742',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => false,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>289,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>6,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 290,
+          'nombres' => 'Maria Elena',
+          'apellido_paterno' => 'Cano',
+          'apellido_materno' => 'Salazar',
+          'rfc' => 'CASE571123',
+          'numero_trabajador' => '108768',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => true,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>290,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>10,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 291,
+          'nombres' => 'Cecilia Teresa',
+          'apellido_paterno' => 'Carmona',
+          'apellido_materno' => 'Tellez',
+          'rfc' => 'CATC731003',
+          'numero_trabajador' => '800744',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => true,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>291,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>8,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 292,
+          'nombres' => 'Juan Carlos',
+          'apellido_paterno' => 'Cedeño',
+          'apellido_materno' => 'Vazquez',
+          'rfc' => 'CEVJ740927',
+          'numero_trabajador' => '814847',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => true,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>292,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>8,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 293,
+          'nombres' => 'Luis Fernando',
+          'apellido_paterno' => 'Donis',
+          'apellido_materno' => 'Rabanales',
+          'rfc' => 'DORL891207',
+          //'numero_trabajador' => '814847',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => false,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>293,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>8,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 294,
+          'nombres' => 'Enrique',
+          'apellido_paterno' => 'Felipe',
+          'apellido_materno' => 'Anastacio',
+          'rfc' => 'FEAE860513',
+          //'numero_trabajador' => '814847',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => false,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>294,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>6,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 295,
+          'nombres' => 'Ana Georgina',
+          'apellido_paterno' => 'Garcia',
+          'apellido_materno' => 'Y Colome',
+          'rfc' => 'GACA500426',
+          'numero_trabajador' => '122520',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => true,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>295,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>9,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 296,
+          'nombres' => 'Carolina',
+          'apellido_paterno' => 'Garrido',
+          'apellido_materno' => 'Morelos',
+          'rfc' => 'GAMC721210',
+          'numero_trabajador' => '805049',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => true,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>296,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>10,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 297,
+          'nombres' => 'Maria de la Paz Esperanza',
+          'apellido_paterno' => 'Gonzalez',
+          'apellido_materno' => 'Anaya',
+          'rfc' => 'GOAP530422',
+          'numero_trabajador' => '154197',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => true,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>297,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>10,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 298,
+          'nombres' => 'Javier',
+          'apellido_paterno' => 'Gomez',
+          'apellido_materno' => 'Rodriguez',
+          'rfc' => 'GORJ631127',
+          'numero_trabajador' => '136768',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => true,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>298,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>8,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 299,
+          'nombres' => 'Jose Rene',
+          'apellido_paterno' => 'Gomez',
+          'apellido_materno' => 'Rodriguez',
+          'rfc' => 'GORR520916',
+          'numero_trabajador' => '97996',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => true,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>299,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>10,
+					'espera'=>0
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>209,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>6,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 302,
+          'nombres' => 'Lucia Yazmin',
+          'apellido_paterno' => 'Juarez',
+          'apellido_materno' => 'De la Mora',
+          'rfc' => 'JUML780321',
+          //'numero_trabajador' => '834837',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => true,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>302,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>6,
+					'espera'=>0
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>200,
+          'asistencia'=>false,
+          'acreditacion'=>false,
+          //'calificacion'=>6,
+					'espera'=>0
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>271,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>10,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 305,
+          'nombres' => 'Maria Magdalena',
+          'apellido_paterno' => 'Lopez',
+          'apellido_materno' => 'Ramirez',
+          'rfc' => 'LORM691015',
+          //'numero_trabajador' => '102478',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => false,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>305,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>10,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 306,
+          'nombres' => 'Jacquelyn',
+          'apellido_paterno' => 'Martinez',
+          'apellido_materno' => 'Alvarez',
+          'rfc' => 'MAAJ810628',
+          'numero_trabajador' => '836089',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => true,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>306,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>10,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 307,
+          'nombres' => 'Alejandro',
+          'apellido_paterno' => 'Maya',
+          'apellido_materno' => 'Franco',
+          'rfc' => 'MAFA830424',
+          'numero_trabajador' => '848030',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => true,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>307,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>7,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 308,
+          'nombres' => 'Nayelli',
+          'apellido_paterno' => 'Manzanarez',
+          'apellido_materno' => 'Gomez',
+          'rfc' => 'MAGN810129',
+          'numero_trabajador' => '824629',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => true,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>308,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>10,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 309,
+          'nombres' => 'Genaro',
+          'apellido_paterno' => 'Muñoz',
+          'apellido_materno' => 'Hernandez',
+          'rfc' => 'MUHG710815',
+          'numero_trabajador' => '800184',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => true,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>309,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>10,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 310,
+          'nombres' => 'Victor Manuel',
+          'apellido_paterno' => 'Palma',
+          'apellido_materno' => 'Valderrama',
+          'rfc' => 'PAVV920120',
+          //'numero_trabajador' => '800184',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => false,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>310,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>9,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 311,
+          'nombres' => 'Jeshua',
+          'apellido_paterno' => 'Perea',
+          'apellido_materno' => 'Constantino',
+          'rfc' => 'PECJ910202',
+          'numero_trabajador' => '876462',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => true,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>311,
+          'asistencia'=>true,
+          'acreditacion'=>true,
+          'calificacion'=>10,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 312,
+          'nombres' => 'Margarita',
+          'apellido_paterno' => 'Ramirez',
+          'apellido_materno' => 'Galindo',
+          'rfc' => 'RAGM571028',
+          'numero_trabajador' => '118763',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => true,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>312,
+          'asistencia'=>false,
+          'acreditacion'=>false,
+          //'calificacion'=>10,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 313,
+          'nombres' => 'Michael Jossue',
+          'apellido_paterno' => 'Rojas',
+          'apellido_materno' => 'Garcia',
+          'rfc' => 'ROGM900703',
+          //'numero_trabajador' => '118763',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => false,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>313,
+          'asistencia'=>false,
+          'acreditacion'=>false,
+          //'calificacion'=>10,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 314,
+          'nombres' => 'Rosangela Lizette',
+          'apellido_paterno' => 'Santana',
+          'apellido_materno' => 'Belmont',
+          'rfc' => 'SABR810124',
+          //'numero_trabajador' => '118763',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => false,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>314,
+          'asistencia'=>false,
+          'acreditacion'=>false,
+          //'calificacion'=>10,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 315,
+          'nombres' => 'Pablo Ernesto',
+          'apellido_paterno' => 'Sanvicente',
+          'apellido_materno' => 'Castro',
+          'rfc' => 'SACP820629',
+          //'numero_trabajador' => '118763',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => false,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>315,
+          'asistencia'=>false,
+          'acreditacion'=>false,
+          //'calificacion'=>10,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 316,
+          'nombres' => 'Karla Ivonne',
+          'apellido_paterno' => 'Vazquez',
+          'apellido_materno' => 'Barrera',
+          'rfc' => 'VABK880613',
+          //'numero_trabajador' => '118763',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => false,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>316,
+          'asistencia'=>false,
+          'acreditacion'=>false,
+          //'calificacion'=>10,
+					'espera'=>0
+        ]);
+        DB::table('profesors')->insert([
+          'id' => 317,
+          'nombres' => 'Sveidy Vanessa',
+          'apellido_paterno' => 'Vaca',
+          'apellido_materno' => 'Lopez',
+          'rfc' => 'VALS920826',
+          //'numero_trabajador' => '118763',
+          
+          'fecha_nacimiento' => '1972-05-17',
+          'telefono' => '55664487',
+          'grado' => 'Ingeniería',
+          'abreviatura_grado' => 'Ing.',
+          'email' => 'prof2@gmail.com',
+          'semblanza_corta' => 'Ingeniero geofisico, con especilidad en volcanes y terremotos y maestria en rocas.',
+          'genero' => 'masculino',
+          'facebook' => 'face',
+          'unam' => false,
+          'facultad_id' =>14
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>317,
+          'asistencia'=>true,
+          'acreditacion'=>false,
+          'calificacion'=>5,
+					'espera'=>0
+        ]);
+        DB::table('participante_curso')->insert([
+          'curso_id'=>204,
+          'profesor_id'=>260,
+          'asistencia'=>false,
+          'acreditacion'=>false,
+          //'calificacion'=>5,
+					'espera'=>0
+        ]);
   }
 }
