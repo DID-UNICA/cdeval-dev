@@ -43,7 +43,8 @@
     #encabezado{
         font-family:Arial, Helvetica, Sans-serif,cursive; 
         text-align: center;
-        font-size: 12px;
+        vertical-align: middle;
+        font-size: 20px;
         line-height:90%;
     }
     #imagen_izquierda{
@@ -91,33 +92,38 @@
     tr:nth-child(even) {
         background-color: #dddddd;
     }
+    .header{
+        z-index:-1;
+    margin-top: -120px;
+	position: fixed;
+    }
+@page {
+margin-top: 120px;
+}
+
+@page :first{
+margin-top: 150px;
+}
 </style>
 <body>
+<script type="text/php">
+    $GLOBALS["header"] = NULL;
+</script>
+<div class="header">
+    <script type="text/php">$GLOBALS["header"] = $pdf->open_object();</script>
     <table  id="tabla_encabezado">
-	    <td width= 12% class="margen">
-            <img id="imagen_izquierda"  src="img/fi_2.png" height="80">
-		</td>
+	<td width= 12% class="margen">
+        <img id="imagen_izquierda"  src="img/fi_2.png" height="80">
+	</td>
 		<td width= 58% id="encabezado" class="margen" style="line-height=20px">
-			FACULTAD DE INGENIERÍA, UNAM<br/>
-			Secretaria de Apoyo a la Docencia<br>
-		    Centro de Docencia "Ing. Gilberto Borja Navarrete"<br/>
+                Criterio de aceptación de la coordinación de los cursos
 		</td>
 		<td width= 12% class="margen">
             <img id="imagen_derecha" src="img/cdd.png" height="80">
 		</td>
     </table>
-    <table id="tabla_encabezado_debajo">
-		<td class="margen">
-			Versión
-		</td>
-		<td class="margen">
-			2
-		</td>
-		<td width="20%" class="margen">
-			Página 1 de 1
-		</td>
-	</table>
-
+    <script type="text/php">$pdf->close_object();</script>
+</div>
     @if(!$criterio_s_empty)
     <table class="tabla_lista">
         <thead>
@@ -157,5 +163,12 @@
         </tbody>
     </table>
     @endif
+    <script type="text/php">
+        $pdf->page_script('
+          if ($PAGE_NUM >= 2) {
+            $pdf->add_object($GLOBALS["header"],"add");
+          }
+        ');
+      </script>
 </body>
-
+</html>

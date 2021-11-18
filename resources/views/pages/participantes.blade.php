@@ -28,8 +28,9 @@
         height: 5%;
         width:100%;
         text-align:center;
+        vertical-align: middle;
         font-family:Arial, Helvetica, Sans-serif,cursive; 
-        font-size: 9px;
+        font-size: 1px;
     }
     #tabla_lista{
         border-collapse: collapse;
@@ -43,7 +44,8 @@
     #encabezado{
         font-family:Arial, Helvetica, Sans-serif,cursive; 
         text-align: center;
-        font-size: 12px;
+        vertical-align: middle;
+        font-size: 20px;
         line-height:90%;
     }
     #imagen_izquierda{
@@ -91,45 +93,41 @@
     tr:nth-child(even) {
         background-color: #dddddd;
     }
+    .space{margin-top: 0px}
+    .header{
+    z-index:-1;
+	position: fixed;
+    margin-top: -150px;
+    }
+@page {
+margin-top: 200px;
+}
+
+@page :first{
+margin-top: 200px;
+}
 </style>
+
 <body>
+    <script type="text/php">
+        $GLOBALS["header"] = NULL;
+    </script>
+<div class="header">
+    <script type="text/php">$GLOBALS["header"] = $pdf->open_object();</script>
     <table  id="tabla_encabezado">
 	    <td width= 12% class="margen">
             <img id="imagen_izquierda"  src="img/fi_2.png" height="80">
 		</td>
 		<td width= 58% id="encabezado" class="margen" style="line-height=20px">
-			FACULTAD DE INGENIERÍA, UNAM<br/>
-			Secretaria de Apoyo a la Docencia<br>
-		    Centro de Docencia "Ing. Gilberto Borja Navarrete"<br/>
-			Sistema de Gestión de la Calidad<br/>
-			Norma ISO 9001-2015<br/>
-			Formato
+			Reporte de participantes por periodo
 		</td>
 		<td width= 12% class="margen">
             <img id="imagen_derecha" src="img/cdd.png" height="80">
 		</td>
     </table>
-    <table id="tabla_encabezado_debajo">
-		<td width="20%" class="margen">
-			2730-SGC-IC-FO-11
-		</td>
-		<td  class="margen">
-			Fecha de emisión:
-		</td>
-		<td class="margen">
-            2017-06-08
-		</td>
-		<td class="margen">
-			Versión
-		</td>
-		<td class="margen">
-			2
-		</td>
-		<td width="20%" class="margen">
-			Página 1 de 1
-		</td>
-	</table>
-
+    <script type="text/php">$pdf->close_object();</script>
+</div>
+    <div class="space">
     <table class="tabla_lista">
         <thead>
             <tr>
@@ -149,11 +147,20 @@
                 <td>{{$curso[3]}}</td>
                 <td>{{$curso[2]}}</td>
                 <td>{{$curso[1]}}</td>
-            </tr>
+            </tr> 
         @endforeach
         <tbody>
         </tbody>
     </table>
+</div>
+<script type="text/php">
+    $pdf->page_script('
+        if ($PAGE_NUM >= 2) {
+        $pdf->add_object($GLOBALS["header"],"add");
+        }
+        ');
+</script>
 
 </body>
+</html>
 
