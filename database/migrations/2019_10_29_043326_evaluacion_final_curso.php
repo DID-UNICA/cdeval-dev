@@ -72,9 +72,9 @@ class EvaluacionFinalCurso extends Migration
             //8. ¿CÓMO SE ENTERÓ DEL CURSO?
             $table->string('p8',300);
             //Lo mejor del curso fue:
-            $table->string('mejor',300);
+            $table->string('mejor',500);
             //Sugerencias y recomendaciones:	
-            $table->string('sug',300);
+            $table->string('sug',500);
             //¿Qué otros cursos, talleres, seminarios o temáticos le gustaría que se impartiesen o tomasen en cuenta para próximas actividades?
             $table->string('otros',300);
             //ÁREA DE CONOCIMIENTO
