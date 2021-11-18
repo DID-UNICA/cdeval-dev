@@ -9844,6 +9844,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>210,
           'asistencia'=>false,
           'acreditacion'=>false,
+          'contesto_hoja_evaluacion'=>false,
 					'espera'=>0
         ]);
         DB::table('profesors')->insert([
@@ -9866,13 +9867,53 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'facultad_id' =>14
         ]);
         DB::table('participante_curso')->insert([
-          'curso_id'=>1,
-          'profesor_id'=>35,
+          'curso_id'=>200,
+          'profesor_id'=>211,
           'asistencia'=>true,
           'acreditacion'=>true,
+          'contesto_hoja_evaluacion'=>true,
           'calificacion'=>8,
 					'espera'=>0
         ]);
+        DB::table('_evaluacion_final_curso')->insert([
+          #'participante_curso_id'=> 211,
+          'p1_1'=> 100,
+          'p1_2'=> 95,
+          'p1_3'=> 100,
+          'p1_4'=> 100,
+          'p1_5'=> 100,
+          'p2_1'=> 60,
+          'p2_2'=> 80,
+          'p2_3'=> 95,
+          'p2_4'=> 100,
+          'p3_1'=> 80,
+          'p3_2'=> 80,
+          'p3_3'=> 95,
+          'p3_4'=> 95,
+          'p4_1'=> 100,
+          'p4_2'=> 100,
+          'p4_3'=> 100,
+          'p4_4'=> 100,
+          'p4_5'=> 95,
+          'p4_6'=> 100,
+          'p4_7'=> 100,
+          'p4_8'=> 100,
+          'p4_9'=> 100,
+          'p4_10'=> 100,
+          'p4_11'=> 100,
+          //7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
+          'p7'=> 1,
+          //8. ¿CÓMO SE ENTERÓ DEL CURSO?
+          'p8'=> '["2"]',
+          'mejor'=> 'La cantidad de herramientas para apoyarnos en la impartición de las clases',
+          'sug'=> 'Este tipo de cursos debería llevarse a cabo durante el periodo intersemestral, ya que a finales del semestre, realmente se complica cumplir con las fechas de entrega de tareas y trabajos, por la carga de trabajo que ya traemos con nuestras asignaturas. Muchas gracias por el curso. Muy útil',
+          'otros'=> '-',
+          'conocimiento'=> '["3"]',
+          'tematica'=> '-',
+          'horarios'=> '17:00 a 19:00 h',
+          'horarioi'=> '10:00 a 13:00 h'
+        ]);
+
         DB::table('profesors')->insert([
           'id' => 212,
           'nombres' => 'Leovigildo',
@@ -9897,8 +9938,45 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>212,
           'asistencia'=>true,
           'acreditacion'=>true,
+          'contesto_hoja_evaluacion'=>true,
           'calificacion'=>10,
 					'espera'=>0
+        ]);
+        DB::table('_evaluacion_final_curso')->insert([
+          #'participante_curso_id'=> 212,
+          'p1_1'=> 100,
+          'p1_2'=> 100,
+          'p1_3'=> 100,
+          'p1_4'=> 100,
+          'p1_5'=> 100,
+          'p2_1'=> 100,
+          'p2_2'=> 100,
+          'p2_3'=> 100,
+          'p2_4'=> 100,
+          'p3_1'=> 100,
+          'p3_2'=> 100,
+          'p3_3'=> 100,
+          'p3_4'=> 100,
+          'p4_1'=> 100,
+          'p4_2'=> 100,
+          'p4_3'=> 100,
+          'p4_4'=> 100,
+          'p4_5'=> 100,
+          'p4_6'=> 100,
+          'p4_7'=> 100,
+          'p4_8'=> 100,
+          'p4_9'=> 100,
+          'p4_10'=> 100,
+          'p4_11'=> 100,
+          //7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
+          'p7'=> 1,
+          //8. ¿CÓMO SE ENTERÓ DEL CURSO?
+          'p8'=>'["2"]',
+          'mejor'=> 'Preparación de mi curso en plataforma Moodle',
+          'sug'=> 'Todo bien',
+          'otros'=> '-',
+          'conocimiento'=> '["1"]',
+          'tematica'=> '-'
         ]);
         DB::table('profesors')->insert([
           'id' => 213,
@@ -9924,8 +10002,47 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>213,
           'asistencia'=>true,
           'acreditacion'=>true,
+          'contesto_hoja_evaluacion'=>true,
           'calificacion'=>10,
 					'espera'=>0
+        ]);
+        DB::table('_evaluacion_final_curso')->insert([
+          #'participante_curso_id'=> 213,
+          'p1_1'=> 95,
+          'p1_2'=> 95,
+          'p1_3'=> 95,
+          'p1_4'=> 50,
+          'p1_5'=> 100,
+          'p2_1'=> 100,
+          'p2_2'=> 100,
+          'p2_3'=> 95,
+          'p2_4'=> 95,
+          'p3_1'=> 100,
+          'p3_2'=> 100,
+          'p3_3'=> 95,
+          'p3_4'=> 95,
+          'p4_1'=> 100,
+          'p4_2'=> 100,
+          'p4_3'=> 100,
+          'p4_4'=> 100,
+          'p4_5'=> 100,
+          'p4_6'=> 100,
+          'p4_7'=> 100,
+          'p4_8'=> 100,
+          'p4_9'=> 100,
+          'p4_10'=> 100,
+          'p4_11'=> 100,
+          //7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
+          'p7'=> 1,
+          //8. ¿CÓMO SE ENTERÓ DEL CURSO?
+          'p8'=>'["1"]',
+          'mejor'=> 'El contenido',
+          'sug'=> 'Profundizar en los temas',
+          'otros'=> '-',
+          'conocimiento'=> '["2","3"]',
+          'tematica'=> '-',
+          'horarios'=> '10:00 a 20:00 h',
+          'horarioi'=> '10:00 a 14:00 h o 16:00 a 20:00 h',
         ]);
         DB::table('profesors')->insert([
           'id' => 214,
@@ -9951,8 +10068,46 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>214,
           'asistencia'=>true,
           'acreditacion'=>true,
+          'contesto_hoja_evaluacion'=>true,
           'calificacion'=>10,
 					'espera'=>0
+        ]);
+        DB::table('_evaluacion_final_curso')->insert([
+          #'participante_curso_id'=> 214,
+          'p1_1'=> 80,
+          'p1_2'=> 80,
+          'p1_3'=> 95,
+          'p1_4'=> 80,
+          'p1_5'=> 80,
+          'p2_1'=> 80,
+          'p2_2'=> 80,
+          'p2_3'=> 80,
+          'p2_4'=> 80,
+          'p3_1'=> 80,
+          'p3_2'=> 80,
+          'p3_3'=> 80,
+          'p3_4'=> 80,
+          'p4_1'=> 80,
+          'p4_2'=> 80,
+          'p4_3'=> 60,
+          'p4_4'=> 80,
+          'p4_5'=> 80,
+          'p4_6'=> 80,
+          'p4_7'=> 80,
+          'p4_8'=> 80,
+          'p4_9'=> 80,
+          'p4_10'=> 80,
+          'p4_11'=> 80,
+          //7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
+          'p7'=> 1,
+          //8. ¿CÓMO SE ENTERÓ DEL CURSO?
+          'p8'=>'["1"]',
+          'mejor'=> 'Propuestas de herramientas tecnológicas por utilizar',
+          //'sug'=> '',
+          'otros'=> '-',
+          'conocimiento'=> '["3"]',
+          'tematica'=> '-',
+          'horarios'=> 'Interturno'
         ]);
         DB::table('profesors')->insert([
           'id' => 215,
@@ -9978,8 +10133,47 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>215,
           'asistencia'=>true,
           'acreditacion'=>true,
+          'contesto_hoja_evaluacion'=>true,
           'calificacion'=>7,
 					'espera'=>0
+        ]);
+        DB::table('_evaluacion_final_curso')->insert([
+          #'participante_curso_id'=> ,
+          'p1_1'=> 50,
+          'p1_2'=> 50,
+          'p1_3'=> 50,
+          'p1_4'=> 50,
+          'p1_5'=> 50,
+          'p2_1'=> 80,
+          'p2_2'=> 95,
+          'p2_3'=> 95,
+          'p2_4'=> 50,
+          'p3_1'=> 100,
+          'p3_2'=> 60,
+          'p3_3'=> 100,
+          'p3_4'=> 80,
+          'p4_1'=> 50,
+          'p4_2'=> 50,
+          'p4_3'=> 50,
+          'p4_4'=> 50,
+          'p4_5'=> 80,
+          'p4_6'=> 80,
+          'p4_7'=> 60,
+          'p4_8'=> 95,
+          'p4_9'=> 95,
+          'p4_10'=> 95,
+          'p4_11'=> 95,
+          //7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
+          'p7'=> 0,
+          //8. ¿CÓMO SE ENTERÓ DEL CURSO?
+          'p8'=>'["1"]',
+          'mejor'=> 'Nada',
+          'sug'=> 'Este curso fue muy decepcionante, al tratarse de un "Curso-Taller" esperaba que nos enseñarán más sobre el uso de las herramientas, fue muy aburrido, con referencias poco actualizadas y los temas vistos ya los había aprendido en el Programa de Capacitación para la educación en línea, impartido por la FI el año pasado. Para mí fue una absoluta pérdida de tiempo',
+          'otros'=> '-',
+          'conocimiento'=> '["1","2"]',
+          'tematica'=> '-',
+          'horarios'=> '8:00 a 10:00 h y 18:00 a 20:00 h',
+          'horarioi'=> '8:00 a 10:00 h y 18:00 a 20:00 h',
         ]);
         DB::table('profesors')->insert([
           'id' => 216,
@@ -10005,8 +10199,47 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>216,
           'asistencia'=>true,
           'acreditacion'=>true,
+          'contesto_hoja_evaluacion'=>true,
           'calificacion'=>9,
 					'espera'=>0
+        ]);
+        DB::table('_evaluacion_final_curso')->insert([
+          #'participante_curso_id'=> ,
+          'p1_1'=> 100,
+          'p1_2'=> 100,
+          'p1_3'=> 100,
+          'p1_4'=> 100,
+          'p1_5'=> 100,
+          'p2_1'=> 95,
+          'p2_2'=> 95,
+          'p2_3'=> 100,
+          'p2_4'=> 100,
+          'p3_1'=> 100,
+          'p3_2'=> 100,
+          'p3_3'=> 100,
+          'p3_4'=> 100,
+          'p4_1'=> 100,
+          'p4_2'=> 100,
+          'p4_3'=> 100,
+          'p4_4'=> 100,
+          'p4_5'=> 100,
+          'p4_6'=> 100,
+          'p4_7'=> 100,
+          'p4_8'=> 100,
+          'p4_9'=> 100,
+          'p4_10'=> 100,
+          'p4_11'=> 100,
+          //7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
+          'p7'=> 1,
+          //8. ¿CÓMO SE ENTERÓ DEL CURSO?
+          'p8'=>'["1","4","Convocatoria DGAPA"]',
+          'mejor'=> 'La experiencia compartidas por parte del profesor',
+          'sug'=> 'Fueron muchas actividades extra-clase, que hicieron un poco pesado el curso, ya que se le debía invertir algo de tiempo, para realizarlas',
+          'otros'=> '-',
+          'conocimiento'=> '["1","3"]',
+          'tematica'=> '-',
+          'horarios'=> '16:00 a 20:00 h',
+          'horarioi'=> '9:00 a 13:00 h',
         ]);
         DB::table('profesors')->insert([
           'id' => 217,
@@ -10032,6 +10265,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>217,
           'asistencia'=>false,
           'acreditacion'=>false,
+          'contesto_hoja_evaluacion'=>false,
           //'calificacion'=>9,
 					'espera'=>0
         ]);
@@ -10059,6 +10293,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>218,
           'asistencia'=>false,
           'acreditacion'=>false,
+          'contesto_hoja_evaluacion'=>false,
           //'calificacion'=>9,
 					'espera'=>0
         ]);
@@ -10086,8 +10321,46 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>219,
           'asistencia'=>true,
           'acreditacion'=>true,
+          'contesto_hoja_evaluacion'=>true,
           'calificacion'=>10,
 					'espera'=>0
+        ]);
+        DB::table('_evaluacion_final_curso')->insert([
+          #'participante_curso_id'=> ,
+          'p1_1'=> 100,
+          'p1_2'=> 100,
+          'p1_3'=> 100,
+          'p1_4'=> 100,
+          'p1_5'=> 100,
+          'p2_1'=> 80,
+          'p2_2'=> 80,
+          'p2_3'=> 80,
+          'p2_4'=> 95,
+          'p3_1'=> 100,
+          'p3_2'=> 100,
+          'p3_3'=> 100,
+          'p3_4'=> 100,
+          'p4_1'=> 100,
+          'p4_2'=> 100,
+          'p4_3'=> 100,
+          'p4_4'=> 100,
+          'p4_5'=> 100,
+          'p4_6'=> 100,
+          'p4_7'=> 100,
+          'p4_8'=> 100,
+          'p4_9'=> 100,
+          'p4_10'=> 100,
+          'p4_11'=> 100,
+          //7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
+          'p7'=> 1,
+          //8. ¿CÓMO SE ENTERÓ DEL CURSO?
+          'p8'=>'["1"]',
+          'mejor'=> 'El intercambio de experiencias de los colegas profesores',
+          'sug'=> 'Buen curso',
+          'otros'=> '-',
+          'conocimiento'=> '["1"]',
+          'tematica'=> '-',
+          'horarios'=> '9:00 a 13:00 h'
         ]);
         DB::table('profesors')->insert([
           'id' => 220,
@@ -10113,8 +10386,47 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>220,
           'asistencia'=>true,
           'acreditacion'=>true,
+          'contesto_hoja_evaluacion'=>true,
           'calificacion'=>10,
 					'espera'=>0
+        ]);
+        DB::table('_evaluacion_final_curso')->insert([
+          #'participante_curso_id'=> ,
+          'p1_1'=> 100,
+          'p1_2'=> 100,
+          'p1_3'=> 100,
+          'p1_4'=> 100,
+          'p1_5'=> 100,
+          'p2_1'=> 100,
+          'p2_2'=> 95,
+          'p2_3'=> 100,
+          'p2_4'=> 100,
+          'p3_1'=> 100,
+          'p3_2'=> 100,
+          'p3_3'=> 100,
+          'p3_4'=> 100,
+          'p4_1'=> 100,
+          'p4_2'=> 100,
+          'p4_3'=> 100,
+          'p4_4'=> 100,
+          'p4_5'=> 100,
+          'p4_6'=> 100,
+          'p4_7'=> 100,
+          'p4_8'=> 100,
+          'p4_9'=> 100,
+          'p4_10'=> 100,
+          'p4_11'=> 100,
+          //7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
+          'p7'=> 1,
+          //8. ¿CÓMO SE ENTERÓ DEL CURSO?
+          'p8'=>'["1"]',
+          'mejor'=> 'El amplio abanico de plataformas que se pueden utilizar para las clases en línea',
+          'sug'=> 'Se requiere profundizar en las plataformas educativas para tener un dominio más completo',
+          'otros'=> '-',
+          'conocimiento'=> '["3"]',
+          'tematica'=> '-',
+          'horarios'=> 'Vespertino',
+          'horarioi'=> 'Matutino'
         ]);
         DB::table('profesors')->insert([
           'id' => 221,
@@ -10140,6 +10452,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>221,
           'asistencia'=>false,
           'acreditacion'=>false,
+          'contesto_hoja_evaluacion'=>false,
           //'calificacion'=>10,
 					'espera'=>0
         ]);
@@ -10167,8 +10480,47 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>222,
           'asistencia'=>true,
           'acreditacion'=>true,
+          'contesto_hoja_evaluacion'=>true,
           'calificacion'=>9,
 					'espera'=>0
+        ]);
+        DB::table('_evaluacion_final_curso')->insert([
+          #'participante_curso_id'=> ,
+          'p1_1'=> 95,
+          'p1_2'=> 95,
+          'p1_3'=> 95,
+          'p1_4'=> 95,
+          'p1_5'=> 80,
+          'p2_1'=> 80,
+          'p2_2'=> 80,
+          'p2_3'=> 95,
+          'p2_4'=> 80,
+          'p3_1'=> 80,
+          'p3_2'=> 80,
+          'p3_3'=> 80,
+          'p3_4'=> 80,
+          'p4_1'=> 80,
+          'p4_2'=> 95,
+          'p4_3'=> 80,
+          'p4_4'=> 80,
+          'p4_5'=> 95,
+          'p4_6'=> 95,
+          'p4_7'=> 95,
+          'p4_8'=> 100,
+          'p4_9'=> 95,
+          'p4_10'=> 80,
+          'p4_11'=> 80,
+          //7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
+          'p7'=> 1,
+          //8. ¿CÓMO SE ENTERÓ DEL CURSO?
+          'p8'=>'["2"]',
+          'mejor'=> 'No hubo cosas nuevas',
+          'sug'=> 'Actualizar los contenidos, ya que las capacitaciones masivas superaron este curso',
+          'otros'=> '-',
+          'conocimiento'=> '["1","3"]',
+          'tematica'=> '-',
+          'horarios'=> '8:00 a 10:00 h o 18:00 a 20:00 h',
+          'horarioi'=> '8:00 a 12:00'
         ]);
         DB::table('profesors')->insert([
           'id' => 223,
@@ -10194,6 +10546,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>223,
           'asistencia'=>false,
           'acreditacion'=>false,
+          'contesto_hoja_evaluacion'=>false,
           //'calificacion'=>9,
 					'espera'=>0
         ]);
@@ -10221,8 +10574,47 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>224,
           'asistencia'=>true,
           'acreditacion'=>true,
+          'contesto_hoja_evaluacion'=>true,
           'calificacion'=>9,
 					'espera'=>0
+        ]);
+        DB::table('_evaluacion_final_curso')->insert([
+          #'participante_curso_id'=> ,
+          'p1_1'=> 100,
+          'p1_2'=> 100,
+          'p1_3'=> 100,
+          'p1_4'=> 100,
+          'p1_5'=> 100,
+          'p2_1'=> 95,
+          'p2_2'=> 100,
+          'p2_3'=> 100,
+          'p2_4'=> 100,
+          'p3_1'=> 100,
+          'p3_2'=> 100,
+          'p3_3'=> 100,
+          'p3_4'=> 100,
+          'p4_1'=> 100,
+          'p4_2'=> 100,
+          'p4_3'=> 100,
+          'p4_4'=> 100,
+          'p4_5'=> 100,
+          'p4_6'=> 100,
+          'p4_7'=> 100,
+          'p4_8'=> 100,
+          'p4_9'=> 100,
+          'p4_10'=> 100,
+          'p4_11'=> 100,
+          //7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
+          'p7'=> 1,
+          //8. ¿CÓMO SE ENTERÓ DEL CURSO?
+          'p8'=>'["2"]',
+          'mejor'=> 'Aprender nuevas plataformas de educación a distancia',
+          'sug'=> 'Gracias por el curso  nos apoyara en nuestra docencia',
+          'otros'=> '-',
+          'conocimiento'=> '["1","3"]',
+          'tematica'=> '-',
+          'horarios'=> '12:00 a 17:00 h',
+          'horarioi'=> '12:00 a 17:00 h'
         ]);
         DB::table('profesors')->insert([
           'id' => 225,
@@ -10248,8 +10640,47 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>225,
           'asistencia'=>true,
           'acreditacion'=>true,
+          'contesto_hoja_evaluacion'=>true,
           'calificacion'=>9,
 					'espera'=>0
+        ]);
+        DB::table('_evaluacion_final_curso')->insert([
+          #'participante_curso_id'=> ,
+          'p1_1'=> 100,
+          'p1_2'=> 100,
+          'p1_3'=> 100,
+          'p1_4'=> 100,
+          'p1_5'=> 100,
+          'p2_1'=> 60,
+          'p2_2'=> 80,
+          'p2_3'=> 95,
+          'p2_4'=> 100,
+          'p3_1'=> 100,
+          'p3_2'=> 100,
+          'p3_3'=> 100,
+          'p3_4'=> 100,
+          'p4_1'=> 100,
+          'p4_2'=> 100,
+          'p4_3'=> 100,
+          'p4_4'=> 100,
+          'p4_5'=> 100,
+          'p4_6'=> 100,
+          'p4_7'=> 100,
+          'p4_8'=> 100,
+          'p4_9'=> 100,
+          'p4_10'=> 100,
+          'p4_11'=> 100,
+          //7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
+          'p7'=> 1,
+          //8. ¿CÓMO SE ENTERÓ DEL CURSO?
+          'p8'=>'["1"]',
+          'mejor'=> 'El uso de nuevas plataformas o aplicaciones para la enseñanza',
+          'sug'=> 'Ninguna, todo estuvo muy bien',
+          'otros'=> '-',
+          'conocimiento'=> '["1","2"]',
+          'tematica'=> '-',
+          'horarios'=> '19:00 a 20:00 h',
+          'horarioi'=> '19:00 a 20:00 h'
         ]);
         DB::table('profesors')->insert([
           'id' => 226,
@@ -10275,8 +10706,47 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>226,
           'asistencia'=>true,
           'acreditacion'=>true,
+          'contesto_hoja_evaluacion'=>true,
           'calificacion'=>10,
 					'espera'=>0
+        ]);
+        DB::table('_evaluacion_final_curso')->insert([
+          #'participante_curso_id'=> ,
+          'p1_1'=> 100,
+          'p1_2'=> 100,
+          'p1_3'=> 100,
+          'p1_4'=> 100,
+          'p1_5'=> 100,
+          'p2_1'=> 100,
+          'p2_2'=> 100,
+          'p2_3'=> 100,
+          'p2_4'=> 100,
+          'p3_1'=> 100,
+          'p3_2'=> 100,
+          'p3_3'=> 100,
+          'p3_4'=> 100,
+          'p4_1'=> 100,
+          'p4_2'=> 100,
+          'p4_3'=> 100,
+          'p4_4'=> 100,
+          'p4_5'=> 100,
+          'p4_6'=> 100,
+          'p4_7'=> 100,
+          'p4_8'=> 100,
+          'p4_9'=> 100,
+          'p4_10'=> 100,
+          'p4_11'=> 100,
+          //7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
+          'p7'=> 1,
+          //8. ¿CÓMO SE ENTERÓ DEL CURSO?
+          'p8'=>'["2"]',
+          'mejor'=> 'La disposición del Maestro Gabriel de compartir sus conocimientos',
+          'sug'=> 'Realizar las actividades de verificación en las sesiones',
+          'otros'=> '-',
+          'conocimiento'=> '["3"]',
+          'tematica'=> '-',
+          'horarios'=> '10:00 a 13:00 h',
+          'horarioi'=> '10:00 a 14:00 h'
         ]);
         DB::table('profesors')->insert([
           'id' => 227,
@@ -10302,6 +10772,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>227,
           'asistencia'=>false,
           'acreditacion'=>false,
+          'contesto_hoja_evaluacion'=>false,
           //'calificacion'=>10,
 					'espera'=>0
         ]);
@@ -10329,8 +10800,47 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>228,
           'asistencia'=>true,
           'acreditacion'=>true,
+          'contesto_hoja_evaluacion'=>true,
           'calificacion'=>7,
 					'espera'=>0
+        ]);
+        DB::table('_evaluacion_final_curso')->insert([
+          #'participante_curso_id'=> ,
+          'p1_1'=> 100,
+          'p1_2'=> 100,
+          'p1_3'=> 100,
+          'p1_4'=> 100,
+          'p1_5'=> 100,
+          'p2_1'=> 60,
+          'p2_2'=> 60,
+          'p2_3'=> 80,
+          'p2_4'=> 95,
+          'p3_1'=> 100,
+          'p3_2'=> 100,
+          'p3_3'=> 100,
+          'p3_4'=> 100,
+          'p4_1'=> 100,
+          'p4_2'=> 100,
+          'p4_3'=> 100,
+          'p4_4'=> 100,
+          'p4_5'=> 100,
+          'p4_6'=> 100,
+          'p4_7'=> 100,
+          'p4_8'=> 100,
+          'p4_9'=> 100,
+          'p4_10'=> 100,
+          'p4_11'=> 100,
+          //7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
+          'p7'=> 1,
+          //8. ¿CÓMO SE ENTERÓ DEL CURSO?
+          'p8'=>'["3"]',
+          'mejor'=> 'Excelente curso',
+          'sug'=> 'Por experiencia, que nos habiliten las aulas moodle',
+          'otros'=> '-',
+          'conocimiento'=> '["1"]',
+          'tematica'=> '-',
+          'horarios'=> '21:00 a 22:00 h',
+          'horarioi'=> '22:00 a 23:00 h'
         ]);
         DB::table('profesors')->insert([
           'id' => 229,
@@ -10356,15 +10866,54 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>229,
           'asistencia'=>true,
           'acreditacion'=>false,
+          'contesto_hoja_evaluacion'=>true,
           //'calificacion'=>7,
 					'espera'=>0
+        ]);
+        DB::table('_evaluacion_final_curso')->insert([
+          #'participante_curso_id'=> ,
+          'p1_1'=> 100,
+          'p1_2'=> 95,
+          'p1_3'=> 100,
+          'p1_4'=> 100,
+          'p1_5'=> 100,
+          'p2_1'=> 60,
+          'p2_2'=> 60,
+          'p2_3'=> 100,
+          'p2_4'=> 100,
+          'p3_1'=> 100,
+          'p3_2'=> 80,
+          'p3_3'=> 100,
+          'p3_4'=> 100,
+          'p4_1'=> 100,
+          'p4_2'=> 100,
+          'p4_3'=> 100,
+          'p4_4'=> 100,
+          'p4_5'=> 100,
+          'p4_6'=> 100,
+          'p4_7'=> 100,
+          'p4_8'=> 100,
+          'p4_9'=> 100,
+          'p4_10'=> 100,
+          'p4_11'=> 100,
+          //7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
+          'p7'=> 1,
+          //8. ¿CÓMO SE ENTERÓ DEL CURSO?
+          'p8'=>'["1"]',
+          'mejor'=> 'Actualización, sentido humano',
+          'sug'=> 'Ampliar curso y contenidos urgen más TICS',
+          'otros'=> '-',
+          'conocimiento'=> '["3"]',
+          'tematica'=> '-',
+          'horarios'=> '8:00 a 14:00 h',
+          'horarioi'=> '8:00 a 14:00 h'
         ]);
         DB::table('profesors')->insert([
           'id' => 230,
           'nombres' => 'Maria del Rocio',
           'apellido_paterno' => 'Rosales',
           'apellido_materno' => 'Martinez',
-          'rfc' => 'ROSA640907',
+          'rfc' => 'ROMR840714',
           //'numero_trabajador' => '6830',
           
           'fecha_nacimiento' => '1972-05-17',
@@ -10383,8 +10932,45 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>230,
           'asistencia'=>true,
           'acreditacion'=>true,
+          'contesto_hoja_evaluacion'=>true,
           'calificacion'=>10,
 					'espera'=>0
+        ]);
+        DB::table('_evaluacion_final_curso')->insert([
+          #'participante_curso_id'=> ,
+          'p1_1'=> 100,
+          'p1_2'=> 100,
+          'p1_3'=> 100,
+          'p1_4'=> 100,
+          'p1_5'=> 100,
+          'p2_1'=> 80,
+          'p2_2'=> 100,
+          'p2_3'=> 100,
+          'p2_4'=> 95,
+          'p3_1'=> 100,
+          'p3_2'=> 100,
+          'p3_3'=> 100,
+          'p3_4'=> 100,
+          'p4_1'=> 100,
+          'p4_2'=> 100,
+          'p4_3'=> 100,
+          'p4_4'=> 100,
+          'p4_5'=> 100,
+          'p4_6'=> 100,
+          'p4_7'=> 100,
+          'p4_8'=> 100,
+          'p4_9'=> 100,
+          'p4_10'=> 100,
+          'p4_11'=> 100,
+          //7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
+          'p7'=> 1,
+          //8. ¿CÓMO SE ENTERÓ DEL CURSO?
+          'p8'=>'["4","DGAPA"]',
+          'mejor'=> 'Convivencia',
+          'sug'=> 'Que se abarque un solo tema por ejemplo el uso de zoom pero desde el nivel básico hasta el avanzado',
+          'otros'=> '-',
+          'conocimiento'=> '["3"]',
+          'tematica'=> '-'
         ]);
         DB::table('profesors')->insert([
           'id' => 231,
@@ -10410,8 +10996,47 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>231,
           'asistencia'=>true,
           'acreditacion'=>true,
+          'contesto_hoja_evaluacion'=>true,
           'calificacion'=>10,
 					'espera'=>0
+        ]);
+        DB::table('_evaluacion_final_curso')->insert([
+          #'participante_curso_id'=> ,
+          'p1_1'=> 100,
+          'p1_2'=> 100,
+          'p1_3'=> 100,
+          'p1_4'=> 100,
+          'p1_5'=> 100,
+          'p2_1'=> 60,
+          'p2_2'=> 95,
+          'p2_3'=> 100,
+          'p2_4'=> 100,
+          'p3_1'=> 100,
+          'p3_2'=> 100,
+          'p3_3'=> 100,
+          'p3_4'=> 100,
+          'p4_1'=> 100,
+          'p4_2'=> 100,
+          'p4_3'=> 100,
+          'p4_4'=> 100,
+          'p4_5'=> 100,
+          'p4_6'=> 100,
+          'p4_7'=> 100,
+          'p4_8'=> 100,
+          'p4_9'=> 100,
+          'p4_10'=> 100,
+          'p4_11'=> 100,
+          //7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
+          'p7'=> 1,
+          //8. ¿CÓMO SE ENTERÓ DEL CURSO?
+          'p8'=>'["2"]',
+          'mejor'=> 'Que se utilizaron muchas plataformas y herramientas',
+          'sug'=> 'En general me gustó mucho el curso, aunque me hubiera gustado que trabajáramos en equipo desde la primera clase',
+          'otros'=> '-',
+          'conocimiento'=> '["1"]',
+          'tematica'=> '-',
+          'horarios'=> '18:00 h',
+          'horarioi'=> '9:00 h'
         ]);
         DB::table('profesors')->insert([
           'id' => 232,
@@ -10437,8 +11062,45 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>232,
           'asistencia'=>true,
           'acreditacion'=>true,
+          'contesto_hoja_evaluacion'=>true,
           'calificacion'=>9,
 					'espera'=>0
+        ]);
+        DB::table('_evaluacion_final_curso')->insert([
+          #'participante_curso_id'=> ,
+          'p1_1'=> 100,
+          'p1_2'=> 100,
+          'p1_3'=> 100,
+          'p1_4'=> 100,
+          'p1_5'=> 100,
+          'p2_1'=> 80,
+          'p2_2'=> 80,
+          'p2_3'=> 95,
+          'p2_4'=> 100,
+          'p3_1'=> 80,
+          'p3_2'=> 100,
+          'p3_3'=> 100,
+          'p3_4'=> 100,
+          'p4_1'=> 100,
+          'p4_2'=> 100,
+          'p4_3'=> 100,
+          'p4_4'=> 100,
+          'p4_5'=> 100,
+          'p4_6'=> 100,
+          'p4_7'=> 100,
+          'p4_8'=> 100,
+          'p4_9'=> 100,
+          'p4_10'=> 100,
+          'p4_11'=> 100,
+          //7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
+          'p7'=> 1,
+          //8. ¿CÓMO SE ENTERÓ DEL CURSO?
+          'p8'=>'["3"]',
+          'mejor'=> 'La forma en el que el profesor la impartió',
+          'sug'=> 'En este semestre se juntaron el curso con el final de semestre, sumado a que mucho profesores tenemos otro trabajo fuera de la universidad, en estas situaciones extraordinarias ojalá fueran más flexibles con el porcentaje de asistencia a las sesiones y también con la carga de trabajo, pero todo excelente',
+          'otros'=> '-',
+          'conocimiento'=> '["1","2","3"]',
+          'tematica'=> '-'
         ]);
         DB::table('profesors')->insert([
           'id' => 233,
@@ -10464,6 +11126,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'profesor_id'=>233,
           'asistencia'=>false,
           'acreditacion'=>false,
+          'contesto_hoja_evaluacion'=>false,
           //'calificacion'=>9,
 					'espera'=>0
         ]);
