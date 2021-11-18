@@ -902,7 +902,6 @@ $promedio_p4=[
         if(sizeof($evaluacionesCursos)==0){
             Session::flash('message','Periodo seleccionado no cuenta con una evaluacion');
 			Session::flash('alert-class', 'alert-danger'); 
-
 			return redirect()->back()->withInput();
         }
 
@@ -2403,7 +2402,11 @@ $promedio_p4=[
         }
 
         if(sizeof($evaluacionesCursos)==0){
-            return redirect()->route('cd.area',['Ningun curso, del periodo indicado, ha sido evaluado.']);
+            //return redirect()->route('cd.area',[$semestre, $periodo, $coordinacion_id]);
+            Session::flash('message','Periodo no cuenta con evaluación');
+			Session::flash('alert-class', 'alert-danger'); 
+
+			return redirect()->back();
         }
 
         //Pasamos el nombre de la coordinacion y la vista a retornar
