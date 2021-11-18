@@ -9876,7 +9876,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
 					'espera'=>0
         ]);
         DB::table('_evaluacion_final_curso')->insert([
-          #'participante_curso_id'=> 211,
+          'participante_curso_id'=> 167,
           'p1_1'=> 100,
           'p1_2'=> 95,
           'p1_3'=> 100,
@@ -9943,7 +9943,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
 					'espera'=>0
         ]);
         DB::table('_evaluacion_final_curso')->insert([
-          #'participante_curso_id'=> 212,
+          'participante_curso_id'=> 168,
           'p1_1'=> 100,
           'p1_2'=> 100,
           'p1_3'=> 100,
@@ -9976,7 +9976,9 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'sug'=> 'Todo bien',
           'otros'=> '-',
           'conocimiento'=> '["1"]',
-          'tematica'=> '-'
+          'tematica'=> '-',
+          'horarios'=>'-',
+          'horarioi'=>'-'
         ]);
         DB::table('profesors')->insert([
           'id' => 213,
@@ -10007,7 +10009,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
 					'espera'=>0
         ]);
         DB::table('_evaluacion_final_curso')->insert([
-          #'participante_curso_id'=> 213,
+          'participante_curso_id'=> 169,
           'p1_1'=> 95,
           'p1_2'=> 95,
           'p1_3'=> 95,
@@ -10073,7 +10075,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
 					'espera'=>0
         ]);
         DB::table('_evaluacion_final_curso')->insert([
-          #'participante_curso_id'=> 214,
+          'participante_curso_id'=> 170,
           'p1_1'=> 80,
           'p1_2'=> 80,
           'p1_3'=> 95,
@@ -10103,11 +10105,12 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           //8. ¿CÓMO SE ENTERÓ DEL CURSO?
           'p8'=>'["1"]',
           'mejor'=> 'Propuestas de herramientas tecnológicas por utilizar',
-          //'sug'=> '',
+          'sug'=> '',
           'otros'=> '-',
           'conocimiento'=> '["3"]',
           'tematica'=> '-',
-          'horarios'=> 'Interturno'
+          'horarios'=>'-',
+          'horarioi'=>'-'
         ]);
         DB::table('profesors')->insert([
           'id' => 215,
@@ -10138,7 +10141,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
 					'espera'=>0
         ]);
         DB::table('_evaluacion_final_curso')->insert([
-          #'participante_curso_id'=> ,
+          'participante_curso_id'=> 171,
           'p1_1'=> 50,
           'p1_2'=> 50,
           'p1_3'=> 50,
@@ -10204,7 +10207,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
 					'espera'=>0
         ]);
         DB::table('_evaluacion_final_curso')->insert([
-          #'participante_curso_id'=> ,
+          'participante_curso_id'=> 172,
           'p1_1'=> 100,
           'p1_2'=> 100,
           'p1_3'=> 100,
@@ -10326,7 +10329,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
 					'espera'=>0
         ]);
         DB::table('_evaluacion_final_curso')->insert([
-          #'participante_curso_id'=> ,
+          'participante_curso_id'=> 175,
           'p1_1'=> 100,
           'p1_2'=> 100,
           'p1_3'=> 100,
@@ -10360,7 +10363,8 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'otros'=> '-',
           'conocimiento'=> '["1"]',
           'tematica'=> '-',
-          'horarios'=> '9:00 a 13:00 h'
+          'horarios'=> '9:00 a 13:00 h',
+          'horarioi'=>'-'
         ]);
         DB::table('profesors')->insert([
           'id' => 220,
@@ -10391,7 +10395,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
 					'espera'=>0
         ]);
         DB::table('_evaluacion_final_curso')->insert([
-          #'participante_curso_id'=> ,
+          'participante_curso_id'=> 176,
           'p1_1'=> 100,
           'p1_2'=> 100,
           'p1_3'=> 100,
@@ -10485,7 +10489,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
 					'espera'=>0
         ]);
         DB::table('_evaluacion_final_curso')->insert([
-          #'participante_curso_id'=> ,
+          'participante_curso_id'=> 178,
           'p1_1'=> 95,
           'p1_2'=> 95,
           'p1_3'=> 95,
@@ -10579,7 +10583,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
 					'espera'=>0
         ]);
         DB::table('_evaluacion_final_curso')->insert([
-          #'participante_curso_id'=> ,
+          'participante_curso_id'=> 180,
           'p1_1'=> 100,
           'p1_2'=> 100,
           'p1_3'=> 100,
@@ -10645,7 +10649,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
 					'espera'=>0
         ]);
         DB::table('_evaluacion_final_curso')->insert([
-          #'participante_curso_id'=> ,
+          'participante_curso_id'=> 181,
           'p1_1'=> 100,
           'p1_2'=> 100,
           'p1_3'=> 100,
@@ -10711,7 +10715,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
 					'espera'=>0
         ]);
         DB::table('_evaluacion_final_curso')->insert([
-          #'participante_curso_id'=> ,
+          'participante_curso_id'=> 182,
           'p1_1'=> 100,
           'p1_2'=> 100,
           'p1_3'=> 100,
@@ -10805,7 +10809,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
 					'espera'=>0
         ]);
         DB::table('_evaluacion_final_curso')->insert([
-          #'participante_curso_id'=> ,
+          'participante_curso_id'=> 184,
           'p1_1'=> 100,
           'p1_2'=> 100,
           'p1_3'=> 100,
@@ -10871,7 +10875,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
 					'espera'=>0
         ]);
         DB::table('_evaluacion_final_curso')->insert([
-          #'participante_curso_id'=> ,
+          'participante_curso_id'=> 185,
           'p1_1'=> 100,
           'p1_2'=> 95,
           'p1_3'=> 100,
@@ -10937,7 +10941,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
 					'espera'=>0
         ]);
         DB::table('_evaluacion_final_curso')->insert([
-          #'participante_curso_id'=> ,
+          'participante_curso_id'=> 186,
           'p1_1'=> 100,
           'p1_2'=> 100,
           'p1_3'=> 100,
@@ -10970,7 +10974,9 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'sug'=> 'Que se abarque un solo tema por ejemplo el uso de zoom pero desde el nivel básico hasta el avanzado',
           'otros'=> '-',
           'conocimiento'=> '["3"]',
-          'tematica'=> '-'
+          'tematica'=> '-',
+          'horarios'=>'-',
+          'horarioi'=>'-'
         ]);
         DB::table('profesors')->insert([
           'id' => 231,
@@ -11001,7 +11007,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
 					'espera'=>0
         ]);
         DB::table('_evaluacion_final_curso')->insert([
-          #'participante_curso_id'=> ,
+          'participante_curso_id'=> 187,
           'p1_1'=> 100,
           'p1_2'=> 100,
           'p1_3'=> 100,
@@ -11067,7 +11073,7 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
 					'espera'=>0
         ]);
         DB::table('_evaluacion_final_curso')->insert([
-          #'participante_curso_id'=> ,
+          'participante_curso_id'=> 188,
           'p1_1'=> 100,
           'p1_2'=> 100,
           'p1_3'=> 100,
@@ -11100,7 +11106,9 @@ DB::table('_evaluacion_final_curso')->insert([ //id=88
           'sug'=> 'En este semestre se juntaron el curso con el final de semestre, sumado a que mucho profesores tenemos otro trabajo fuera de la universidad, en estas situaciones extraordinarias ojalá fueran más flexibles con el porcentaje de asistencia a las sesiones y también con la carga de trabajo, pero todo excelente',
           'otros'=> '-',
           'conocimiento'=> '["1","2","3"]',
-          'tematica'=> '-'
+          'tematica'=> '-',
+          'horarios'=>'-',
+          'horarioi'=>'-'
         ]);
         DB::table('profesors')->insert([
           'id' => 233,

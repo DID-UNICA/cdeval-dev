@@ -2085,23 +2085,29 @@ $promedio_p4=[
 
         //Iteramos cada curso del área seleccionada
         foreach($cursos as $curso){
-            $tam_coordinacion++;
             //Obtenemos el catálogo y evaluaciones de dichos cursos
             $catalogo_curso = DB::table('catalogo_cursos')
                 ->where('id',$curso->catalogo_id)
                 ->get();
-            if(strcmp($catalogo_curso[0]->tipo,'S') == 0)
+            if(strcmp($catalogo_curso[0]->tipo,'S') == 0){
               $evals = DB::table('_evaluacion_final_curso as ec')
                 ->join('participante_curso as pc', 'pc.id', '=', 'ec.participante_curso_id')
                 ->where('pc.curso_id',$curso->id)
                 ->select('ec.*')
                 ->get();
-            else            
+                if(sizeof($evals)>0){
+                    $tam_coordinacion++;
+                }
+            }else{            
               $evals = DB::table('_evaluacion_final_curso as es')
                 ->join('participante_curso as pc', 'pc.id', '=', 'es.participante_curso_id')
                 ->where('pc.curso_id',$curso->id)
                 ->select('es.*')
                 ->get();
+                if(sizeof($evals)>0){
+                    $tam_coordinacion++;
+                }
+            }
 
             $tam_curso = 0;
             $contenido_curso = 0;
