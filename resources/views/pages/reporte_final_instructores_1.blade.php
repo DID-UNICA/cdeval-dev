@@ -16,13 +16,20 @@
         font-family:Arial, Helvetica, Sans-serif,cursive;   
         font-size: 12px;    
     }
-	#tabla_encabezado{
+    #tabla_encabezado{
         border-collapse: collapse;
-        border: 1px solid #ddd;
-        height: 50px;
+        height: 100px;
         width:100%;
     }
-
+    #tabla_encabezado_debajo{
+        border-collapse: collapse;
+        border: 1px solid #000000;
+        height: 5%;
+        width:100%;
+        text-align:center;
+        font-family:Arial, Helvetica, Sans-serif,cursive; 
+        font-size: 9px;
+    }
 body {
   font-family: Arial, Helvetica, Sans-serif;
   align-items: center;
@@ -57,52 +64,53 @@ body {
   border-spacing: 0;
 }
 #encabezado{
-        font-family:Arial, Helvetica, Sans-serif,cursive; 
-        text-align: center;
-        vertical-align: middle;
-        font-size: 20px;
-        line-height:90%;
-    }
+	/*padding: 10px;*/
+}
 .small{
 	width: 20%;
 }
-#imagen_izquierda{
-        margin-left: 15%;
-    }
-    #imagen_derecha{
-        margin-left: 14%;
-    }
-.header{
-	z-index:-1;
-	position: fixed;
-    margin-top: -250px;
-    }
-@page {
-margin-top: 300px;
-}
-
-@page :first{
-margin-top: 300px;
-}
 </style>
 <body>
-<script type="text/php">
-	$GLOBALS["header"] = NULL;
-</script>
-<div class="header">
-		<div height="10%">	
-			<script type="text/php">$GLOBALS["header"] = $pdf->open_object();</script>
-			<table  id="tabla_encabezado">
-				<td width= 12% class="margen">
-					<img id="imagen_izquierda"  src="img/fi_2.png" height="89">
+<div style="height: 70%">
+	<div height="10%">
+		<table style="width: 100%" align="center"  id="tabla_encabezado" height="5%">
+			<tr id="normal">
+				<td rowspan="2" width="20%" align="center" id="normal"><br>
+					<img src="img/fi.jpg" alt="" align="center" height="112">
 				</td>
-				<td width= 58% id="encabezado" class="margen" style="line-height=20px">
-					Reporte de instructores
+				<td rowspan="2" align="center" id="normal">
+                    FACULTAD DE INGENIERÍA,UNAM<br>
+                    Secretaría de Apoyo a la Docencia<br>
+			        CENTRO DE DOCENCIA "Ing. Gilberto Borja Navarrete"<br>
+			        Sistema de Gestión de la Calidad<br>
+                    Norma ISO 9001:2015<br>
+                    Formato
 				</td>
-				<td width= 12% class="margen">
-					<img id="imagen_derecha" src="img/cdd.png" height="85">
+				<td rowspan="2" width="20%" align="center" id="normal"><br>
+					<img src="img/cdd.png" alt="" align="center" height="112">
 				</td>
-			</table>		
+			</tr>
+		</table>
+        <table id="tabla_encabezado_debajo">
+				<td width="20%" class="margen">
+					2730-SGC-IC-FO-09
+				</td>
+				<td  class="margen">
+					Fecha de emisión:
+				</td>
+				<td class="margen">
+                    2017-08-21
+				</td>
+				<td class="margen">
+					Versión
+				</td>
+				<td class="margen">
+					2
+				</td>
+				<td width="20%" class="margen">
+					Página 1 de 1
+				</td>
+		</table>
         <div align="center">
 			<?php
 				//50
@@ -120,9 +128,7 @@ margin-top: 300px;
 				}
 			?>
         </div>
-    	</div>
-		<script type="text/php">$pdf->close_object();</script>
-	</div>
+    </div>
     <div>
         <table width="100%">
 			<thead>
@@ -186,12 +192,6 @@ margin-top: 300px;
 <p>{{$dia}}, {{$date["mday"]}} de {{$mes}} de {{$date["year"]}}</p>
 
 </div>
-<script type="text/php">
-    $pdf->page_script('
-        if ($PAGE_NUM >= 2) {
-        $pdf->add_object($GLOBALS["header"],"add");
-        }
-        ');
-</script>
+
 </body>
 </html>
