@@ -10,6 +10,8 @@ use App\CatalogoCurso;
 use App\Profesor;
 use App\ProfesoresCurso;
 use App\ParticipantesCurso;
+use App\EvaluacionCurso;
+use App\EvaluacionInstructor;
 use App\EvaluacionFinalCurso;
 use App\EvaluacionFinalSeminario;
 /*use App\EvaluacionXCurso;
@@ -305,31 +307,12 @@ class AreaController extends Controller
                 ->with('id',$curso_id);
     }
 
-    public function evaluacion(Request $request, int $id){
-
-        $datos = DB::table('cursos')
-            ->join('participante_curso','cursos.id','=','participante_curso.curso_id')
-            ->join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
-            ->join('profesors','participante_curso.profesor_id','=','profesors.id')
-            ->select('catalogo_cursos.nombre_curso','profesors.id','profesors.nombres','profesors.apellido_paterno','profesors.apellido_materno')
-            ->where([['cursos.id',$id]])
-            ->get();
-
-		$catalogo_curso = DB::table('cursos as c')
-            ->join('catalogo_cursos as cc','cc.id','=','c.catalogo_id')
-            ->select('cc.nombre_curso')
-            ->where('c.id',$id)
-            ->get();
-        
-        if(sizeof($datos) == 0){
-			Session::forget('message-warning');
-            Session::flash('message-warning','No es posible realizar alguna evaluación, el curso '.$catalogo_curso[0]->nombre_curso.' no cuenta con participantes inscritos');
-            return redirect()->back()->withInput($request->input());
-        }
-
-        return view('pages.eval')
-            ->with('datos',$datos)
-            ->with('id',$id);
+    public function evaluacion(Request $request, int $curso_id){
+      $curso = Curso::findOrFail($curso_id);
+      return view('pages.eval')
+        ->with('nombre_curso', $curso->getCatalogoCurso()->nombre_curso)
+        ->with('participantes', $curso->getParticipantes())
+        ->with('curso_id', $curso->id);
     }
 
     public function evaluacionVista(Request $request, $curso_id, $profesor_id){
@@ -833,56 +816,78 @@ $promedio_p4=[
         return redirect()->route('cd.evaluacion',[$curso_id]);
     }
 
-	public function modificarEvaluacion(Request $request, int $curso_id, int $profesor_id){
-    $profesor = Profesor::findOrFail($profesor_id);
-    $curso = Curso::findOrFail($curso_id);
-    $catalogo = CatalogoCurso::findOrFail($curso->catalogo_id);
-    $instructores = $curso->getInstructores();
-
-    $participante = ParticipantesCurso::select('id','curso_id')
-      ->where('curso_id',$curso->id)
-      ->where('profesor_id',$profesor->id)
-      ->get()->first();
-    if(!$participante){
-      Session::flash('message','Problemas con el participante');
-			Session::flash('alert-class', 'alert-danger'); 
+	public function modificarEvaluacion(Request $request, int $participante_id){
+    $participante = ParticipantesCurso::findOrFail($participante_id);
+    $evaluacion = EvaluacionCurso::where('participante_curso_id', $participante->id)->get()->first();
+    if(!$evaluacion){
+      Session::flash('message-warning',
+      'El participante aún no ha contestado la encuesta por primera vez. Presione el botón de Evaluación Final de Curso para hacerlo.');
       return redirect()->back();
     }
+    $curso = $participante->getCurso();
 
-		if($catalogo->tipo == 'S'){
-			$evaluacion_final = EvaluacionFinalSeminario::where('participante_curso_id',$participante->id)->get();
-		}else{
-			$evaluacion_final = EvaluacionFinalCurso::where('participante_curso_id',$participante->id)->get();
-		}
-
-		if($evaluacion_final->isEmpty()){
-      Session::flash('message','El curso o seminario no ha sido evaluado, favor de evaluarlo.');
-			Session::flash('alert-class', 'alert-danger'); 
-			return redirect()->back()->withInput($request->input());
-    }
-
-    if($catalogo->tipo === "S"){
-      return view("pages.final_seminario_modificar")
-        ->with("profesor",$profesor)
-        ->with("curso",$curso)
-        ->with('catalogoCurso',$catalogo)
-        ->with('evaluacion',$evaluacion_final->first())
-        ->with('instructores',$instructores)
-        ->with('cadena_instructores',$curso->getCadenaInstructores());
-		}else{
-      return view("pages.final_curso_modificar")
-        ->with("profesor",$profesor)
-        ->with("curso",$curso)
-        ->with('catalogoCurso',$catalogo)
-        ->with('evaluacion',$evaluacion_final->first())
-        ->with('instructores',$instructores)
-        ->with('cadena_instructores',$curso->getCadenaInstructores());
-    }
+    return view("pages.evaluacion_modificar")
+      ->with("participante_nombre",$participante->getProfesor()->getNombre())
+      ->with("participante_id",$participante->id)
+      ->with('evaluacion', $evaluacion)
+      ->with('instructores_cadena', $curso->getCadenaInstructores())
+      ->with('instructores', $curso->getProfesoresCurso())
+      ->with('fecha', $curso->getToday())
+      ->with('nombre_curso', $curso->getCatalogoCurso()->nombre_curso);
   }
 
-	public function changeFinal_Curso(Request $request,$profesor_id,$curso_id, $catalogoCurso_id){
-        $participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
-        return $this->saveFinal_Curso($request,$profesor_id,$curso_id, $catalogoCurso_id);
+	public function changeFinal_Curso(Request $request,$participante_id,$encuesta_id){
+      $participante = ParticipantesCurso::findOrFail($participante_id);
+      $curso = Curso::findOrFail($participante->curso_id);
+      $instructores = $curso->getProfesoresCurso();
+      foreach($instructores as $instructor){
+        $evaluacion_inst = EvaluacionInstructor::where('instructor_id', $instructor->id)
+          ->where('participante_id', $participante->id)->get()->first();
+        if(!isset($evaluacion_inst)){
+          $evaluacion_inst = new EvaluacionInstructor();
+          $evaluacion_inst->instructor_id = $instructor->id;
+          $evaluacion_inst->participante_id = $participante->id;
+        }
+        $evaluacion_inst->p1 = $request->{"i_".$instructor->id."_p1"};
+        $evaluacion_inst->p2 = $request->{"i_".$instructor->id."_p2"};
+        $evaluacion_inst->p3 = $request->{"i_".$instructor->id."_p3"};
+        $evaluacion_inst->p4 = $request->{"i_".$instructor->id."_p4"};
+        $evaluacion_inst->p5 = $request->{"i_".$instructor->id."_p5"};
+        $evaluacion_inst->p6 = $request->{"i_".$instructor->id."_p6"};
+        $evaluacion_inst->p7 = $request->{"i_".$instructor->id."_p7"};
+        $evaluacion_inst->p8 = $request->{"i_".$instructor->id."_p8"};
+        $evaluacion_inst->p9 = $request->{"i_".$instructor->id."_p9"};
+        $evaluacion_inst->p10 = $request->{"i_".$instructor->id."_p10"};
+        $evaluacion_inst->p11 = $request->{"i_".$instructor->id."_p11"};
+        $evaluacion_inst->save();
+      }
+      $evaluacion = EvaluacionCurso::findOrFail($encuesta_id);
+      $evaluacion->p1_1 = $request->p1_1;
+      $evaluacion->p1_2 = $request->p1_2;
+      $evaluacion->p1_3 = $request->p1_3;
+      $evaluacion->p1_4 = $request->p1_4;
+      $evaluacion->p1_5 = $request->p1_5;
+      $evaluacion->p2_1 = $request->p2_1;
+      $evaluacion->p2_2 = $request->p2_2;
+      $evaluacion->p2_3 = $request->p2_3;
+      $evaluacion->p2_4 = $request->p2_4;
+      $evaluacion->p3_1 = $request->p3_1;
+      $evaluacion->p3_2 = $request->p3_2;
+      $evaluacion->p3_3 = $request->p3_3;
+      $evaluacion->p3_4 = $request->p3_4;
+      $evaluacion->p7 = $request->p7;
+      $evaluacion->p8 = $request->p8;
+      $evaluacion->p9 = $request->p9;
+      $evaluacion->sug = $request->sug;
+      $evaluacion->otros = $request->otros;
+      $evaluacion->conocimiento = $request->conocimiento;
+      $evaluacion->tematica = $request->tematica;
+      $evaluacion->horarios = $request->horarios;
+      $evaluacion->horarioi = $request->horarioi;
+
+      $evaluacion->save();
+      Session::flash('message-success', 'Encuesta guardada correctamente');
+      return redirect()->route('area.evaluacion',$participante->curso_id);
     }
 
 	public function changeFinal_Seminario(Request $request,$profesor_id,$curso_id, $catalogoCurso_id){

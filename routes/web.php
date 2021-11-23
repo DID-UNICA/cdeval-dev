@@ -37,8 +37,8 @@ Route::get('/CD/participantes/curso/{curso_id}',[CoordinadorGeneralController::c
 Route::get('/CD/area/{semestre}/{periodo}/{division}',[CoordinadorGeneralController::class,'area'])->name('cd.area');
 Route::post('CD/area/buscar/curso/{id}/{semestreEnv}/{periodo}',[CoordinadorGeneralController::class,'buscarCurso'])->name('cd.buscar.curso');
 Route::get('/CD/evaluacion/{id}',[CoordinadorGeneralController::class,'evaluacion'])->name('cd.evaluacion');
-Route::get('CD/evaluacion/final/{curso_id}/{profesor_id}',[CoordinadorGeneralController::class,'evaluacionVista'])->name('cd.evaluacion.vista');
-Route::get('CD/modificar/final/{curso_id}/{profesor_id}',[CoordinadorGeneralController::class,'modificarEvaluacion'])->name('cd.modificar.evaluacion');
+Route::get('CD/evaluacion/final/{participante_id}',[CoordinadorGeneralController::class,'evaluacionVista'])->name('cd.evaluacion.vista');
+Route::get('CD/modificar/final/{participante_id}',[CoordinadorGeneralController::class,'modificarEvaluacion'])->name('cd.modificar.evaluacion');
 Route::get('/CD/participantes/{curso_id}',[CoordinadorGeneralController::class,'participantes'])->name('cd.participantes');
 Route::get('descargar/global/{fecha}/{semestral}',[CoordinadorGeneralController::class,'globalPDF'])->name('cd.global_pdf');
 Route::get('/CD/global/{semestre}/{periodo}/{coordinacion_id}',[CoordinadorGeneralController::class,'enviarArea'])->name('cd.reporte.area');
@@ -46,11 +46,8 @@ Route::get('/CD/global/{curso_id}',[CoordinadorGeneralController::class,'reporte
 Route::get('/CD/global/instructores/{curso_id}',[CoordinadorGeneralController::class,'reporteFinalInstructor'])->name('cd.instructores.curso');
 Route::post('/CD/participantes/buscar/{curso_id}',[CoordinadorGeneralController::class,'buscarInstructor'])->name('cd.buscar.instructor');
 
-Route::post('/finalc/{profesor_id}/{curso_id}/{catalogoCurso_id}',[CoordinadorGeneralController::class,'saveFinal_Curso'])->name('final.curso');
-Route::post('/finals/{profesor_id}/{curso_id}/{catalogoCurso_id}',[CoordinadorGeneralController::class,'saveFinal_Seminario'])->name('final.seminario');
-
-Route::post('/finalc/cambio/{profesor_id}/{curso_id}/{catalogoCurso_id}',[CoordinadorGeneralController::class,'changeFinal_Curso'])->name('final.change');
-Route::post('/finals/cambio{profesor_id}/{curso_id}/{catalogoCurso_id}',[CoordinadorGeneralController::class,'changeFinal_Seminario'])->name('final.seminario.change');
+Route::post('/CD/encuesta/create/{participante_id}',[CoordinadorGeneralController::class,'saveFinal_Curso'])->name('cd.create.encuesta');
+Route::post('/CD/encuesta/update/{encuesta_id}',[CoordinadorGeneralController::class,'changeFinal_Curso'])->name('cd.update.encuesta');
 
 Route::get('/area', [AreaController::class, 'index'])->name('area.index');
 Route::post('/area/buscar/fecha',[AreaController::class,'cambioFecha'])->name('area.cambioFecha');
@@ -58,15 +55,13 @@ Route::get('/area/{fecha}',[AreaController::class,'nuevaFecha'])->name('area.nue
 Route::post('/area/buscar/curso/{id}',[AreaController::class,'buscarCurso'])->name('area.buscar.curso');
 Route::post('/area/buscar_periodo/curso/{id}',[AreaController::class,'buscarCursoPeriodo'])->name('area.buscar.curso.periodo');
 Route::get('/area/{coordinacion_id}/nuevo/{busqueda}/{tipo}',[AreaController::class,'nuevoCurso'])->name('area.nuevoCurso');
-Route::get('/area/evaluacion/{id}',[AreaController::class,'evaluacion'])->name('area.evaluacion');
-Route::get('/area/evaluacion/{id}/{profesor_id}',[AreaController::class,'evaluacionVista'])->name('area.evaluacion.vista');
+Route::get('/area/evaluacion/{curso_id}',[AreaController::class,'evaluacion'])->name('area.evaluacion');
+Route::get('/area/evaluacion/vista/{participante_id}',[AreaController::class,'evaluacionVista'])->name('area.evaluacion.vista');
 Route::post('/area/evaluacion/buscar/{curso_id}',[AreaController::class,'buscarInstructor'])->name('area.buscar.instructor');
 
-Route::get('/area/modificar/final/{id}/{profesor_id}',[AreaController::class,'modificarEvaluacion'])->name('area.modificar.evaluacion');
+Route::get('/area/modificar/final/{participante_id}',[AreaController::class,'modificarEvaluacion'])->name('area.modificar.evaluacion');
 Route::get('/area/participantes/{id}',[AreaController::class,'participantes'])->name('area.participantes');
 Route::get('/area/final/{id}',[AreaController::class,'reporteFinalCurso'])->name('area.curso');
-Route::post('/area/finalc/{profesor_id}/{curso_id}/{catalogoCurso_id}',[AreaController::class,'saveFinal_Curso'])->name('area.final.curso');
-Route::post('/area/finals/{profesor_id}/{curso_id}/{catalogoCurso_id}',[AreaController::class,'saveFinal_Seminario'])->name('area.seminario.curso');
 
-Route::post('/area/finalc/cambio/{profesor_id}/{curso_id}/{catalogoCurso_id}',[AreaController::class,'changeFinal_Curso'])->name('area.final.change');
-Route::post('/area/finals/cambio/{profesor_id}/{curso_id}/{catalogoCurso_id}',[AreaController::class,'changeFinal_Seminario'])->name('area.final.seminario.change');
+Route::post('/area/encuesta/create/{participante_id}',[AreaController::class,'saveFinal_Curso'])->name('area.create.encuesta');
+Route::post('/area/encuesta/update/{participante_id}/{encuesta_id}',[AreaController::class,'changeFinal_Curso'])->name('area.update.encuesta');
