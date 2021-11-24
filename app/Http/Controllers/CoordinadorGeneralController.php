@@ -66,12 +66,22 @@ class CoordinadorGeneralController extends Controller
         $periodo=$periodo;
         $coordinacion = Coordinacion::findOrFail($coordinacion_id);
 
-        $cursos = DB::table('cursos')
-            ->join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
-            ->join('coordinacions','coordinacions.id','=','coordinacion_id')
-            ->select('catalogo_cursos.nombre_curso','cursos.id')
-            ->where([['cursos.semestre_anio',$semestre[0]],['cursos.semestre_pi',$semestre[1]],['cursos.semestre_si',$periodo],['coordinacions.id',$coordinacion->id]])
-            ->get();
+        $cursos = 0;
+
+        if($coordinacion->id == 1 || $coordinacion->id == 6)
+            $cursos = DB::table('cursos')
+                ->join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
+                ->join('coordinacions','coordinacions.id','=','coordinacion_id')
+                ->select('catalogo_cursos.nombre_curso','cursos.id')
+                ->where([['cursos.semestre_anio',$semestre[0]],['cursos.semestre_pi',$semestre[1]],['cursos.semestre_si',$periodo]])
+                ->get();
+        else
+            $cursos = DB::table('cursos')
+                ->join('catalogo_cursos','cursos.catalogo_id','=','catalogo_cursos.id')
+                ->join('coordinacions','coordinacions.id','=','coordinacion_id')
+                ->select('catalogo_cursos.nombre_curso','cursos.id')
+                ->where([['cursos.semestre_anio',$semestre[0]],['cursos.semestre_pi',$semestre[1]],['cursos.semestre_si',$periodo],['coordinacions.id',$coordinacion->id]])
+                ->get();
 
         $datos = array();
         foreach($cursos as $curso){
