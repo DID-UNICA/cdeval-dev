@@ -49,18 +49,11 @@ td{
           container.innerHTML= content;
         }
 </script>
-<div class="content">
+<div style="padding-left: 0.5cm;">
     <section class="content-inner">
         <br> 
-        <!--//@ include ('partials.messages')-->
+        @include ('partials.messages')
         <div style='margin-top: 5%' class="panel panel-default">
-        @if(session()->has('message-success'))
-          <div class="alert alert-success" role='alert'>{{session('message-success')}}</div>
-        @elseif(session()->has('message-danger'))
-          <div class="alert alert-danger" role='alert'>{{session('message-danger')}}</div>
-        @elseif(session()->has('message-warning'))
-          <div class="alert alert-warning" role='alert'>{{session('message-warning')}}</div>
-        @endif
             <div class="panel-heading">
                 <h3>Lista de participantes de {{$curso->getCatalogoCurso()->nombre_curso}}</h3>
                 <h4>Instructores(es): {{ $curso->getCadenaInstructores()}}</h4>

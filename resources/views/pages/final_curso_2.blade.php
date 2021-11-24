@@ -14,7 +14,7 @@
     <form method="POST" action="{{ action('AreaController@changeFinal_Curso',['profesor_id' => $profesor->id,'curso_id'=> $curso->id,  'catalogoCurso_id'=>$catalogoCurso->id ]) }}">
 @endif
 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-  <div class="content">
+  <div style="padding-top: 2cm; padding-left: 0.5cm; padding-right: 0.5cm;">
     <div class="top-bar">       
       <a href="#menu" class="side-menu-link burger"> 
         <span class='burger_inside' id='bgrOne'></span>

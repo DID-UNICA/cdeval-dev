@@ -108,13 +108,13 @@
 		</table>
         <table id="tabla_encabezado_debajo">
 				<td width="20%" class="margen">
-					2730-SGC-IC-FO-11
+					2730-SGC-IC-FO-10
 				</td>
 				<td  class="margen">
 					Fecha de emisión:
 				</td>
 				<td class="margen">
-                    2017-06-08
+                    2017-03-30
 				</td>
 				<td class="margen">
 					Versión
