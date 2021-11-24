@@ -34,9 +34,9 @@ Route::get('/CD/participantes/{semestre}/',[CoordinadorGeneralController::class,
 Route::get('/CD/criterio/{semestre}/',[CoordinadorGeneralController::class,'criterioAceptacion'])->name('cd.criterio');
 Route::get('/CD/participantes/area/{semestre}/{division}',[CoordinadorGeneralController::class,'asistentesArea'])->name('cd.participantes.area');
 Route::get('/CD/participantes/curso/{curso_id}',[CoordinadorGeneralController::class,'participantes'])->name('cd.participantes.curso');
-Route::get('/CD/area/{semestre}/{periodo}/{division}',[CoordinadorGeneralController::class,'area'])->name('cd.area');
+Route::get('/CD/area/{semestre}/{periodo}/{coordinacion_id}',[CoordinadorGeneralController::class,'area'])->name('cd.area');
 Route::post('CD/area/buscar/curso/{id}/{semestreEnv}/{periodo}',[CoordinadorGeneralController::class,'buscarCurso'])->name('cd.buscar.curso');
-Route::get('/CD/evaluacion/{id}',[CoordinadorGeneralController::class,'evaluacion'])->name('cd.evaluacion');
+Route::get('/CD/evaluacion/{curso_id}',[CoordinadorGeneralController::class,'evaluacion'])->name('cd.evaluacion');
 Route::get('CD/evaluacion/final/{participante_id}',[CoordinadorGeneralController::class,'evaluacionVista'])->name('cd.evaluacion.vista');
 Route::get('CD/modificar/final/{participante_id}',[CoordinadorGeneralController::class,'modificarEvaluacion'])->name('cd.modificar.evaluacion');
 Route::get('/CD/participantes/{curso_id}',[CoordinadorGeneralController::class,'participantes'])->name('cd.participantes');
@@ -47,7 +47,7 @@ Route::get('/CD/global/instructores/{curso_id}',[CoordinadorGeneralController::c
 Route::post('/CD/participantes/buscar/{curso_id}',[CoordinadorGeneralController::class,'buscarInstructor'])->name('cd.buscar.instructor');
 
 Route::post('/CD/encuesta/create/{participante_id}',[CoordinadorGeneralController::class,'saveFinal_Curso'])->name('cd.create.encuesta');
-Route::post('/CD/encuesta/update/{encuesta_id}',[CoordinadorGeneralController::class,'changeFinal_Curso'])->name('cd.update.encuesta');
+Route::post('/CD/encuesta/update/{participante_id}/{encuesta_id}',[CoordinadorGeneralController::class,'changeFinal_Curso'])->name('cd.update.encuesta');
 
 Route::get('/area', [AreaController::class, 'index'])->name('area.index');
 Route::post('/area/buscar/fecha',[AreaController::class,'cambioFecha'])->name('area.cambioFecha');

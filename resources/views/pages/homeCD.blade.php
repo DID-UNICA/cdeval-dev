@@ -53,7 +53,7 @@
                 <div class="panel-body">
                   <select class='' id='area' name='area'> 
                     @foreach($coordinaciones as $coordinacion)
-                      <option value="{{$coordinacion->nombre_coordinacion}}">{{$coordinacion->nombre_coordinacion}}</option>
+                      <option value="{{$coordinacion->id}}">{{$coordinacion->nombre_coordinacion}}</option>
                     @endforeach
                   </select>
                   <button id="boton2"  type="submit" class="btn btn-success">Visualizar Área</button>

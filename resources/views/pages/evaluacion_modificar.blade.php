@@ -5,7 +5,7 @@
 
 <!--Body content-->
 @if(Auth::user()->es_admin === True)
-  {!! Form::open(["route" => ["cd.update.encuesta",$evaluacion->id], "method" => "POST"]) !!}
+  {!! Form::open(["route" => ["cd.update.encuesta", $participante_id, $evaluacion->id], "method" => "POST"]) !!}
 @else
   {!! Form::open(["route" => ["area.update.encuesta",$participante_id, $evaluacion->id], "method" => "POST"]) !!}
 @endif

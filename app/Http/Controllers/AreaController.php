@@ -307,7 +307,6 @@ class AreaController extends Controller
 
     public function evaluacionVista(int $participante_id){
     // TODO:Pasar tipo del curso, por si es seminario
-    // TODO:Arreglar mensajes
     $participante = ParticipantesCurso::findOrFail($participante_id);
     $evaluacion = EvaluacionCurso::where('participante_curso_id', $participante->id)->get()->first();
     if($evaluacion){
@@ -324,8 +323,7 @@ class AreaController extends Controller
       ->with('nombre_curso', $curso->getCatalogoCurso()->nombre_curso);
 	}
 
-    public function saveFinal_Curso(Request $request,$participante_id){
-    //AFTER
+    public function saveFinal_Curso(Request $request, int $participante_id){
     $participante = ParticipantesCurso::findOrFail($participante_id);
     $curso = Curso::findOrFail($participante->curso_id);
     $instructores = $curso->getProfesoresCurso();
@@ -621,7 +619,7 @@ class AreaController extends Controller
       ->with('nombre_curso', $curso->getCatalogoCurso()->nombre_curso);
   }
 
-	public function changeFinal_Curso(Request $request,$participante_id,$encuesta_id){
+	public function changeFinal_Curso(Request $request,int $participante_id,int $encuesta_id){
       $participante = ParticipantesCurso::findOrFail($participante_id);
       $curso = Curso::findOrFail($participante->curso_id);
       $instructores = $curso->getProfesoresCurso();
