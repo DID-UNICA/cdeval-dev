@@ -119,8 +119,8 @@ class CoordinadorGeneralController extends Controller
             ->get();
         
         if(sizeof($datos) == 0){
-            Session::flash('message-danger','No es posible realizar alguna evaluación, el curso '.$catalogo_curso[0]->nombre_curso.' no cuenta con participantes inscritos');
-            return redirect()->back();
+            return redirect()->back()
+              ->with('danger','No es posible realizar alguna evaluación, el curso '.$catalogo_curso[0]->nombre_curso.' no cuenta con participantes inscritos');
         }
 
         return view('pages.eval')
@@ -284,8 +284,8 @@ class CoordinadorGeneralController extends Controller
 		}
 
         if(sizeof($evaluacion_final_curso) > 0){
-            Session::flash('message-warning','Usuario '.$profesor->apellido_paterno.' '.$profesor->apellido_materno.' '.$profesor->nombres.' ya respondió la evaluación');
-            return redirect()->back();
+            return redirect()->back()
+              ->with('warning', 'Usuario '.$profesor->apellido_paterno.' '.$profesor->apellido_materno.' '.$profesor->nombres.' ya respondió la evaluación');
         }else if(strcmp($catalogoCurso->tipo,"S") == 0){
             if($count==1){
                 return view("pages.final_seminario_1")
@@ -797,9 +797,8 @@ $promedio_p4=[
         $curso = Curso::find($curso_id);
         $users = array();
         if(sizeof($participantes) == 0){
-            Session::flash('message-warning','Por el momento no hay alumnos inscritos en el curso');
-
-			return redirect()->back();
+          return redirect()->back()
+            ->with('warning', 'Por el momento no hay alumnos inscritos en el curso');
         }
         foreach($participantes as $participante){
             $user = DB::table('profesors')
@@ -901,9 +900,10 @@ $promedio_p4=[
         }
 
         if(sizeof($evaluacionesCursos)==0){
-            Session::flash('message-danger','Periodo seleccionado no cuenta con una evaluacion'); 
-
-			return redirect()->back()->withInput();
+            return redirect()
+              ->back()
+              ->with('danger','Periodo seleccionado no cuenta con una evaluacion')
+              ->withInput();
         }
 
         $DP=0;
@@ -2433,9 +2433,8 @@ $promedio_p4=[
         }
 
         if(sizeof($evals) == 0){
-            Session::flash('message-danger','Curso no cuenta con evaluación');
-
-			return redirect()->back();
+			    return redirect()->back()
+            ->with('danger', 'Curso no cuenta con evaluación');
         }
 
         $contestaron = sizeof($evals);
@@ -3155,9 +3154,9 @@ $promedio_p4=[
 		}
 
         if(sizeof($evaluacion_final_curso) == 0 && Session::has('message-danger') == false){
-            Session::flash('message-danger','El curso no ha sido evaluado, favor de evaluarlo.');
-
-			return redirect()->back()->withInput($request->input());
+          return redirect()->back()
+            ->with('danger', 'El curso no ha sido evaluado, favor de evaluarlo.')
+            ->withInput($request->input());
         }else if(sizeof($evaluacion_final_curso) == 0 && Session::has('message-success')){
             return redirect()->route('cd.evaluacion.vista',[$curso_id, $profesor_id])->withInput($request->input());
         }
@@ -3256,9 +3255,8 @@ $promedio_p4=[
 
 
         if(sizeof($evals) == 0){
-            Session::flash('message-danger','Curso no cuenta con evaluación');
-    
-            return redirect()->back();
+            return redirect()->back()
+              ->with('danger'. 'Curso no cuenta con evaluación');
         }
 	
 		//Obtenemos los docentes/facilitadores de los cursos y su número
@@ -3468,8 +3466,8 @@ $promedio_p4=[
             ->get();
 
         if(sizeof($cursos) == 0){
-            Session::flash('message-danger','No hay cursos dados de alta en el periodo '.$semestreEnv);
-            return redirect()->back();
+            return redirect()->back()
+              ->with('danger', 'No hay cursos dados de alta en el periodo '.$semestreEnv);
         }
         
         $asistentes = array();
@@ -3642,8 +3640,8 @@ $promedio_p4=[
         }
 
         if($aux1_empty && $aux2_empty){
-            Session::flash('message-danger','El periodo '.$semestreEnv.' no ha sido evaluado');
-            return redirect()->back();
+            return redirect()->back()
+              ->with('danger', 'El periodo '.$semestreEnv.' no ha sido evaluado');
         }
 
         $pdf = PDF::loadView('pages.criterio_aceptacion',array('semestre'=>$semestreEnv,'criterio_s'=>$aux1,'criterio_i'=>$aux2,'criterio_s_empty'=>$aux1_empty,'criterio_i_empty'=>$aux2_empty));	

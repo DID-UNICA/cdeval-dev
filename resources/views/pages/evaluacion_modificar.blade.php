@@ -10,13 +10,7 @@
   {!! Form::open(["route" => ["area.update.encuesta",$participante_id, $evaluacion->id], "method" => "POST"]) !!}
 @endif
 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-@if(session()->has('message-success'))
-<div class="alert alert-success" role='alert'>{{session('message-success')}}</div>
-@elseif(session()->has('message-danger'))
-<div class="alert alert-danger" role='alert'>{{session('message-danger')}}</div>
-@elseif(session()->has('message-warning'))
-<div class="alert alert-warning" role='alert'>{{session('message-warning')}}</div>
-@endif
+@include ('partials.messages')
   <div style="padding-top: 2cm; padding-left: 0.5cm; padding-right: 0.5cm;">
     <div class="top-bar">       
       <a href="#menu" class="side-menu-link burger"> 
