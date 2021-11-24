@@ -91,7 +91,7 @@ body {
 					Fecha de emisión:
 				</td>
 				<td class="margen">
-                    2017-08-21
+                    2017/08/21
 				</td>
 				<td class="margen">
 					Versión
