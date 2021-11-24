@@ -181,52 +181,36 @@ class CoordinadorGeneralController extends Controller
     }
 
     public function buscarInstructor (Request $request, int $curso_id){
-        $profesores = array();
-
-            $words=explode(" ", $request->pattern);
-            foreach($words as $word){
-                $profesor = Profesor::select('id')->whereRaw("lower(unaccent(nombres)) ILIKE lower(unaccent('%".$word."%')) or lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$word."%'))")
-                ->orWhereRaw("lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$word."%'))")
-                ->orWhereRaw("lower(unaccent(apellido_materno)) ILIKE lower(unaccent('%".$word."%'))")
+      $curso = Curso::findOrFail($curso_id);
+      $profesores = array();
+      $words=explode(" ", $request->pattern);
+      foreach($words as $word){
+          $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(nombres)) LIKE unaccent(lower('%".$word."%'))) OR (unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".$word."%'))) OR (unaccent(lower(apellido_materno)) LIKE unaccent(lower('%".$word."%')))")->get();
+          if($profesor->isNotEmpty())
+            array_push($profesores, $profesor);
+      }
+      $curso_prof = array();
+      $aux = array();
+      foreach($profesores as $profesor_aux){
+          foreach($profesor_aux as $profesor){
+              $prof = ParticipantesCurso::where('profesor_id', $profesor->id)
+                ->where('curso_id',$curso_id)
                 ->get();
-                //$profesores = Profesor::select('id')->where(DB::raw("(lower(unaccent(nombres)) LIKE lower(unaccent('%".$word."%'))) OR (lower(unaccent(apellido_paterno)) LIKE lower(unaccent('%".$word."%'))) OR (lower(unaccent(apellido_materno)) LIKE lower(unaccent('%".$word."%')))"))->get();
-                //$profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(lower(unaccent(nombres)) LIKE unaccent(lower('%".$word."%'))) OR (unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".$word."%'))) OR (unaccent(lower(apellido_materno)) LIKE unaccent(lower('%".$word."%'))")->get();
-                //return 'hola';
-                array_push($profesores, $profesor);
-            }
-
-            $curso_prof = array();
-            $aux = array();
-
-            foreach($profesores as $profesor_aux){
-                foreach($profesor_aux as $profesor){
-                    $prof = DB::table('participante_curso')
-                        ->where([['profesor_id', $profesor->id],['curso_id',$curso_id]])
-                        ->get();
-                    if(sizeof($prof) > 0)
-                        array_push($curso_prof, $prof);
-                }
-            }
-
-            $datos = array();
-
-            foreach($curso_prof as $prof_aux){
-                foreach($prof_aux as $prof){
-                    $dato = DB::table('participante_curso as pc')    
-                        ->join('profesors as p', 'p.id', '=', 'pc.profesor_id')
-                        ->join('cursos as c', 'c.id', '=', 'pc.curso_id')
-                        ->join('catalogo_cursos as cc','cc.id', '=', 'c.catalogo_id')
-                        ->select('cc.nombre_curso', 'c.id','p.id', 'p.nombres','p.apellido_paterno','p.apellido_materno')
-                        ->where( 'pc.id','=',$prof->id)
-                        ->get();
-                    
-                    array_push($datos, $dato[0]);
-                }
-            }
-    
-            return view('pages.eval')
-                ->with('datos',$datos)
-                ->with('id',$curso_id);
+              if($prof->isNotEmpty())
+                  array_push($curso_prof, $prof);
+          }
+      }
+      $datos = array();
+      foreach($curso_prof as $prof_aux){
+          foreach($prof_aux as $prof){
+              $dato = ParticipantesCurso::findOrFail($prof->id);
+              array_push($datos, $dato);
+          }
+      }
+      return view('pages.eval')
+          ->with('participantes',$datos)
+          ->with('curso_id',$curso->id)
+          ->with('nombre_curso', $curso->getCatalogoCurso()->nombre_curso);
     }
 
     public function evaluacionVista(int $participante_id){
