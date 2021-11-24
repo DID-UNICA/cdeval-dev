@@ -2116,7 +2116,7 @@ $promedio_p4=[
         }
 
         if(sizeof($evaluacionesCursos)==0){
-            return redirect()->route('cd.area',['Ningun curso, del periodo indicado, ha sido evaluado.']);
+          return redirect()->back()->with('danger', 'Periodo no cuenta con evaluación');
         }
 
         //Pasamos el nombre de la coordinacion y la vista a retornar
