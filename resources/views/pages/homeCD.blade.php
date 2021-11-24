@@ -12,14 +12,8 @@
     </div>
     <section class="content-inner">
       <br>
+      @include ('partials.messages')
       <div class="panel panel-default">
-        @if(session()->has('message-success'))
-        <div class="alert alert-success" role='alert'>{{session('message-success')}}</div>
-      @elseif(session()->has('message-danger'))
-        <div class="alert alert-danger" role='alert'>{{session('message-danger')}}</div>
-      @elseif(session()->has('message-warning'))
-        <div class="alert alert-warning" role='alert'>{{session('message-warning')}}</div>
-      @endif
         <div class="panel-heading">
           <h3>Coodinación del Centro de Docencia</h3> <!-- Obtener valor de BD-->
         </div>
@@ -59,7 +53,7 @@
                 <div class="panel-body">
                   <select class='' id='area' name='area'> 
                     @foreach($coordinaciones as $coordinacion)
-                      <option value="{{$coordinacion->nombre_coordinacion}}">{{$coordinacion->nombre_coordinacion}}</option>
+                      <option value="{{$coordinacion->id}}">{{$coordinacion->nombre_coordinacion}}</option>
                     @endforeach
                   </select>
                   <button id="boton2"  type="submit" class="btn btn-success">Visualizar Área</button>

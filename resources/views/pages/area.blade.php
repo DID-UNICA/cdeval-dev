@@ -25,16 +25,8 @@
     </div>
     <section class="content-inner">
       <br>
+      @include ('partials.messages')
       <div class="panel panel-default">
-
-        @if(session()->has('message-success'))
-        <div class="alert alert-success" role='alert'>{{session('message-success')}}</div>
-      @elseif(session()->has('message-danger'))
-        <div class="alert alert-danger" role='alert'>{{session('message-danger')}}</div>
-      @elseif(session()->has('message-warning'))
-        <div class="alert alert-warning" role='alert'>{{session('message-warning')}}</div>
-      @endif
-
         <div class="panel-heading">
           <h3>Coodinación del Centro de Docencia</h3> <!-- Obtener valor de BD-->
         </div>
@@ -102,7 +94,7 @@
                                     </td>
                                     <td>
                                       <a href="{{url("/CD/global/{$curso[0]->id}")}}" class="btn btn-info" id="btn_reporte">Reporte de Evaluación final de curso</a><br>
-                                      <a href="{{url("/CD/global/instructores/{$curso[0]->id}")}}" class="btn btn-primary" id="btn_reporte">Reporte de Instructores</a>
+                                      <a href="{{url("/CD/global/instructores/{$curso[0]->id}")}}" style='margin: 0; margin-top: 5%' class="btn btn-primary" id="btn_reporte">Reporte de Instructores</a>
                                     </td>
                                     <td><button onclick="window.location='{{ route("cd.participantes.curso",[$curso[0]->id])}}'" class="btn btn-warning" id="btn_participantes">Visualizar participantes inscritos</button>
                                   </td>

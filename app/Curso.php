@@ -39,6 +39,10 @@ class Curso extends Model
         return $instructores;
     }
 
+    public function getProfesoresCurso(){
+       return ProfesoresCurso::where('curso_id', $this->id) ->get();
+   }
+
     public function getCadenaInstructores(){
         $instructores = ProfesoresCurso::where('curso_id',$this->id)->get();
 
@@ -62,7 +66,7 @@ class Curso extends Model
     }
 
     public function getParticipantes(){
-        return ParticipantesCurso::where('cursos.id', '=', $this->id)->get();
+        return ParticipantesCurso::where('curso_id', '=', $this->id)->get();
     }
 
     public function getDiplomado(){

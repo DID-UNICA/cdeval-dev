@@ -15,4 +15,17 @@ class ProfesoresCurso extends Model
      */
     protected $fillable = [
         'curso_id','profesor_id'];
+
+  public function getProfesor(){
+    return Profesor::findOrFail($this->profesor_id);
+  }
+
+  public function getEvaluacionByParticipante(int $participante_id){
+    return EvaluacionInstructor::where('instructor_id', $this->id)
+      ->where('participante_id', $participante_id)->get()->first();
+  }
+
+  public function getEvaluaciones(){
+    return EvaluacionInstructor::where('instructor_id', $this->id)->get();
+  }
 }
