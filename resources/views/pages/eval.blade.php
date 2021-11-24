@@ -33,21 +33,12 @@
             <tr>
               <div class="input-group">
                 <td>
+                  {!!Form::label('pattern','Buscar', ["class" => "form-label"])!!}
                   {!!Form::text("pattern", null, [ "class" => "form-control", "placeholder" => "Buscar Profesor"])!!}
                 </td>
                 <td>
-                  {!! Form::select('type', array(
-                        'instructor' => 'Por instructor'),
-                        null,['class' => 'btn dropdown-toggle pull-left'] ) !!}
+                  <button style='margin-top:30%; margin-left:5%;' class="btn btn-search " type="submit">Buscar</button>
                 </td>
-                <td>
-                  <span class="input-group-btn col-md-2">
-                    <button class="btn btn-search " type="submit">Buscar</button>
-                </span>
-                </td>
-                <input type="hidden" name="periodo_anio" value="{{isset($periodo_anio)? $periodo_anio:null}}">
-                <input type="hidden" name="periodo_pi" value="{{isset($periodo_pi)? $periodo_pi:null}}">
-                <input type="hidden" name="periodo_si" value="{{isset($periodo_si)? $periodo_si:null}}">
               </div>
             </tr>
           </table>
@@ -56,7 +47,6 @@
         <div class="panel-body">
             <h3>{{$nombre_curso}}</h3>
             <br>
-            <h4>Buscar</h4>
             <div class="div_info">
               <table class="table table-hover">
                 <thead>
