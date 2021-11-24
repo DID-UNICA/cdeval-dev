@@ -3,14 +3,21 @@
 
 @section('contenido')
 
-  <!--Body content-->
-@if(Session::get('sesion') == 'cd' && isset($evaluacion) == false)
-    <form method="POST" action="{{ action('CoordinadorGeneralController@saveFinal_Curso',['profesor_id' => $profesor->id,'curso_id'=> $curso->id,  'catalogoCurso_id'=>$catalogoCurso->id ]) }}">
-@elseif(Session::get('sesion') == 'area' && isset($evaluacion) == false)
-    <form method="POST" action="{{ action('AreaController@saveFinal_Curso',['profesor_id' => $profesor->id,'curso_id'=> $curso->id,  'catalogoCurso_id'=>$catalogoCurso->id ]) }}">
+<!--Body content-->
+@if(Auth::user()->es_admin === True)
+<!-- TODO:Recordar arreglar metodos para cd -->
+  {!! Form::open(["route" => ["cd.create.encuesta",$participante_id], "method" => "POST"]) !!}
+@else
+  {!! Form::open(["route" => ["area.create.encuesta",$participante_id], "method" => "POST"]) !!}
 @endif
 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-  
+@if(session()->has('message-success'))
+<div class="alert alert-success" role='alert'>{{session('message-success')}}</div>
+@elseif(session()->has('message-danger'))
+<div class="alert alert-danger" role='alert'>{{session('message-danger')}}</div>
+@elseif(session()->has('message-warning'))
+<div class="alert alert-warning" role='alert'>{{session('message-warning')}}</div>
+@endif
   <div style="padding-top: 2cm; padding-left: 0.5cm; padding-right: 0.5cm;">
     <div class="top-bar">       
       <a href="#menu" class="side-menu-link burger"> 
@@ -26,29 +33,29 @@
         <div class="alert alert-success" role='alert'>{{session('msj')}}</div>
       @endif
                 <div class="panel-heading">
-                    <h2><span class="fa fa-check-square-o"></span>    Evaluación final de curso </h3>
+                    <h2><span class="fa fa-check-square-o"></span> Evaluación final de curso </h3>
                 </div>
 
                 <div class="panel-body">
                     <br>
                     <div class="form-group row">
                         <div class="col-sm-10">
-                        <h4> Curso:  {{ $catalogoCurso->nombre_curso }}</h4>
+                        <h4> Curso:  {{ $nombre_curso }}</h4>
                         </div>
                     </div>
                     <div class="form-group row">
                             <div class="col-sm-10">
-                                <h4>Instructor: {{ $curso->getCadenaInstructores() }}</h4>
+                                <h4>Instructor(es): {{ $instructores_cadena }}</h4>
                             </div> 
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-10">
-                        <h4> Participante:  {{ $profesor->nombres }} {{ $profesor->apellido_paterno }} {{ $profesor->apellido_materno }}</h4>
+                        <h4> Participante:  {{ $participante_nombre }}</h4>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-10">
-                            <h4>Fecha: {{ $curso->getToday() }}</h4>
+                            <h4>Fecha: {{ $fecha }}</h4>
                         </div>
                     </div>
                         <br>
@@ -522,9 +529,18 @@
                     </tr>
                     </table>
                     <br>
+                    @php
+                      $count = 0;
+                    @endphp
+                    <br>
+                    @foreach($instructores as $instructor)
+                      @php
+                        $evaluacion_instructor = $instructor->getEvaluacionByParticipante($participante_id);
+                        $count = $count + 1;
+                      @endphp
                     <table class="table table-hover">
                     <tr>
-                        <th width="42%" align="justify">4. INSTRUCTOR(A) UNO</th>
+                        <th width="42%" align="justify">4.{{ $count }} INSTRUCTOR(A): {{ $instructor->getProfesor()->getNombre() }} </th>
                         <th align="right">SR</th>
                         <th align="right">Mala</th>
                         <th align="right">Regular</th>
@@ -536,32 +552,32 @@
                         <td align="justify">Considero la experiencia del instructor como </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_1" value="0"  {{ (old('p4_1') == '0') ? 'checked' :  '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p1" value="0"  {{ (old('i_'.$instructor->id.'_p1') == '0' ) ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_1" value="50"  {{ (old('p4_1') == '50') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p1" value="50"  {{ (old('i_'.$instructor->id.'_p1') == '50' ) ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_1" value="60"  {{ (old('p4_1') == '60') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p1" value="60"  {{ (old('i_'.$instructor->id.'_p1') == '60') ?'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_1" value="80"  {{ (old('p4_1') == '80') ? 'checked' :  '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p1" value="80"  {{ (old('i_'.$instructor->id.'_p1') == '80') ? 'checked' : ''}}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_1" value="95"  {{ (old('p4_1') == '95') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p1" value="95"  {{ (old('i_'.$instructor->id.'_p1') == '95') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_1" value="100"  {{ (old('p4_1') == '100') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p1" value="100"  {{ (old('i_'.$instructor->id.'_p1') == '100') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -569,32 +585,32 @@
                         <td align="justify">La planeación y organización de las sesiones y lecturas de acuerdo a los temas fue</td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_2" value="0"  {{ (old('p4_2') == '0') ? 'checked' :  '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p2" value="0"  {{ (old('i_'.$instructor->id.'_p2') == '0' ) ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_2" value="50"  {{ (old('p4_2') == '50') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p2" value="50"  {{ (old('i_'.$instructor->id.'_p2') == '50') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_2" value="60"  {{ (old('p4_2') == '60') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p2" value="60"  {{ (old('i_'.$instructor->id.'_p2') == '60') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_2" value="80"  {{ (old('p4_2') == '80') ? 'checked' :  '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p2" value="80"  {{ (old('i_'.$instructor->id.'_p2') == '80') ? 'checked' : ''}}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_2" value="95"  {{ (old('p4_2') == '95') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p2" value="95"  {{ (old('i_'.$instructor->id.'_p2') == '95') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_2" value="100"  {{ (old('p4_2') == '100') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p2" value="100"  {{ (old('i_'.$instructor->id.'_p2') == '100') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -602,32 +618,32 @@
                         <td align="justify">La puntualidad del instructor fue</td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_3" value="0"  {{ (old('p4_3') == '0') ? 'checked' :  '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p3" value="0"  {{ (old('i_'.$instructor->id.'_p3') == '0' ) ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_3" value="50"  {{ (old('p4_3') == '50') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p3" value="50"  {{ (old('i_'.$instructor->id.'_p3') == '50') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_3" value="60"  {{ (old('p4_3') == '60') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p3" value="60"  {{ (old('i_'.$instructor->id.'_p3') == '60') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_3" value="80"  {{ (old('p4_3') == '80') ? 'checked' :  '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p3" value="80"  {{ (old('i_'.$instructor->id.'_p3') == '80') ? 'checked' : ''}}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_3" value="95"  {{ (old('p4_3') == '95') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p3" value="95"  {{ (old('i_'.$instructor->id.'_p3') == '95') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_3" value="100"  {{ (old('p4_3') == '100') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p3" value="100"  {{ (old('i_'.$instructor->id.'_p3') == '100') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -635,32 +651,32 @@
                         <td align="justify">La forma de utilizar el equipo y materiales de apoyo al curso fue</td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_4" value="0"  {{ (old('p4_4') == '0') ? 'checked' :  '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p4" value="0"  {{ (old('i_'.$instructor->id.'_p4') == '0' ) ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_4" value="50"  {{ (old('p4_4') == '50') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p4" value="50"  {{ (old('i_'.$instructor->id.'_p4') == '50') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_4" value="60"  {{ (old('p4_4') == '60') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p4" value="60"  {{ (old('i_'.$instructor->id.'_p4') == '60') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_4" value="80"  {{ (old('p4_4') == '80') ? 'checked' :  '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p4" value="80"  {{ (old('i_'.$instructor->id.'_p4') == '80') ? 'checked' : ''}}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_4" value="95"  {{ (old('p4_4') == '95') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p4" value="95"  {{ (old('i_'.$instructor->id.'_p4') == '95') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_4" value="100"  {{ (old('p4_4') == '100') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p4" value="100"  {{ (old('i_'.$instructor->id.'_p4') == '100') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -668,32 +684,32 @@
                         <td align="justify">La manera de aclarar las dudas planteadas por los participantes fue</td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_5" value="0"  {{ (old('p4_5') == '0') ? 'checked' :  '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p5" value="0"  {{ (old('i_'.$instructor->id.'_p5') == '0') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_5" value="50"  {{ (old('p4_5') == '50') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p5" value="50"  {{ (old('i_'.$instructor->id.'_p5') == '50') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_5" value="60"  {{ (old('p4_5') == '60') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p5" value="60"  {{ (old('i_'.$instructor->id.'_p5') == '60') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_5" value="80"  {{ (old('p4_5') == '80') ? 'checked' :  '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p5" value="80"  {{ (old('i_'.$instructor->id.'_p5') == '80') ? 'checked' : ''}}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_5" value="95"  {{ (old('p4_5') == '95') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p5" value="95"  {{ (old('i_'.$instructor->id.'_p5') == '95') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_5" value="100"  {{ (old('p4_5') == '100') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p5" value="100"  {{ (old('i_'.$instructor->id.'_p5') == '100') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -701,32 +717,32 @@
                         <td align="justify">Las técnicas grupales utilizadas por el (la) instructor(a) fueron</td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_6" value="0"  {{ (old('p4_6') == '0') ? 'checked' :  '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p6" value="0"  {{ (old('i_'.$instructor->id.'_p6') == '0') ? 'checked' : '' }} class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_6" value="50"  {{ (old('p4_6') == '50') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p6" value="50"  {{ (old('i_'.$instructor->id.'_p6') == '50') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_6" value="60"  {{ (old('p4_6') == '60') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p6" value="60"  {{ (old('i_'.$instructor->id.'_p6') == '60') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_6" value="80"  {{ (old('p4_6') == '80') ? 'checked' :  '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p6" value="80"  {{ (old('i_'.$instructor->id.'_p6') == '80') ? 'checked' : ''}}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_6" value="95"  {{ (old('p4_6') == '95') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p6" value="95"  {{ (old('i_'.$instructor->id.'_p6') == '95') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_6" value="100"  {{ (old('p4_6') == '100') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p6" value="100"  {{ (old('i_'.$instructor->id.'_p6') == '100') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -734,32 +750,32 @@
                         <td align="justify">La forma de interesar a los participantes durante el curso fue</td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_7" value="0"  {{ (old('p4_7') == '0') ? 'checked' :  '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p7" value="0"  {{ (old('i_'.$instructor->id.'_p7') == '0') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_7" value="50"  {{ (old('p4_7') == '50') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p7" value="50"  {{ (old('i_'.$instructor->id.'_p7') == '50') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_7" value="60"  {{ (old('p4_7') == '60') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p7" value="60"  {{ (old('i_'.$instructor->id.'_p7') == '60') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_7" value="80"  {{ (old('p4_7') == '80') ? 'checked' :  '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p7" value="80"  {{ (old('i_'.$instructor->id.'_p7') == '80') ? 'checked' : ''}}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_7" value="95"  {{ (old('p4_7') == '95') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p7" value="95"  {{ (old('i_'.$instructor->id.'_p7') == '95') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_7" value="100"  {{ (old('p4_7') == '100') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p7" value="100"  {{ (old('i_'.$instructor->id.'_p7') == '100') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -767,32 +783,32 @@
                         <td align="justify">La actitud del (de la) instructor(a) fue</td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_8" value="0"  {{ (old('p4_8') == '0') ? 'checked' :  '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p8" value="0"  {{ (old('i_'.$instructor->id.'_p8') == '0') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_8" value="50"  {{ (old('p4_8') == '50') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p8" value="50"  {{ (old('i_'.$instructor->id.'_p8') == '50') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_8" value="60"  {{ (old('p4_8') == '60') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p8" value="60"  {{ (old('i_'.$instructor->id.'_p8') == '60') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_8" value="80"  {{ (old('p4_8') == '80') ? 'checked' :  '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p8" value="80"  {{ (old('i_'.$instructor->id.'_p8') == '80') ? 'checked' : ''}}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_8" value="95"  {{ (old('p4_8') == '95') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p8" value="95"  {{ (old('i_'.$instructor->id.'_p8') == '95') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_8" value="100"  {{ (old('p4_8') == '100') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p8" value="100"  {{ (old('i_'.$instructor->id.'_p8') == '100') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -800,32 +816,32 @@
                         <td align="justify">El manejo de las relaciones interpersonales del instructor(a) fue</td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_9" value="0"  {{ (old('p4_9') == '0') ? 'checked' :  '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p9" value="0"  {{ (old('i_'.$instructor->id.'_p9') == '0') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_9" value="50"  {{ (old('p4_9') == '50') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p9" value="50"  {{ (old('i_'.$instructor->id.'_p9') == '50') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_9" value="60"  {{ (old('p4_9') == '60') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p9" value="60"  {{ (old('i_'.$instructor->id.'_p9') == '60') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_9" value="80"  {{ (old('p4_9') == '80') ? 'checked' :  '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p9" value="80"  {{ (old('i_'.$instructor->id.'_p9') == '80') ? 'checked' : ''}}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_9" value="95"  {{ (old('p4_9') == '95') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p9" value="95"  {{ (old('i_'.$instructor->id.'_p9') == '95') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_9" value="100"  {{ (old('p4_9') == '100') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p9" value="100"  {{ (old('i_'.$instructor->id.'_p9') == '100') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -833,32 +849,32 @@
                         <td align="justify">La calidad del trato humano hacia los participantes fue</td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_10" value="0"  {{ (old('p4_10') == '0') ? 'checked' :  '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p10" value="0"  {{ (old('i_'.$instructor->id.'_p10') == '0') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_10" value="50"  {{ (old('p4_10') == '50') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p10" value="50"  {{ (old('i_'.$instructor->id.'_p10') == '50') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_10" value="60"  {{ (old('p4_10') == '60') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p10" value="60"  {{ (old('i_'.$instructor->id.'_p10') == '60') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_10" value="80"  {{ (old('p4_10') == '80') ? 'checked' :  '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p10" value="80"  {{ (old('i_'.$instructor->id.'_p10') == '80') ? 'checked' : ''}}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_10" value="95"  {{ (old('p4_10') == '95') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p10" value="95"  {{ (old('i_'.$instructor->id.'_p10') == '95') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_10" value="100"  {{ (old('p4_10') == '100') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p10" value="100"  {{ (old('i_'.$instructor->id.'_p10') == '100') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
@@ -866,36 +882,37 @@
                         <td align="justify">El manejo de las emociones en las sesiones por parte del instructor(a) fue</td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_11" value="0"  {{ (old('p4_11') == '0') ? 'checked' :  '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p11" value="0"  {{ (old('i_'.$instructor->id.'_p11') == '0') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_11" value="50"  {{ (old('p4_11') == '50') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p11" value="50"  {{ (old('i_'.$instructor->id.'_p11') == '50') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_11" value="60"  {{ (old('p4_11') == '60') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p11" value="60"  {{ (old('i_'.$instructor->id.'_p11') == '60') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_11" value="80"  {{ (old('p4_11') == '80') ? 'checked' :  '' }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p11" value="80"  {{ (old('i_'.$instructor->id.'_p11') == '80') ? 'checked' : ''}}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_11" value="95"  {{ (old('p4_11') == '95') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p11" value="95"  {{ (old('i_'.$instructor->id.'_p11') == '95') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                         <td align="center">
                             <div class="form-check">
-                                <input type="radio" name="p4_11" value="100"  {{ (old('p4_11') == '100') ? 'checked' : ''  }}  class="form-check-input" id="materialUnchecked">
+                                <input type="radio" name="i_{{$instructor->id}}_p11" value="100"  {{ (old('i_'.$instructor->id.'_p11') == '100') ? 'checked' : '' }}  class="form-check-input" id="materialUnchecked">
                             </div>
                         </td>
                     </tr>
                     </table>
+                    @endforeach
                     <br>
                     
                     <table class="table table-hover">
@@ -953,7 +970,7 @@
                     <table class="table table-hover">
                         <tr>
                             <td width="40%" align="justify">Lo mejor del curso fue: </td>
-                            <td><textarea name="mejor" class="form-control" id="contenido" rows="2" value={{old('mejor')}}></textarea></td>
+                            <td><textarea name="p9" class="form-control" id="contenido" rows="2" value={{old('mejor')}}></textarea></td>
                         </tr>
                         <tr>
                             <td width="40%" align="justify">Sugerencias y recomendaciones: </td>

@@ -315,278 +315,317 @@ class AreaController extends Controller
         ->with('curso_id', $curso->id);
     }
 
-    public function evaluacionVista(Request $request, $curso_id, $profesor_id){
-      $profesor = Profesor::findOrFail($profesor_id);
-      $curso = Curso::findOrFail($curso_id);
-      $catalogoCurso = CatalogoCurso::findOrFail($curso->catalogo_id);
-      $participante_curso = ParticipantesCurso::where([
-                                                  ['profesor_id',$profesor_id],
-                                                  ['curso_id',$curso_id]
-                                                ])->get()->first();
-		if($catalogoCurso->tipo === "S"){
-			$evaluacion_final_curso = EvaluacionFinalSeminario::where('participante_curso_id',$participante_curso->id)->get();
-		}
-		else{
-			$evaluacion_final_curso = EvaluacionFinalCurso::where('participante_curso_id',$participante_curso->id)->get();
-		}
-    if($evaluacion_final_curso->isNotEmpty()){
-      Session::flash('message-warning','Usuario '.$profesor->apellido_paterno.' '.$profesor->apellido_materno.' '.$profesor->nombres.' ya respondió la evaluación');
+    public function evaluacionVista(Request $request, $participante_id){
+    // TODO:Pasar tipo del curso, por si es seminario
+    $participante = ParticipantesCurso::findOrFail($participante_id);
+    $evaluacion = EvaluacionCurso::where('participante_curso_id', $participante->id)->get()->first();
+    if($evaluacion){
+      Session::flash('message-warning',
+      'El participante ya ha contestado la encuesta por primera vez. Presione el botón de Modificar Evaluación Final de Curso.');
       return redirect()->back();
-    }else if($catalogoCurso->tipo === "S"){
-      return view("pages.final_seminario")
-      ->with("profesor",$profesor)
-      ->with("curso",$curso)
-      ->with('catalogoCurso',$catalogoCurso);
-    }else{
-      return view("pages.final_curso")
-        ->with("profesor",$profesor)
-        ->with("curso",$curso)
-        ->with('catalogoCurso',$catalogoCurso);
-		}
+    }
+    $curso = $participante->getCurso();
+
+    return view("pages.evaluacion_nueva")
+      ->with("participante_nombre",$participante->getProfesor()->getNombre())
+      ->with("participante_id",$participante->id)
+      ->with('instructores_cadena', $curso->getCadenaInstructores())
+      ->with('instructores', $curso->getProfesoresCurso())
+      ->with('fecha', $curso->getToday())
+      ->with('nombre_curso', $curso->getCatalogoCurso()->nombre_curso);
 	}
 
-    public function saveFinal_Curso(Request $request,$profesor_id,$curso_id, $catalogoCurso_id){
-        $participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
-		return $participante;
-        $evaluacion_id = DB::table('_evaluacion_final_curso')
-            ->select('id')
-            ->where([['participante_curso_id',$participante[0]->id],['curso_id',$curso_id]])
-            ->get();
+    public function saveFinal_Curso(Request $request,$participante_id){
+    //AFTER
+    $participante = ParticipantesCurso::findOrFail($participante_id);
+    $curso = Curso::findOrFail($participante->curso_id);
+    $instructores = $curso->getProfesoresCurso();
+    foreach($instructores as $instructor){
+      $evaluacion_inst = new EvaluacionInstructor();
+      $evaluacion_inst->instructor_id = $instructor->id;
+      $evaluacion_inst->participante_id = $participante->id;
+      $evaluacion_inst->p1 = $request->{"i_".$instructor->id."_p1"};
+      $evaluacion_inst->p2 = $request->{"i_".$instructor->id."_p2"};
+      $evaluacion_inst->p3 = $request->{"i_".$instructor->id."_p3"};
+      $evaluacion_inst->p4 = $request->{"i_".$instructor->id."_p4"};
+      $evaluacion_inst->p5 = $request->{"i_".$instructor->id."_p5"};
+      $evaluacion_inst->p6 = $request->{"i_".$instructor->id."_p6"};
+      $evaluacion_inst->p7 = $request->{"i_".$instructor->id."_p7"};
+      $evaluacion_inst->p8 = $request->{"i_".$instructor->id."_p8"};
+      $evaluacion_inst->p9 = $request->{"i_".$instructor->id."_p9"};
+      $evaluacion_inst->p10 = $request->{"i_".$instructor->id."_p10"};
+      $evaluacion_inst->p11 = $request->{"i_".$instructor->id."_p11"};
+      $evaluacion_inst->save();
+    }
+    $evaluacion = new EvaluacionCurso();
+    $evaluacion->participante_curso_id = $participante->id;
+    $evaluacion->p1_1 = $request->p1_1;
+    $evaluacion->p1_2 = $request->p1_2;
+    $evaluacion->p1_3 = $request->p1_3;
+    $evaluacion->p1_4 = $request->p1_4;
+    $evaluacion->p1_5 = $request->p1_5;
+    $evaluacion->p2_1 = $request->p2_1;
+    $evaluacion->p2_2 = $request->p2_2;
+    $evaluacion->p2_3 = $request->p2_3;
+    $evaluacion->p2_4 = $request->p2_4;
+    $evaluacion->p3_1 = $request->p3_1;
+    $evaluacion->p3_2 = $request->p3_2;
+    $evaluacion->p3_3 = $request->p3_3;
+    $evaluacion->p3_4 = $request->p3_4;
+    $evaluacion->p7 = $request->p7;
+    $evaluacion->p8 = $request->p8;
+    $evaluacion->p9 = $request->p9;
+    $evaluacion->sug = $request->sug;
+    $evaluacion->otros = $request->otros;
+    $evaluacion->conocimiento = $request->conocimiento;
+    $evaluacion->tematica = $request->tematica;
+    $evaluacion->horarios = $request->horarios;
+    $evaluacion->horarioi = $request->horarioi;
+    $evaluacion->save();
+    Session::flash('message-success', 'Encuesta guardada correctamente');
+    return redirect()->route('area.evaluacion',$participante->curso_id);
+    //BEFORE
+    //     $participante = ParticipantesCurso::where('profesor_id',$profesor_id)->where('curso_id',$curso_id)->get();
+		// return $participante;
+    //     $evaluacion_id = DB::table('_evaluacion_final_curso')
+    //         ->select('id')
+    //         ->where([['participante_curso_id',$participante[0]->id],['curso_id',$curso_id]])
+    //         ->get();
 
-        if(sizeof($participante) > 0){
-            $evaluacion_id = DB::table('_evaluacion_final_curso')
-                ->select('id')
-                ->where([['participante_curso_id',$participante[0]->id],['curso_id',$curso_id]])
-                ->get();
-            if(sizeof($evaluacion_id) > 0){
-                $eval_fcurso = EvaluacionFinalSeminario::find($evaluacion_id[0]->id);
-                $eval_fcurso->delete();
-            }
-        }
+    //     if(sizeof($participante) > 0){
+    //         $evaluacion_id = DB::table('_evaluacion_final_curso')
+    //             ->select('id')
+    //             ->where([['participante_curso_id',$participante[0]->id],['curso_id',$curso_id]])
+    //             ->get();
+    //         if(sizeof($evaluacion_id) > 0){
+    //             $eval_fcurso = EvaluacionFinalSeminario::find($evaluacion_id[0]->id);
+    //             $eval_fcurso->delete();
+    //         }
+    //     }
 
-        $eval_fcurso = new EvaluacionFinalCurso;
-		try{
-			$eval_fcurso->participante_curso_id=$participante[0]->id;
-			//Obtenemos la fecha actual para usarla en consultas posteriores	
-			$date = date("Y-m-j");  
+    //     $eval_fcurso = new EvaluacionFinalCurso;
+		// try{
+		// 	$eval_fcurso->participante_curso_id=$participante[0]->id;
+		// 	//Obtenemos la fecha actual para usarla en consultas posteriores	
+		// 	$date = date("Y-m-j");  
 		  
-			//1. DESARROLLO DEL CURSO
-			$eval_fcurso->p1_1 = $request->p1_1;
-			$eval_fcurso->p1_2 = $request->p1_2;
-			$eval_fcurso->p1_3 = $request->p1_3;
-			$eval_fcurso->p1_4 = $request->p1_4;
-			$eval_fcurso->p1_5 = $request->p1_5;
+		// 	//1. DESARROLLO DEL CURSO
+		// 	$eval_fcurso->p1_1 = $request->p1_1;
+		// 	$eval_fcurso->p1_2 = $request->p1_2;
+		// 	$eval_fcurso->p1_3 = $request->p1_3;
+		// 	$eval_fcurso->p1_4 = $request->p1_4;
+		// 	$eval_fcurso->p1_5 = $request->p1_5;
           
-			$promedio_p1 = [
-				$eval_fcurso->p1_1,
-				$eval_fcurso->p1_2,
-				$eval_fcurso->p1_3,
-				$eval_fcurso->p1_4,
-				$eval_fcurso->p1_5
-			];
+		// 	$promedio_p1 = [
+		// 		$eval_fcurso->p1_1,
+		// 		$eval_fcurso->p1_2,
+		// 		$eval_fcurso->p1_3,
+		// 		$eval_fcurso->p1_4,
+		// 		$eval_fcurso->p1_5
+		// 	];
           
-			//2. AUTOEVALUACION
-			$eval_fcurso->p2_1 = $request->p2_1;
-			$eval_fcurso->p2_2 = $request->p2_2;
-			$eval_fcurso->p2_3 = $request->p2_3;
-			$eval_fcurso->p2_4 = $request->p2_4;
-			$promedio_p2 =[
-				$eval_fcurso->p2_1,
-				$eval_fcurso->p2_2,
-				$eval_fcurso->p2_3,
-				$eval_fcurso->p2_4 
-			];
+		// 	//2. AUTOEVALUACION
+		// 	$eval_fcurso->p2_1 = $request->p2_1;
+		// 	$eval_fcurso->p2_2 = $request->p2_2;
+		// 	$eval_fcurso->p2_3 = $request->p2_3;
+		// 	$eval_fcurso->p2_4 = $request->p2_4;
+		// 	$promedio_p2 =[
+		// 		$eval_fcurso->p2_1,
+		// 		$eval_fcurso->p2_2,
+		// 		$eval_fcurso->p2_3,
+		// 		$eval_fcurso->p2_4 
+		// 	];
 			
-			//3. COORDINACION DEL CURSO
-			$eval_fcurso->p3_1 = $request->p3_1;
-			$eval_fcurso->p3_2 = $request->p3_2;
-			$eval_fcurso->p3_3 = $request->p3_3;
-			$eval_fcurso->p3_4 = $request->p3_4;
-			$promedio_p3=[
-				$eval_fcurso->p3_1,
-				$eval_fcurso->p3_2,
-				$eval_fcurso->p3_3,
-				$eval_fcurso->p3_4
-			];			
+		// 	//3. COORDINACION DEL CURSO
+		// 	$eval_fcurso->p3_1 = $request->p3_1;
+		// 	$eval_fcurso->p3_2 = $request->p3_2;
+		// 	$eval_fcurso->p3_3 = $request->p3_3;
+		// 	$eval_fcurso->p3_4 = $request->p3_4;
+		// 	$promedio_p3=[
+		// 		$eval_fcurso->p3_1,
+		// 		$eval_fcurso->p3_2,
+		// 		$eval_fcurso->p3_3,
+		// 		$eval_fcurso->p3_4
+		// 	];			
 			
-			//4. INSTRUCTOR UNO
-			$eval_fcurso->p4_1 = $request->p4_1;
-			$eval_fcurso->p4_2 = $request->p4_2;
-			$eval_fcurso->p4_3 = $request->p4_3;
-			$eval_fcurso->p4_4 = $request->p4_4;
-			$eval_fcurso->p4_5 = $request->p4_5;
-			$eval_fcurso->p4_6 = $request->p4_6;
-			$eval_fcurso->p4_7 = $request->p4_7;
-			$eval_fcurso->p4_8 = $request->p4_8;
-			$eval_fcurso->p4_9 = $request->p4_9;
-			$eval_fcurso->p4_10 = $request->p4_10;
-			$eval_fcurso->p4_11 = $request->p4_11;
-			$promedio_p4=[
-				$eval_fcurso->p4_1,
-				$eval_fcurso->p4_2,
-				$eval_fcurso->p4_3,
-				$eval_fcurso->p4_4,
-				$eval_fcurso->p4_5,
-				$eval_fcurso->p4_6,
-				$eval_fcurso->p4_7,
-				$eval_fcurso->p4_8,
-				$eval_fcurso->p4_9,
-				$eval_fcurso->p4_10,
-				$eval_fcurso->p4_11
-			];
+		// 	//4. INSTRUCTOR UNO
+		// 	$eval_fcurso->p4_1 = $request->p4_1;
+		// 	$eval_fcurso->p4_2 = $request->p4_2;
+		// 	$eval_fcurso->p4_3 = $request->p4_3;
+		// 	$eval_fcurso->p4_4 = $request->p4_4;
+		// 	$eval_fcurso->p4_5 = $request->p4_5;
+		// 	$eval_fcurso->p4_6 = $request->p4_6;
+		// 	$eval_fcurso->p4_7 = $request->p4_7;
+		// 	$eval_fcurso->p4_8 = $request->p4_8;
+		// 	$eval_fcurso->p4_9 = $request->p4_9;
+		// 	$eval_fcurso->p4_10 = $request->p4_10;
+		// 	$eval_fcurso->p4_11 = $request->p4_11;
+		// 	$promedio_p4=[
+		// 		$eval_fcurso->p4_1,
+		// 		$eval_fcurso->p4_2,
+		// 		$eval_fcurso->p4_3,
+		// 		$eval_fcurso->p4_4,
+		// 		$eval_fcurso->p4_5,
+		// 		$eval_fcurso->p4_6,
+		// 		$eval_fcurso->p4_7,
+		// 		$eval_fcurso->p4_8,
+		// 		$eval_fcurso->p4_9,
+		// 		$eval_fcurso->p4_10,
+		// 		$eval_fcurso->p4_11
+		// 	];
 		
-			//5. INSTRUCTOR DOS
-			$eval_fcurso->p5_1 = $request->p5_1;
-			$eval_fcurso->p5_2 = $request->p5_2;
-			$eval_fcurso->p5_3 = $request->p5_3;
-			$eval_fcurso->p5_4 = $request->p5_4;
-			$eval_fcurso->p5_5 = $request->p5_5;
-			$eval_fcurso->p5_6 = $request->p5_6;
-			$eval_fcurso->p5_7 = $request->p5_7;
-			$eval_fcurso->p5_8 = $request->p5_8;
-			$eval_fcurso->p5_9 = $request->p5_9;
-			$eval_fcurso->p5_10 = $request->p5_10;
-			$eval_fcurso->p5_11 = $request->p5_11;
-			$promedio_p5=[
-				$eval_fcurso->p5_1,
-				$eval_fcurso->p5_2,
-				$eval_fcurso->p5_3,
-				$eval_fcurso->p5_4,
-				$eval_fcurso->p5_5,
-				$eval_fcurso->p5_6,
-				$eval_fcurso->p5_7,
-				$eval_fcurso->p5_8,
-				$eval_fcurso->p5_9,
-				$eval_fcurso->p5_10,
-				$eval_fcurso->p5_11
-			];
+		// 	//5. INSTRUCTOR DOS
+		// 	$eval_fcurso->p5_1 = $request->p5_1;
+		// 	$eval_fcurso->p5_2 = $request->p5_2;
+		// 	$eval_fcurso->p5_3 = $request->p5_3;
+		// 	$eval_fcurso->p5_4 = $request->p5_4;
+		// 	$eval_fcurso->p5_5 = $request->p5_5;
+		// 	$eval_fcurso->p5_6 = $request->p5_6;
+		// 	$eval_fcurso->p5_7 = $request->p5_7;
+		// 	$eval_fcurso->p5_8 = $request->p5_8;
+		// 	$eval_fcurso->p5_9 = $request->p5_9;
+		// 	$eval_fcurso->p5_10 = $request->p5_10;
+		// 	$eval_fcurso->p5_11 = $request->p5_11;
+		// 	$promedio_p5=[
+		// 		$eval_fcurso->p5_1,
+		// 		$eval_fcurso->p5_2,
+		// 		$eval_fcurso->p5_3,
+		// 		$eval_fcurso->p5_4,
+		// 		$eval_fcurso->p5_5,
+		// 		$eval_fcurso->p5_6,
+		// 		$eval_fcurso->p5_7,
+		// 		$eval_fcurso->p5_8,
+		// 		$eval_fcurso->p5_9,
+		// 		$eval_fcurso->p5_10,
+		// 		$eval_fcurso->p5_11
+		// 	];
 			
-			//6. INSTRUCTOR TRES
-			$eval_fcurso->p6_1 = $request->p6_1;
-			$eval_fcurso->p6_2 = $request->p6_2;
-			$eval_fcurso->p6_3 = $request->p6_3;
-			$eval_fcurso->p6_4 = $request->p6_4;
-			$eval_fcurso->p6_5 = $request->p6_5;
-			$eval_fcurso->p6_6 = $request->p6_6;
-			$eval_fcurso->p6_7 = $request->p6_7;
-			$eval_fcurso->p6_8 = $request->p6_8;
-			$eval_fcurso->p6_9 = $request->p6_9;
-			$eval_fcurso->p6_10 = $request->p6_10;
-			$eval_fcurso->p6_11 = $request->p6_11;
-			$promedio_p6=[
-				$eval_fcurso->p6_1,
-				$eval_fcurso->p6_2,
-				$eval_fcurso->p6_3,
-				$eval_fcurso->p6_4,
-				$eval_fcurso->p6_5,
-				$eval_fcurso->p6_6,
-				$eval_fcurso->p6_7,
-				$eval_fcurso->p6_8,
-				$eval_fcurso->p6_9,
-				$eval_fcurso->p6_10,
-				$eval_fcurso->p6_11			
-			];
+		// 	//6. INSTRUCTOR TRES
+		// 	$eval_fcurso->p6_1 = $request->p6_1;
+		// 	$eval_fcurso->p6_2 = $request->p6_2;
+		// 	$eval_fcurso->p6_3 = $request->p6_3;
+		// 	$eval_fcurso->p6_4 = $request->p6_4;
+		// 	$eval_fcurso->p6_5 = $request->p6_5;
+		// 	$eval_fcurso->p6_6 = $request->p6_6;
+		// 	$eval_fcurso->p6_7 = $request->p6_7;
+		// 	$eval_fcurso->p6_8 = $request->p6_8;
+		// 	$eval_fcurso->p6_9 = $request->p6_9;
+		// 	$eval_fcurso->p6_10 = $request->p6_10;
+		// 	$eval_fcurso->p6_11 = $request->p6_11;
+		// 	$promedio_p6=[
+		// 		$eval_fcurso->p6_1,
+		// 		$eval_fcurso->p6_2,
+		// 		$eval_fcurso->p6_3,
+		// 		$eval_fcurso->p6_4,
+		// 		$eval_fcurso->p6_5,
+		// 		$eval_fcurso->p6_6,
+		// 		$eval_fcurso->p6_7,
+		// 		$eval_fcurso->p6_8,
+		// 		$eval_fcurso->p6_9,
+		// 		$eval_fcurso->p6_10,
+		// 		$eval_fcurso->p6_11			
+		// 	];
 				
-			//7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
-			$eval_fcurso->p7 = $request->p7;
-			//return $eval_fcurso->p7;
+		// 	//7.¿RECOMENDARÍA EL CURSO A OTROS PROFESORES?
+		// 	$eval_fcurso->p7 = $request->p7;
+		// 	//return $eval_fcurso->p7;
 			
-			//8. ¿CÓMO SE ENTERÓ DEL CURSO?
-			$eval_fcurso->p8 = $request->p8;
-			//Lo mejor del curso fue:
-			$eval_fcurso->mejor = $request->mejor;
-			//Sugerencias y recomendaciones:	
-			$eval_fcurso->sug = $request->sug;
-			//¿Qué otros cursos, talleres, seminarios o temáticos le gustaría que se impartiesen o tomasen en cuenta para próximas actividades?
-			$eval_fcurso->otros = $request->otros;
-			//ÁREA DE CONOCIMIENTO
-			$eval_fcurso->conocimiento = $request->conocimiento;
-			//Temáticas:	
-			$eval_fcurso->tematica = $request->tematica;
-			//¿En qué horarios le gustaría que se impartiesen los cursos, talleres, seminarios o diplomados?
-			//Horarios Semestrales:
-			$eval_fcurso->horarios = $request->horarios;	
-			//Horarios Intersemestrales:
-			$eval_fcurso->horarioi = $request->horarioi;
-			$eval_fcurso->curso_id = $curso_id;
+		// 	//8. ¿CÓMO SE ENTERÓ DEL CURSO?
+		// 	$eval_fcurso->p8 = $request->p8;
+		// 	//Lo mejor del curso fue:
+		// 	$eval_fcurso->mejor = $request->mejor;
+		// 	//Sugerencias y recomendaciones:	
+		// 	$eval_fcurso->sug = $request->sug;
+		// 	//¿Qué otros cursos, talleres, seminarios o temáticos le gustaría que se impartiesen o tomasen en cuenta para próximas actividades?
+		// 	$eval_fcurso->otros = $request->otros;
+		// 	//ÁREA DE CONOCIMIENTO
+		// 	$eval_fcurso->conocimiento = $request->conocimiento;
+		// 	//Temáticas:	
+		// 	$eval_fcurso->tematica = $request->tematica;
+		// 	//¿En qué horarios le gustaría que se impartiesen los cursos, talleres, seminarios o diplomados?
+		// 	//Horarios Semestrales:
+		// 	$eval_fcurso->horarios = $request->horarios;	
+		// 	//Horarios Intersemestrales:
+		// 	$eval_fcurso->horarioi = $request->horarioi;
+		// 	$eval_fcurso->curso_id = $curso_id;
 
-            $string_vals = ['mejor','sug','otros','conocimiento','tematica','horarios','horarioi'];
+    //         $string_vals = ['mejor','sug','otros','conocimiento','tematica','horarios','horarioi'];
 
-            foreach($eval_fcurso->getAttributes() as $key => $value){
-                if($value == null){
-                    if($key == 'p7'){
-                        $eval_fcurso->$key = -1;
-                    }else if(in_array($key,$string_vals,TRUE)){
-                        $eval_fcurso->$key = '';
-                    }else if($key == 'p8[0]'){
-                        $eval_fcurso->$key = [''];
-                    }else{
-                        $eval_fcurso->$key = 0;
-                    }
-                }
-            }
+    //         foreach($eval_fcurso->getAttributes() as $key => $value){
+    //             if($value == null){
+    //                 if($key == 'p7'){
+    //                     $eval_fcurso->$key = -1;
+    //                 }else if(in_array($key,$string_vals,TRUE)){
+    //                     $eval_fcurso->$key = '';
+    //                 }else if($key == 'p8[0]'){
+    //                     $eval_fcurso->$key = [''];
+    //                 }else{
+    //                     $eval_fcurso->$key = 0;
+    //                 }
+    //             }
+    //         }
 
-			$eval_fcurso->save();
-		}catch (\Exception $e){
-			//En caso de que no se haya evaluado correctamente el curso regresamos a la vista anterior indicando que la evaluación fue errónea
-			Session::flash('message','Sucedió un error al contestar el formulario. Favor de llenar todas las preguntas o revisar que el usuario en cuestión no lo haya contestado');
-			Session::flash('alert-class', 'alert-danger'); 
+		// 	$eval_fcurso->save();
+		// }catch (\Exception $e){
+		// 	//En caso de que no se haya evaluado correctamente el curso regresamos a la vista anterior indicando que la evaluación fue errónea
+		// 	Session::flash('message','Sucedió un error al contestar el formulario. Favor de llenar todas las preguntas o revisar que el usuario en cuestión no lo haya contestado');
+		// 	Session::flash('alert-class', 'alert-danger'); 
 
-			return redirect()->back()->withInput($request->input());
-		}
-		//Pasos despreciados, usados en versiones antiguas para obtener el promedio de toda la evaluación
-		$promedio=[
-			$eval_fcurso->p1_1,
-			$eval_fcurso->p1_2,
-			$eval_fcurso->p1_3,
-			$eval_fcurso->p1_4,
-			$eval_fcurso->p1_5,
-			$eval_fcurso->p2_1,
-			$eval_fcurso->p2_2,
-			$eval_fcurso->p2_3,
-			$eval_fcurso->p2_4,
-			$eval_fcurso->p3_1,
-			$eval_fcurso->p3_2,
-			$eval_fcurso->p3_3,
-			$eval_fcurso->p3_4,
-			$eval_fcurso->p4_1,
-			$eval_fcurso->p4_2,
-			$eval_fcurso->p4_3,
-			$eval_fcurso->p4_4,
-			$eval_fcurso->p4_5,
-			$eval_fcurso->p4_6,
-			$eval_fcurso->p4_7,
-			$eval_fcurso->p4_8,
-			$eval_fcurso->p4_9,
-			$eval_fcurso->p4_10,
-			$eval_fcurso->p4_11,
-			$eval_fcurso->p5_1,
-			$eval_fcurso->p5_2,
-			$eval_fcurso->p5_3,
-			$eval_fcurso->p5_4,
-			$eval_fcurso->p5_5,
-			$eval_fcurso->p5_6,
-			$eval_fcurso->p5_7,
-			$eval_fcurso->p5_8,
-			$eval_fcurso->p5_9,
-			$eval_fcurso->p5_10,
-			$eval_fcurso->p5_11
-		];
-		$pg=collect($promedio)->average()*2*10;
-		$p1=collect($promedio_p1)->average()*2*10;
-		$p2=collect($promedio_p2)->average()*2*10;
-		$p3=collect($promedio_p3)->average()*2*10;
-		$p4=collect($promedio_p4)->average()*2*10;
-		$p5=collect($promedio_p5)->average()*2*10;
+		// 	return redirect()->back()->withInput($request->input());
+		// }
+		// //Pasos despreciados, usados en versiones antiguas para obtener el promedio de toda la evaluación
+		// $promedio=[
+		// 	$eval_fcurso->p1_1,
+		// 	$eval_fcurso->p1_2,
+		// 	$eval_fcurso->p1_3,
+		// 	$eval_fcurso->p1_4,
+		// 	$eval_fcurso->p1_5,
+		// 	$eval_fcurso->p2_1,
+		// 	$eval_fcurso->p2_2,
+		// 	$eval_fcurso->p2_3,
+		// 	$eval_fcurso->p2_4,
+		// 	$eval_fcurso->p3_1,
+		// 	$eval_fcurso->p3_2,
+		// 	$eval_fcurso->p3_3,
+		// 	$eval_fcurso->p3_4,
+		// 	$eval_fcurso->p4_1,
+		// 	$eval_fcurso->p4_2,
+		// 	$eval_fcurso->p4_3,
+		// 	$eval_fcurso->p4_4,
+		// 	$eval_fcurso->p4_5,
+		// 	$eval_fcurso->p4_6,
+		// 	$eval_fcurso->p4_7,
+		// 	$eval_fcurso->p4_8,
+		// 	$eval_fcurso->p4_9,
+		// 	$eval_fcurso->p4_10,
+		// 	$eval_fcurso->p4_11,
+		// 	$eval_fcurso->p5_1,
+		// 	$eval_fcurso->p5_2,
+		// 	$eval_fcurso->p5_3,
+		// 	$eval_fcurso->p5_4,
+		// 	$eval_fcurso->p5_5,
+		// 	$eval_fcurso->p5_6,
+		// 	$eval_fcurso->p5_7,
+		// 	$eval_fcurso->p5_8,
+		// 	$eval_fcurso->p5_9,
+		// 	$eval_fcurso->p5_10,
+		// 	$eval_fcurso->p5_11
+		// ];
+		// $pg=collect($promedio)->average()*2*10;
+		// $p1=collect($promedio_p1)->average()*2*10;
+		// $p2=collect($promedio_p2)->average()*2*10;
+		// $p3=collect($promedio_p3)->average()*2*10;
+		// $p4=collect($promedio_p4)->average()*2*10;
+		// $p5=collect($promedio_p5)->average()*2*10;
 
-		//Actualizar campo de hoja de evaluacion
-		DB::table('participante_curso')
-			->where('id', $participante[0]->id)
-			->where('curso_id',$curso_id)
-			->update(['contesto_hoja_evaluacion' => true]);
+		// //Actualizar campo de hoja de evaluacion
+		// DB::table('participante_curso')
+		// 	->where('id', $participante[0]->id)
+		// 	->where('curso_id',$curso_id)
+		// 	->update(['contesto_hoja_evaluacion' => true]);
 
 	 
-        return redirect()->route('cd.evaluacion',[$curso_id]);
+        // return redirect()->route('cd.evaluacion',[$curso_id]);
     }
 
     public function saveFinal_Seminario(Request $request,$profesor_id,$curso_id, $catalogoCurso_id){
