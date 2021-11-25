@@ -61,73 +61,91 @@ body {
 .small{
 	width: 20%;
 }
+.header{
+    z-index:-1;
+    margin-top: -245px;
+	position: fixed;
+}
+@page {
+    margin-top: 300px;
+}
+
+@page :first{
+    margin-top: 300px;
+}
 </style>
 <body>
-<div style="height: 90%">
-	<div height="10%">
-		<table style="width: 100%" align="center"  id="tabla_encabezado" height="5%">
-			<tr id="normal">
-				<td rowspan="2" width="20%" align="center" id="normal"><br>
-					<img src="img/fi.jpg" alt="" align="center" height="112">
-				</td>
-				<td rowspan="2" align="center" id="normal">
-                    FACULTAD DE INGENIERÍA,UNAM<br>
-                    Secretaría de Apoyo a la Docencia<br>
-			        CENTRO DE DOCENCIA "Ing. Gilberto Borja Navarrete"<br>
-			        Sistema de Gestión de la Calidad<br>
-                    Norma ISO 9001:2015<br>
-                    Formato
-				</td>
-				<td rowspan="2" width="20%" align="center" id="normal"><br>
-					<img src="img/cdd.png" alt="" align="center" height="112">
-				</td>
-			</tr>
-		</table>
-        <table id="tabla_encabezado_debajo">
-				<td width="20%" class="margen">
-					2730-SGC-IC-FO-09
-				</td>
-				<td  class="margen">
-					Fecha de emisión:
-				</td>
-				<td class="margen">
-                    2017-08-21
-				</td>
-				<td class="margen">
-					Versión
-				</td>
-				<td class="margen">
-					2
-				</td>
-				<td width="20%" class="margen">
-					Página 1 de 1
-				</td>
-		</table>
-        <br>
-        <div align="center">
-        <?php
-				//50
-				if(strlen($catalogo->nombre_curso)>50){
-            		echo "<p style=\"float: left; width: 100%; font-size: 22px; line-heigh:5px;\" class=\"n\"> $catalogo->nombre_curso </p>";
-					echo "<br>";
-            		echo "<p style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\"> $curso->semestre_anio-$curso->semestre_pi$curso->semestre_si</p>";
-            		echo "<div style=\"clear: both\"></div>";
-					echo "<hr>";
-				}else{
-					echo "<div style=\"float: left; width: 100%; font-size: 22px;\" class=\"n\">$catalogo->nombre_curso</div>";
-					echo "<div style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\">$curso->semestre_anio-$curso->semestre_pi$curso->semestre_si</div>";
-					echo "<div style=\"clear: both\"></div>";
-					echo "<hr>";
-				}
-			?>
+    <script type="text/php">
+        $GLOBALS["header"] = NULL;
+    </script>
+    <div class="header">
+        <script type="text/php">$GLOBALS["header"] = $pdf->open_object();</script>
+        <div height="10%">
+            <table style="width: 100%" align="center"  id="tabla_encabezado" height="5%">
+                <tr id="normal">
+                    <td rowspan="2" width="20%" align="center" id="normal"><br>
+                        <img src="img/fi.jpg" alt="" align="center" height="112">
+                    </td>
+                    <td rowspan="2" align="center" id="normal">
+                        FACULTAD DE INGENIERÍA,UNAM<br>
+                        Secretaría de Apoyo a la Docencia<br>
+                        CENTRO DE DOCENCIA "Ing. Gilberto Borja Navarrete"<br>
+                        Sistema de Gestión de la Calidad<br>
+                        Norma ISO 9001:2015<br>
+                        Formato
+                    </td>
+                    <td rowspan="2" width="20%" align="center" id="normal"><br>
+                        <img src="img/cdd.png" alt="" align="center" height="112">
+                    </td>
+                </tr>
+            </table>
+            <table id="tabla_encabezado_debajo">
+                    <td width="20%" class="margen">
+                        2730-SGC-IC-FO-09
+                    </td>
+                    <td  class="margen">
+                        Fecha de emisión:
+                    </td>
+                    <td class="margen">
+                        2017/08/21
+                    </td>
+                    <td class="margen">
+                        Versión
+                    </td>
+                    <td class="margen">
+                        2
+                    </td>
+                    <td width="20%" class="margen">
+                        Página 1 de 1
+                    </td>
+            </table>
+            <br>
+            <div align="center">
+            <?php
+                    //50
+                    if(strlen($catalogo->nombre_curso)>50){
+                        echo "<p style=\"float: left; width: 100%; font-size: 22px; line-heigh:5px;\" class=\"n\"> $catalogo->nombre_curso </p>";
+                        echo "<br>";
+                        echo "<p style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\"> $curso->semestre_anio-$curso->semestre_pi$curso->semestre_si</p>";
+                        echo "<div style=\"clear: both\"></div>";
+                        echo "<hr>";
+                    }else{
+                        echo "<div style=\"float: left; width: 100%; font-size: 22px;\" class=\"n\">$catalogo->nombre_curso</div>";
+                        echo "<div style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\">$curso->semestre_anio-$curso->semestre_pi$curso->semestre_si</div>";
+                        echo "<div style=\"clear: both\"></div>";
+                        echo "<hr>";
+                    }
+                ?>
+            </div>
         </div>
+        <script type="text/php">$pdf->close_object();</script>
     </div>
-    <div>
-        <table width="100%">
-            <tr>
-                <th>1. DATOS GENERALES DEL CURSO</th>
-            </tr>
-            <tr>
+<div>
+    <table width="100%">
+        <tr>
+            <th>1. DATOS GENERALES DEL CURSO</th>
+        </tr>
+        <tr>
                 <td style="font-weight: bold" class="n">a) Instructores</td>
                 <td class="n">
                 <ul>
@@ -346,10 +364,16 @@ body {
 
         </table>
 
-    </div>
-
-
 </div>
+
+<script type="text/php">
+    $pdf->page_script('
+        if ($PAGE_NUM >= 2) {
+            $pdf->add_object($GLOBALS["header"],"add");
+        }
+        ');
+</script>
+
 
 </body>
 </html>
