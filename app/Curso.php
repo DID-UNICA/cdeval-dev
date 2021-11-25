@@ -34,7 +34,7 @@ class Curso extends Model
     public function getInstructores(){
        $instructores = Profesor::join('profesor_curso', 'profesors.id', '=', 'profesor_curso.profesor_id')
        ->where('profesor_curso.curso_id', '=', $this->id)
-       ->get();
+       ->get('profesors.nombres','profesors.apellido_paterno','profesors.apellido_materno');
         return $instructores;
     }
 
@@ -88,7 +88,11 @@ class Curso extends Model
   }
 
   public function getSede(){
-    return DB::table('salons')->where('id', $this->salon_id)->get();
+    return DB::table('salons')->where('id', $this->salon_id)->get('sede')->first();
+  }
+
+  public function getPeriodo(){
+    return $this->semestre_anio.'-'.$this->semestre_pi.'_'.$this->semestre_si;
   }
 }
 

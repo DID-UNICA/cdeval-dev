@@ -1455,6 +1455,7 @@ $promedio_p4=[
         //return $profesoresRecontratar;
         //Retornamos la vista correspondiente (seleccionados por fecah o seleccionados por fecha y coordinacion) con los datos calculados
         return view($lugar)
+        //BEFORE
             ->with('nombres',$nombresCursos)
             ->with('periodo',$request)
             ->with('acreditaron',$acreditaron)
@@ -2227,11 +2228,23 @@ $promedio_p4=[
       $preguntas_contenido = 0;
       $preguntas_coordinacion = 0;
 
+      //Arrays para sugerencias, tematicas, conocimiento y horarios
+      $sugs = array();
+      $tematicas = array();
+      $horarioi = array();
+      $horarios = array();
       //Bucle necesario para obtener el numero de preguntas positivas, evaluaciones de cada uno de los instructores y los factores de calidad de contenido, de calidad de la coordinacion, y los factores de calidad de los instructores
       foreach($evals as $evaluacion){
         //Aumentamos el numero de alumnos que respondieron el cuestionario
         $alumnos++;
-        
+        if($evaluacion->sug)
+          array_push($sugs, $evaluacion->sug);
+        if($evaluacion->tematica)
+          array_push($tematicas, $evaluacion->tematica);
+        if($evaluacion->horarioi)
+          array_push($horarioi, $evaluacion->horarioi);
+        if($evaluacion->horarios)
+          array_push($horarios, $evaluacion->horarios);
         //Desde 1_1 a 1_5 obtenemos el factor de calidad del contenido ($respuestasContenido/$alumnos*5) valor >= 60
         if($evaluacion->p1_1 >= 50){
           $preguntas++;
@@ -2337,6 +2350,7 @@ $promedio_p4=[
       //Queremos obtener todas las evaluaciones para luego comparar promedio, 
       // minimo y maximo del instructor
       $instructores = $curso->getProfesoresCurso();
+      $ct_instructores = 0;
       foreach($instructores as $instructor){
         $evalInsts = $instructor->getEvaluaciones();
         // ${'respuestasInstructores'.$instructor->id} = 0;
@@ -2461,8 +2475,9 @@ $promedio_p4=[
         $instructor->factor = ${'factor_instructor'.$instructor->id};
         $instructor->minimo = ${'minimo'.$instructor->id};
         $instructor->maximo = ${'maximo'.$instructor->id};
-        
+        $ct_instructores = $ct_instructores + $instructor->factor;
       }
+      $ct_instructores = $ct_instructores/$instructores->count();
       // return $instructores;
       // $envio = 'pages.reporte_final_curso';
       $envioPDF = 'pages.validacion';
@@ -2500,26 +2515,64 @@ $promedio_p4=[
         .$curso->semestre_si.
         '.pdf';
       $pdf = PDF::loadView($envioPDF,array(
-        'evals'=>$evals,
-        'curso_id'=>$curso->id,
-        'catalogoCurso_id'=>$catalogoCurso->id,
-        'participantes'=>$participantes,
-        'factor_acreditacion'=>$factor_acreditacion,
+        //AFTER
+        'nombre_curso' => $catalogoCurso->nombre_curso,
+        'periodo'=> $curso->getPeriodo(),
+        'nombre_instructores' => $curso->getInstructores(),
+        'instructores' => $instructores,
+        'fecha_imparticion'=> 'TODO',
+        'cupo_maximo'=>$curso->cupo_maximo,
+        'hora_inicio'=> $curso->hora_inicio,
+        'hora_fin'=> $curso->hora_fin,
+        'duracion'=> $catalogoCurso->duracion,
+        'sede' => $curso->getSede()->sede,
+        'inscritos' => $participantes->count(),
+        'asistieron'=>$asistieron,
+        'acreditaron'=>$acreditado,
+        'contestaron'=>$contestaron,
+        //factor ocupacion
+        'ocupacion'=>$ocupacion,
+        //factor recomendacion
         'factor'=>$factor,
-        'alumnos'=>$alumnos,
+        'factor_acreditacion'=>$factor_acreditacion,
+        //factor de calidad
+        'positivas'=>$factor_respuestas_positivas,
+        'sugerencias' => collect($sugs),
+        'tematicas'=> collect($tematicas),
+        'horarioi' => collect($horarioi),
+        'horarios' => collect($horarios),
+        //Criterio de aceptación de contenido
+        'contenido'=>$factor_contenido,
+        //Criterio de aceptacion de instructor
+        'ct_instructores' =>$ct_instructores,
+        //Criterio de aceptacion de coordinacion
+        'factor_coordinacion'=>$factor_coordinacion,
         'DP'=>$DP,
         'DH'=>$DH,
         'CO'=>$CO,
         'DI'=>$DI,
         'Otros'=>$Otros,
-        'ocupacion'=>$ocupacion,
-        'positivas'=>$factor_respuestas_positivas,
-        'contenido'=>$factor_contenido,
-        'factor_coordinacion'=>$factor_coordinacion,
-        'curso'=>$curso,
-        'salon'=>$curso->getSede(),
-        'acreditaron'=>$acreditado,
-        'instructores' => $instructores,
+        //BEFORE
+        // 'evals'=>$evals,
+        // 'curso_id'=>$curso->id,
+        // 'catalogoCurso_id'=>$catalogoCurso->id,
+        // 'participantes'=>$participantes,
+        // 'factor_acreditacion'=>$factor_acreditacion,
+        // 'factor'=>$factor,
+        // 'alumnos'=>$alumnos,
+        // 'DP'=>$DP,
+        // 'DH'=>$DH,
+        // 'CO'=>$CO,
+        // 'DI'=>$DI,
+        // 'Otros'=>$Otros,
+        // 'ocupacion'=>$ocupacion,
+        // 'positivas'=>$factor_respuestas_positivas,
+        // 'contenido'=>$factor_contenido,
+        // 'factor_coordinacion'=>$factor_coordinacion,
+        // 'curso'=>$curso,
+        // 'salon'=>$curso->getSede(),
+        // 'acreditaron'=>$acreditado,
+        // 'instructores' => $instructores,
         // 'instructor'=>${'factor_instructor'.$instructor->id},
         // 'minimo'=>${'minimo'.$instructor->id},
         // 'maximo'=>${'maximo'.$instructor->id},
@@ -2528,11 +2581,11 @@ $promedio_p4=[
         // 'instructor3'=>$factor_instructor3,
         // 'minimo3'=>$minimo3,
         // 'maximo3'=>$maximo3,
-        'numero_horas'=>$numero_horas,
-        'asistieron'=>$asistieron,
-        'nombreInstructor'=>$curso->getCadenaInstructores(),
-        'catalogo'=>$catalogoCurso,
-        'contestaron'=>$contestaron
+        // 'numero_horas'=>$numero_horas,
+        // 'asistieron'=>$asistieron,
+        // 'nombreInstructor'=>$curso->getCadenaInstructores(),
+        // 'catalogo'=>$catalogoCurso,
+        // 'contestaron'=>$contestaron
       ));	
       return $pdf->download($nombre);
     }
