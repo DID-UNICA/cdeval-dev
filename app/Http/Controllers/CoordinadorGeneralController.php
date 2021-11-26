@@ -1309,20 +1309,23 @@ $promedio_p4=[
 
                 if(($temp_1/$tam_1)>$max){
                     $max = round($temp_1/$tam_1,2);
-                }elseif(($temp_1/$tam_1)<$min){
+                }
+                if(($temp_1/$tam_1)<$min){
                     $min = round($temp_1/$tam_1,2);
                 }
                 if($temp_2>0){
                     if(($temp_2/$tam_2)>$max2){
                         $max2 = round($temp_2/$tam_2,2);
-                    }elseif(($temp_2/$tam_2)<$min2){
+                    }
+                    if(($temp_2/$tam_2)<$min2){
                         $min2 = round($temp_2/$tam_2,2);
                     }   
                 }
                 if($temp_3>0){
                     if(($temp_3/$tam_3)>$max3){
                         $max3 = round($temp_3/$tam_3,2);
-                    }elseif(($temp_3/$tam_3)<$min3){
+                    }
+                    if(($temp_3/$tam_3)<$min3){
                         $min3 = round($temp_3/$tam_3,2);
                     }   
                 }
@@ -1358,7 +1361,7 @@ $promedio_p4=[
             }
 
             //Si un curso obtiene calificacion >= 80 en cada uno de los tres factores sus profesores se vuelven a contratar
-            if($factor_calidad_curso >= 80 && $factora_acreditacion >= 80 && $factor_recomendacion_curso >= 80){
+            if($factor_calidad_curso >= 0 && $factora_acreditacion >= 0 && $factor_recomendacion_curso >= 0){
                 //Obtenemos los datos de los profesores del curso
                 $inList = 0;
                 foreach($profesores as $profesors){
@@ -1845,6 +1848,7 @@ $promedio_p4=[
             $instructor_3 = 0;
             $tam_contenido = 0;
             $tam_coord = 0;
+            $tam_recomendacion = 0;
 
             //Iteramos las evaluaciones de cada curso y acumulamos las calificaciones de cada rubro
             foreach($evals as $eval){
@@ -2027,6 +2031,9 @@ $promedio_p4=[
 
                 if(intval($eval->p7) == 1){
                     $factor_recomendacion_curso++;
+                    $tam_recomendacion++;
+                }else if(intval($eval->p7) == 0){
+                    $tam_recomendacion++;
                 }
 
             }
@@ -2051,7 +2058,7 @@ $promedio_p4=[
             if($tam1 != 0)
                 $instructor_promedio += (($instructor_1/($tam1))+($instructor_2/($tam2))+($instructor_3/($tam3)))/$divisor;
             if($tam_curso != 0)
-                $factor_recomendacion_promedio += ($factor_recomendacion_curso*100)/$tam_curso;
+            $factor_recomendacion_promedio += ($factor_recomendacion_curso*100)/$tam_recomendacion;
 
         }
 

@@ -90,7 +90,7 @@
 </style>
 <body>
 	<div>
-		<table  id="tabla_encabezado">
+		<!---<table  id="tabla_encabezado">
 				<td width= 12% class="margen">
                     <img id="imagen_izquierda"  src="img/fi_2.png" height="80">
 				</td>
@@ -108,13 +108,13 @@
 		</table>
         <table id="tabla_encabezado_debajo">
 				<td width="20%" class="margen">
-					2730-SGC-IC-FO-10
+					2730-SGC-IC-FO-11
 				</td>
 				<td  class="margen">
 					Fecha de emisión:
 				</td>
 				<td class="margen">
-                    2017-03-30
+                    2017-06-08
 				</td>
 				<td class="margen">
 					Versión
@@ -125,7 +125,7 @@
 				<td width="20%" class="margen">
 					Página 1 de 1
 				</td>
-		</table>
+		</table>-->
         @if(Session::get('tipos') == 'CD')
             <h5 class="inicial">Reporte de Evaluación global</h5>
         @else
@@ -220,7 +220,7 @@
         <br>
         <table width="100%">
             <tr>
-                <th class="titulos" align= left >INSTRUCTORES QUE SE VOLVERÍAN A CONTRATAR</th>
+                <th class="titulos" align= left >7. INSTRUCTORES QUE SE VOLVERÍAN A CONTRATAR</th>
                 <th class="titulos" align= left >Mínimo Evaluación</th>
                 <th class="titulos" align= left >Máximo Evaluación</th>
                 <th class="titulos" align= left >Promedio Evaluación</th>
@@ -405,7 +405,7 @@
     <br>
     <br>
 
-    <table class = "tabla-centro" width="100%">
+    <!--<table class = "tabla-centro" width="100%">
       <tr>
         <td  class="firma" style="font-weight: bold; text-align: center;">Analista de Área</td>
         <td  class="firma" style="font-weight: bold; text-align: center;">Coordinador del centro de Docencia</td>
@@ -421,7 +421,7 @@
     </table>
     <br>
     <br>
-    <p>Fecha:___________________</p>
+    <p>Fecha:___________________</p>-->
 
 
 <br>
