@@ -16,6 +16,7 @@ use App\EvaluacionFinalCurso;
 use App\EvaluacionFinalSeminario;
 use App\EvaluacionCurso;
 use App\EvaluacionInstructor;
+use Illuminate\Support\Facades\Auth;
 /*use App\EvaluacionXCurso;
 use App\EvaluacionXSeminario;
 use App\Coordinacion;*/
@@ -2622,229 +2623,141 @@ $promedio_p4=[
     // }
 
     public function reporteFinalInstructor($curso_id){
-		//Si el formulario no fue rellenado por un profesor, no hace falta enviar el correo
-		if (Session::has('coordinador_id') or Session::has('superadmin'))
-			return;
+      $curso = Curso::findOrFail($curso_id);
+      $catalogoCurso = $curso->getCatalogoCurso();
+      $evalsCurso = $curso->getEvalsCurso();
+      $p9s = array(); //mejor
+      $sugs = array(); //sug
+      $instructores = $curso->getProfesoresCurso();
+      
+      //TODO:Arreglar rutas en cd.area para redirigir a cd.area y no back por buscador
+      if($evalsCurso->isEmpty())
+        return redirect()->back()->with('danger', 'El curso no cuenta con evaluaciones');
 
-		//Obtenemos el curso evaluado
-		$curso = DB::table('cursos')
-			->where('id',$curso_id)
-			->get();
-		//Obtenemos el catálogo del curso evaluado
-		$catalogoCurso = DB::table('catalogo_cursos')
-			->where('id',$curso[0]->catalogo_id)
-			->get();
-        $evals = 0;
-		//Obtenemos todas las evaluaciones del curso
-        if(strcmp($catalogoCurso[0]->tipo,'S')==0){
-		    $evals = DB::table('_evaluacion_final_seminario as e')
-            ->join('participante_curso as p','p.id','=','e.participante_curso_id')
-			->where('p.curso_id',$curso_id)
-			->get();
-        } else {
-            $evals = DB::table('_evaluacion_final_curso as e')
-            ->join('participante_curso as p','p.id','=','e.participante_curso_id')
-			->where('p.curso_id',$curso_id)
-			->get();
+      foreach($evalsCurso as $eval){
+        if($eval->sug)
+          array_push($sugs, $eval->sug);
+        if($eval->p9)
+          array_push($p9s, $eval->p9);
+      }
+      
+      //Iteramos todas las evaluaciones para ir sumando los valores de las evaluaciones
+      foreach($instructores as $instructor){
+        $evals = $instructor->getEvaluaciones();
+        if($evals->isEmpty())
+          continue;
+        $t_evals = $evals->count();
+        foreach($evals as $eval){
+          if($eval->p1)
+            $instructor->experiencia += $eval->p1;
+          if($eval->p2)
+            $instructor->planeacion += $eval->p2;
+          if($eval->p3)
+            $instructor->puntualidad += $eval->p3;
+          if($eval->p4)
+            $instructor->materiales += $eval->p4;
+          if($eval->p5)
+            $instructor->dudas += $eval->p5;
+          if($eval->p6)
+            $instructor->control += $eval->p6;
+          if($eval->p7)
+            $instructor->interes += $eval->p7;
+          if($eval->p8)
+            $instructor->actitud += $eval->p8;
         }
+        //Obtenemos los promedios de cada profesor
+        $instructor->experiencia = round($instructor->experiencia/$t_evals,2);
+        $instructor->planeacion = round($instructor->planeacion/$t_evals,2);
+        $instructor->puntualidad = round($instructor->puntualidad/$t_evals,2);
+        $instructor->materiales = round($instructor->materiales/$t_evals,2);
+        $instructor->dudas = round($instructor->dudas/$t_evals,2);
+        $instructor->control = round($instructor->control/$t_evals,2);
+        $instructor->interes = round($instructor->interes/$t_evals,2);
+        $instructor->actitud = round($instructor->actitud/$t_evals,2);
+        $instructor->nombre = $instructor->getNombreProfesor();
+      }
+      //TODO:Meter esto a una funcion helper
+      setlocale(LC_ALL,"es_MX");
+      $date = getdate();
+      $dia = '';
+      $mes= '';
+      switch($date["weekday"]){
+        case 'Monday':
+          $dia = 'Lunes';
+          break;
+        case 'Tuesday':
+          $dia = 'Martes';
+          break;
+        case 'Wednesday':
+          $dia = 'Miércoles';
+          break;
+        case 'Thursday':
+          $dia = 'Jueves';
+          break;
+        case 'Friday':
+          $dia = 'Viernes';
+          break;
+        case 'Saturday':
+          $dia = 'Sábado';
+          break;
+        case 'Sunday':
+          $dia = 'Domingo';
+          break;
+      }
 
-
-        if(sizeof($evals) == 0){
-            return redirect()->back()
-              ->with('danger'. 'Curso no cuenta con evaluación');
-        }
-	
-		//Obtenemos los docentes/facilitadores de los cursos y su número
-		$profesorsDatos = DB::table('profesor_curso')
-			->where('curso_id',$curso[0]->id)
-			->get();
-
-		$count = ProfesoresCurso::select($curso_id)
-			->where('curso_id',$curso_id)
-			->count();
-	
-		$profesors = array();
-	
-		//Obtenemos los datos de los docentes
-		foreach($profesorsDatos as $Dato){
-			$profesor = Profesor::find($Dato->id);
-			array_push($profesors,$profesor);
-		}
-
-		//Empezamps la evaluación del curso
-		$mejor = array(); //mejor
-		$sugerencias = array(); //sug
-		$lugar = 'pages.reporte_final_instructores_1';
-        $nombre = 'reporte_instructores_'.$catalogoCurso[0]->nombre_curso.'.pdf';
-		$experiencia1 = 0; //4_1
-		$planeacion1 = 0;	//4_2
-		$puntualidad1 = 0;	//4_3
-		$materiales1 = 0;	//4_4
-		$dudas1 = 0;		//4_5
-		$control1 = 0;		//4_6
-		$interes1 = 0;		//4_6
-		$actitud1 = 0;		//4_8
-		$experiencia2 = 0;
-		$planeacion2 = 0;
-		$puntualidad2 = 0;
-		$materiales2 = 0;
-		$dudas2 = 0;
-		$control2 = 0;
-		$interes2 = 0;
-		$actitud2 = 0;
-		$experiencia3 = 0;
-		$planeacion3 = 0;
-		$puntualidad3 = 0;
-		$materiales3 = 0;
-		$dudas3 = 0;
-		$control3 = 0;
-		$interes3 = 0;
-		$actitud3 = 0;
-
-		//Iteramos todas las evaluaciones para ir sumando los valores de las evaluaciones
-		foreach($evals as $eval){
-
-			$experiencia1 += $eval->p4_1; //4_1
-			$planeacion1 += $eval->p4_2;	//4_2
-			$puntualidad1 += $eval->p4_3;	//4_3
-			$materiales1 += $eval->p4_4;	//4_4
-			$dudas1 += $eval->p4_5;		//4_5
-			$control1 += $eval->p4_6;		//4_6
-			$interes1 += $eval->p4_7;		//4_7
-			$actitud1 += $eval->p4_8;		//4_8
-	
-			//Si hay dos profesores obtenemos la evaluación del segundo docente
-			if($count>=2){
-				$lugar = 'pages.reporte_final_instructores_2';
-				$experiencia2 += $eval->p5_1;
-				$planeacion2 += $eval->p5_2;
-				$puntualidad2 += $eval->p5_3;
-				$materiales2 += $eval->p5_4;
-				$dudas2 += $eval->p5_5;
-				$control2 += $eval->p5_6;
-				$interes2 += $eval->p5_7;
-				$actitud2 += $eval->p5_8;
-			}
-
-			//Si hay tres docentes obtenemos la evaluación del tercero
-			if($count == 3){
-				$lugar = 'pages.reporte_final_instructores_3';
-				$experiencia3 += $eval->p6_1;
-				$planeacion3 += $eval->p6_2;
-				$puntualidad3 += $eval->p6_3;
-				$materiales3 += $eval->p6_4;
-				$dudas3 += $eval->p6_5;
-				$control3 += $eval->p6_6;
-				$interes3 += $eval->p6_7;
-				$actitud3 += $eval->p6_8;
-			}
-
-			array_push($mejor,$eval->mejor);
-			array_push($sugerencias,$eval->sug);
-
-		}
-
-
-		//Obtenemos los promedios de cada profesor
-		$experiencia1 = round($experiencia1/sizeof($evals),2);
-		$planeacion1 = round($planeacion1/sizeof($evals),2);	//4_2
-		$puntualidad1 = round($puntualidad1/sizeof($evals),2);	//4_3
-		$materiales1 = round($materiales1/sizeof($evals),2);	//4_4
-		$dudas1 = round($dudas1/sizeof($evals),2);		//4_5
-		$control1 = round($control1/sizeof($evals),2);		//4_6
-		$interes1 = round($interes1/sizeof($evals),2);		//4_7
-		$actitud1 = round($actitud1/sizeof($evals),2);	
-
-		$experiencia2 = round($experiencia2/sizeof($evals),2);
-		$planeacion2 = round($planeacion2/sizeof($evals),2);	//4_2
-		$puntualidad2 = round($puntualidad2/sizeof($evals),2);	//4_3
-		$materiales2 = round($materiales2/sizeof($evals),2);	//4_4
-		$dudas2 = round($dudas2/sizeof($evals),2);		//4_5
-		$control2 = round($control2/sizeof($evals),2);		//4_6
-		$interes2 = round($interes2/sizeof($evals),2);		//4_7
-		$actitud2 = round($actitud2/sizeof($evals),2);	
-		
-		$experiencia3 = round($experiencia3/sizeof($evals),2);
-		$planeacion3 = round($planeacion3/sizeof($evals),2);	//4_2
-		$puntualidad3 = round($puntualidad3/sizeof($evals),2);	//4_3
-		$materiales3 = round($materiales3/sizeof($evals),2);	//4_4
-		$dudas3 = round($dudas3/sizeof($evals),2);		//4_5
-		$control3 = round($control3/sizeof($evals),2);		//4_6
-		$interes3 = round($interes3/sizeof($evals),2);		//4_7
-		$actitud3 = round($actitud3/sizeof($evals),2);	
-		
-        setlocale(LC_ALL,"es_MX");
-
-        $date = getdate();
-        $dia = '';
-        $mes= '';
-        switch($date["weekday"]){
-            case 'Monday':
-                $dia = 'Lunes';
-                break;
-            case 'Tuesday':
-                $dia = 'Martes';
-                break;
-            case 'Wednesday':
-                $dia = 'Miércoles';
-                break;
-            case 'Thursday':
-                $dia = 'Jueves';
-                break;
-            case 'Friday':
-                $dia = 'Viernes';
-                break;
-            case 'Saturday':
-                $dia = 'Sábado';
-                break;
-            case 'Sunday':
-                $dia = 'Domingo';
-                break;
-        }
-
-        switch($date["mon"]){
-            case 1:
-                $mes = 'enero';
-                break;
-            case 2:
-                $mes = 'febrero';
-                break;
-            case 3:
-                $mes = 'marzo';
-                break;
-            case 4:
-                $mes = 'abril';
-                break;
-            case 5:
-                $mes = 'mayo';
-                break;
-            case 6:
-                $mes = 'junio';
-                break;
-            case 7:
-                $mes = 'julio';
-                break;
-            case 8:
-                $mes = 'agosto';
-                break;
-            case 9:
-                $mes = 'septiembre';
-                break;
-            case 10:
-                $mes = 'octubre';
-                break;
-            case 11:
-                $mes = 'noviembre';
-                break;
-            case 12:
-                $mes = 'diciembre';
-                break;
-        }
-		//Obtenemos el pdf
-		$pdf = PDF::loadView($lugar,array('experiencia1'=>$experiencia1,'planeacion1'=>$planeacion1,'puntualidad1'=>$puntualidad1,'materiales1'=>$materiales1,'dudas1'=>$dudas1,'control1'=>$control1,'interes1'=>$interes1,'actitud1'=>$actitud1,'experiencia2'=>$experiencia2,'planeacion2'=>$planeacion2,'puntualidad2'=>$puntualidad2,'materiales2'=>$materiales2,'dudas2'=>$dudas2,'control2'=>$control2,'interes2'=>$interes2,'actitud2'=>$actitud2,'experiencia3'=>$experiencia3,'planeacion3'=>$planeacion3,'puntualidad3'=>$puntualidad3,'materiales3'=>$materiales3,'dudas3'=>$dudas3,'control3'=>$control3,'interes3'=>$interes3,'actitud3'=>$actitud3,'mejor'=>$mejor,'sugerencias'=>$sugerencias,'catalogo'=>$catalogoCurso[0],'curso'=>$curso[0],'cursos'=>$curso[0],'profesors'=>$profesors,'date'=>$date,'dia'=>$dia, 'mes'=>$mes));	
-
-        return $pdf->download($nombre);
-
+      switch($date["mon"]){
+        case 1:
+          $mes = 'enero';
+          break;
+        case 2:
+          $mes = 'febrero';
+          break;
+        case 3:
+          $mes = 'marzo';
+          break;
+        case 4:
+          $mes = 'abril';
+          break;
+        case 5:
+          $mes = 'mayo';
+          break;
+        case 6:
+          $mes = 'junio';
+          break;
+        case 7:
+          $mes = 'julio';
+          break;
+        case 8:
+          $mes = 'agosto';
+          break;
+        case 9:
+          $mes = 'septiembre';
+          break;
+        case 10:
+          $mes = 'octubre';
+          break;
+        case 11:
+          $mes = 'noviembre';
+          break;
+        case 12:
+          $mes = 'diciembre';
+          break;
+      }
+      //Obtenemos el pdf
+      $lugar = 'pages.reporte_final_instructores';
+      $nombre = 'reporte_instructores_'.$catalogoCurso->nombre_curso.'.pdf';
+      $pdf = PDF::loadView($lugar,array(
+        'instructores' => $instructores,
+        'mejor'=>collect($p9s),
+        'sugerencias'=>collect($sugs),
+        'nombre_curso'=>$catalogoCurso->nombre_curso,
+        'periodo' =>$curso->getPeriodo(),
+        'catalogo'=>$catalogoCurso,
+        'curso'=>$curso,
+        'date'=>$date,
+        'dia'=>$dia,
+        'mes'=>$mes));	
+      return $pdf->download($nombre);
     }
 
     public function asistentesGlobal(String $semestreEnv){
