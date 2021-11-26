@@ -61,9 +61,24 @@ body {
 .small{
 	width: 20%;
 }
+.header{
+    z-index:-1;
+    margin-top: -310px;
+	position: fixed;
+}
+@page {
+margin-top: 350px;
+}
+@page :first{
+margin-top: 350px;
+}
 </style>
 <body>
-<div style="height: 90%">
+<script type="text/php">
+    $GLOBALS["header"] = NULL;
+</script>
+<div class="header">
+    <script type="text/php">$GLOBALS["header"] = $pdf->open_object();</script>
 	<div height="10%">
 		<table style="width: 100%" align="center"  id="tabla_encabezado" height="5%">
 			<tr id="normal">
@@ -122,6 +137,8 @@ body {
 			?>
         </div>
     </div>
+    <script type="text/php">$pdf->close_object();</script>
+</div>
     <div>
         <table width="100%">
             <tr>
@@ -336,9 +353,13 @@ body {
         </table>
 
     </div>
-
-
-</div>
+    <script type="text/php">
+    $pdf->page_script('
+        if ($PAGE_NUM >= 2) {
+            $pdf->add_object($GLOBALS["header"],"add");
+        }
+        ');
+    </script>
 
 </body>
 </html>
