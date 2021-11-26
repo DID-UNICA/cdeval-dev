@@ -20,6 +20,10 @@ class ProfesoresCurso extends Model
     return Profesor::findOrFail($this->profesor_id);
   }
 
+  public function getNombreProfesor(){
+    $prof = Profesor::findOrFail($this->profesor_id);
+    return $prof->nombres.' '.$prof->apellido_paterno.' '.$prof->apellido_materno;
+  }
   public function getEvaluacionByParticipante(int $participante_id){
     return EvaluacionInstructor::where('instructor_id', $this->id)
       ->where('participante_id', $participante_id)->get()->first();

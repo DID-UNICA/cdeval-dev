@@ -1455,6 +1455,7 @@ $promedio_p4=[
         //return $profesoresRecontratar;
         //Retornamos la vista correspondiente (seleccionados por fecah o seleccionados por fecha y coordinacion) con los datos calculados
         return view($lugar)
+        //BEFORE
             ->with('nombres',$nombresCursos)
             ->with('periodo',$request)
             ->with('acreditaron',$acreditaron)
@@ -2195,7 +2196,6 @@ $promedio_p4=[
       $DI=0;
       $Otros=0;
       foreach($evals as $evaluacion){
-        //TODO preguntar si el continue afecta la formula
           if($evaluacion->conocimiento === null)
             continue;
           foreach($evaluacion->conocimiento as $elem){
@@ -2216,7 +2216,7 @@ $promedio_p4=[
                 $Otros++;
               }
           }
-		  }
+      }   
 
       $preguntas = 0;
       $positivas = 0;
@@ -2227,11 +2227,23 @@ $promedio_p4=[
       $preguntas_contenido = 0;
       $preguntas_coordinacion = 0;
 
+      //Arrays para sugerencias, tematicas, conocimiento y horarios
+      $sugs = array();
+      $tematicas = array();
+      $horarioi = array();
+      $horarios = array();
       //Bucle necesario para obtener el numero de preguntas positivas, evaluaciones de cada uno de los instructores y los factores de calidad de contenido, de calidad de la coordinacion, y los factores de calidad de los instructores
       foreach($evals as $evaluacion){
         //Aumentamos el numero de alumnos que respondieron el cuestionario
         $alumnos++;
-        
+        if($evaluacion->sug)
+          array_push($sugs, $evaluacion->sug);
+        if($evaluacion->tematica)
+          array_push($tematicas, $evaluacion->tematica);
+        if($evaluacion->horarioi)
+          array_push($horarioi, $evaluacion->horarioi);
+        if($evaluacion->horarios)
+          array_push($horarios, $evaluacion->horarios);
         //Desde 1_1 a 1_5 obtenemos el factor de calidad del contenido ($respuestasContenido/$alumnos*5) valor >= 60
         if($evaluacion->p1_1 >= 50){
           $preguntas++;
@@ -2337,11 +2349,9 @@ $promedio_p4=[
       //Queremos obtener todas las evaluaciones para luego comparar promedio, 
       // minimo y maximo del instructor
       $instructores = $curso->getProfesoresCurso();
+      $ct_instructores = 0;
       foreach($instructores as $instructor){
         $evalInsts = $instructor->getEvaluaciones();
-        // ${'respuestasInstructores'.$instructor->id} = 0;
-        // $respuestasInstructores2 = 0;
-        // $respuestasInstructores3 = 0;
         ${'respuestasInstructores'.$instructor->id} = 0;
         ${'alumnos_eval_instructor'.$instructor->id} = 0;
         ${'respuesta_individual'.$instructor->id} = 0;
@@ -2457,14 +2467,12 @@ $promedio_p4=[
 		    //Si hay un instructor obtenemos su factor
 		    if(${'alumnos_eval_instructor'.$instructor->id} != 0)
 			    ${'factor_instructor'.$instructor->id} = round(${'respuestasInstructores'.$instructor->id} / (${'alumnos_eval_instructor'.$instructor->id}),2);
-        //TODO: Guardar factor_instructor minimo y maximo para envio a la vista
         $instructor->factor = ${'factor_instructor'.$instructor->id};
         $instructor->minimo = ${'minimo'.$instructor->id};
         $instructor->maximo = ${'maximo'.$instructor->id};
-        
+        $ct_instructores = $ct_instructores + $instructor->factor;
       }
-      // return $instructores;
-      // $envio = 'pages.reporte_final_curso';
+      $ct_instructores = $ct_instructores/$instructores->count();
       $envioPDF = 'pages.validacion';
       //En caso de no haber alumnos ni preguntas (se pide el resumen de un curso no evaluado anteriormente) pasamos su valor a 1 para evitar division by zero exception
       if($alumnos == 0)
@@ -2480,19 +2488,6 @@ $promedio_p4=[
       $factor_respuestas_positivas = round($positivas*100 / $preguntas, 2);
       $factor_contenido = round($respuestasContenido / ($preguntas_contenido),2);
       $factor_coordinacion = round($respuestasCoordinacion / ($preguntas_coordinacion),2);
-
-    //  Obtenemos el numero de horas a partir del numero de sesiones y las horas de cada sesion
-		// $horas_inicio = explode(':',$curso[0]->hora_inicio);
-		// $horas_fin = explode(':',$curso[0]->hora_fin);
-
-    //     $inicio = intval($horas_inicio[0]) + floatval($horas_inicio[1]/100);
-    //     $fin = intval($horas_fin[0]) + floatval($horas_fin[1]/100);
-
-    //     $numero_horas = floatval($curso[0]->numero_sesiones) * ($fin-$inicio);
-
-    //     $catalogo_curso = DB::table('catalogo_cursos')
-    //         ->where('id',$curso[0]->catalogo_id)
-    //         ->get();
       $numero_horas = $catalogoCurso->duracion_curso;
       $nombre = $catalogoCurso->getTipoCadena().'_'
         .$catalogoCurso->nombre_curso.'_'.$curso->semestre_anio.'_'
@@ -2500,39 +2495,42 @@ $promedio_p4=[
         .$curso->semestre_si.
         '.pdf';
       $pdf = PDF::loadView($envioPDF,array(
-        'evals'=>$evals,
-        'curso_id'=>$curso->id,
-        'catalogoCurso_id'=>$catalogoCurso->id,
-        'participantes'=>$participantes,
-        'factor_acreditacion'=>$factor_acreditacion,
+        'nombre_curso' => $catalogoCurso->nombre_curso,
+        'periodo'=> $curso->getPeriodo(),
+        'nombre_instructores' => $curso->getInstructores(),
+        'instructores' => $instructores,
+        'fecha_imparticion'=> 'TODO',
+        'cupo_maximo'=>$curso->cupo_maximo,
+        'hora_inicio'=> $curso->hora_inicio,
+        'hora_fin'=> $curso->hora_fin,
+        'duracion'=> $catalogoCurso->duracion_curso,
+        'sede' => $curso->getSede()->sede,
+        'inscritos' => $participantes->count(),
+        'asistieron'=>$asistieron,
+        'acreditaron'=>$acreditado,
+        'contestaron'=>$contestaron,
+        //factor ocupacion
+        'ocupacion'=>$ocupacion,
+        //factor recomendacion
         'factor'=>$factor,
-        'alumnos'=>$alumnos,
+        'factor_acreditacion'=>$factor_acreditacion,
+        //factor de calidad
+        'positivas'=>$factor_respuestas_positivas,
+        'sugerencias' => collect($sugs),
+        'tematicas'=> collect($tematicas),
+        'horarioi' => collect($horarioi),
+        'horarios' => collect($horarios),
+        //Criterio de aceptación de contenido
+        'contenido'=>$factor_contenido,
+        //Criterio de aceptacion de instructor
+        'ct_instructores' =>$ct_instructores,
+        //Criterio de aceptacion de coordinacion
+        'factor_coordinacion'=>$factor_coordinacion,
         'DP'=>$DP,
         'DH'=>$DH,
         'CO'=>$CO,
         'DI'=>$DI,
         'Otros'=>$Otros,
-        'ocupacion'=>$ocupacion,
-        'positivas'=>$factor_respuestas_positivas,
-        'contenido'=>$factor_contenido,
-        'factor_coordinacion'=>$factor_coordinacion,
-        'curso'=>$curso,
-        'salon'=>$curso->getSede(),
-        'acreditaron'=>$acreditado,
-        'instructores' => $instructores,
-        // 'instructor'=>${'factor_instructor'.$instructor->id},
-        // 'minimo'=>${'minimo'.$instructor->id},
-        // 'maximo'=>${'maximo'.$instructor->id},
-        // 'instructor2'=>$factor_instructor2,
-        // 'minimo2'=>$minimo2,'maximo2'=>$maximo2,
-        // 'instructor3'=>$factor_instructor3,
-        // 'minimo3'=>$minimo3,
-        // 'maximo3'=>$maximo3,
-        'numero_horas'=>$numero_horas,
-        'asistieron'=>$asistieron,
-        'nombreInstructor'=>$curso->getCadenaInstructores(),
-        'catalogo'=>$catalogoCurso,
-        'contestaron'=>$contestaron
       ));	
       return $pdf->download($nombre);
     }
