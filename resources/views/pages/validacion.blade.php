@@ -283,20 +283,28 @@ body {
             <tr>
                 <th>12. HORARIOS SOLICITADOS</th>
             </tr>
+            <table width="50%">
             <tr>
-                <th style="width: 50%" class="f">Horario semestral</th>
-                <th style="width: 50%" class="f">Horario intersemestral</th>
+              <th style="width: 50%" class="f">Horario semestral</th>
             </tr>
-            <?php
-                foreach($horarios as $horario){
-                    echo "<tr>";
-                    echo "<td style=\"width: 50%\" class= \"n\">$horario</td>";
-                }
-                foreach($horarioi as $horario)
-                    echo "<td style=\"width: 50%\" class=\"n\">$horario</td>";
-                    echo "</tr>";
-            ?>
+            @foreach($horarios as $horaris)
+              <tr>
+                  <td style="width: 50%;" class="n">{{$horaris}}</td>
+              </tr>
+            @endforeach
         </table>
+        <table style="float:right" width="50%">
+            <tr>
+              <th style="width: 50%" class="f">Horario intersemestral</th>
+            </tr>
+              @foreach($horarioi as $horarii)
+                <tr>
+                  <td style="width: 50%;" class="n">{{$horarii}}</td>
+                </tr>
+              @endforeach
+        </table>
+        </table>
+        
         <br>
         <table width="100%">
             <tr>

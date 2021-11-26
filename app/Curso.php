@@ -92,7 +92,7 @@ class Curso extends Model
   }
 
   public function getPeriodo(){
-    return $this->semestre_anio.'-'.$this->semestre_pi.'_'.$this->semestre_si;
+    return $this->semestre_anio.'-'.$this->semestre_pi.$this->semestre_si;
   }
 }
 
