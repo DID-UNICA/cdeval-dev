@@ -33,16 +33,18 @@ class Curso extends Model
 
     public function getInstructores(){
        $instructores = Profesor::join('profesor_curso', 'profesors.id', '=', 'profesor_curso.profesor_id')
-       ->join('cursos', 'cursos.id', '=', 'profesor_curso.curso_id')
-       ->where('cursos.id', '=', $this->id)
-       ->get();
+       ->where('profesor_curso.curso_id', '=', $this->id)
+       ->get('profesors.nombres','profesors.apellido_paterno','profesors.apellido_materno');
         return $instructores;
     }
 
     public function getProfesoresCurso(){
-       return ProfesoresCurso::where('curso_id', $this->id) ->get();
+       return ProfesoresCurso::where('curso_id', $this->id)->get();
    }
 
+   public function getParticipantesCursoId(){
+    return ParticipantesCurso::where('curso_id', $this->id)->get('id');
+}
     public function getCadenaInstructores(){
         $instructores = ProfesoresCurso::where('curso_id',$this->id)->get();
 
@@ -76,6 +78,21 @@ class Curso extends Model
     public function getToday(){
       $date = \Carbon\Carbon::now()->locale('es_MX');
       return $date->isoFormat('dddd, DD MMMM YYYY');
+  }
+
+  public function getEvalsCurso(){
+    $participantes = $this->getParticipantesCursoId();
+    if($participantes->isEmpty())
+      return NULL;
+    return EvaluacionCurso::whereIn('participante_curso_id', $participantes)->get();
+  }
+
+  public function getSede(){
+    return DB::table('salons')->where('id', $this->salon_id)->get('sede')->first();
+  }
+
+  public function getPeriodo(){
+    return $this->semestre_anio.'-'.$this->semestre_pi.$this->semestre_si;
   }
 }
 

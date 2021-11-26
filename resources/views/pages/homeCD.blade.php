@@ -8,7 +8,7 @@
     <br>
     <br>
     <div id="inner">
-    <div class="top-bar">            
+    <div class="top-bar">
     </div>
     <section class="content-inner">
       <br>

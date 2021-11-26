@@ -32,5 +32,21 @@ protected $fillable = [
     {
         return $this->coordinacion_id;
     }
+    public function getTipoCadena(){
+      if($this->tipo === 'CT')
+        return 'Curso';
+      if($this->tipo === 'C')
+        return 'Curso';
+      if($this->tipo === 'T')
+        return 'Curso';
+      if($this->tipo === 'E')
+        return 'Evento';
+      if($this->tipo === 'S')
+        return 'Seminario';
+      if($this->tipo === 'D')
+        return 'Módulo de Diplomado';
+      if($this->tipo === 'F')
+        return 'Foro';
+    }
 
 }

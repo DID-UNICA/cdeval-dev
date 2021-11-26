@@ -69,7 +69,6 @@ body {
 @page {
 margin-top: 350px;
 }
-
 @page :first{
 margin-top: 350px;
 }
@@ -123,15 +122,15 @@ margin-top: 350px;
         <div align="center">
         <?php
 				//50
-				if(strlen($catalogo->nombre_curso)>50){
-            		echo "<p style=\"float: left; width: 100%; font-size: 22px; line-heigh:5px;\" class=\"n\"> $catalogo->nombre_curso </p>";
+				if(strlen($nombre_curso)>50){
+            		echo "<p style=\"float: left; width: 100%; font-size: 22px; line-heigh:5px;\" class=\"n\"> $nombre_curso </p>";
 					echo "<br>";
-            		echo "<p style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\"> $curso->semestre_anio-$curso->semestre_pi$curso->semestre_si</p>";
+            		echo "<p style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\"> $periodo</p>";
             		echo "<div style=\"clear: both\"></div>";
 					echo "<hr>";
 				}else{
-					echo "<div style=\"float: left; width: 100%; font-size: 22px;\" class=\"n\">$catalogo->nombre_curso</div>";
-					echo "<div style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\">$curso->semestre_anio-$curso->semestre_pi$curso->semestre_si</div>";
+					echo "<div style=\"float: left; width: 100%; font-size: 22px;\" class=\"n\">$nombre_curso</div>";
+					echo "<div style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\">$periodo</div>";
 					echo "<div style=\"clear: both\"></div>";
 					echo "<hr>";
 				}
@@ -149,29 +148,27 @@ margin-top: 350px;
                 <td style="font-weight: bold" class="n">a) Instructor</td>
                 <td class="n">
                 <ul>
-                <?php
-                    foreach($nombreInstructor as $instructorCurso){
-                        echo "<li> $instructorCurso->nombres $instructorCurso->apellido_paterno $instructorCurso->apellido_materno </li>";
-                    }
-                ?>
+                    @foreach($instructores as $instructor)
+                        <li> {{$instructor->getNombreProfesor()}} </li>
+                    @endforeach
                 </ul>
                 </td>
             </tr>
             <tr>
                 <td style="font-weight: bold" class="n">b) Fecha de impartición</td>
-                <td style="width=10%" class="n">{{$curso->fecha_inicio}}, {{$curso->fecha_fin}}</td>
+                <td style="width=10%" class="n">{{$fecha_imparticion}}</td>
                 <td style="font-weight: bold; margin-left:50px white; width=40%" class="n" >e) Capacidad</td>
-                <td style="width=10%" class="n">{{$curso->cupo_maximo}}</td>
+                <td style="width=10%" class="n">{{$cupo_maximo}}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold" class="n">c) Horario</td>
-                <td class="n">{{$curso->hora_inicio}}, {{$curso->hora_fin}}</td>
+                <td class="n">{{$hora_inicio}}, {{$hora_fin}}</td>
                 <td style="font-weight: bold ; margin-left: 50px white;" class="n">f) Total de horas</td>
-                <td class="n">{{$numero_horas}}</td>
+                <td class="n">{{$duracion}}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold" class="n">d) Lugar</td>
-                <td class="n">{{$salon->sede}}</td>
+                <td class="n">{{$sede}}</td>
                 
             </tr>     
         </table>
@@ -182,7 +179,7 @@ margin-top: 350px;
             </tr>
             <tr>
                 <td style="font-weight: bold" class="n">a) Inscritos</td>
-                <td class="n"><?php echo sizeof($participantes); ?></td>
+                <td class="n">{{$inscritos}}</td>
                 <td style="font-weight: bold ; margin-left: 50px white;" class="n" >c) Acreditaron</td>
                 <td class="n">{{$acreditaron}}</td>
             </tr>
@@ -225,21 +222,23 @@ margin-top: 350px;
                 <th class="f">Máximo</th>
                 <th class="f">Juicio Sumario</th>
             </tr>
+        @foreach($instructores as $instructor)
             <tr>
-                <td style="width: 65%" class="n" >{{$nombreInstructor[0]->nombres}} {{$nombreInstructor[0]->apellido_paterno}} {{$nombreInstructor[0]->apellido_materno}}</td>
-                <td class="n">{{$instructor}}</td>
-                <td class="n">{{$minimo}}</td>
-                <td class="n">{{$maximo}}</td>
-                <td class="n"><?php
-                    if($factor >= 80){
-                        echo "Si";
-                    }else{
-                        echo "No";
-                    }
-                ?></td>
+                <td style="width: 65%" class="n" >{{$instructor->getNombreProfesor()}}</td>
+                <td class="n">{{$instructor->factor}}</td>
+                <td class="n">{{$instructor->minimo}}</td>
+                <td class="n">{{$instructor->maximo}}</td>
+                <td class="n">
+                    @if($instructor->factor >= 80)
+                        Si
+                    @else
+                        No
+                    @endif
+                </td>
             </tr>
-        </table>
+        @endforeach
 
+        </table>
         <br>
         <table width="100%">
             <tr>
@@ -260,9 +259,9 @@ margin-top: 350px;
                 <th>9. RECOMENDACIONES</th>
             </tr>
             <?php
-                foreach($evals as $evaluacion){
+                foreach($sugerencias as $sug){
                     echo "<tr>";
-                    echo "<td class=\"n\">$evaluacion->sug</td>";
+                    echo "<td class=\"n\">$sug</td>";
                     echo "</tr>";
                 }
             ?>
@@ -289,9 +288,9 @@ margin-top: 350px;
                 <th>11. TEMÁTICA SOLICITADAS</th>
             </tr>
             <?php
-                foreach($evals as $evaluacion){
+                foreach($tematicas as $tematica){
                     echo "<tr>";
-                    echo "<td class=\"n\">$evaluacion->tematica</td>";
+                    echo "<td class=\"n\">$tematica</td>";
                     echo "</tr>";
                 }
             ?>
@@ -301,19 +300,28 @@ margin-top: 350px;
             <tr>
                 <th>12. HORARIOS SOLICITADOS</th>
             </tr>
+            <table width="50%">
             <tr>
-                <th style="width: 50%" class="f">Horario semestral</th>
-                <th style="width: 50%" class="f">Horario intersemestral</th>
+              <th style="width: 50%" class="f">Horario semestral</th>
             </tr>
-            <?php
-                foreach($evals as $evaluacion){
-                    echo "<tr>";
-                    echo "<td style=\"width: 50%\" class= \"n\">$evaluacion->horarios</td>";
-                    echo "<td style=\"width: 50%\" class=\"n\">$evaluacion->horarioi</td>";
-                    echo "</tr>";
-            }
-            ?>
+            @foreach($horarios as $horaris)
+              <tr>
+                  <td style="width: 50%;" class="n">{{$horaris}}</td>
+              </tr>
+            @endforeach
         </table>
+        <table style="float:right" width="50%">
+            <tr>
+              <th style="width: 50%" class="f">Horario intersemestral</th>
+            </tr>
+              @foreach($horarioi as $horarii)
+                <tr>
+                  <td style="width: 50%;" class="n">{{$horarii}}</td>
+                </tr>
+              @endforeach
+        </table>
+        </table>
+        
         <br>
         <table width="100%">
             <tr>
@@ -329,7 +337,7 @@ margin-top: 350px;
             <br>
             <tr>
                 <th style="width: 10%" >Instructores: </th>
-                <td style="width: 90%" class="n" >{{$instructor}}</td>
+                <td style="width: 90%" class="n" >{{$ct_instructores}}</td>
             </tr>
             <br>
             <tr>
@@ -345,15 +353,13 @@ margin-top: 350px;
         </table>
 
     </div>
-
-
-
-<script type="text/php">
+    <script type="text/php">
     $pdf->page_script('
         if ($PAGE_NUM >= 2) {
             $pdf->add_object($GLOBALS["header"],"add");
         }
         ');
     </script>
+
 </body>
 </html>
