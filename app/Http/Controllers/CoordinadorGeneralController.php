@@ -2076,48 +2076,36 @@ $promedio_p4=[
     }
 
     public function enviarArea($semestre, $periodo, $coordinacion_id){
+      $evals_curso = collect();
+      // $evals_instructores = collect();
       $fecha = explode('-',$semestre);
       $coordinacion = Coordinacion::findOrFail($coordinacion_id);
-      if($coordinacion->es_admin)
-        $cursos = Curso::join('catalogo_cursos', 'catalogo_cursos.id', '=', 'cursos.catalogo_id')
-          ->where('cursos.semestre_anio', $fecha[0])
-          ->where('cursos.semestre_pi', $fecha[1])
-          ->where('cursos.semestre_si', $periodo)
-          ->get();
-      else
-        $cursos = Curso::join('catalogo_cursos', 'catalogo_cursos.id', '=', 'cursos.catalogo_id')
-          ->where('cursos.semestre_anio', $fecha[0])
-          ->where('cursos.semestre_pi', $fecha[1])
-          ->where('cursos.semestre_si', $periodo)
-          ->where('catalogo_cursos.coordinacion_id', $coordinacion->id)
-          ->get();
-
-      $t_evals = array();
-      $inscritos = 0;
-      $acreditaron = 0;
-      $capacidad_total = 0;
-      $asistieron = 0;
-
-      foreach($cursos as $curso){
-        $capacidad_total += intval($curso->cupo_maximo);
-        $participantes = $curso->getParticipantes();
-        $inscritos += sizeof($participantes);
-        $evals = $curso->getEvalsCurso();
-        if($evals->isNotEmpty())
-          array_push($t_evals, $evals);
-        foreach($participantes as $participante){
-          if($participante->acreditacion == 1)
-            $acreditaron++;
-          if($participante->asistencia == 1)
-            $asistieron++;
-        }
-      }
-      if(sizeof($t_evals) === 0)
+      $cursos = Curso::join('catalogo_cursos', 'catalogo_cursos.id', '=', 'cursos.catalogo_id')
+        ->where('cursos.semestre_anio', $fecha[0])
+        ->where('cursos.semestre_pi', $fecha[1])
+        ->where('cursos.semestre_si', $periodo)
+        ->where('catalogo_cursos.coordinacion_id', $coordinacion->id)
+        ->get();
+      if($cursos->isEmpty())
         return redirect()->route('cd.area', [$semestre, $periodo, $coordinacion_id])
           ->with('warning', 
-          'El periodo seleccionado con anterioridad, no cuenta con evaluaciones para realizar este reporte.');
-      //TODO TERMINAR
-      return '404';
+          'El periodo seleccionado con anterioridad, no cuenta con cursos asignados.');
+
+      //Variables para enviar a la vista
+      $inscritos = 0;
+      $acreditados = 0;
+      $asistentes = 0;
+      $contestaron = 0;
+
+      $factor_ocupacion = 0;
+      $factor_recomendacion = 0;
+      $factor_acreditacion = 0;
+
+      //Variables para calculos
+      $capacidad = 0;
+
+      // $capacidad_total = 0;
+      // $nombres_curso = array();
       // $DP=0;
       // $DH=0;
       // $CO=0;
@@ -2129,7 +2117,6 @@ $promedio_p4=[
       // $DItematica = array();
       // $Otrostematica = array();
       // $alumnos = 0;
-      // $contestaron = 0;
       // $recomendaciones = 0;
       // $alumnosRecomendaron = 0;
       // $positivas = 0;
@@ -2143,31 +2130,72 @@ $promedio_p4=[
       // $preguntas_contenido = 0;
       // $preguntas_coordinacion = 0;
       // $cont_prom = array();
-
       // $desempenioProfesores = array();
-      // foreach($t_evals as $evals)
-      //   foreach($evals as $evaluacion){
-      //     $array = explode(',',$evaluacion->conocimiento);
-      //     foreach($array as $elem){
-      //         if($elem[2] == 1 || $elem[1] == 1){
-      //             $DP++;
-      //             array_push($DPtematica,$evaluacion->tematica);
-      //         }else if($elem[2] == 2 || $elem[1] == 2){
-      //             $DH++;
-      //             array_push($DHtematica,$evaluacion->tematica);
-      //         }else if($elem[2] == 3 || $elem[1] == 3){
-      //             $CO++;
-      //             array_push($COtematica,$evaluacion->tematica);
-      //         }else if($elem[2] == 4 || $elem[1] == 4){
-      //             $DI++;
-      //             array_push($DItematica,$evaluacion->tematica);
-      //         }else if($elem[2] == 5 || $elem[1] == 5){
-      //             $Otros++;
-      //             array_push($Otrostematica,$evaluacion->tematica);
-      //         }
-      //     }
-      //   }
-      
+      // $evals = collect();
+
+      //Recorremos cada curso
+      foreach($cursos as $curso){
+        
+        //Datos por curso
+        $instructores = $curso->getProfesoresCurso();
+        $participantes = $curso->getParticipantes();
+        $evals = $evals->merge($curso->getEvalsCurso());
+
+        // Calculos por curso
+        $inscritos += sizeof($participantes);
+        $capacidad += intval($curso->cupo_maximo);
+        // return $curso;
+        // array_push($nombres_curso, $curso->nombre_curso);
+
+        // // if($evals->isNotEmpty())
+        // //   array_push($t_evals, $evals);
+
+        //Calculos por participant del curso
+        foreach($participantes as $participante){
+          if($participante->acreditacion == 1)
+            $acreditados++;
+          if($participante->asistencia == 1)
+            $asistentes++;
+          if($participante->contesto_hoja_evaluacion == 1)
+            $contestaron++;
+        }
+
+        // //Calculos por evaluacion del curso
+        // foreach($evals as $eval){
+        //   $array = explode(',',$evaluacion->conocimiento);
+        //   foreach($array as $elem){
+        //     if($elem[2] == 1 || $elem[1] == 1){
+        //       $DP++;
+        //       array_push($DPtematica,$evaluacion->tematica);
+        //     }else if($elem[2] == 2 || $elem[1] == 2){
+        //       $DH++;
+        //       array_push($DHtematica,$evaluacion->tematica);
+        //     }else if($elem[2] == 3 || $elem[1] == 3){
+        //       $CO++;
+        //       array_push($COtematica,$evaluacion->tematica);
+        //     }else if($elem[2] == 4 || $elem[1] == 4){
+        //       $DI++;
+        //       array_push($DItematica,$evaluacion->tematica);
+        //     }else if($elem[2] == 5 || $elem[1] == 5){
+        //       $Otros++;
+        //       array_push($Otrostematica,$evaluacion->tematica);
+        //     }
+        //   }
+        // }
+
+        //Calculos por instructores del curso
+      }
+
+      $factor_ocupacion = ($asistentes * 100) / $capacidad;
+      if(sizeof($t_evals) === 0)
+        return redirect()->route('cd.area', [$semestre, $periodo, $coordinacion_id])
+          ->with('warning', 
+          'El periodo seleccionado con anterioridad, no cuenta con evaluaciones para realizar este reporte.');
+      //TODO TERMINAR
+
+      // return pdf
+      //   ->with('periodo', $semestre.$periodo)
+      //   ->with('inscritos',)
     }
 
     public function reporteFinalCurso($curso_id){
