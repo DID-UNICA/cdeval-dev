@@ -83,7 +83,7 @@ class Curso extends Model
   public function getEvalsCurso(){
     $participantes = $this->getParticipantesCursoId();
     if($participantes->isEmpty())
-      return NULL;
+      return collect();
     return EvaluacionCurso::whereIn('participante_curso_id', $participantes)->get();
   }
 
