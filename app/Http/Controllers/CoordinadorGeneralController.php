@@ -2145,6 +2145,73 @@ $promedio_p4=[
     }
 
     public function reporteFinalCurso($curso_id){
+         //TODO:Meter esto a una funcion helper
+      setlocale(LC_ALL,"es_MX");
+      $date = getdate();
+      $dia = '';
+      $mes= '';
+      switch($date["weekday"]){
+        case 'Monday':
+          $dia = 'Lunes';
+          break;
+        case 'Tuesday':
+          $dia = 'Martes';
+          break;
+        case 'Wednesday':
+          $dia = 'Miércoles';
+          break;
+        case 'Thursday':
+          $dia = 'Jueves';
+          break;
+        case 'Friday':
+          $dia = 'Viernes';
+          break;
+        case 'Saturday':
+          $dia = 'Sábado';
+          break;
+        case 'Sunday':
+          $dia = 'Domingo';
+          break;
+      }
+
+      switch($date["mon"]){
+        case 1:
+          $mes = 'enero';
+          break;
+        case 2:
+          $mes = 'febrero';
+          break;
+        case 3:
+          $mes = 'marzo';
+          break;
+        case 4:
+          $mes = 'abril';
+          break;
+        case 5:
+          $mes = 'mayo';
+          break;
+        case 6:
+          $mes = 'junio';
+          break;
+        case 7:
+          $mes = 'julio';
+          break;
+        case 8:
+          $mes = 'agosto';
+          break;
+        case 9:
+          $mes = 'septiembre';
+          break;
+        case 10:
+          $mes = 'octubre';
+          break;
+        case 11:
+          $mes = 'noviembre';
+          break;
+        case 12:
+          $mes = 'diciembre';
+          break;
+      }
       $curso = Curso::findOrFail($curso_id);
       $catalogoCurso = $curso->getCatalogoCurso();
       $participantes = $curso->getParticipantes();
@@ -2538,6 +2605,9 @@ $promedio_p4=[
         'DH'=>$DH,
         'CO'=>$CO,
         'DI'=>$DI,
+        'dia'=>$dia,
+        'mes' =>$mes,
+        'date' =>$date,
         'Otros'=>$Otros,
       ));	
       return $pdf->download($nombre);
