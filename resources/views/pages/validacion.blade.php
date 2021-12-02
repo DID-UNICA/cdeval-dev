@@ -351,7 +351,7 @@ margin-top: 350px;
             </tr>
 
         </table>
-
+    <p>{{$dia}}, {{$date["mday"]-1}} de {{$mes}} de {{$date["year"]}}</p>
     </div>
     <script type="text/php">
     $pdf->page_script('
