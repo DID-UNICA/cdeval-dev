@@ -687,7 +687,7 @@ $promedio_p4=[
 
         $cont_prom = array();
 
-        $desempenioProfesores = array(); 
+        $desempenioProfesores = array();
 
         foreach($evaluacionesCursos as $curso){
             $curso_id = ParticipantesCurso::findOrFail($curso[0]->participante_curso_id)->curso_id;
@@ -2076,72 +2076,126 @@ $promedio_p4=[
     }
 
     public function enviarArea($semestre, $periodo, $coordinacion_id){
-        //Obtenemos la fecha y la coordinacion seleccionadas por el usuario
-        $fecha = explode('-',$semestre);
+      $evals_curso = collect();
+      // $evals_instructores = collect();
+      $fecha = explode('-',$semestre);
+      $coordinacion = Coordinacion::findOrFail($coordinacion_id);
+      $cursos = Curso::join('catalogo_cursos', 'catalogo_cursos.id', '=', 'cursos.catalogo_id')
+        ->where('cursos.semestre_anio', $fecha[0])
+        ->where('cursos.semestre_pi', $fecha[1])
+        ->where('cursos.semestre_si', $periodo)
+        ->where('catalogo_cursos.coordinacion_id', $coordinacion->id)
+        ->get();
+      if($cursos->isEmpty())
+        return redirect()->route('cd.area', [$semestre, $periodo, $coordinacion_id])
+          ->with('warning', 
+          'El periodo seleccionado con anterioridad, no cuenta con cursos asignados.');
 
-        $coordinacion_id = $coordinacion_id;
-        $coordinaciones = DB::table('coordinacions')
-            ->where('id',$coordinacion_id)
-            ->get();
+      //Variables para enviar a la vista
+      $inscritos = 0;
+      $acreditados = 0;
+      $asistentes = 0;
+      $contestaron = 0;
 
-        //Buscamos los cursos de dicha coordinacion
-        $catalogs = DB::table('catalogo_cursos')
-            ->where('coordinacion_id',$coordinacion_id)
-            ->get();
+      $factor_ocupacion = 0;
+      $factor_recomendacion = 0;
+      $factor_acreditacion = 0;
 
-        //return $request->get('periodo');
-        //Buscamos los cursos de dicha fecha
-        $cursosFecha = DB::table('cursos')
-            ->where([['semestre_anio',$fecha[0]],['semestre_pi',$fecha[1]],['semestre_si',$periodo]])
-            ->get();
+      //Variables para calculos
+      $capacidad = 0;
 
-        $cursos = array();
+      // $capacidad_total = 0;
+      // $nombres_curso = array();
+      // $DP=0;
+      // $DH=0;
+      // $CO=0;
+      // $DI=0;
+      // $Otros=0;
+      // $DPtematica = array();
+      // $DHtematica = array();
+      // $COtematica = array();
+      // $DItematica = array();
+      // $Otrostematica = array();
+      // $alumnos = 0;
+      // $recomendaciones = 0;
+      // $alumnosRecomendaron = 0;
+      // $positivas = 0;
+      // $preguntas = 0;
+      // $respuestasContenido = 0;
+      // $respuestasCoordinacion = 0;
+      // $horariosCurso = array();
+      // $profesoresRecontratar = array();
+      // $curso_recomendaron = 0;
+      // $evaluacionProfesor = 0;
+      // $preguntas_contenido = 0;
+      // $preguntas_coordinacion = 0;
+      // $cont_prom = array();
+      // $desempenioProfesores = array();
+      // $evals = collect();
+
+      //Recorremos cada curso
+      foreach($cursos as $curso){
         
-        //Buscamos los cursos que coinciden en fecha y coordinacion
-        foreach($catalogs as $catalogo){
-            foreach($cursosFecha as $curso){
-                if($curso->catalogo_id == $catalogo->id){
-                    array_push($cursos,$curso);
-                    break;
-                }
-            }
+        //Datos por curso
+        $instructores = $curso->getProfesoresCurso();
+        $participantes = $curso->getParticipantes();
+        $evals = $evals->merge($curso->getEvalsCurso());
+
+        // Calculos por curso
+        $inscritos += sizeof($participantes);
+        $capacidad += intval($curso->cupo_maximo);
+        // return $curso;
+        // array_push($nombres_curso, $curso->nombre_curso);
+
+        // // if($evals->isNotEmpty())
+        // //   array_push($t_evals, $evals);
+
+        //Calculos por participant del curso
+        foreach($participantes as $participante){
+          if($participante->acreditacion == 1)
+            $acreditados++;
+          if($participante->asistencia == 1)
+            $asistentes++;
+          if($participante->contesto_hoja_evaluacion == 1)
+            $contestaron++;
         }
 
-        $evaluacionesCursos = array();
-        foreach($cursos as $curso){
+        // //Calculos por evaluacion del curso
+        // foreach($evals as $eval){
+        //   $array = explode(',',$evaluacion->conocimiento);
+        //   foreach($array as $elem){
+        //     if($elem[2] == 1 || $elem[1] == 1){
+        //       $DP++;
+        //       array_push($DPtematica,$evaluacion->tematica);
+        //     }else if($elem[2] == 2 || $elem[1] == 2){
+        //       $DH++;
+        //       array_push($DHtematica,$evaluacion->tematica);
+        //     }else if($elem[2] == 3 || $elem[1] == 3){
+        //       $CO++;
+        //       array_push($COtematica,$evaluacion->tematica);
+        //     }else if($elem[2] == 4 || $elem[1] == 4){
+        //       $DI++;
+        //       array_push($DItematica,$evaluacion->tematica);
+        //     }else if($elem[2] == 5 || $elem[1] == 5){
+        //       $Otros++;
+        //       array_push($Otrostematica,$evaluacion->tematica);
+        //     }
+        //   }
+        // }
 
-            //Las evaluaciones finales de los cursos
-            $eval = DB::table('_evaluacion_final_curso as ec')
-                ->join('participante_curso as pc', 'pc.id', '=', 'ec.participante_curso_id')
-                ->where('pc.curso_id',$curso->id)
-                ->select('ec.*')
-                ->get();
-            
-            //Las evaluaciones finales de los seminarios
-            $eval2 = DB::table('_evaluacion_final_seminario as es')
-              ->join('participante_curso as pc', 'pc.id', '=', 'es.participante_curso_id')
-              ->where('curso_id',$curso->id)
-              ->select('es.*')
-              ->get();
+        //Calculos por instructores del curso
+      }
 
-            //Si hay evaluacions finales de cursos los incluimos en el arreglo de evaluacionesCursos
-            if(sizeof($eval)>0){
-                array_push($evaluacionesCursos,$eval);
-            }
-            //Si hay evaluacions finales de seminarios los incluimos en el arreglo de evaluacionesCursos
-            if(sizeof($eval2)>0){
-                array_push($evaluacionesCursos,$eval2);
-            }
-        }
+      $factor_ocupacion = ($asistentes * 100) / $capacidad;
+      if(sizeof($t_evals) === 0)
+        return redirect()->route('cd.area', [$semestre, $periodo, $coordinacion_id])
+          ->with('warning', 
+          'El periodo seleccionado con anterioridad, no cuenta con evaluaciones para realizar este reporte.');
+      //TODO TERMINAR
 
-        if(sizeof($evaluacionesCursos)==0){
-          return redirect()->back()->with('danger', 'Periodo no cuenta con evaluación');
-        }
-
-        //Pasamos el nombre de la coordinacion y la vista a retornar
-        $nombreCoordinacion = $coordinaciones[0]->nombre_coordinacion;
-        $lugar = "pages.reporte_final_area";
-        return $this->enviarVista($semestre, $cursos, $nombreCoordinacion, $lugar,1,'elegir.coordinacion',$periodo);
+      // return pdf
+      //   ->with('periodo', $semestre.$periodo)
+      //   ->with('inscritos',)
     }
 
     public function reporteFinalCurso($curso_id){
@@ -2937,24 +2991,14 @@ $promedio_p4=[
 
         foreach($cursos as $curso){
             $criterio = 0;
-            if(strcmp($curso->tipo,'S')==0)
-                $criterio=DB::table('_evaluacion_final_seminario as e')
-                    ->join('participante_curso as p','p.id','=','e.participante_curso_id')
-                    ->join('cursos as c','p.curso_id','=','c.id')
-                    ->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
-                    ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
-                    ->select('e.p7','co.abreviatura')
-                    ->where('c.id',$curso->id)
-                    ->get();
-            else
-                $criterio=DB::table('_evaluacion_final_curso as e')
-                    ->join('participante_curso as p','p.id','=','e.participante_curso_id')
-                    ->join('cursos as c','p.curso_id','=','c.id')
-                    ->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
-                    ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
-                    ->select('e.p7','co.abreviatura')
-                    ->where('c.id',$curso->id)
-                    ->get();
+            $criterio=DB::table('_evaluacion_final_curso as e')
+                ->join('participante_curso as p','p.id','=','e.participante_curso_id')
+                ->join('cursos as c','p.curso_id','=','c.id')
+                ->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
+                ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
+                ->select('e.p7','co.abreviatura')
+                ->where('c.id',$curso->id)
+                ->get();
 
             if($curso->semestre_si == 's' && $criterio != null){
                 array_push($criterios_s, $criterio);
@@ -3019,7 +3063,7 @@ $promedio_p4=[
 
         if($aux1_empty && $aux2_empty){
             return redirect()->back()
-              ->with('danger', 'El periodo '.$semestreEnv.' no ha sido evaluado');
+              ->with('warning', 'El periodo '.$semestreEnv.' no posee ninguna evaluación asociada a algún curso');
         }
 
         $pdf = PDF::loadView('pages.criterio_aceptacion',array('semestre'=>$semestreEnv,'criterio_s'=>$aux1,'criterio_i'=>$aux2,'criterio_s_empty'=>$aux1_empty,'criterio_i_empty'=>$aux2_empty));	
