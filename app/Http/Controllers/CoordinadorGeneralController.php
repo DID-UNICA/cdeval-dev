@@ -2334,6 +2334,8 @@ $promedio_p4=[
             if($eval->puntaje > $instructor->max)
               $instructor->max = $eval->puntaje;
           }
+          if($evals_instructor->count() === 0)
+            return redirect()->back()->with('danger', 'No hay evaluaciones creadas para el instructor '.$instructor->getNombreProfesor().' en el curso '.$curso->nombre_curso);
           $instructor->prom = round($instructor->prom / $evals_instructor->count(), 2);
         }
 
@@ -2540,7 +2542,10 @@ $promedio_p4=[
         // CALCULOS POR CURSO
         // Para nombres de cursos en la vista
         array_push($nombre_cursos, $curso->nombre_curso);
-        
+
+        if($curso->reactivos_contenido === 0 || $curso->reactivos_recomendacion === 0 || $curso->reactivos_coordinacion === 0)
+          return redirect()->back()->with('danger', 'No hay evaluaciones creadas para el curso '.$curso->nombre_curso);
+
         // Para factores
         $curso->factor_ocupacion     = round(($curso->asistentes * 100) / $curso->cupo_maximo,2);
         $curso->factor_recomendacion = round(($curso->criterio_recomendacion * 100) / $curso->reactivos_recomendacion,2);
