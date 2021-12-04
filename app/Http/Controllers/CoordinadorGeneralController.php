@@ -2543,14 +2543,15 @@ $promedio_p4=[
         // Para nombres de cursos en la vista
         array_push($nombre_cursos, $curso->nombre_curso);
 
-        if($curso->reactivos_contenido === 0 || $curso->reactivos_recomendacion === 0 || $curso->reactivos_coordinacion === 0)
-          return redirect()->back()->with('danger', 'No hay evaluaciones creadas para el curso '.$curso->nombre_curso);
-
         // Para factores
-        $curso->factor_ocupacion     = round(($curso->asistentes * 100) / $curso->cupo_maximo,2);
-        $curso->factor_recomendacion = round(($curso->criterio_recomendacion * 100) / $curso->reactivos_recomendacion,2);
-        $curso->factor_acreditacion  = round(($curso->acreditados * 100) / $curso->asistentes,2);
-        $curso->factor_calidad       = round(($curso->positivas * 100) / (
+        if($curso->cupo_maximo != NULL && $curso->cupo_maximo != 0)
+          $curso->factor_ocupacion = round(($curso->asistentes * 100) / $curso->cupo_maximo,2);
+        if($curso->reactivos_recomendacion != 0)
+          $curso->factor_recomendacion = round(($curso->criterio_recomendacion * 100) / $curso->reactivos_recomendacion,2);
+        if($curso->reactivos_asistentes != 0)
+          $curso->factor_acreditacion  = round(($curso->acreditados * 100) / $curso->asistentes,2);
+        if($curso->reactivos_contenido != 0 || $curso->reactivos_instructores != 0 || $curso->reactivos_coordinacion != 0 || $curso->reactivos_autoevaluacion != 0)
+          $curso->factor_calidad = round(($curso->positivas * 100) / (
                                         $curso->reactivos_contenido + 
                                         $curso->reactivos_instructores + 
                                         $curso->reactivos_autoevaluacion +
@@ -2562,10 +2563,14 @@ $promedio_p4=[
         $factor_calidad       += $curso->factor_calidad;
 
         // Para criterios aritmeticos
-        $curso->criterio_contenido = round($curso->criterio_contenido / $curso->reactivos_contenido, 2);
-        $curso->criterio_coordinacion = round($curso->criterio_coordinacion / $curso->reactivos_coordinacion, 2);
-        $curso->criterio_recomendacion = round($curso->criterio_recomendacion * 100 / $curso->reactivos_recomendacion, 2);
-        $curso->criterio_instructores = round($curso->criterio_instructores / $curso->reactivos_instructores, 2);
+        if($curso->reactivos_contenido != 0)
+          $curso->criterio_contenido = round($curso->criterio_contenido / $curso->reactivos_contenido, 2);
+        if($curso->reactivos_coordinacion != 0)
+          $curso->criterio_coordinacion = round($curso->criterio_coordinacion / $curso->reactivos_coordinacion, 2);
+        if($curso->reactivos_recomendacion != 0)
+          $curso->criterio_recomendacion = round($curso->criterio_recomendacion * 100 / $curso->reactivos_recomendacion, 2);
+        if($curso->reactivos_instructores != 0)
+          $curso->criterio_instructores = round($curso->criterio_instructores / $curso->reactivos_instructores, 2);
 
         $criterio_contenido_arim += $curso->criterio_contenido;
         $criterio_coordinacion_arim += $curso->criterio_coordinacion;
@@ -2602,6 +2607,15 @@ $promedio_p4=[
       $factor_calidad = round($factor_calidad / $cursos->count(),2);
 
       // Calculo final de criterios ponderados
+      if($reactivos_contenido === 0)
+        return redirect()->back()->with('danger', 'No hay reactivos de contenido evaluados para ninguna evaluacion de ningún curso de este periodo');
+      if($reactivos_coordinacion === 0)
+        return redirect()->back()->with('danger', 'No hay reactivos de coordinacion evaluados para ninguna evaluacion de ningún curso de este periodo');
+      if($reactivos_recomendacion === 0)
+        return redirect()->back()->with('danger', 'No hay reactivos de recomendacion evaluados para ninguna evaluacion de ningún curso de este periodo');
+      if($reactivos_instructores === 0)
+        return redirect()->back()->with('danger', 'No hay reactivos de instructores evaluados para ninguna evaluacion de ningún curso de este periodo');
+
       $criterio_contenido_pon = round($criterio_contenido_pon / $reactivos_contenido, 2);
       $criterio_coordinacion_pon = round($criterio_coordinacion_pon / $reactivos_coordinacion, 2);
       $criterio_recomendacion_pon = round(($criterio_recomendacion_pon * 100) / $reactivos_recomendacion, 2);
