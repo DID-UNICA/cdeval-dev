@@ -561,939 +561,940 @@ $promedio_p4=[
         return $this->enviarVista($fecha, $cursos, "", $lugar,1,'cd.index',$periodo);
     }
 
-    public function enviarVista($request, $cursos, $nombreCoordinacion, $lugar, $pdf, $inicio, $semestral){
+    //TODO: Revisar funciones de calculo aritmetico, etc. para ver si se pueden implementar en el nuevo metodo
+    // public function enviarVista($request, $cursos, $nombreCoordinacion, $lugar, $pdf, $inicio, $semestral){
 
-        //Obtenemos todos los coordinadores
+    //     //Obtenemos todos los coordinadores
 
-        $evaluacionesCursos = array();
+    //     $evaluacionesCursos = array();
 
-        $nombresCursos = array();
-        $inscritos = 0;
-        $acreditaron = 0;
-        $capacidad_total = 0;
-        $asistieron = 0;
+    //     $nombresCursos = array();
+    //     $inscritos = 0;
+    //     $acreditaron = 0;
+    //     $capacidad_total = 0;
+    //     $asistieron = 0;
 
-        //Usado para la seccion 2 de evaluacion_global
-        foreach($cursos as $curso){
+    //     //Usado para la seccion 2 de evaluacion_global
+    //     foreach($cursos as $curso){
 
-            //Aumentamos la capacidad total de todos los cursos
-            $capacidad_total += intval($curso->cupo_maximo);
-            $catalogo = DB::table('catalogo_cursos')
-                ->where('id',$curso->catalogo_id)
-                ->get();
+    //         //Aumentamos la capacidad total de todos los cursos
+    //         $capacidad_total += intval($curso->cupo_maximo);
+    //         $catalogo = DB::table('catalogo_cursos')
+    //             ->where('id',$curso->catalogo_id)
+    //             ->get();
 
-            //Obtenemos los nombres de los cursos
-            array_push($nombresCursos,$catalogo[0]->nombre_curso);
+    //         //Obtenemos los nombres de los cursos
+    //         array_push($nombresCursos,$catalogo[0]->nombre_curso);
 
-            //Las evaluaciones finales de los cursos
-            $eval = DB::table('_evaluacion_final_curso as ec')
-                ->join('participante_curso as pc', 'pc.id', '=', 'ec.participante_curso_id')
-                ->where('pc.curso_id',$curso->id)
-                ->select('ec.*')
-                ->get();
+    //         //Las evaluaciones finales de los cursos
+    //         $eval = DB::table('_evaluacion_final_curso as ec')
+    //             ->join('participante_curso as pc', 'pc.id', '=', 'ec.participante_curso_id')
+    //             ->where('pc.curso_id',$curso->id)
+    //             ->select('ec.*')
+    //             ->get();
             
-            //Las evaluaciones finales de los seminarios
-            $eval2 = DB::table('_evaluacion_final_seminario as es')
-              ->join('participante_curso as pc', 'pc.id', '=', 'es.participante_curso_id')
-              ->where('curso_id',$curso->id)
-              ->select('es.*')
-              ->get();
+    //         //Las evaluaciones finales de los seminarios
+    //         $eval2 = DB::table('_evaluacion_final_seminario as es')
+    //           ->join('participante_curso as pc', 'pc.id', '=', 'es.participante_curso_id')
+    //           ->where('curso_id',$curso->id)
+    //           ->select('es.*')
+    //           ->get();
 
-            //Obtenemos los participantes de los cursos
-            $participantes = DB::table('participante_curso')
-                ->where('curso_id',$curso->id)
-                ->get();
+    //         //Obtenemos los participantes de los cursos
+    //         $participantes = DB::table('participante_curso')
+    //             ->where('curso_id',$curso->id)
+    //             ->get();
 
-            //Necesario para el factor de acreditacion
-            foreach($participantes as $participante){
-                if($participante->acreditacion == 1){
-                    //Aumentamos la cantidad de acreditaciones
-                    $acreditaron++;
-                }
-                if($participante->asistencia == 1){
-                    //Aumentamos la cantidad de asistencia
-                    $asistieron++;
-                }
-            }
+    //         //Necesario para el factor de acreditacion
+    //         foreach($participantes as $participante){
+    //             if($participante->acreditacion == 1){
+    //                 //Aumentamos la cantidad de acreditaciones
+    //                 $acreditaron++;
+    //             }
+    //             if($participante->asistencia == 1){
+    //                 //Aumentamos la cantidad de asistencia
+    //                 $asistieron++;
+    //             }
+    //         }
 
-            //Aumentamos la cantidad de inscritos
-            $inscritos += sizeof($participantes);
+    //         //Aumentamos la cantidad de inscritos
+    //         $inscritos += sizeof($participantes);
 
-            //Si hay evaluacions finales de cursos los incluimos en el arreglo de evaluacionesCursos
-            if(sizeof($eval)>0){
-                array_push($evaluacionesCursos,$eval);
-            }
-            //Si hay evaluacions finales de seminarios los incluimos en el arreglo de evaluacionesCursos
-            if(sizeof($eval2)>0){
-                array_push($evaluacionesCursos,$eval2);
-            }
-        }
+    //         //Si hay evaluacions finales de cursos los incluimos en el arreglo de evaluacionesCursos
+    //         if(sizeof($eval)>0){
+    //             array_push($evaluacionesCursos,$eval);
+    //         }
+    //         //Si hay evaluacions finales de seminarios los incluimos en el arreglo de evaluacionesCursos
+    //         if(sizeof($eval2)>0){
+    //             array_push($evaluacionesCursos,$eval2);
+    //         }
+    //     }
 
-        if(sizeof($evaluacionesCursos)==0){
-            return redirect()
-              ->back()
-              ->with('danger','Periodo seleccionado no cuenta con una evaluacion')
-              ->withInput();
-        }
+    //     if(sizeof($evaluacionesCursos)==0){
+    //         return redirect()
+    //           ->back()
+    //           ->with('danger','Periodo seleccionado no cuenta con una evaluacion')
+    //           ->withInput();
+    //     }
 
-        $DP=0;
-        $DH=0;
-        $CO=0;
-        $DI=0;
-        $Otros=0;
-        $DPtematica = array();
-        $DHtematica = array();
-        $COtematica = array();
-        $DItematica = array();
-        $Otrostematica = array();
-        //Obtenemos la cantidad de participantes de cada division y las tematcias solicitadas por cada division
-        foreach($evaluacionesCursos as $evals)
-            foreach($evals as $evaluacion){
-                $array = explode(',',$evaluacion->conocimiento);
-                foreach($array as $elem){
-                    if($elem[2] == 1 || $elem[1] == 1){
-                        $DP++;
-                        array_push($DPtematica,$evaluacion->tematica);
-                    }else if($elem[2] == 2 || $elem[1] == 2){
-                        $DH++;
-                        array_push($DHtematica,$evaluacion->tematica);
-                    }else if($elem[2] == 3 || $elem[1] == 3){
-                        $CO++;
-                        array_push($COtematica,$evaluacion->tematica);
-                    }else if($elem[2] == 4 || $elem[1] == 4){
-                        $DI++;
-                        array_push($DItematica,$evaluacion->tematica);
-                    }else if($elem[2] == 5 || $elem[1] == 5){
-                        $Otros++;
-                        array_push($Otrostematica,$evaluacion->tematica);
-                    }
-                }
-		    }
+    //     $DP=0;
+    //     $DH=0;
+    //     $CO=0;
+    //     $DI=0;
+    //     $Otros=0;
+    //     $DPtematica = array();
+    //     $DHtematica = array();
+    //     $COtematica = array();
+    //     $DItematica = array();
+    //     $Otrostematica = array();
+    //     //Obtenemos la cantidad de participantes de cada division y las tematcias solicitadas por cada division
+    //     foreach($evaluacionesCursos as $evals)
+    //         foreach($evals as $evaluacion){
+    //             $array = explode(',',$evaluacion->conocimiento);
+    //             foreach($array as $elem){
+    //                 if($elem[2] == 1 || $elem[1] == 1){
+    //                     $DP++;
+    //                     array_push($DPtematica,$evaluacion->tematica);
+    //                 }else if($elem[2] == 2 || $elem[1] == 2){
+    //                     $DH++;
+    //                     array_push($DHtematica,$evaluacion->tematica);
+    //                 }else if($elem[2] == 3 || $elem[1] == 3){
+    //                     $CO++;
+    //                     array_push($COtematica,$evaluacion->tematica);
+    //                 }else if($elem[2] == 4 || $elem[1] == 4){
+    //                     $DI++;
+    //                     array_push($DItematica,$evaluacion->tematica);
+    //                 }else if($elem[2] == 5 || $elem[1] == 5){
+    //                     $Otros++;
+    //                     array_push($Otrostematica,$evaluacion->tematica);
+    //                 }
+    //             }
+		//     }
 		
-        $alumnos = 0;
-        $contestaron = 0;
-        $recomendaciones = 0;
-        $alumnosRecomendaron = 0;
-        $positivas = 0;
-        $preguntas = 0;
-        $respuestasContenido = 0;
-        $respuestasCoordinacion = 0;
-        $horariosCurso = array();
-        $profesoresRecontratar = array();
-        $curso_recomendaron = 0;
-        $evaluacionProfesor = 0;
-        $preguntas_contenido = 0;
-        $preguntas_coordinacion = 0;
+    //     $alumnos = 0;
+    //     $contestaron = 0;
+    //     $recomendaciones = 0;
+    //     $alumnosRecomendaron = 0;
+    //     $positivas = 0;
+    //     $preguntas = 0;
+    //     $respuestasContenido = 0;
+    //     $respuestasCoordinacion = 0;
+    //     $horariosCurso = array();
+    //     $profesoresRecontratar = array();
+    //     $curso_recomendaron = 0;
+    //     $evaluacionProfesor = 0;
+    //     $preguntas_contenido = 0;
+    //     $preguntas_coordinacion = 0;
 
-        $cont_prom = array();
+    //     $cont_prom = array();
 
-        $desempenioProfesores = array();
+    //     $desempenioProfesores = array();
 
-        foreach($evaluacionesCursos as $curso){
-            $curso_id = ParticipantesCurso::findOrFail($curso[0]->participante_curso_id)->curso_id;
-            $profesores = DB::table('profesor_curso')
-                ->where('curso_id',$curso_id)
-                ->get();
+    //     foreach($evaluacionesCursos as $curso){
+    //         $curso_id = ParticipantesCurso::findOrFail($curso[0]->participante_curso_id)->curso_id;
+    //         $profesores = DB::table('profesor_curso')
+    //             ->where('curso_id',$curso_id)
+    //             ->get();
 
-            $acreditaronCurso = 0;
-            $alumno_curso = 0;
-            $recomendaciones_curso = 0;
-            $alumnos_recomendaron_curso = 0;
-            $positivas_curso = 0;
-            $preguntas_curso = 0;
+    //         $acreditaronCurso = 0;
+    //         $alumno_curso = 0;
+    //         $recomendaciones_curso = 0;
+    //         $alumnos_recomendaron_curso = 0;
+    //         $positivas_curso = 0;
+    //         $preguntas_curso = 0;
 
-            $desempenioProfesor1 = 0;
-            $desempenioProfesor2 = 0;
-            $desempenioProfesor3 = 0;
+    //         $desempenioProfesor1 = 0;
+    //         $desempenioProfesor2 = 0;
+    //         $desempenioProfesor3 = 0;
 
-            $instructor_1 = 0;
-            $instructor_2 = 0;
-            $instructor_3 = 0;
+    //         $instructor_1 = 0;
+    //         $instructor_2 = 0;
+    //         $instructor_3 = 0;
 
-            $desempenioProfesoresCurso = array();
+    //         $desempenioProfesoresCurso = array();
 
-            $cont_curso = 0;
-            $tam_curso = 0;
+    //         $cont_curso = 0;
+    //         $tam_curso = 0;
 
-            $min = 100;
-            $min2 = 100;
-            $min3 = 100;
+    //         $min = 100;
+    //         $min2 = 100;
+    //         $min3 = 100;
 
-            $max = 0;
-            $max2 = 0;
-            $max3 = 0;
+    //         $max = 0;
+    //         $max2 = 0;
+    //         $max3 = 0;
 
-            foreach($curso as $evaluacion){
+    //         foreach($curso as $evaluacion){
 
-                $temp_1 = 0;
-                $temp_2 = 0;
-                $temp_3 = 0;
+    //             $temp_1 = 0;
+    //             $temp_2 = 0;
+    //             $temp_3 = 0;
 
-                $tam_1 = 0;
-                $tam_2 = 0;
-                $tam_3 = 0;
+    //             $tam_1 = 0;
+    //             $tam_2 = 0;
+    //             $tam_3 = 0;
 
-                $tupla = array();
+    //             $tupla = array();
 
-                $alumno_curso++;
+    //             $alumno_curso++;
 
-                //Obtenemos los datos del alumno
-                $alumno = DB::table('participante_curso')
-                    ->where('id',$evaluacion->participante_curso_id)
-                    ->get();
+    //             //Obtenemos los datos del alumno
+    //             $alumno = DB::table('participante_curso')
+    //                 ->where('id',$evaluacion->participante_curso_id)
+    //                 ->get();
                 
-                //Obtenemos numero de acreditacion de los usuarios
-                if(intval($alumno[0]->acreditacion) == 1){
-                    $acreditaronCurso++;
-                }
+    //             //Obtenemos numero de acreditacion de los usuarios
+    //             if(intval($alumno[0]->acreditacion) == 1){
+    //                 $acreditaronCurso++;
+    //             }
 
-                //Obtenemos y guardamos los horarios pedidos por cada usuario
-                $horarios = array($evaluacion->horarios,$evaluacion->horarioi);
-                array_push($horariosCurso,$horarios);
+    //             //Obtenemos y guardamos los horarios pedidos por cada usuario
+    //             $horarios = array($evaluacion->horarios,$evaluacion->horarioi);
+    //             array_push($horariosCurso,$horarios);
 
-                $contestaron++;
+    //             $contestaron++;
 
-                //Necesario para obtener el factor de recomendacion
-                //En este caso necesitamos obtener el factor de recomendacion general (recomendaciones) y el individual de cada curso (recomendaciones_curso)
-                if($evaluacion->p7 == 1){
-                    $recomendaciones_curso++;
-                    $alumnos_recomendaron_curso++;
-                    $recomendaciones++;
-                    $alumnosRecomendaron++;
-                }else if($evaluacion->p7 == 0){
-                    $alumnos_recomendaron_curso++;
-                    $alumnosRecomendaron++;
-                }
+    //             //Necesario para obtener el factor de recomendacion
+    //             //En este caso necesitamos obtener el factor de recomendacion general (recomendaciones) y el individual de cada curso (recomendaciones_curso)
+    //             if($evaluacion->p7 == 1){
+    //                 $recomendaciones_curso++;
+    //                 $alumnos_recomendaron_curso++;
+    //                 $recomendaciones++;
+    //                 $alumnosRecomendaron++;
+    //             }else if($evaluacion->p7 == 0){
+    //                 $alumnos_recomendaron_curso++;
+    //                 $alumnosRecomendaron++;
+    //             }
 
-                //Obtenemos la cantidad de preguntas positivas del curso valor >= 60
-                //De las preguntas 1_1 a 1_5 obtenemmos las evaluaciones del contenido del curso
-                if($evaluacion->p1_1 >= 50){
-                    $preguntas_contenido++;
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $respuestasContenido += $evaluacion->p1_1;
-                    $cont_curso += $evaluacion->p1_1;
-                    $tam_curso++;
-                    if($evaluacion->p1_1 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p1_2 >= 50){
-                    $preguntas_contenido++;
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $respuestasContenido+= $evaluacion->p1_2;
-                    $cont_curso += $evaluacion->p1_2;
-                    $tam_curso++;
-                    if($evaluacion->p1_2 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p1_3 >= 50){
-                    $preguntas_contenido++;
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $respuestasContenido+= $evaluacion->p1_3;
-                    $cont_curso += $evaluacion->p1_3;
-                    $tam_curso++;
-                    if($evaluacion->p1_3 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p1_4 >= 50){
-                    $preguntas_contenido++;
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $respuestasContenido+= $evaluacion->p1_4;
-                    $cont_curso += $evaluacion->p1_4;
-                    $tam_curso++;
-                    if($evaluacion->p1_4 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p1_5 >= 50){
-                    $preguntas_contenido++;
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $respuestasContenido+= $evaluacion->p1_5;
-                    $cont_curso += $evaluacion->p1_5;
-                    $tam_curso++;
-                    if($evaluacion->p1_5 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
+    //             //Obtenemos la cantidad de preguntas positivas del curso valor >= 60
+    //             //De las preguntas 1_1 a 1_5 obtenemmos las evaluaciones del contenido del curso
+    //             if($evaluacion->p1_1 >= 50){
+    //                 $preguntas_contenido++;
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $respuestasContenido += $evaluacion->p1_1;
+    //                 $cont_curso += $evaluacion->p1_1;
+    //                 $tam_curso++;
+    //                 if($evaluacion->p1_1 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p1_2 >= 50){
+    //                 $preguntas_contenido++;
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $respuestasContenido+= $evaluacion->p1_2;
+    //                 $cont_curso += $evaluacion->p1_2;
+    //                 $tam_curso++;
+    //                 if($evaluacion->p1_2 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p1_3 >= 50){
+    //                 $preguntas_contenido++;
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $respuestasContenido+= $evaluacion->p1_3;
+    //                 $cont_curso += $evaluacion->p1_3;
+    //                 $tam_curso++;
+    //                 if($evaluacion->p1_3 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p1_4 >= 50){
+    //                 $preguntas_contenido++;
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $respuestasContenido+= $evaluacion->p1_4;
+    //                 $cont_curso += $evaluacion->p1_4;
+    //                 $tam_curso++;
+    //                 if($evaluacion->p1_4 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p1_5 >= 50){
+    //                 $preguntas_contenido++;
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $respuestasContenido+= $evaluacion->p1_5;
+    //                 $cont_curso += $evaluacion->p1_5;
+    //                 $tam_curso++;
+    //                 if($evaluacion->p1_5 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
     
-                if($evaluacion->p2_1 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    if($evaluacion->p2_1 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p2_2 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    if($evaluacion->p2_2 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p2_3 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    if($evaluacion->p2_3 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p2_4 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    if($evaluacion->p2_4 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
+    //             if($evaluacion->p2_1 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 if($evaluacion->p2_1 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p2_2 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 if($evaluacion->p2_2 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p2_3 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 if($evaluacion->p2_3 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p2_4 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 if($evaluacion->p2_4 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
     
-                //De las preguntas 3_1 a 3_4 obtenemos el puntaje dado a la coordinacion
-                if($evaluacion->p3_1 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $respuestasCoordinacion += $evaluacion->p3_1;
-                    $preguntas_coordinacion++;
-                    if($evaluacion->p3_1 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p3_2 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $preguntas_coordinacion++;
-                    $respuestasCoordinacion += $evaluacion->p3_2;
-                    if($evaluacion->p3_2 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p3_3 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $preguntas_coordinacion++;
-                    $respuestasCoordinacion += $evaluacion->p3_3;
-                    if($evaluacion->p3_3 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p3_4 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $preguntas_coordinacion++;
-                    $respuestasCoordinacion += $evaluacion->p3_4;
-                    if($evaluacion->p3_4 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
+    //             //De las preguntas 3_1 a 3_4 obtenemos el puntaje dado a la coordinacion
+    //             if($evaluacion->p3_1 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $respuestasCoordinacion += $evaluacion->p3_1;
+    //                 $preguntas_coordinacion++;
+    //                 if($evaluacion->p3_1 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p3_2 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $preguntas_coordinacion++;
+    //                 $respuestasCoordinacion += $evaluacion->p3_2;
+    //                 if($evaluacion->p3_2 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p3_3 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $preguntas_coordinacion++;
+    //                 $respuestasCoordinacion += $evaluacion->p3_3;
+    //                 if($evaluacion->p3_3 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p3_4 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $preguntas_coordinacion++;
+    //                 $respuestasCoordinacion += $evaluacion->p3_4;
+    //                 if($evaluacion->p3_4 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
     
-                //De la 4_1 a la 4_11 obtenemos la evaluacion del primer instructor
-                //Queremos tanto el desempeño del instructor del curso como la cantidad de preguntas positivas del instructor
-                if($evaluacion->p4_1 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor1 += $evaluacion->p4_1;
-                    $instructor_1++;
-                    $temp_1 += $evaluacion->p4_1;
-                    $tam_1++;
-                    if($evaluacion->p4_1 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p4_2 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor1 += $evaluacion->p4_2;
-                    $instructor_1++;
-                    $temp_1 += $evaluacion->p4_2;
-                    $tam_1++;
-                    if($evaluacion->p4_2 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p4_3 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor1 += $evaluacion->p4_3;
-                    $instructor_1++;
-                    $temp_1 += $evaluacion->p4_3;
-                    $tam_1++;
-                    if($evaluacion->p4_3 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p4_4 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor1 += $evaluacion->p4_4;
-                    $instructor_1++;
-                    $temp_1 += $evaluacion->p4_4;
-                    $tam_1++;
-                    if($evaluacion->p4_4 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p4_5 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor1 += $evaluacion->p4_5;
-                    $instructor_1++;
-                    $temp_1 += $evaluacion->p4_5;
-                    $tam_1++;
-                    if($evaluacion->p4_5 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p4_6 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor1 += $evaluacion->p4_6;
-                    $instructor_1++;
-                    $temp_1 += $evaluacion->p4_6;
-                    $tam_1++;
-                    if($evaluacion->p4_6 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p4_7 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor1 += $evaluacion->p4_7;
-                    $instructor_1++;
-                    $temp_1 += $evaluacion->p4_7;
-                    $tam_1++;
-                    if($evaluacion->p4_7 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p4_8 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor1 += $evaluacion->p4_8;
-                    $instructor_1++;
-                    $temp_1 += $evaluacion->p4_8;
-                    $tam_1++;
-                    if($evaluacion->p4_8 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p4_9 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor1 += $evaluacion->p4_9;
-                    $instructor_1++;
-                    $temp_1 += $evaluacion->p4_9;
-                    $tam_1++;
-                    if($evaluacion->p4_9 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p4_10 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor1 += $evaluacion->p4_10;
-                    $instructor_1++;
-                    $temp_1 += $evaluacion->p4_10;
-                    $tam_1++;
-                    if($evaluacion->p4_10 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p4_11 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor1 += $evaluacion->p4_11;
-                    $instructor_1++;
-                    $temp_1 += $evaluacion->p4_11;
-                    $tam_1++;
-                    if($evaluacion->p4_11 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
+    //             //De la 4_1 a la 4_11 obtenemos la evaluacion del primer instructor
+    //             //Queremos tanto el desempeño del instructor del curso como la cantidad de preguntas positivas del instructor
+    //             if($evaluacion->p4_1 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor1 += $evaluacion->p4_1;
+    //                 $instructor_1++;
+    //                 $temp_1 += $evaluacion->p4_1;
+    //                 $tam_1++;
+    //                 if($evaluacion->p4_1 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p4_2 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor1 += $evaluacion->p4_2;
+    //                 $instructor_1++;
+    //                 $temp_1 += $evaluacion->p4_2;
+    //                 $tam_1++;
+    //                 if($evaluacion->p4_2 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p4_3 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor1 += $evaluacion->p4_3;
+    //                 $instructor_1++;
+    //                 $temp_1 += $evaluacion->p4_3;
+    //                 $tam_1++;
+    //                 if($evaluacion->p4_3 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p4_4 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor1 += $evaluacion->p4_4;
+    //                 $instructor_1++;
+    //                 $temp_1 += $evaluacion->p4_4;
+    //                 $tam_1++;
+    //                 if($evaluacion->p4_4 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p4_5 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor1 += $evaluacion->p4_5;
+    //                 $instructor_1++;
+    //                 $temp_1 += $evaluacion->p4_5;
+    //                 $tam_1++;
+    //                 if($evaluacion->p4_5 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p4_6 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor1 += $evaluacion->p4_6;
+    //                 $instructor_1++;
+    //                 $temp_1 += $evaluacion->p4_6;
+    //                 $tam_1++;
+    //                 if($evaluacion->p4_6 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p4_7 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor1 += $evaluacion->p4_7;
+    //                 $instructor_1++;
+    //                 $temp_1 += $evaluacion->p4_7;
+    //                 $tam_1++;
+    //                 if($evaluacion->p4_7 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p4_8 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor1 += $evaluacion->p4_8;
+    //                 $instructor_1++;
+    //                 $temp_1 += $evaluacion->p4_8;
+    //                 $tam_1++;
+    //                 if($evaluacion->p4_8 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p4_9 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor1 += $evaluacion->p4_9;
+    //                 $instructor_1++;
+    //                 $temp_1 += $evaluacion->p4_9;
+    //                 $tam_1++;
+    //                 if($evaluacion->p4_9 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p4_10 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor1 += $evaluacion->p4_10;
+    //                 $instructor_1++;
+    //                 $temp_1 += $evaluacion->p4_10;
+    //                 $tam_1++;
+    //                 if($evaluacion->p4_10 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p4_11 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor1 += $evaluacion->p4_11;
+    //                 $instructor_1++;
+    //                 $temp_1 += $evaluacion->p4_11;
+    //                 $tam_1++;
+    //                 if($evaluacion->p4_11 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
     
-                //De la 5_1 a la 5_11 obtenemos la evaluacion del segundo instructor
-                //Queremos tanto el desempeño del instructor del curso como la cantidad de preguntas positivas del instructor
-                if($evaluacion->p5_1 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor2 += $evaluacion->p5_1;
-                    $instructor_2++;
-                    $temp_2 += $evaluacion->p5_1;
-                    $tam_2++;
-                    if($evaluacion->p5_1 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p5_2 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor2 += $evaluacion->p5_2;
-                    $instructor_2++;
-                    $temp_2 += $evaluacion->p5_2;
-                    $tam_2++;
-                    if($evaluacion->p5_2 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p5_3 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor2 += $evaluacion->p5_3;
-                    $instructor_2++;
-                    $temp_2 += $evaluacion->p5_3;
-                    $tam_2++;
-                    if($evaluacion->p5_3 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p5_4 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor2 += $evaluacion->p5_4;
-                    $instructor_2++;
-                    $temp_2 += $evaluacion->p5_4;
-                    $tam_2++;
-                    if($evaluacion->p5_4 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p5_5 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor2 += $evaluacion->p5_5;
-                    $instructor_2++;
-                    $temp_2 += $evaluacion->p5_5;
-                    $tam_2++;
-                    if($evaluacion->p5_5 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p5_6 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor2 += $evaluacion->p5_6;
-                    $instructor_2++;
-                    $temp_2 += $evaluacion->p5_6;
-                    $tam_2++;
-                    if($evaluacion->p5_6 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p5_7 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor2 += $evaluacion->p5_7;
-                    $instructor_2++;
-                    $temp_2 += $evaluacion->p5_7;
-                    $tam_2++;
-                    if($evaluacion->p5_7 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p5_8 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor2 += $evaluacion->p5_8;
-                    $instructor_2++;
-                    $temp_2 += $evaluacion->p5_8;
-                    $tam_2++;
-                    if($evaluacion->p5_8 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p5_9 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor2 += $evaluacion->p5_9;
-                    $instructor_2++;
-                    $temp_2 += $evaluacion->p5_9;
-                    $tam_2++;
-                    if($evaluacion->p5_9 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p5_10 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor2 += $evaluacion->p5_10;
-                    $instructor_2++;
-                    $temp_2 += $evaluacion->p5_10;
-                    $tam_2++;
-                    if($evaluacion->p5_10 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p5_11 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor2 += $evaluacion->p5_11;
-                    $instructor_2++;
-                    $temp_2 += $evaluacion->p5_11;
-                    $tam_2++;
-                    if($evaluacion->p5_11 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
+    //             //De la 5_1 a la 5_11 obtenemos la evaluacion del segundo instructor
+    //             //Queremos tanto el desempeño del instructor del curso como la cantidad de preguntas positivas del instructor
+    //             if($evaluacion->p5_1 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor2 += $evaluacion->p5_1;
+    //                 $instructor_2++;
+    //                 $temp_2 += $evaluacion->p5_1;
+    //                 $tam_2++;
+    //                 if($evaluacion->p5_1 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p5_2 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor2 += $evaluacion->p5_2;
+    //                 $instructor_2++;
+    //                 $temp_2 += $evaluacion->p5_2;
+    //                 $tam_2++;
+    //                 if($evaluacion->p5_2 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p5_3 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor2 += $evaluacion->p5_3;
+    //                 $instructor_2++;
+    //                 $temp_2 += $evaluacion->p5_3;
+    //                 $tam_2++;
+    //                 if($evaluacion->p5_3 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p5_4 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor2 += $evaluacion->p5_4;
+    //                 $instructor_2++;
+    //                 $temp_2 += $evaluacion->p5_4;
+    //                 $tam_2++;
+    //                 if($evaluacion->p5_4 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p5_5 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor2 += $evaluacion->p5_5;
+    //                 $instructor_2++;
+    //                 $temp_2 += $evaluacion->p5_5;
+    //                 $tam_2++;
+    //                 if($evaluacion->p5_5 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p5_6 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor2 += $evaluacion->p5_6;
+    //                 $instructor_2++;
+    //                 $temp_2 += $evaluacion->p5_6;
+    //                 $tam_2++;
+    //                 if($evaluacion->p5_6 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p5_7 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor2 += $evaluacion->p5_7;
+    //                 $instructor_2++;
+    //                 $temp_2 += $evaluacion->p5_7;
+    //                 $tam_2++;
+    //                 if($evaluacion->p5_7 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p5_8 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor2 += $evaluacion->p5_8;
+    //                 $instructor_2++;
+    //                 $temp_2 += $evaluacion->p5_8;
+    //                 $tam_2++;
+    //                 if($evaluacion->p5_8 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p5_9 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor2 += $evaluacion->p5_9;
+    //                 $instructor_2++;
+    //                 $temp_2 += $evaluacion->p5_9;
+    //                 $tam_2++;
+    //                 if($evaluacion->p5_9 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p5_10 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor2 += $evaluacion->p5_10;
+    //                 $instructor_2++;
+    //                 $temp_2 += $evaluacion->p5_10;
+    //                 $tam_2++;
+    //                 if($evaluacion->p5_10 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p5_11 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor2 += $evaluacion->p5_11;
+    //                 $instructor_2++;
+    //                 $temp_2 += $evaluacion->p5_11;
+    //                 $tam_2++;
+    //                 if($evaluacion->p5_11 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
     
-                //De la 6_1 a la 6_11 obtenemos la evaluacion del tercer instructor
-                //Queremos tanto el desempeño del instructor del curso como la cantidad de preguntas positivas del instructor
-                if($evaluacion->p6_1 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor3 += $evaluacion->p6_1;
-                    $instructor_3++;
-                    $temp_3 += $evaluacion->p6_1;
-                    $tam_3++;
-                    if($evaluacion->p6_1 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p6_2 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor3 += $evaluacion->p6_2;
-                    $instructor_3++;
-                    $temp_3 += $evaluacion->p6_2;
-                    $tam_3++;
-                    if($evaluacion->p6_2 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p6_3 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor3 += $evaluacion->p6_3;
-                    $instructor_3++;
-                    $temp_3 += $evaluacion->p6_3;
-                    $tam_3++;
-                    if($evaluacion->p6_3 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p6_4 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor3 += $evaluacion->p6_4;
-                    $instructor_3++;
-                    $temp_3 += $evaluacion->p6_4;
-                    $tam_3++;
-                    if($evaluacion->p6_4 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p6_5 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor3 += $evaluacion->p6_5;
-                    $instructor_3++;
-                    $temp_3 += $evaluacion->p6_5;
-                    $tam_3++;
-                    if($evaluacion->p6_5 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p6_6 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor3 += $evaluacion->p6_6;
-                    $instructor_3++;
-                    $temp_3 += $evaluacion->p6_6;
-                    $tam_3++;
-                    if($evaluacion->p6_6 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p6_7 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor3 += $evaluacion->p6_7;
-                    $instructor_3++;
-                    $temp_3 += $evaluacion->p6_7;
-                    $tam_3++;
-                    if($evaluacion->p6_7 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p6_8 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor3 += $evaluacion->p6_8;
-                    $instructor_3++;
-                    $temp_3 += $evaluacion->p6_8;
-                    $tam_3++;
-                    if($evaluacion->p6_8 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p6_9 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor3 += $evaluacion->p6_9;
-                    $instructor_3++;
-                    $temp_3 += $evaluacion->p6_9;
-                    $tam_3++;
-                    if($evaluacion->p6_9 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p6_10 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor3 += $evaluacion->p6_10;
-                    $instructor_3++;
-                    $temp_3 += $evaluacion->p6_10;
-                    $tam_3++;
-                    if($evaluacion->p6_10 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
-                if($evaluacion->p6_11 >= 50){
-                    $preguntas++;
-                    $preguntas_curso++;
-                    $desempenioProfesor3 += $evaluacion->p6_11;
-                    $instructor_3++;
-                    $temp_3 += $evaluacion->p6_11;
-                    $tam_3++;
-                    if($evaluacion->p6_11 >= 80){
-                        $positivas++;
-                        $positivas_curso++;
-                    }
-                }
+    //             //De la 6_1 a la 6_11 obtenemos la evaluacion del tercer instructor
+    //             //Queremos tanto el desempeño del instructor del curso como la cantidad de preguntas positivas del instructor
+    //             if($evaluacion->p6_1 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor3 += $evaluacion->p6_1;
+    //                 $instructor_3++;
+    //                 $temp_3 += $evaluacion->p6_1;
+    //                 $tam_3++;
+    //                 if($evaluacion->p6_1 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p6_2 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor3 += $evaluacion->p6_2;
+    //                 $instructor_3++;
+    //                 $temp_3 += $evaluacion->p6_2;
+    //                 $tam_3++;
+    //                 if($evaluacion->p6_2 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p6_3 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor3 += $evaluacion->p6_3;
+    //                 $instructor_3++;
+    //                 $temp_3 += $evaluacion->p6_3;
+    //                 $tam_3++;
+    //                 if($evaluacion->p6_3 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p6_4 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor3 += $evaluacion->p6_4;
+    //                 $instructor_3++;
+    //                 $temp_3 += $evaluacion->p6_4;
+    //                 $tam_3++;
+    //                 if($evaluacion->p6_4 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p6_5 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor3 += $evaluacion->p6_5;
+    //                 $instructor_3++;
+    //                 $temp_3 += $evaluacion->p6_5;
+    //                 $tam_3++;
+    //                 if($evaluacion->p6_5 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p6_6 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor3 += $evaluacion->p6_6;
+    //                 $instructor_3++;
+    //                 $temp_3 += $evaluacion->p6_6;
+    //                 $tam_3++;
+    //                 if($evaluacion->p6_6 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p6_7 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor3 += $evaluacion->p6_7;
+    //                 $instructor_3++;
+    //                 $temp_3 += $evaluacion->p6_7;
+    //                 $tam_3++;
+    //                 if($evaluacion->p6_7 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p6_8 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor3 += $evaluacion->p6_8;
+    //                 $instructor_3++;
+    //                 $temp_3 += $evaluacion->p6_8;
+    //                 $tam_3++;
+    //                 if($evaluacion->p6_8 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p6_9 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor3 += $evaluacion->p6_9;
+    //                 $instructor_3++;
+    //                 $temp_3 += $evaluacion->p6_9;
+    //                 $tam_3++;
+    //                 if($evaluacion->p6_9 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p6_10 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor3 += $evaluacion->p6_10;
+    //                 $instructor_3++;
+    //                 $temp_3 += $evaluacion->p6_10;
+    //                 $tam_3++;
+    //                 if($evaluacion->p6_10 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
+    //             if($evaluacion->p6_11 >= 50){
+    //                 $preguntas++;
+    //                 $preguntas_curso++;
+    //                 $desempenioProfesor3 += $evaluacion->p6_11;
+    //                 $instructor_3++;
+    //                 $temp_3 += $evaluacion->p6_11;
+    //                 $tam_3++;
+    //                 if($evaluacion->p6_11 >= 80){
+    //                     $positivas++;
+    //                     $positivas_curso++;
+    //                 }
+    //             }
 
-                if(($temp_1/$tam_1)>$max){
-                    $max = round($temp_1/$tam_1,2);
-                }
-                if(($temp_1/$tam_1)<$min){
-                    $min = round($temp_1/$tam_1,2);
-                }
-                if($temp_2>0){
-                    if(($temp_2/$tam_2)>$max2){
-                        $max2 = round($temp_2/$tam_2,2);
-                    }
-                    if(($temp_2/$tam_2)<$min2){
-                        $min2 = round($temp_2/$tam_2,2);
-                    }   
-                }
-                if($temp_3>0){
-                    if(($temp_3/$tam_3)>$max3){
-                        $max3 = round($temp_3/$tam_3,2);
-                    }
-                    if(($temp_3/$tam_3)<$min3){
-                        $min3 = round($temp_3/$tam_3,2);
-                    }   
-                }
-            }
+    //             if(($temp_1/$tam_1)>$max){
+    //                 $max = round($temp_1/$tam_1,2);
+    //             }
+    //             if(($temp_1/$tam_1)<$min){
+    //                 $min = round($temp_1/$tam_1,2);
+    //             }
+    //             if($temp_2>0){
+    //                 if(($temp_2/$tam_2)>$max2){
+    //                     $max2 = round($temp_2/$tam_2,2);
+    //                 }
+    //                 if(($temp_2/$tam_2)<$min2){
+    //                     $min2 = round($temp_2/$tam_2,2);
+    //                 }   
+    //             }
+    //             if($temp_3>0){
+    //                 if(($temp_3/$tam_3)>$max3){
+    //                     $max3 = round($temp_3/$tam_3,2);
+    //                 }
+    //                 if(($temp_3/$tam_3)<$min3){
+    //                     $min3 = round($temp_3/$tam_3,2);
+    //                 }   
+    //             }
+    //         }
 
-            array_push($cont_prom, $cont_curso/$tam_curso);
+    //         array_push($cont_prom, $cont_curso/$tam_curso);
 
-            if($preguntas_curso == 0){
-                $preguntas_curso = 1;
-            }
-            if($alumno_curso == 0){
-                $alumno_curso = 1;
-            }
-            if($recomendaciones_curso == 0){
-                $recomendaciones_curso = 1;
-            }
+    //         if($preguntas_curso == 0){
+    //             $preguntas_curso = 1;
+    //         }
+    //         if($alumno_curso == 0){
+    //             $alumno_curso = 1;
+    //         }
+    //         if($recomendaciones_curso == 0){
+    //             $recomendaciones_curso = 1;
+    //         }
 
-            //Obtenemos factor de calidad del curso iterado, su factor de acreditacion y de recomendacion
-            $factor_calidad_curso = ($positivas_curso*100)/$preguntas_curso;
-            $factora_acreditacion = ($acreditaronCurso*100)/$alumno_curso;
-            $factor_recomendacion_curso = ($alumnos_recomendaron_curso*100)/$recomendaciones_curso;
+    //         //Obtenemos factor de calidad del curso iterado, su factor de acreditacion y de recomendacion
+    //         $factor_calidad_curso = ($positivas_curso*100)/$preguntas_curso;
+    //         $factora_acreditacion = ($acreditaronCurso*100)/$alumno_curso;
+    //         $factor_recomendacion_curso = ($alumnos_recomendaron_curso*100)/$recomendaciones_curso;
 
-            array_push($desempenioProfesoresCurso,(round($desempenioProfesor1/$instructor_1,2)));
-            if($instructor_2==0){
-                array_push($desempenioProfesoresCurso,0);    
-            }else{
-                array_push($desempenioProfesoresCurso,(round($desempenioProfesor2/$instructor_2,2)));
-            }
-            if($instructor_3 == 0){
-                array_push($desempenioProfesoresCurso,0);
-            }else{
-                array_push($desempenioProfesoresCurso,(round($desempenioProfesor3/$instructor_3,2)));
-            }
+    //         array_push($desempenioProfesoresCurso,(round($desempenioProfesor1/$instructor_1,2)));
+    //         if($instructor_2==0){
+    //             array_push($desempenioProfesoresCurso,0);    
+    //         }else{
+    //             array_push($desempenioProfesoresCurso,(round($desempenioProfesor2/$instructor_2,2)));
+    //         }
+    //         if($instructor_3 == 0){
+    //             array_push($desempenioProfesoresCurso,0);
+    //         }else{
+    //             array_push($desempenioProfesoresCurso,(round($desempenioProfesor3/$instructor_3,2)));
+    //         }
 
-            //Si un curso obtiene calificacion >= 80 en cada uno de los tres factores sus profesores se vuelven a contratar
-            if($factor_calidad_curso >= 0 && $factora_acreditacion >= 0 && $factor_recomendacion_curso >= 0){
-                //Obtenemos los datos de los profesores del curso
-                $inList = 0;
-                foreach($profesores as $profesors){
+    //         //Si un curso obtiene calificacion >= 80 en cada uno de los tres factores sus profesores se vuelven a contratar
+    //         if($factor_calidad_curso >= 0 && $factora_acreditacion >= 0 && $factor_recomendacion_curso >= 0){
+    //             //Obtenemos los datos de los profesores del curso
+    //             $inList = 0;
+    //             foreach($profesores as $profesors){
 
-                    $profesor = DB::table('profesors')
-                        ->where('id',$profesors->profesor_id)
-                        ->get();
+    //                 $profesor = DB::table('profesors')
+    //                     ->where('id',$profesors->profesor_id)
+    //                     ->get();
                     
-                    //Guardamos los profesores en una lista a retornar
-                    if($inList == 0){
-                        $profesor_valores = array();
-                        array_push($profesor_valores,$profesor[0]);
-                        array_push($profesor_valores,$min);
-                        array_push($profesor_valores,$max);
-                        array_push($profesor_valores,round($desempenioProfesor1/$instructor_1,2));
-                        array_push($profesoresRecontratar,$profesor_valores);
-                    }
-                    if($inList == 1){
-                        $profesor_valores = array();
-                        array_push($profesor_valores,$profesor[0]);
-                        array_push($profesor_valores,$min2);
-                        array_push($profesor_valores,$max2);
-                        array_push($profesor_valores,round($desempenioProfesor2/$instructor_2,2));
-                        array_push($profesoresRecontratar,$profesor_valores);
-                    }
-                    if($inList == 2){
-                        $profesor_valores = array();
-                        array_push($profesor_valores,$profesor[0]);
-                        array_push($profesor_valores,$min3);
-                        array_push($profesor_valores,$max3);
-                        array_push($profesor_valores,round($desempenioProfesor3/$instructor_3,2));
-                        array_push($profesoresRecontratar,$profesor_valores);
-                    }
-                    $inList++;
-                }
+    //                 //Guardamos los profesores en una lista a retornar
+    //                 if($inList == 0){
+    //                     $profesor_valores = array();
+    //                     array_push($profesor_valores,$profesor[0]);
+    //                     array_push($profesor_valores,$min);
+    //                     array_push($profesor_valores,$max);
+    //                     array_push($profesor_valores,round($desempenioProfesor1/$instructor_1,2));
+    //                     array_push($profesoresRecontratar,$profesor_valores);
+    //                 }
+    //                 if($inList == 1){
+    //                     $profesor_valores = array();
+    //                     array_push($profesor_valores,$profesor[0]);
+    //                     array_push($profesor_valores,$min2);
+    //                     array_push($profesor_valores,$max2);
+    //                     array_push($profesor_valores,round($desempenioProfesor2/$instructor_2,2));
+    //                     array_push($profesoresRecontratar,$profesor_valores);
+    //                 }
+    //                 if($inList == 2){
+    //                     $profesor_valores = array();
+    //                     array_push($profesor_valores,$profesor[0]);
+    //                     array_push($profesor_valores,$min3);
+    //                     array_push($profesor_valores,$max3);
+    //                     array_push($profesor_valores,round($desempenioProfesor3/$instructor_3,2));
+    //                     array_push($profesoresRecontratar,$profesor_valores);
+    //                 }
+    //                 $inList++;
+    //             }
 
-            }
+    //         }
 
-            array_push($desempenioProfesores, $desempenioProfesoresCurso);
+    //         array_push($desempenioProfesores, $desempenioProfesoresCurso);
 
-        }
+    //     }
 
-        $instructores_factor = 0;
-        $num = 0;
-        foreach($desempenioProfesores as $desempenio){
-            foreach($desempenio as $calif){
-                if($calif > 0){
-                    $instructores_factor += $calif;
-                    $num++;
-                }
-            }
-        }
+    //     $instructores_factor = 0;
+    //     $num = 0;
+    //     foreach($desempenioProfesores as $desempenio){
+    //         foreach($desempenio as $calif){
+    //             if($calif > 0){
+    //                 $instructores_factor += $calif;
+    //                 $num++;
+    //             }
+    //         }
+    //     }
 
 
-        $factor_acreditacion = 0;
-        $factor_calidad = 0;
-        $promedio_coordinacion = 0;
-        $promedio_contenido = 0;
-        $factor_recomendacion = 0;
-        $factor_instructor = round($instructores_factor/$num,2);
-        $factor_ocupacion = 0;
+    //     $factor_acreditacion = 0;
+    //     $factor_calidad = 0;
+    //     $promedio_coordinacion = 0;
+    //     $promedio_contenido = 0;
+    //     $factor_recomendacion = 0;
+    //     $factor_instructor = round($instructores_factor/$num,2);
+    //     $factor_ocupacion = 0;
 
-        //Obtenemos los factores de recomendacion
-        //Necesario evitar la division entre cero, es posible pedir ver resumen de una fecha sin cursos
-        if($alumnosRecomendaron != 0){
-            $factor_recomendacion = round($recomendaciones*100 / $alumnosRecomendaron,2);
-        }
-        if($inscritos != 0){
-            $factor_acreditacion = round($acreditaron*100 / $asistieron,2);
-        }
-        if($preguntas != 0){
-            $factor_calidad = round($positivas*100 / $preguntas,2);
-        }
-        if($contestaron != 0){
-            $promedio_coordinacion = round($respuestasCoordinacion / $preguntas_coordinacion,2);
-            $promedio_contenido = round($respuestasContenido / $preguntas_contenido,2);
-        }
-        if($capacidad_total != 0){
-            $factor_ocupacion = round((($asistieron*100)) / $capacidad_total,2);
-        }
-        $aritmetico = [0,0,0,0];
-        if(strcmp($nombreCoordinacion,"")==0){
-            $aritmetico = $this->calculaAritmetico($cursos);
-        }else{
-            $aritmetico = $this->calculaAritmeticoArea($cursos, $nombreCoordinacion);
-        }
+    //     //Obtenemos los factores de recomendacion
+    //     //Necesario evitar la division entre cero, es posible pedir ver resumen de una fecha sin cursos
+    //     if($alumnosRecomendaron != 0){
+    //         $factor_recomendacion = round($recomendaciones*100 / $alumnosRecomendaron,2);
+    //     }
+    //     if($inscritos != 0){
+    //         $factor_acreditacion = round($acreditaron*100 / $asistieron,2);
+    //     }
+    //     if($preguntas != 0){
+    //         $factor_calidad = round($positivas*100 / $preguntas,2);
+    //     }
+    //     if($contestaron != 0){
+    //         $promedio_coordinacion = round($respuestasCoordinacion / $preguntas_coordinacion,2);
+    //         $promedio_contenido = round($respuestasContenido / $preguntas_contenido,2);
+    //     }
+    //     if($capacidad_total != 0){
+    //         $factor_ocupacion = round((($asistieron*100)) / $capacidad_total,2);
+    //     }
+    //     $aritmetico = [0,0,0,0];
+    //     if(strcmp($nombreCoordinacion,"")==0){
+    //         $aritmetico = $this->calculaAritmetico($cursos);
+    //     }else{
+    //         $aritmetico = $this->calculaAritmeticoArea($cursos, $nombreCoordinacion);
+    //     }
 
-        //Si el usuario indico descargar un pdf se procedera a realizarlo
-        if($pdf == 1){
-            //Retornamos la funcion que permite la descarga del pdf
-            return $this->descargarPDF($nombresCursos,$request,$acreditaron,$inscritos,$contestaron,$factor_ocupacion,$factor_recomendacion,$factor_acreditacion,$factor_calidad,$DP,$DH,$CO,$DI,$Otros,$DPtematica,$DItematica,$COtematica,$DHtematica,$Otrostematica,$horariosCurso,$promedio_coordinacion,$promedio_contenido,$profesoresRecontratar,$factor_instructor,$asistieron,$nombreCoordinacion,$lugar,$aritmetico[0],$aritmetico[1],$aritmetico[2],$aritmetico[3],$semestral);
-        }
+    //     //Si el usuario indico descargar un pdf se procedera a realizarlo
+    //     if($pdf == 1){
+    //         //Retornamos la funcion que permite la descarga del pdf
+    //         return $this->descargarPDF($nombresCursos,$request,$acreditaron,$inscritos,$contestaron,$factor_ocupacion,$factor_recomendacion,$factor_acreditacion,$factor_calidad,$DP,$DH,$CO,$DI,$Otros,$DPtematica,$DItematica,$COtematica,$DHtematica,$Otrostematica,$horariosCurso,$promedio_coordinacion,$promedio_contenido,$profesoresRecontratar,$factor_instructor,$asistieron,$nombreCoordinacion,$lugar,$aritmetico[0],$aritmetico[1],$aritmetico[2],$aritmetico[3],$semestral);
+    //     }
 
-        //return $profesoresRecontratar;
-        //Retornamos la vista correspondiente (seleccionados por fecah o seleccionados por fecha y coordinacion) con los datos calculados
-        return view($lugar)
-        //BEFORE
-            ->with('nombres',$nombresCursos)
-            ->with('periodo',$request)
-            ->with('acreditaron',$acreditaron)
-            ->with('inscritos',$inscritos)
-            ->with('contestaron',$contestaron)
-            ->with('factor_ocupacion',$factor_ocupacion)
-            ->with('factor_ocupacion',$factor_ocupacion)
-            ->with('factor_recomendacion',$factor_recomendacion)
-            ->with('factor_acreditacion',$factor_acreditacion)
-            ->with('positivas',$factor_calidad)
-            ->with('DP',$DP)
-            ->with('DH',$DH)
-            ->with('CO',$CO)
-            ->with('DI',$DI)
-            ->with('Otros',$Otros)
-            ->with('DPtematicas',$DPtematica)
-            ->with('DItematicas',$DItematica)
-            ->with('COtematicas',$COtematica)
-            ->with('DHtematicas',$DHtematica)
-            ->with('Otrostematicas',$Otrostematica)
-            ->with('horarios',$horariosCurso)
-            ->with('coordinacion',$promedio_coordinacion)
-            ->with('contenido',$promedio_contenido)
-            ->with('profesors',$profesoresRecontratar)
-            ->with('instructor',$factor_instructor)
-            ->with('asistencia',$asistieron)
-            ->with('nombreCoordinacion',$nombreCoordinacion)
-            ->with('aritmetico_contenido',$aritmetico[0])
-            ->with('aritmetico_instructor',$aritmetico[1])
-            ->with('aritmetico_coordinacion',$aritmetico[2])
-            ->with('aritmetico_recomendacion',$aritmetico[3])
-            ->with('semestral',$semestral)
-            /*->with('encargado',$coordinadores[0]->id);*/;
-    }
+    //     //return $profesoresRecontratar;
+    //     //Retornamos la vista correspondiente (seleccionados por fecah o seleccionados por fecha y coordinacion) con los datos calculados
+    //     return view($lugar)
+    //     //BEFORE
+    //         ->with('nombres',$nombresCursos)
+    //         ->with('periodo',$request)
+    //         ->with('acreditaron',$acreditaron)
+    //         ->with('inscritos',$inscritos)
+    //         ->with('contestaron',$contestaron)
+    //         ->with('factor_ocupacion',$factor_ocupacion)
+    //         ->with('factor_ocupacion',$factor_ocupacion)
+    //         ->with('factor_recomendacion',$factor_recomendacion)
+    //         ->with('factor_acreditacion',$factor_acreditacion)
+    //         ->with('positivas',$factor_calidad)
+    //         ->with('DP',$DP)
+    //         ->with('DH',$DH)
+    //         ->with('CO',$CO)
+    //         ->with('DI',$DI)
+    //         ->with('Otros',$Otros)
+    //         ->with('DPtematicas',$DPtematica)
+    //         ->with('DItematicas',$DItematica)
+    //         ->with('COtematicas',$COtematica)
+    //         ->with('DHtematicas',$DHtematica)
+    //         ->with('Otrostematicas',$Otrostematica)
+    //         ->with('horarios',$horariosCurso)
+    //         ->with('coordinacion',$promedio_coordinacion)
+    //         ->with('contenido',$promedio_contenido)
+    //         ->with('profesors',$profesoresRecontratar)
+    //         ->with('instructor',$factor_instructor)
+    //         ->with('asistencia',$asistieron)
+    //         ->with('nombreCoordinacion',$nombreCoordinacion)
+    //         ->with('aritmetico_contenido',$aritmetico[0])
+    //         ->with('aritmetico_instructor',$aritmetico[1])
+    //         ->with('aritmetico_coordinacion',$aritmetico[2])
+    //         ->with('aritmetico_recomendacion',$aritmetico[3])
+    //         ->with('semestral',$semestral)
+    //         /*->with('encargado',$coordinadores[0]->id);*/;
+    // }
 
     /**
      * Función encargada de obtener los cálculos aritméticos de la evaluación global
@@ -2076,7 +2077,7 @@ $promedio_p4=[
     }
 
     public function enviarArea($semestre, $periodo, $coordinacion_id){
-      $evals_curso = collect();
+      // $evals_curso = collect();
       // $evals_instructores = collect();
       $fecha = explode('-',$semestre);
       $coordinacion = Coordinacion::findOrFail($coordinacion_id);
@@ -2092,7 +2093,23 @@ $promedio_p4=[
           'El periodo seleccionado con anterioridad, no cuenta con cursos asignados.');
 
       //Variables para enviar a la vista
-      $inscritos = 0;
+      $nombre_cursos = array();
+      $nombres_instructores = array();
+      $horarios = array();
+      $temDP = array();
+      $temDH = array();
+      $temCO = array();
+      $temDI = array();
+      $temOtros = array();
+      
+      $DP = 0;
+      $DH = 0;
+      $CO = 0;
+      $DI = 0;
+      $Otros = 0;
+
+      $capacidad = 0;
+      $inscritos = 0; 
       $acreditados = 0;
       $asistentes = 0;
       $contestaron = 0;
@@ -2100,102 +2117,538 @@ $promedio_p4=[
       $factor_ocupacion = 0;
       $factor_recomendacion = 0;
       $factor_acreditacion = 0;
+      $factor_calidad = 0;
 
-      //Variables para calculos
-      $capacidad = 0;
+      $criterio_contenido_arim = 0;
+      $criterio_coordinacion_arim = 0;
+      $criterio_recomendacion_arim = 0;
+      $criterio_instructores_arim = 0;
 
-      // $capacidad_total = 0;
-      // $nombres_curso = array();
-      // $DP=0;
-      // $DH=0;
-      // $CO=0;
-      // $DI=0;
-      // $Otros=0;
-      // $DPtematica = array();
-      // $DHtematica = array();
-      // $COtematica = array();
-      // $DItematica = array();
-      // $Otrostematica = array();
-      // $alumnos = 0;
-      // $recomendaciones = 0;
-      // $alumnosRecomendaron = 0;
-      // $positivas = 0;
-      // $preguntas = 0;
-      // $respuestasContenido = 0;
-      // $respuestasCoordinacion = 0;
-      // $horariosCurso = array();
-      // $profesoresRecontratar = array();
-      // $curso_recomendaron = 0;
-      // $evaluacionProfesor = 0;
-      // $preguntas_contenido = 0;
-      // $preguntas_coordinacion = 0;
-      // $cont_prom = array();
-      // $desempenioProfesores = array();
-      // $evals = collect();
+      $criterio_coordinacion_pon = 0;
+      $criterio_contenido_pon = 0;
+      $criterio_recomendacion_pon = 0;
+      $criterio_instructores_pon = 0;
+
+      $reactivos_contenido = 0;
+      $reactivos_instructores = 0;
+      $reactivos_coordinacion = 0;
+      $reactivos_recomendacion = 0;
 
       //Recorremos cada curso
       foreach($cursos as $curso){
         
         //Datos por curso
-        $instructores = $curso->getProfesoresCurso();
         $participantes = $curso->getParticipantes();
-        $evals = $evals->merge($curso->getEvalsCurso());
+        $evals_curso = $curso->getEvalsCurso();
+        $instructores = $curso->getProfesoresCurso();
+        $curso->acreditados = 0;
+        $curso->asistentes = 0;
+        $curso->contestaron = 0;
 
-        // Calculos por curso
-        $inscritos += sizeof($participantes);
-        $capacidad += intval($curso->cupo_maximo);
-        // return $curso;
-        // array_push($nombres_curso, $curso->nombre_curso);
+        $curso->criterio_contenido = 0;
+        $curso->criterio_coordinacion = 0;
+        $curso->criterio_recomendacion = 0;
+        $curso->criterio_instructores = 0;
 
-        // // if($evals->isNotEmpty())
-        // //   array_push($t_evals, $evals);
+        $curso->reactivos_contenido = 0;
+        $curso->reactivos_coordinacion = 0;
+        $curso->reactivos_instructores = 0;
+        $curso->reactivos_recomendacion = 0;
+        $curso->reactivos_autoevaluacion = 0;
 
-        //Calculos por participant del curso
+        $curso->positivas = 0;
+        $curso->negativas = 0;
+
+        //Calculos de encuestar por instructor
+        foreach($instructores as $instructor){
+          $evals_instructor = $instructor->getEvaluaciones();
+          $instructor->nombre = $instructor->getNombreProfesor();
+          $instructor->min = 100;
+          $instructor->max = 0;
+          $instructor->prom = 0;
+          foreach($evals_instructor as $eval){
+            
+            //Para calcular max, min y promedios del instructor
+            $eval->puntaje = 0;
+            $eval->reactivos = 0;
+
+            //Para factor de calidad
+            $reactivo = $eval->getCons($eval->p1);
+            if($reactivo !== NULL){
+              $curso->reactivos_instructores++;
+              $eval->reactivos++;
+              $criterio_instructores_pon += $eval->p1;
+              $curso->criterio_instructores += $eval->p1;
+              $eval->puntaje += $eval->p1;
+            }
+            if($reactivo === 1){
+              $curso->positivas++;
+            }elseif($reactivo === 0){
+              $curso->negativas++;
+            }
+
+            $reactivo = $eval->getCons($eval->p2);
+            if($reactivo !== NULL){
+              $curso->reactivos_instructores++;
+              $eval->reactivos++;
+              $criterio_instructores_pon += $eval->p2;
+              $curso->criterio_instructores += $eval->p2;
+              $eval->puntaje += $eval->p2;
+            }
+            if($reactivo === 1){
+              $curso->positivas++;
+            }elseif($reactivo === 0){
+              $curso->negativas++;
+            }
+
+            $reactivo = $eval->getCons($eval->p3);
+            if($reactivo !== NULL){
+              $curso->reactivos_instructores++;
+              $eval->reactivos++;
+              $criterio_instructores_pon += $eval->p3;
+              $curso->criterio_instructores += $eval->p3;
+              $eval->puntaje += $eval->p3;
+            }
+            if($reactivo === 1){
+              $curso->positivas++;
+            }elseif($reactivo === 0){
+              $curso->negativas++;
+            }
+
+            $reactivo = $eval->getCons($eval->p4);
+            if($reactivo !== NULL){
+              $curso->reactivos_instructores++;
+              $eval->reactivos++;
+              $criterio_instructores_pon += $eval->p4;
+              $curso->criterio_instructores += $eval->p4;
+              $eval->puntaje += $eval->p4;
+            }
+            if($reactivo === 1){
+              $curso->positivas++;
+            }elseif($reactivo === 0){
+              $curso->negativas++;
+            }
+
+            $reactivo = $eval->getCons($eval->p5);
+            if($reactivo !== NULL){
+              $curso->reactivos_instructores++;
+              $eval->reactivos++;
+              $criterio_instructores_pon += $eval->p5;
+              $curso->criterio_instructores += $eval->p5;
+              $eval->puntaje += $eval->p5;
+            }
+            if($reactivo === 1){
+              $curso->positivas++;
+            }elseif($reactivo === 0){
+              $curso->negativas++;
+            }
+
+            $reactivo = $eval->getCons($eval->p6);
+            if($reactivo !== NULL){
+              $curso->reactivos_instructores++;
+              $eval->reactivos++;
+              $criterio_instructores_pon += $eval->p6;
+              $curso->criterio_instructores += $eval->p6;
+              $eval->puntaje += $eval->p6;
+            }
+            if($reactivo === 1){
+              $curso->positivas++;
+            }elseif($reactivo === 0){
+              $curso->negativas++;
+            }
+
+            $reactivo = $eval->getCons($eval->p7);
+            if($reactivo !== NULL){
+              $curso->reactivos_instructores++;
+              $eval->reactivos++;
+              $criterio_instructores_pon += $eval->p7;
+              $curso->criterio_instructores += $eval->p7;
+              $eval->puntaje += $eval->p7;
+            }
+            if($reactivo === 1){
+              $curso->positivas++;
+            }elseif($reactivo === 0){
+              $curso->negativas++;
+            }
+
+            $reactivo = $eval->getCons($eval->p8);
+            if($reactivo !== NULL){
+              $curso->reactivos_instructores++;
+              $eval->reactivos++;
+              $criterio_instructores_pon += $eval->p8;
+              $curso->criterio_instructores += $eval->p8;
+              $eval->puntaje += $eval->p8;
+            }
+            if($reactivo === 1){
+              $curso->positivas++;
+            }elseif($reactivo === 0){
+              $curso->negativas++;
+            }
+
+            $reactivo = $eval->getCons($eval->p9);
+            if($reactivo !== NULL){
+              $curso->reactivos_instructores++;
+              $eval->reactivos++;
+              $criterio_instructores_pon += $eval->p9;
+              $curso->criterio_instructores += $eval->p9;
+              $eval->puntaje += $eval->p9;
+            }
+            if($reactivo === 1){
+              $curso->positivas++;
+            }elseif($reactivo === 0){
+              $curso->negativas++;
+            }
+
+            $reactivo = $eval->getCons($eval->p10);
+            if($reactivo !== NULL){
+              $curso->reactivos_instructores++;
+              $eval->reactivos++;
+              $criterio_instructores_pon += $eval->p10;
+              $curso->criterio_instructores += $eval->p10;
+              $eval->puntaje += $eval->p10;
+            }
+            if($reactivo === 1){
+              $curso->positivas++;
+            }elseif($reactivo === 0){
+              $curso->negativas++;
+            }
+
+            $reactivo = $eval->getCons($eval->p11);
+            if($reactivo !== NULL){
+              $curso->reactivos_instructores++;
+              $eval->reactivos++;
+              $criterio_instructores_pon += $eval->p11;
+              $curso->criterio_instructores += $eval->p11;
+              $eval->puntaje += $eval->p11;
+            }
+            if($reactivo === 1){
+              $curso->positivas++;
+            }elseif($reactivo === 0){
+              $curso->negativas++;
+            }
+
+            $eval->puntaje = round($eval->puntaje / $eval->reactivos, 2);
+            $instructor->prom += $eval->puntaje; 
+            if($eval->puntaje < $instructor->min)
+              $instructor->min = $eval->puntaje;
+            if($eval->puntaje > $instructor->max)
+              $instructor->max = $eval->puntaje;
+          }
+          $instructor->prom = round($instructor->prom / $evals_instructor->count(), 2);
+        }
+
+        //Calculos por participante del curso
         foreach($participantes as $participante){
           if($participante->acreditacion == 1)
-            $acreditados++;
+            $curso->acreditados++;
           if($participante->asistencia == 1)
-            $asistentes++;
+            $curso->asistentes++;
           if($participante->contesto_hoja_evaluacion == 1)
-            $contestaron++;
+            $curso->contestaron++;
+          // $evals_instructores = $participante->getEvaluacionesInstructores();
         }
 
         // //Calculos por evaluacion del curso
-        // foreach($evals as $eval){
-        //   $array = explode(',',$evaluacion->conocimiento);
-        //   foreach($array as $elem){
-        //     if($elem[2] == 1 || $elem[1] == 1){
-        //       $DP++;
-        //       array_push($DPtematica,$evaluacion->tematica);
-        //     }else if($elem[2] == 2 || $elem[1] == 2){
-        //       $DH++;
-        //       array_push($DHtematica,$evaluacion->tematica);
-        //     }else if($elem[2] == 3 || $elem[1] == 3){
-        //       $CO++;
-        //       array_push($COtematica,$evaluacion->tematica);
-        //     }else if($elem[2] == 4 || $elem[1] == 4){
-        //       $DI++;
-        //       array_push($DItematica,$evaluacion->tematica);
-        //     }else if($elem[2] == 5 || $elem[1] == 5){
-        //       $Otros++;
-        //       array_push($Otrostematica,$evaluacion->tematica);
-        //     }
-        //   }
-        // }
 
-        //Calculos por instructores del curso
+        foreach($evals_curso as $eval){
+
+          //Para factor de recomendacion
+          if($eval->p7 === 0)
+            $curso->reactivos_recomendacion++;
+          elseif($eval->p7 === 1){
+            $curso->reactivos_recomendacion++;
+            $curso->criterio_recomendacion++;
+            $criterio_recomendacion_pon++;
+          }
+
+          //Para factor de calidad
+          $reactivo = $eval->getCons($eval->p1_1);
+          if($reactivo !== NULL){
+            $criterio_contenido_pon += $eval->p1_1;
+            $curso->criterio_contenido += $eval->p1_1;
+            $curso->reactivos_contenido++;
+          }
+          if($reactivo === 1){
+            $curso->positivas++;
+          }elseif($reactivo === 0){
+            $curso->negativas++;
+          }
+
+          $reactivo = $eval->getCons($eval->p1_2);
+          if($reactivo !== NULL){
+            $criterio_contenido_pon += $eval->p1_2;
+            $curso->criterio_contenido += $eval->p1_2;
+            $curso->reactivos_contenido++;
+          }
+          if($reactivo === 1){
+            $curso->positivas++;
+          }elseif($reactivo === 0){
+            $curso->negativas++;
+          }
+
+          $reactivo = $eval->getCons($eval->p1_3);
+          if($reactivo !== NULL){
+            $criterio_contenido_pon += $eval->p1_3;
+            $curso->criterio_contenido += $eval->p1_3;
+            $curso->reactivos_contenido++;
+          }
+          if($reactivo === 1){
+            $curso->positivas++;
+          }elseif($reactivo === 0){
+            $curso->negativas++;
+          }
+
+          $reactivo = $eval->getCons($eval->p1_4);
+          if($reactivo !== NULL){
+            $criterio_contenido_pon += $eval->p1_4;
+            $curso->criterio_contenido += $eval->p1_4;
+            $curso->reactivos_contenido++;
+          }
+          if($reactivo === 1){
+            $curso->positivas++;
+          }elseif($reactivo === 0){
+            $curso->negativas++;
+          }
+
+          $reactivo = $eval->getCons($eval->p1_5);
+          if($reactivo !== NULL){
+            $criterio_contenido_pon += $eval->p1_5;
+            $curso->criterio_contenido += $eval->p1_5;
+            $curso->reactivos_contenido++;
+          }
+          if($reactivo === 1){
+            $curso->positivas++;
+          }elseif($reactivo === 0){
+            $curso->negativas++;
+          }
+
+          //TODO: Estos tambien cuentan como reactivos para los calculos?
+          $reactivo = $eval->getCons($eval->p2_1);
+          if($reactivo !== NULL){
+            $curso->reactivos_autoevaluacion++;
+          }
+          if($reactivo === 1){
+            $curso->positivas++;
+          }elseif($reactivo === 0){
+            $curso->negativas++;
+          }
+
+          $reactivo = $eval->getCons($eval->p2_2);
+          if($reactivo !== NULL){
+            $curso->reactivos_autoevaluacion++;
+          }
+          if($reactivo === 1){
+            $curso->positivas++;
+          }elseif($reactivo === 0){
+            $curso->negativas++;
+          }
+
+          $reactivo = $eval->getCons($eval->p2_3);
+          if($reactivo !== NULL){
+            $curso->reactivos_autoevaluacion++;
+          }
+          if($reactivo === 1){
+            $curso->positivas++;
+          }elseif($reactivo === 0){
+            $curso->negativas++;
+          }
+
+          $reactivo = $eval->getCons($eval->p2_4);
+          if($reactivo !== NULL){
+            $curso->reactivos_autoevaluacion++;
+          }
+          if($reactivo === 1){
+            $curso->positivas++;
+          }elseif($reactivo === 0){
+            $curso->negativas++;
+          }
+
+          $reactivo = $eval->getCons($eval->p3_1);
+          if($reactivo !== NULL){
+            $criterio_coordinacion_pon += $eval->p3_1;
+            $curso->criterio_coordinacion += $eval->p3_1;
+            $curso->reactivos_coordinacion++;
+          }
+          if($reactivo === 1){
+            $curso->positivas++;
+          }elseif($reactivo === 0){
+            $curso->negativas++;
+          }
+
+          $reactivo = $eval->getCons($eval->p3_2);
+          if($reactivo !== NULL){
+            $criterio_coordinacion_pon += $eval->p3_2;
+            $curso->criterio_coordinacion += $eval->p3_2;
+            $curso->reactivos_coordinacion++;
+          }
+          if($reactivo === 1){
+            $curso->positivas++;
+          }elseif($reactivo === 0){
+            $curso->negativas++;
+          }
+
+          $reactivo = $eval->getCons($eval->p3_3);
+          if($reactivo !== NULL){
+            $criterio_coordinacion_pon += $eval->p3_3;
+            $curso->criterio_coordinacion += $eval->p3_3;
+            $curso->reactivos_coordinacion++;
+          }
+          if($reactivo === 1){
+            $curso->positivas++;
+          }elseif($reactivo === 0){
+            $curso->negativas++;
+          }
+
+          $reactivo = $eval->getCons($eval->p3_4);
+          if($reactivo !== NULL){
+            $criterio_coordinacion_pon += $eval->p3_4;
+            $curso->criterio_coordinacion += $eval->p3_4;
+            $curso->reactivos_coordinacion++;
+          }
+          if($reactivo === 1){
+            $curso->positivas++;
+          }elseif($reactivo === 0){
+            $curso->negativas++;
+          }
+          if($eval->conocimiento != null){
+            foreach($eval->conocimiento as $elem){
+              if($elem == 1 ){
+                $DP++;
+                array_push($temDP,$eval->tematica);
+              }else if($elem == 2){
+                $DH++;
+                array_push($temDH,$eval->tematica);
+              }else if($elem == 3){
+                $CO++;
+                array_push($temCO,$eval->tematica);
+              }else if($elem == 4){
+                $DI++;
+                array_push($temDI,$eval->tematica);
+              }else if($elem == 5){
+                $Otros++;
+                array_push($temOtros,$eval->tematica);
+              }
+            }
+          }
+
+          if($eval->horarios !== NULL || $eval->horarioi !== NULL){
+            $horario = collect([$eval->horarios,$eval->horarioi]);
+          }
+            array_push($horarios, $horario);
+        }
+
+        // CALCULOS POR CURSO
+        // Para nombres de cursos en la vista
+        array_push($nombre_cursos, $curso->nombre_curso);
+        
+        // Para factores
+        $curso->factor_ocupacion     = round(($curso->asistentes * 100) / $curso->cupo_maximo,2);
+        $curso->factor_recomendacion = round(($curso->criterio_recomendacion * 100) / $curso->reactivos_recomendacion,2);
+        $curso->factor_acreditacion  = round(($curso->acreditados * 100) / $curso->asistentes,2);
+        $curso->factor_calidad       = round(($curso->positivas * 100) / (
+                                        $curso->reactivos_contenido + 
+                                        $curso->reactivos_instructores + 
+                                        $curso->reactivos_autoevaluacion +
+                                        $curso->reactivos_coordinacion ),2);
+
+        $factor_ocupacion     += $curso->factor_ocupacion;
+        $factor_recomendacion += $curso->factor_recomendacion;
+        $factor_acreditacion  += $curso->factor_acreditacion;
+        $factor_calidad       += $curso->factor_calidad;
+
+        // Para criterios aritmeticos
+        $curso->criterio_contenido = round($curso->criterio_contenido / $curso->reactivos_contenido, 2);
+        $curso->criterio_coordinacion = round($curso->criterio_coordinacion / $curso->reactivos_coordinacion, 2);
+        $curso->criterio_recomendacion = round($curso->criterio_recomendacion * 100 / $curso->reactivos_recomendacion, 2);
+        $curso->criterio_instructores = round($curso->criterio_instructores / $curso->reactivos_instructores, 2);
+
+        $criterio_contenido_arim += $curso->criterio_contenido;
+        $criterio_coordinacion_arim += $curso->criterio_coordinacion;
+        $criterio_recomendacion_arim += $curso->criterio_recomendacion;
+        $criterio_instructores_arim += $curso->criterio_instructores;
+
+        
+        //Para criterios ponderados
+        $reactivos_contenido += $curso->reactivos_contenido;
+        $reactivos_coordinacion += $curso->reactivos_coordinacion;
+        $reactivos_instructores += $curso->reactivos_instructores;
+        $reactivos_recomendacion += $curso->reactivos_recomendacion;
+        
+
+        // Para datos de la vista
+        $acreditados += $curso->acreditados;
+        $asistentes  += $curso->asistentes;
+        $contestaron += $curso->contestaron;
+        $capacidad   += $curso->cupo_maximo;
+        $inscritos   += $participantes->count();
+
+        //Juicio sumario de los instructores
+        if($curso->factor_calidad >= 80 && $curso->factor_acreditacion >= 80 && $curso->factor_recomendacion >= 80){
+          foreach($instructores as $instructor){
+            array_push($nombres_instructores, $instructor);
+          }
+        }
       }
 
-      $factor_ocupacion = ($asistentes * 100) / $capacidad;
-      if(sizeof($t_evals) === 0)
-        return redirect()->route('cd.area', [$semestre, $periodo, $coordinacion_id])
-          ->with('warning', 
-          'El periodo seleccionado con anterioridad, no cuenta con evaluaciones para realizar este reporte.');
-      //TODO TERMINAR
+      // Calculo final de factores
+      $factor_ocupacion = round($factor_ocupacion / $cursos->count(),2);
+      $factor_recomendacion = round($factor_recomendacion / $cursos->count(),2);
+      $factor_acreditacion = round($factor_acreditacion / $cursos->count(),2);
+      $factor_calidad = round($factor_calidad / $cursos->count(),2);
 
-      // return pdf
-      //   ->with('periodo', $semestre.$periodo)
-      //   ->with('inscritos',)
+      // Calculo final de criterios ponderados
+      $criterio_contenido_pon = round($criterio_contenido_pon / $reactivos_contenido, 2);
+      $criterio_coordinacion_pon = round($criterio_coordinacion_pon / $reactivos_coordinacion, 2);
+      $criterio_recomendacion_pon = round(($criterio_recomendacion_pon * 100) / $reactivos_recomendacion, 2);
+      $criterio_instructores_pon = round($criterio_instructores_pon / $reactivos_instructores, 2);
+
+
+      // Calculo final de criterios aritmeticos
+      $criterio_contenido_arim = round($criterio_contenido_arim / $cursos->count(),2);
+      $criterio_coordinacion_arim = round($criterio_coordinacion_arim / $cursos->count(),2);
+      $criterio_recomendacion_arim = round($criterio_recomendacion_arim / $cursos->count(),2);
+      $criterio_instructores_arim = round($criterio_instructores_arim / $cursos->count(),2);
+
+      $pdf = PDF::loadView('pages.global', array(
+        'nombre_cursos'=>$nombre_cursos,
+        'periodo'=>$semestre.$periodo,
+        'acreditados'=>$acreditados,
+        'inscritos'=>$inscritos,
+        'contestaron' => $contestaron,
+        'asistentes' => $asistentes,
+        'factor_ocupacion' => $factor_ocupacion,
+        'factor_recomendacion' => $factor_recomendacion,
+        'factor_acreditacion' => $factor_acreditacion,
+        'factor_calidad' => $factor_calidad,
+        'nombres_instructores' => $nombres_instructores,
+        'DP' => $DP,
+        'DH' => $DH,
+        'CO' => $CO,
+        'DI' => $DI,
+        // 'Otros' => $Otros,
+        'temDP' => $temDP,
+        'temDI' => $temDI,
+        'temDH' => $temDH,
+        'temCO' => $temCO,
+        // 'temOtros' => $temOtros,
+        'horarios' => $horarios,
+        'criterio_contenido_arim' => $criterio_contenido_arim,
+        'criterio_instructores_arim' => $criterio_instructores_arim,
+        'criterio_coordinacion_arim' => $criterio_coordinacion_arim,
+        'criterio_recomendacion_arim' => $criterio_recomendacion_arim,
+        'criterio_contenido_pon' => $criterio_contenido_pon,
+        'criterio_instructores_pon' => $criterio_instructores_pon,
+        'criterio_coordinacion_pon' => $criterio_coordinacion_pon,
+        'criterio_recomendacion_pon' => $criterio_recomendacion_pon
+      ));
+
+      //Retornamos la descarga del pdf
+      return $pdf->download('reporte_global_area'.
+                            $coordinacion->nombre_coordinacion.
+                            $semestre.
+                            $periodo.
+                            '.pdf');
+
     }
 
     public function reporteFinalCurso($curso_id){
@@ -2608,7 +3061,6 @@ $promedio_p4=[
         $alumnos = 1;      
       if($preguntas == 0)
         $preguntas = 1;
-      // TODO: ¿lo mismo para preguntas contenido y coordinacion?
       if($preguntas_contenido == 0)
         $preguntas_contenido = 1;
       if($preguntas_coordinacion == 0)

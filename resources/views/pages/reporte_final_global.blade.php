@@ -78,7 +78,7 @@ body {
                 <td style="border: 0px solid white;">
                     <ul>
                         <?php
-                            foreach($nombres as $nombre){
+                            foreach($nombre_cursos as $nombre){
                                 echo "<li>$nombre</li>";
                             }
                         ?>
@@ -95,7 +95,7 @@ body {
                 <td style="font-weight: bold; border: 0px solid white;">a) Periodo de Evaluación:</td>
                 <td style="border: 0px solid white;"> {{$periodo}}</td>
                 <td style="font-weight: bold; border: 0px solid white;">d) Número de participantes que acreditaron:</td>
-                <td style="border: 0px solid white;"> {{$acreditaron}}</td>
+                <td style="border: 0px solid white;"> {{$acreditados}}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold; border: 0px solid white;">b) Número de participantes inscritos:</td>
@@ -105,7 +105,7 @@ body {
             </tr>
             <tr>
                 <td style="font-weight: bold; border: 0px solid white;">c) Número de participantes que asistieron</td>
-                <td style="border: 0px solid white;">{{$asistencia}}</td>
+                <td style="border: 0px solid white;">{{$asistentes}}</td>
             </tr>
         </table>
         <br> <hr>
@@ -132,7 +132,7 @@ body {
         <table width = "100%">
             <tr>
                 <th>6. FACTOR DE CALIDAD</th>
-                <td style="border: 0px solid white;"> {{$positivas}}</td>
+                <td style="border: 0px solid white;"> {{$factor_calidad}}</td>
             </tr>
         </table>
         <br> <hr>
@@ -145,19 +145,19 @@ body {
                 <th>Promedio Evaluación</th>
             </tr>
             <?php
-                foreach($profesors as $profesor){
+                foreach($nombres_instructores as $instructor){
                     echo "<tr>";
                         echo "<td style=\"border: 0px solid white;\">";
-                            echo $profesor[0]->apellido_paterno." ".$profesor[0]->apellido_materno." ".$profesor[0]->nombres;
+                            echo $instructor;
                         echo "</td>";
                         echo "<td style=\"border: 0px solid white; text-align: center;\">";
-                            echo $profesor[1];
+                            echo '$MINIMO';
                         echo "</td>";
                         echo "<td style=\"border: 0px solid white; text-align: center;\">";
-                            echo $profesor[2];
+                            echo '$MAXIMO';
                         echo "</td>";
                         echo "<td style=\"border: 0px solid white; text-align: center;\">";
-                            echo $profesor[3];
+                            echo '$PROMEDIO';
                         echo "</td>";
                     echo "</tr>";
                 }
@@ -195,7 +195,7 @@ body {
                 <td style="border: 0px solid white;">
                     <ul>
                         <?php
-                            foreach($DPtematicas as $tematica){
+                            foreach($temDP as $tematica){
                                 echo "<li>$tematica</li>";
                             }
                         ?>
@@ -204,7 +204,7 @@ body {
                 <td style="border: 0px solid white;">
                     <ul>
                         <?php
-                            foreach($DItematicas as $tematica){
+                            foreach($temDI as $tematica){
                                 echo "<li>$tematica</li>";
                             }
                         ?>
@@ -213,7 +213,7 @@ body {
                 <td style="border: 0px solid white;">
                     <ul>
                         <?php
-                            foreach($DHtematicas as $tematica){
+                            foreach($temDH as $tematica){
                                 echo "<li>$tematica</li>";
                             }
                         ?>
@@ -222,7 +222,7 @@ body {
                 <td style="border: 0px solid white;">
                     <ul>
                         <?php
-                            foreach($COtematicas as $tematica){
+                            foreach($temCO as $tematica){
                                 echo "<li>$tematica</li>";
                             }
                         ?>
@@ -231,7 +231,7 @@ body {
                 <td style="border: 0px solid white;">
                     <ul>
                         <?php
-                            foreach($Otrostematicas as $tematica){
+                            foreach($temOtros as $tematica){
                                 echo "<li>$tematica</li>";
                             }
                         ?>
@@ -270,34 +270,28 @@ body {
             </tr>
             <tr>
                 <td style="border: 0px solid white">Contenido de los cursos: </td>
-                <td style="border: 0px solid white">{{$contenido}}</td>
-                <td style="border: 0px solid white">{{$aritmetico_contenido}}</td>
+                <td style="border: 0px solid white">{{$criterio_contenido_arim}}</td>
+                <td style="border: 0px solid white">{{$criterio_contenido_pon}}</td>
             </tr>
             <tr>
                 <td style="border: 0px solid white">Desempeño de los instructores: </td>
-                <td style="border: 0px solid white">{{$instructor}}</td>
-                <td style="border: 0px solid white">{{$aritmetico_instructor}}</td>
+                <td style="border: 0px solid white">{{$criterio_instructores_arim}}</td>
+                <td style="border: 0px solid white">{{$criterio_instructores_pon}}</td>
             </tr>
             <tr>
                 <td style="border: 0px solid white">Coordinación de los cursos: </td>
-                <td style="border: 0px solid white">{{$coordinacion}}</td>
-                <td style="border: 0px solid white">{{$aritmetico_coordinacion}}</td>
+                <td style="border: 0px solid white">{{$criterio_coordinacion_arim}}</td>
+                <td style="border: 0px solid white">{{$criterio_coordinacion_pon}}</td>
             </tr>
             <tr>
                 <td style="border: 0px solid white">Recomendación de los cursos: </td>
-                <td style="border: 0px solid white">{{$factor_recomendacion}}</td>
-                <td style="border: 0px solid white">{{$aritmetico_recomendacion}}</td>
+                <td style="border: 0px solid white">{{$criterio_recomendacion_arim}}</td>
+                <td style="border: 0px solid white">{{$criterio_recomendacion_pon}}</td>
             </tr>
 
 		</table> 
         </div>
     </div>
-
-    <button id="dia"  type="button" class="btn btn-primary active"><a href="{{route('cd.global.pdf',[$periodo, $semestral])}}" style="color:white">Descargar PDF</a></button>
-                                                                                                        
-    <?php
-        
-    ?>
                          
                 </div>
      </section>

@@ -5,7 +5,6 @@
 
 <!--Body content-->
 @if(Auth::user()->es_admin === True)
-<!-- TODO:Recordar arreglar metodos para cd -->
   {!! Form::open(["route" => ["cd.create.encuesta",$participante_id], "method" => "POST"]) !!}
 @else
   {!! Form::open(["route" => ["area.create.encuesta",$participante_id], "method" => "POST"]) !!}
