@@ -134,9 +134,9 @@ margin-top: 200px;
                 <th>Periodo</th>
                 <th>Área</th>
                 <th>Nombre del curso</th>
-                <th>No. Aistentes totales</th>
-                <th>No. Aistentes externos</th>
-                <th>No. Aistentes FI</th>
+                <th>No. Asistentes totales</th>
+                <th>No. Asistentes externos</th>
+                <th>No. Asistentes FI</th>
             </tr>
         </thead>
         @foreach($cursos as $curso)

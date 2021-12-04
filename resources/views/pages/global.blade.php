@@ -142,7 +142,7 @@
                     <!--<ol type=”A”>-->
                         <?php 
                             $num = 1;
-                            foreach($nombres as $nombre){
+                            foreach($nombre_cursos as $nombre){
                                 echo "<dd style=\"line-height:1.3\">&nbsp;$num. $nombre</dd>";
                                 $num++;
                             }
@@ -162,7 +162,7 @@
                 <td class="margen">a) Periodo de evaluación: </td>
                 <td class="margen">  {{$periodo}}</td>  </td>
                 <td class="margen">d) Número de participantes que acreditaron </td>
-                <td class="margen"> {{$acreditaron}}</td>
+                <td class="margen"> {{$acreditados}}</td>
             </tr>
             <tr>
                 <td class="margen">b) Número de particpantes inscritos: </td>
@@ -172,7 +172,7 @@
             </tr>
             <tr>
                 <td class="margen">c) Número de participantes que asistieron: </td>
-                <td class="margen">{{$asistencia}}</td>
+                <td class="margen">{{$asistentes}}</td>
             </tr>
 		</table> 
         <br>
@@ -213,7 +213,7 @@
             </tr>
             <tr>
                 <td class="margen">(Total de reactivos positivos x 100 / Total de reactivos) = </td>
-                <td class="margen"> {{$positivas}}</td>
+                <td class="margen"> {{$factor_calidad}}</td>
             </tr>
 
 		</table> 
@@ -226,19 +226,19 @@
                 <th class="titulos" align= left >Promedio Evaluación</th>
             </tr>
             <?php
-                foreach($profesors as $profesor){
+                foreach($nombres_instructores as $instructor){
                     echo "<tr>";
                         echo "<td style=\"border: 0px solid white;\">";
-                            echo $profesor[0]->apellido_paterno." ".$profesor[0]->apellido_materno." ".$profesor[0]->nombres;
+                            echo $instructor->nombre;
                         echo "</td>";
                         echo "<td style=\"border: 0px solid white; text-align: center;\">";
-                            echo $profesor[1];
+                            echo $instructor->min;
                         echo "</td>";
                         echo "<td style=\"border: 0px solid white; text-align: center;\">";
-                            echo $profesor[2];
+                          echo $instructor->max;
                         echo "</td>";
                         echo "<td style=\"border: 0px solid white; text-align: center;\">";
-                            echo $profesor[3];
+                          echo $instructor->prom;
                         echo "</td>";
                     echo "</tr>";
                 }
@@ -282,7 +282,7 @@
                 <td class="margen">
                     <ul>
                         <?php
-                            foreach($DPtematicas as $tematica){
+                            foreach($temDP as $tematica){
                                 echo "<li style=\"line-height=0.7\">$tematica</li>";
                             }
                         ?>
@@ -291,7 +291,7 @@
                 <td class="margen">
                     <ul>
                         <?php
-                            foreach($DItematicas as $tematica){
+                            foreach($temDI as $tematica){
                                 echo "<li style=\"line-height=0.7\">$tematica</li>";
                             }
                         ?>
@@ -300,7 +300,7 @@
                 <td class="margen">
                     <ul>
                         <?php
-                            foreach($DHtematicas as $tematica){
+                            foreach($temDH as $tematica){
                                 echo "<li style=\"line-height=0.7\">$tematica</li>";
                             }
                         ?>
@@ -309,7 +309,7 @@
                 <td class="margen">
                     <ul>
                         <?php
-                            foreach($COtematicas as $tematica){
+                            foreach($temCO as $tematica){
                                 echo "<li style=\"line-height=0.7\">$tematica</li>";
                             }
                         ?>
@@ -334,40 +334,40 @@
                     echo "<td class=\"margen\">$horario[0]</td>";
                     echo "<td class=\"margen\">$horario[1]</td>";
                     echo "</tr>";
-                }        
+                }
             ?>
 
 		</table> 
 <br>
         <table style="width: 100%">
             <?php
-                $calif_contenido = $contenido;
-                $calif_contenido_aritmetico = $aritmetico_contenido;
-                $calif_instructor = $instructor;
-                $calif_instrcutor_aritmetico = $aritmetico_instructor;
-                $calif_coordinacion = $coordinacion;
-                $calif_coordinacion_aritmetico = $aritmetico_coordinacion;
-                $calif_recomendacion = $factor_recomendacion;
-                $calif_recomendacion_aritmetico = $aritmetico_recomendacion;
-                if($contenido > $aritmetico_contenido){
-                    $calif_contenido = strval($contenido).' *';
+                $calif_contenido = $criterio_contenido_pon;
+                $calif_contenido_aritmetico = $criterio_contenido_arim;
+                $calif_instructor = $criterio_instructores_pon;
+                $calif_instrcutor_aritmetico = $criterio_instructores_arim;
+                $calif_coordinacion = $criterio_coordinacion_pon;
+                $calif_coordinacion_aritmetico = $criterio_coordinacion_arim;
+                $calif_recomendacion = $criterio_recomendacion_pon;
+                $calif_recomendacion_aritmetico = $criterio_recomendacion_arim;
+                if($criterio_contenido_pon > $criterio_contenido_arim){
+                    $calif_contenido = strval($criterio_contenido_pon).' *';
                 }else{
-                    $calif_contenido_aritmetico = strval($aritmetico_contenido).' *';
+                    $calif_contenido_aritmetico = strval($criterio_contenido_arim).' *';
                 }
-                if($instructor > $calif_instrcutor_aritmetico){
-                    $calif_instructor = strval($instructor).' *';
+                if($criterio_instructores_pon > $criterio_instructores_arim){
+                    $calif_instructor = strval($criterio_instructores_pon).' *';
                 }else{
-                    $calif_instrcutor_aritmetico = strval($aritmetico_instructor).' *';
+                    $calif_instrcutor_aritmetico = strval($criterio_instructores_arim).' *';
                 }
-                if($coordinacion > $aritmetico_coordinacion){
-                    $calif_coordinacion = strval($coordinacion).' *';
+                if($criterio_coordinacion_pon > $criterio_coordinacion_arim){
+                    $calif_coordinacion = strval($criterio_coordinacion_pon).' *';
                 }else{
-                    $calif_coordinacion_aritmetico = strval($aritmetico_coordinacion).' *';
+                    $calif_coordinacion_aritmetico = strval($criterio_coordinacion_arim).' *';
                 }
-                if($factor_recomendacion > $aritmetico_recomendacion){
-                    $calif_recomendacion = strval($factor_recomendacion).' *';
+                if($criterio_recomendacion_pon > $criterio_recomendacion_arim){
+                    $calif_recomendacion = strval($criterio_recomendacion_pon).' *';
                 }else{
-                    $calif_recomendacion_aritmetico = strval($aritmetico_recomendacion).' *';
+                    $calif_recomendacion_aritmetico = strval($criterio_recomendacion_arim).' *';
                 }
             ?>
             <tr>
@@ -404,26 +404,6 @@
     <br>
     <br>
     <br>
-
-    <!--<table class = "tabla-centro" width="100%">
-      <tr>
-        <td  class="firma" style="font-weight: bold; text-align: center;">Analista de Área</td>
-        <td  class="firma" style="font-weight: bold; text-align: center;">Coordinador del centro de Docencia</td>
-      </tr>
-      <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-      </tr>
-      <tr>
-        <td  class="firma1">___________________</td>
-        <td  class="firma1" style=" text-align: center;">___________________</td>
-      </tr>
-    </table>
-    <br>
-    <br>
-    <p>Fecha:___________________</p>-->
-
-
 <br>
 
 </div>

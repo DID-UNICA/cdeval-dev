@@ -31,4 +31,13 @@ class EvaluacionInstructor extends Model
       'instructor_id'
    ];
   public $timestamps = false;
+  
+  public function getCons(int $p){
+    if($p === 100 || $p === 95 || $p === 80)
+      return 1;
+    if($p === 60 || $p === 50)
+      return 0;
+    else
+      return NULL;
+  }
 }

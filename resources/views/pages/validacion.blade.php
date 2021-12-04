@@ -106,7 +106,7 @@ margin-top: 350px;
 					Fecha de emisión:
 				</td>
 				<td class="margen">
-                    2017/08/21
+                    21/08/2017
 				</td>
 				<td class="margen">
 					Versión
@@ -351,7 +351,11 @@ margin-top: 350px;
             </tr>
 
         </table>
-
+        <?php
+            $diassemana = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
+            $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+            echo $diassemana[date('w')]." ".date('j')." de ".$meses[date('n')-1]. " del ".date('Y');
+        ?>
     </div>
     <script type="text/php">
     $pdf->page_script('
