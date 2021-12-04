@@ -23,4 +23,8 @@ class ParticipantesCurso extends Model
   public function getCurso(){
     return Curso::findOrFail($this->curso_id);
   }
+
+  public function getEvaluacionesInstructores(){
+    return EvaluacionInstructor::where('participante_id', $this->id)->get();
+  }
 }

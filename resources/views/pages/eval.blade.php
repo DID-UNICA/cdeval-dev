@@ -57,7 +57,6 @@
                               <p>{{$participante->getProfesor()->getNombre()}}</p>
                           </td>
                           <td>
-                            <!-- TODO:Implementar ruta en demas métodos -->
                             @if(Auth::user()->es_admin === True)
                               <button onclick="window.location='{{route("cd.evaluacion.vista",$participante->id)}}'" class="btn btn-success">Evaluación final de curso</button>
                             @else

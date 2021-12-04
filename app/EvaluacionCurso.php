@@ -38,4 +38,13 @@ class EvaluacionCurso extends Model
   ];
   public $timestamps = false;
 
+  public function getCons(int $p){
+    if($p === 100 || $p === 95 || $p === 80)
+      return 1;
+    elseif($p === 60 || $p === 50)
+      return 0;
+    else
+      return NULL;
+  }
+
 }
