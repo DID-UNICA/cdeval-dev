@@ -63,7 +63,7 @@
             <table>
               <tr>
                 @if($coordinacion === 'Coordinación Del Centro de Docencia' or $coordinacion === 'Área de Gestión y Vinculación')
-                  <td><a onclick="window.location='{{ route("cd.participantes.area",[$semestre,$coordinacion_id]) }}'" class="btn btn-primary">Reporte participantes periodo</a></td>
+                  <td><a onclick="window.location='{{ route("cd.participantes",[$semestre,$coordinacion_id]) }}'" class="btn btn-primary">Reporte participantes periodo</a></td>
                 @else
                   <td><a onclick="window.location='{{ route("cd.reporte.area",[$semestre,$periodo,$coordinacion_id]) }}'" class="btn btn-primary">Reporte de Evaluación Global de Área</a></td>
                   <td><a onclick="window.location='{{ route("cd.participantes.area",[$semestre,$coordinacion_id]) }}'" class="btn btn-primary">Reporte participantes periodo</a></td>

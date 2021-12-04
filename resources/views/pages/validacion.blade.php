@@ -106,7 +106,7 @@ margin-top: 350px;
 					Fecha de emisión:
 				</td>
 				<td class="margen">
-                    2017/08/21
+                    21/08/2017
 				</td>
 				<td class="margen">
 					Versión
