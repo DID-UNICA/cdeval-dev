@@ -32,7 +32,7 @@ class EvaluacionInstructor extends Model
    ];
   public $timestamps = false;
   
-  public function getCons(int $p){
+  public function getCons($p){
     if($p === 100 || $p === 95 || $p === 80)
       return 1;
     if($p === 60 || $p === 50)
