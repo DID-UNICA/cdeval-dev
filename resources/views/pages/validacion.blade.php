@@ -77,18 +77,23 @@ margin-top: 350px;
 <script type="text/php">
     $GLOBALS["header"] = NULL;
 </script>
-<script type="text/php">
-      if ( isset($pdf) ) {
-          $pdf->page_script('
+
+<div class="header">
+    <script type="text/php">$GLOBALS["header"] = $pdf->open_object();
+      $pdf->page_script('
               $font = $fontMetrics->get_font("Arial", "normal");
-              if ($PAGE_NUM >= 2){
-                  $pdf->text(490, 750, "Página $PAGE de $PAGE_COUNT", $font, 10);
+              if ($PAGE_NUM >= 1){
+                  $pdf->text(480 , 135, "Página $PAGE_NUM de $PAGE_COUNT", $font, 8);
+              }
+              if( $PAGE_NUM == $PAGE_COUNT){
+                $diassemana = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
+                $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+                $temp_date = $diassemana[date("w")]." ".date("j")." de ".$meses[date("n")-1]. " del ".date("Y");
+                $pdf->text(50 , 800, "$temp_date", $font, 10);
               }
           ');
-      }
-</script>
-<div class="header">
-    <script type="text/php">$GLOBALS["header"] = $pdf->open_object();</script>
+      
+    </script>
 	<div height="10%">
 		<table style="width: 100%" align="center"  id="tabla_encabezado" height="5%">
 			<tr id="normal">
@@ -364,20 +369,14 @@ margin-top: 350px;
             </tr>
 
         </table>
-        <?php
-            $diassemana = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
-            $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-            echo $diassemana[date('w')]." ".date('j')." de ".$meses[date('n')-1]. " del ".date('Y');
-        ?>
+
     </div>
     <script type="text/php">
     $pdf->page_script('
-        if ($PAGE_NUM >= 2) {
+        if ($PAGE_NUM >= 1) {
             $pdf->add_object($GLOBALS["header"],"add");
         }
         ');
     </script>
-    
-
 </body>
 </html>

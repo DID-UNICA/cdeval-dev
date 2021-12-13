@@ -87,7 +87,21 @@ margin-top: 260px;
 	$GLOBALS["header"] = NULL;
 </script>
 	<div class="header">
-		<script type="text/php">$GLOBALS["header"] = $pdf->open_object();</script>
+  <script type="text/php">$GLOBALS["header"] = $pdf->open_object();
+      $pdf->page_script('
+              $font = $fontMetrics->get_font("Arial", "normal");
+              if ($PAGE_NUM >= 1){
+                  $pdf->text(480 , 133, "Página $PAGE_NUM de $PAGE_COUNT", $font, 8);
+              }
+              if( $PAGE_NUM == $PAGE_COUNT){
+                $diassemana = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
+                $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+                $temp_date = $diassemana[date("w")]." ".date("j")." de ".$meses[date("n")-1]. " del ".date("Y");
+                $pdf->text(50 , 800, "$temp_date", $font, 10);
+              }
+          ');
+      
+    </script>
 		<div height="10%">
 			<table style="width: 100%" align="center"  id="tabla_encabezado" height="5%">
 				<tr id="normal">
@@ -124,7 +138,7 @@ margin-top: 260px;
 						2
 					</td>
 					<td width="20%" class="margen">
-						Página 1 de 1
+
 					</td>
 			</table>
 			<div align="center">
@@ -206,16 +220,11 @@ margin-top: 260px;
 <br>
 <p>_______________________________________</p>
 <p>SAD,CDD</p>
-	<?php
-        $diassemana = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
-        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-        echo $diassemana[date('w')]." ".date('j')." de ".$meses[date('n')-1]. " del ".date('Y');
-    ?>
 
 <script type="text/php">
 	$pdf->page_script('
-	  if ($PAGE_NUM >= 2) {
-		$pdf->add_object($GLOBALS["header"],"add");
+	  if ($PAGE_NUM >= 1) {
+		  $pdf->add_object($GLOBALS["header"],"add");
 	  }
 	');
   </script>
