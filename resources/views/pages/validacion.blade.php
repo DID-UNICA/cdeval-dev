@@ -36,8 +36,8 @@ body {
   font-size: 15px;
 }
 .f{
-    background-color: #2A4EDF;
-    color: white; 
+    background-color: #b9d7eb;
+    color: #000000;
 }
 .n{
     border: 0px solid white;
@@ -77,6 +77,16 @@ margin-top: 350px;
 <script type="text/php">
     $GLOBALS["header"] = NULL;
 </script>
+<script type="text/php">
+      if ( isset($pdf) ) {
+          $pdf->page_script('
+              $font = $fontMetrics->get_font("Arial", "normal");
+              if ($PAGE_NUM >= 2){
+                  $pdf->text(490, 750, "Página $PAGE de $PAGE_COUNT", $font, 10);
+              }
+          ');
+      }
+</script>
 <div class="header">
     <script type="text/php">$GLOBALS["header"] = $pdf->open_object();</script>
 	<div height="10%">
@@ -115,7 +125,7 @@ margin-top: 350px;
 					2
 				</td>
 				<td width="20%" class="margen">
-					Página 1 de 1
+					
 				</td>
 		</table>
         <br>
@@ -216,11 +226,10 @@ margin-top: 350px;
         </table>
         <table width="100%">
             <tr>
-                <th style="width: 65%" class="f" >Instructor</th>
-                <th class="f">Promedio</th>
-                <th class="f">Mínimo</th>
-                <th class="f">Máximo</th>
-                <th class="f">Juicio Sumario</th>
+                <th style="width: 65%; text-align:left" class="f" >Instructor</th>
+                <th style="text-align:right" class="f">Promedio</th>
+                <th style="text-align:right" class="f">Mínimo</th>
+                <th style="text-align:right" class="f">Máximo</th>
             </tr>
         @foreach($instructores as $instructor)
             <tr>
@@ -228,30 +237,34 @@ margin-top: 350px;
                 <td class="n">{{$instructor->factor}}</td>
                 <td class="n">{{$instructor->minimo}}</td>
                 <td class="n">{{$instructor->maximo}}</td>
-                <td class="n">
-                    @if($instructor->factor >= 80)
-                        Si
-                    @else
-                        No
-                    @endif
-                </td>
             </tr>
         @endforeach
 
         </table>
         <br>
-        <table width="100%">
-            <tr>
-                <th style="width: 20%">8. JUICIO SUMARIO  CURSO</th>
-                <?php
-                    $num = round(($factor+$factor_acreditacion+$positivas)/3,2);
-                    if($factor >= 80 && $factor_acreditacion >= 80 && $positivas >= 80){
-                        echo "<td style=\"width: 30%\" class=\"n\">$num &nbsp; Si</td>";
-                    }else{
-                        echo "<td style=\"width: 30%\" class=\"n\">$num &nbsp; No</td>";
-                    }
-                ?>
-            </tr>
+        <table style="align:left" width="100%">
+          <tr>
+            <th style="text-align:left; width: 40%">8. JUICIO SUMARIO  INSTRUCTOR a)</th>
+            @if($instructor->factor >= 80)
+              <td style="text-align:left; width: 60%" class= "n">  Si </td> 
+            @else
+              <td style="text-align:left; width: 60%" class= "n">  No </td> 
+            @endif
+          </tr>
+        </table>
+        <table style="align:left" width="100%">
+          <tr>
+            <th style="text-align:left; width: 40%">8. JUICIO SUMARIO  CURSO b)</th>
+            @php
+              $num = round(($factor+$factor_acreditacion+$positivas)/3,2);
+            @endphp
+              <td style="width: 30%" class="n">{{$num}}</td>
+            @if($factor >= 80 && $factor_acreditacion >= 80 && $positivas >= 80)
+              <td style="text-align:left; width: 30%" class="n">Si</td>
+            @else
+              <td style="text-align:left; width: 30%" class="n">No</td>
+            @endif
+          </tr>
         </table>
         <br>
         <table>
@@ -364,6 +377,7 @@ margin-top: 350px;
         }
         ');
     </script>
+    
 
 </body>
 </html>
