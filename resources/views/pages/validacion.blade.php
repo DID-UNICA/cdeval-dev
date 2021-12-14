@@ -209,7 +209,7 @@ margin-top: 350px;
         <table width="100%">
             <tr>
                 <th>3. FACTOR DE OCUPACIÓN</th>
-                <td class="n"> {{$ocupacion}}</td>
+                <td class="n"> {{round($ocupacion,2)}}</td>
                 <th>4. FACTOR DE RECOMENDACIÓN</th>
                 <td class="n"> {{$factor}}</td>
             </tr>
