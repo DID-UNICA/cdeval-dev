@@ -2166,6 +2166,7 @@ $promedio_p4=[
           $instructor->min = 100;
           $instructor->max = 0;
           $instructor->prom = 0;
+          $instructor->count_evals = 0;
           foreach($evals_instructor as $eval){
             
             //Para calcular max, min y promedios del instructor
@@ -2326,8 +2327,12 @@ $promedio_p4=[
             }elseif($reactivo === 0){
               $curso->negativas++;
             }
-
-            $eval->puntaje = round($eval->puntaje / $eval->reactivos, 2);
+            if($eval->reactivos != 0){
+              $instructor->count_evals++;
+              $eval->puntaje = round($eval->puntaje / $eval->reactivos, 2);
+            }
+            else
+              $eval->puntaje = 0;
             $instructor->prom += $eval->puntaje; 
             if($eval->puntaje < $instructor->min)
               $instructor->min = $eval->puntaje;
@@ -2336,7 +2341,7 @@ $promedio_p4=[
           }
           if($evals_instructor->count() === 0)
             return redirect()->back()->with('danger', 'No hay evaluaciones creadas para el instructor '.$instructor->getNombreProfesor().' en el curso '.$curso->nombre_curso);
-          $instructor->prom = round($instructor->prom / $evals_instructor->count(), 2);
+          $instructor->prom = round($instructor->prom / $instructor->count_evals, 2);
         }
 
         //Calculos por participante del curso
@@ -3099,7 +3104,7 @@ $promedio_p4=[
         'periodo'=> $curso->getPeriodo(),
         'nombre_instructores' => $curso->getInstructores(),
         'instructores' => $instructores,
-        'fecha_imparticion'=> 'TODO',
+        'fecha_imparticion'=> $curso->getFecha(),
         'cupo_maximo'=>$curso->cupo_maximo,
         'hora_inicio'=> $curso->hora_inicio,
         'hora_fin'=> $curso->hora_fin,
