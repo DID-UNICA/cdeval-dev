@@ -2081,11 +2081,13 @@ $promedio_p4=[
       // $evals_instructores = collect();
       $fecha = explode('-',$semestre);
       $coordinacion = Coordinacion::findOrFail($coordinacion_id);
+      // $cursos = Curso::get();
       $cursos = Curso::join('catalogo_cursos', 'catalogo_cursos.id', '=', 'cursos.catalogo_id')
         ->where('cursos.semestre_anio', $fecha[0])
         ->where('cursos.semestre_pi', $fecha[1])
         ->where('cursos.semestre_si', $periodo)
         ->where('catalogo_cursos.coordinacion_id', $coordinacion->id)
+        ->select('catalogo_cursos.*','cursos.*')
         ->get();
       if($cursos->isEmpty())
         return redirect()->route('cd.area', [$semestre, $periodo, $coordinacion_id])
@@ -2113,6 +2115,8 @@ $promedio_p4=[
       $acreditados = 0;
       $asistentes = 0;
       $contestaron = 0;
+      $positivas = 0;
+
 
       $factor_ocupacion = 0;
       $factor_recomendacion = 0;
@@ -2133,10 +2137,11 @@ $promedio_p4=[
       $reactivos_instructores = 0;
       $reactivos_coordinacion = 0;
       $reactivos_recomendacion = 0;
+      $reactivos_autoevaluacion = 0;
+
 
       //Recorremos cada curso
       foreach($cursos as $curso){
-        
         //Datos por curso
         $participantes = $curso->getParticipantes();
         $evals_curso = $curso->getEvalsCurso();
@@ -2553,18 +2558,18 @@ $promedio_p4=[
           $curso->factor_ocupacion = round(($curso->asistentes * 100) / $curso->cupo_maximo,2);
         if($curso->reactivos_recomendacion != 0)
           $curso->factor_recomendacion = round(($curso->criterio_recomendacion * 100) / $curso->reactivos_recomendacion,2);
-        if($curso->reactivos_asistentes != 0)
-          $curso->factor_acreditacion  = round(($curso->acreditados * 100) / $curso->asistentes,2);
+        // if($curso->asistentes !=NULL && $curso->asistentes != 0)
+        //   $curso->factor_acreditacion  = round(($curso->acreditados * 100) / $curso->asistentes,2);
         if($curso->reactivos_contenido != 0 || $curso->reactivos_instructores != 0 || $curso->reactivos_coordinacion != 0 || $curso->reactivos_autoevaluacion != 0)
           $curso->factor_calidad = round(($curso->positivas * 100) / (
                                         $curso->reactivos_contenido + 
                                         $curso->reactivos_instructores + 
                                         $curso->reactivos_autoevaluacion +
                                         $curso->reactivos_coordinacion ),2);
-
+        
         $factor_ocupacion     += $curso->factor_ocupacion;
-        $factor_recomendacion += $curso->factor_recomendacion;
-        $factor_acreditacion  += $curso->factor_acreditacion;
+        $factor_recomendacion += $curso->criterio_recomendacion;
+        // $factor_acreditacion  += $curso->factor_acreditacion;
         $factor_calidad       += $curso->factor_calidad;
 
         // Para criterios aritmeticos
@@ -2587,6 +2592,7 @@ $promedio_p4=[
         $reactivos_contenido += $curso->reactivos_contenido;
         $reactivos_coordinacion += $curso->reactivos_coordinacion;
         $reactivos_instructores += $curso->reactivos_instructores;
+        $reactivos_autoevaluacion += $curso->reactivos_autoevaluacion;
         $reactivos_recomendacion += $curso->reactivos_recomendacion;
         
 
@@ -2595,21 +2601,26 @@ $promedio_p4=[
         $asistentes  += $curso->asistentes;
         $contestaron += $curso->contestaron;
         $capacidad   += $curso->cupo_maximo;
+        $positivas   += $curso->positivas;
         $inscritos   += $participantes->count();
-
+        
         //Juicio sumario de los instructores
-        if($curso->factor_calidad >= 80 && $curso->factor_acreditacion >= 80 && $curso->factor_recomendacion >= 80){
+        // if($curso->factor_calidad >= 80 && $curso->factor_acreditacion >= 80 && $curso->factor_recomendacion >= 80){
           foreach($instructores as $instructor){
             array_push($nombres_instructores, $instructor);
           }
-        }
+        // }
       }
+      $reactivos = $reactivos_contenido+
+                   $reactivos_coordinacion+
+                   $reactivos_instructores+
+                   $reactivos_autoevaluacion;
 
       // Calculo final de factores
-      $factor_ocupacion = round($factor_ocupacion / $cursos->count(),2);
-      $factor_recomendacion = round($factor_recomendacion / $cursos->count(),2);
-      $factor_acreditacion = round($factor_acreditacion / $cursos->count(),2);
-      $factor_calidad = round($factor_calidad / $cursos->count(),2);
+      $factor_ocupacion = round($asistentes*100 / $capacidad,2);
+      $factor_recomendacion = round($factor_recomendacion*100 / $reactivos_recomendacion,2);
+      $factor_acreditacion = round($acreditados*100/$asistentes,2);
+      $factor_calidad = round($positivas*100 / $reactivos,2);
 
       // Calculo final de criterios ponderados
       if($reactivos_contenido === 0)
@@ -2625,6 +2636,7 @@ $promedio_p4=[
       $criterio_coordinacion_pon = round($criterio_coordinacion_pon / $reactivos_coordinacion, 2);
       $criterio_recomendacion_pon = round(($criterio_recomendacion_pon * 100) / $reactivos_recomendacion, 2);
       $criterio_instructores_pon = round($criterio_instructores_pon / $reactivos_instructores, 2);
+
 
 
       // Calculo final de criterios aritmeticos
