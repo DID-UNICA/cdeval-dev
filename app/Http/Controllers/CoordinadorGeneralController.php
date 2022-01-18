@@ -1796,7 +1796,7 @@ $promedio_p4=[
 
     public function descargarPDF($nombres,$periodo,$acreditaron,$inscritos,$contestaron,$factor_ocupacion,$factor_recomendacion,$factor_acreditacion,$positivas,$DP,$DH,$CO,$DI,$Otros,$DPtematicas,$DItematicas,$COtematicas,$DHtematicas,$Otrostematicas,$horarios,$coordinacion,$contenido,$profesors,$instructor,$asistencia,$nombreCoordinacion,$lugar,$factor_contenido_aritmetico,$factor_instructor_aritmetico,$factor_coordinacion_aritmetico,$factor_recomendacion_aritmetico,$semestral){
 
-        $envio = 'pages.global';
+        $envio = 'pages.global-reporte';
         $envioPDF = 'global_'.$periodo.'-'.$semestral;
         Session::flash('tipos','CD');
         if(strcmp($lugar,'pages.reporte_final_area') == 0){
@@ -2645,45 +2645,76 @@ $promedio_p4=[
       $criterio_recomendacion_arim = round($criterio_recomendacion_arim / $cursos->count(),2);
       $criterio_instructores_arim = round($criterio_instructores_arim / $cursos->count(),2);
 
-      $pdf = PDF::loadView('pages.global', array(
-        'nombre_cursos'=>$nombre_cursos,
-        'periodo'=>$semestre.$periodo,
-        'acreditados'=>$acreditados,
-        'inscritos'=>$inscritos,
-        'contestaron' => $contestaron,
-        'asistentes' => $asistentes,
-        'factor_ocupacion' => $factor_ocupacion,
-        'factor_recomendacion' => $factor_recomendacion,
-        'factor_acreditacion' => $factor_acreditacion,
-        'factor_calidad' => $factor_calidad,
-        'nombres_instructores' => $nombres_instructores,
-        'DP' => $DP,
-        'DH' => $DH,
-        'CO' => $CO,
-        'DI' => $DI,
-        // 'Otros' => $Otros,
-        'temDP' => $temDP,
-        'temDI' => $temDI,
-        'temDH' => $temDH,
-        'temCO' => $temCO,
-        // 'temOtros' => $temOtros,
-        'horarios' => $horarios,
-        'criterio_contenido_arim' => $criterio_contenido_arim,
-        'criterio_instructores_arim' => $criterio_instructores_arim,
-        'criterio_coordinacion_arim' => $criterio_coordinacion_arim,
-        'criterio_recomendacion_arim' => $criterio_recomendacion_arim,
-        'criterio_contenido_pon' => $criterio_contenido_pon,
-        'criterio_instructores_pon' => $criterio_instructores_pon,
-        'criterio_coordinacion_pon' => $criterio_coordinacion_pon,
-        'criterio_recomendacion_pon' => $criterio_recomendacion_pon
-      ));
+      // $pdf = PDF::loadView('pages.global', array(
+      //   'nombre_cursos'=>$nombre_cursos,
+      //   'periodo'=>$semestre.$periodo,
+      //   'acreditados'=>$acreditados,
+      //   'inscritos'=>$inscritos,
+      //   'contestaron' => $contestaron,
+      //   'asistentes' => $asistentes,
+      //   'factor_ocupacion' => $factor_ocupacion,
+      //   'factor_recomendacion' => $factor_recomendacion,
+      //   'factor_acreditacion' => $factor_acreditacion,
+      //   'factor_calidad' => $factor_calidad,
+      //   'nombres_instructores' => $nombres_instructores,
+      //   'DP' => $DP,
+      //   'DH' => $DH,
+      //   'CO' => $CO,
+      //   'DI' => $DI,
+      //   // 'Otros' => $Otros,
+      //   'temDP' => $temDP,
+      //   'temDI' => $temDI,
+      //   'temDH' => $temDH,
+      //   'temCO' => $temCO,
+      //   // 'temOtros' => $temOtros,
+      //   'horarios' => $horarios,
+      //   'criterio_contenido_arim' => $criterio_contenido_arim,
+      //   'criterio_instructores_arim' => $criterio_instructores_arim,
+      //   'criterio_coordinacion_arim' => $criterio_coordinacion_arim,
+      //   'criterio_recomendacion_arim' => $criterio_recomendacion_arim,
+      //   'criterio_contenido_pon' => $criterio_contenido_pon,
+      //   'criterio_instructores_pon' => $criterio_instructores_pon,
+      //   'criterio_coordinacion_pon' => $criterio_coordinacion_pon,
+      //   'criterio_recomendacion_pon' => $criterio_recomendacion_pon
+      // ));
 
-      //Retornamos la descarga del pdf
-      return $pdf->download('reporte_global_area'.
-                            $coordinacion->nombre_coordinacion.
-                            $semestre.
-                            $periodo.
-                            '.pdf');
+      // //Retornamos la descarga del pdf
+      // return $pdf->download('reporte_global_area'.
+      //                       $coordinacion->nombre_coordinacion.
+      //                       $semestre.
+      //                       $periodo.
+      //                       '.pdf');
+
+      return view('pages.global')
+      ->with('nombre_cursos',$nombre_cursos)
+      ->with('periodo',$semestre.$periodo)
+      ->with('acreditados',$acreditados)
+      ->with('inscritos',$inscritos)
+      ->with('contestaron' , $contestaron)
+      ->with('asistentes' , $asistentes)
+      ->with('factor_ocupacion' , $factor_ocupacion)
+      ->with('factor_recomendacion' , $factor_recomendacion)
+      ->with('factor_acreditacion' , $factor_acreditacion)
+      ->with('factor_calidad' , $factor_calidad)
+      ->with('nombres_instructores' , $nombres_instructores)
+      ->with('DP' , $DP)
+      ->with('DH' , $DH)
+      ->with('CO' , $CO)
+      ->with('DI' , $DI)
+      ->with('temDP' , $temDP)
+      ->with('temDI' , $temDI)
+      ->with('temDH' , $temDH)
+      ->with('temCO' , $temCO)
+      ->with('horarios' , $horarios)
+      ->with('criterio_contenido_arim' , $criterio_contenido_arim)
+      ->with('criterio_instructores_arim' , $criterio_instructores_arim)
+      ->with('criterio_coordinacion_arim' , $criterio_coordinacion_arim)
+      ->with('criterio_recomendacion_arim' , $criterio_recomendacion_arim)
+      ->with('criterio_contenido_pon' , $criterio_contenido_pon)
+      ->with('criterio_instructores_pon' , $criterio_instructores_pon)
+      ->with('criterio_coordinacion_pon' , $criterio_coordinacion_pon)
+      ->with('criterio_recomendacion_pon' , $criterio_recomendacion_pon)
+      ;
 
     }
 

@@ -1,8 +1,10 @@
-@extends('layouts.principal')
-
-@section('contenido')
-
-<!-- <style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Evaluación global</title>
+</head>
+<style>
     html{
 	    width:100%;
     }
@@ -85,114 +87,164 @@
         padding-bottom: 1.5%;
         line-height: 100%;
     }
-    
-</style> -->
-    <style>
-      .text{
-        margin: 1%;
-      }
-    </style>
-	<div id="inner" style="margin-top:2%">
-    <div class="content-inner">
-      <br>
-      @include('partials.messages')
-      <div class="panel panel-default">
-        
-        <div class="panel-heading">
-          <h3>Reporte de Evaluación Global de Área</h3>
-          <h4>{{$periodo}}</h4>
-        </div>
+</style>
+<body>
+	<div>
+		<!---<table  id="tabla_encabezado">
+				<td width= 12% class="margen">
+                    <img id="imagen_izquierda"  src="img/fi_2.png" height="80">
+				</td>
+				<td width= 58% id="encabezado" class="margen" style="line-height=20px">
+			        FACULTAD DE INGENIERÍA, UNAM<br/>
+			        Secretaria de Apoyo a la Docencia<br>
+			        Centro de Docencia "Ing. Gilberto Borja Navarrete"<br/>
+			        Sistema de Gestión de la Calidad<br/>
+			        Norma ISO 9001-2015<br/>
+			        Formato
+				</td>
+				<td width= 12% class="margen">
+                    <img id="imagen_derecha" src="img/cdd.png" height="80">
+				</td>
+		</table>
+        <table id="tabla_encabezado_debajo">
+				<td width="20%" class="margen">
+					2730-SGC-IC-FO-11
+				</td>
+				<td  class="margen">
+					Fecha de emisión:
+				</td>
+				<td class="margen">
+                    2017-06-08
+				</td>
+				<td class="margen">
+					Versión
+				</td>
+				<td class="margen">
+					2
+				</td>
+				<td width="20%" class="margen">
+					Página 1 de 1
+				</td>
+		</table>-->
+        @if(Session::get('tipos') == 'CD')
+            <h5 class="inicial">Reporte de Evaluación global</h5>
+        @else
+            <h5 class="inicial">Reporte de Evaluación global de Área</h5>
+        @endif
 
-        <div class="panel-body">
-          <div class="row">
-            <div class="form-group col-md-6 text"> 
-                {!!Form::label("cursos", "1. NOMBRE DE LOS CURSOS")!!}
-              @foreach($nombre_cursos as $nombre)
-                {!!Form::text("cursos", $nombre, ["class"=>"form-control", "disabled","style"=>"margin:1%"])!!}
-              @endforeach
-            </div>
-          </div>
+        <br>
+        <table style="width: 100%">
+            <tr>
+                <th class="titulos" align= left >  1. NOMBRE DE LOS CURSOS EVALUADOS</th>
+            </tr>
+            <tr>
+                <td class="margen">
+                    <!--<ol type=”A”>-->
+                        <?php 
+                            $num = 1;
+                            foreach($nombre_cursos as $nombre){
+                                echo "<dd style=\"line-height:1.3\">&nbsp;$num. $nombre</dd>";
+                                $num++;
+                            }
+                        ?>
+                    <!--</ol>-->
+                </td>
+            </tr>
 
-          <div class="row">
-            <div class="form-group col-md-6 text">
-            {!!Form::label("participantes", "2. REGISTRO DE PARTICIPANTES")!!}
-              <div>
-                {!!Form::label("periodo", 'a) Periodo de evaluación:', ["class"=>'col-md-4'])!!}
-                {!!Form::text("periodo", $periodo, ["class"=>"col-md-2", "disabled","style"=>"margin:1%"])!!}
-              </div>
+		</table> 
+        <br>
 
-              <div>
-                {!!Form::label("numero", 'b) Número de participantes inscritos:', ["class"=>'col-md-4'])!!}
-                {!!Form::text("numero", $inscritos, ["class"=>"col-md-2", "disabled","style"=>"margin:1%"])!!}
-              </div>
-              <div>
-                {!!Form::label("asist", 'c) Número de participantes que asistieron:', ["class"=>'col-md-4'])!!}
-                {!!Form::text("asist", $asistentes, ["class"=>"col-md-2", "disabled","style"=>"margin:1%"])!!}
-              </div>
-              <div>
-                {!!Form::label("acredit", 'd) Número de participantes que acreditaron:', ["class"=>'col-md-4'])!!}
-                {!!Form::text("acredit", $acreditados, ["class"=>"col-md-2", "disabled","style"=>"margin:1%"])!!}
-              </div>
-              <div>
-                {!!Form::label("contestaron", 'e) Número de participantes que contestaron el formato de evaluación:', ["class"=>'col-md-4'])!!}
-                {!!Form::text("contestaron", $contestaron, ["class"=>"col-md-2", "disabled","style"=>"margin:1%"])!!}
-              </div>
+        <table style="width: 100%">
+            <tr>
+                <th colspan="4" class="titulos" align= left >2. REGISTRO DE PARTICIPANTES</th>
+            </tr>
+            <tr>
+                <td class="margen">a) Periodo de evaluación: </td>
+                <td class="margen">  {{$periodo}}</td>  </td>
+                <td class="margen">d) Número de participantes que acreditaron </td>
+                <td class="margen"> {{$acreditados}}</td>
+            </tr>
+            <tr>
+                <td class="margen">b) Número de particpantes inscritos: </td>
+                <td class="margen"> {{$inscritos}}</td>
+                <td rowspan="2" class="margen">e) Número de participantes que contestaron el formato de evaluación</td>
+                <td rowspan="2"  class="margen">{{$contestaron}}</td>
+            </tr>
+            <tr>
+                <td class="margen">c) Número de participantes que asistieron: </td>
+                <td class="margen">{{$asistentes}}</td>
+            </tr>
+		</table> 
+        <br>
+        <table style="width: 100%">
+            <tr>
+                <th colspan="2" class="titulos" align= left >3. FACTOR DE OCUPACIÓN</th>
+            </tr>
+            <tr>
+                <td class="margen"> (Total de participantes que asistieron a cursos x 100 / Capacidad total de los cursos) = </td>
+                <td class="margen">{{$factor_ocupacion}}</td>
+            </tr>
 
-            </div>
-          </div>
+		</table> 
+        <br>
+        <table style="width: 100%">
+            <tr>
+                <th colspan="2" class="titulos" align= left >4. FACTOR DE RECOMENDACIÓN DE LOS CURSOS</th>
+            </tr>
+            <tr>
+                <td class="margen">(Total de participantes que recomiendan los cursos x 100 / Total de participantes que respondieron la pregunta de satisfacción) = </td>
+                <td class="margen"> {{$factor_recomendacion}}</td>
+            </tr>
+		</table> 
+        <br>
+        <table style="width: 100%">
+            <tr>
+                <th colspan="2" class="titulos" align= left >5. FACTOR DE ACREDITACIÓN</th>
+            </tr>
+            <tr>
+                <td class="margen"> (Total de participantes que recibieron constancia x 100 / Total de participantes que asistieron a cursos) = </td>
+                <td class="margen">{{$factor_acreditacion}}</td>
+            </tr>
+		</table> 
+<br>
+        <table style="width: 100%">
+            <tr>
+                <th colspan="2" class="titulos" align= left >6. CALIDAD DE LOS CURSOS</th>
+            </tr>
+            <tr>
+                <td class="margen">(Total de reactivos positivos x 100 / Total de reactivos) = </td>
+                <td class="margen"> {{$factor_calidad}}</td>
+            </tr>
 
-          <div class="row">
-            <div class="form-group col-md-6 text"> 
-                {!!Form::label("ocupacion", "3. FACTOR DE OCUPACIÓN")!!}
-                <br>
-                Total de participantes que asistieron a cursos x 100 / Capacidad total de los cursos
-                {!!Form::text("ocupacion", $factor_ocupacion, ["class"=>"form-control", "disabled","style"=>"margin:1%"])!!}
-            </div>
-          </div>
-          <div class="row">
-            <div class="form-group col-md-6 text"> 
-              {!!Form::label("recomendacion", "4. FACTOR DE RECOMENDACIÓN DE LOS CURSOS:")!!}
-              <br>
-              Total de participantes que recomiendan los cursos x 100 / Total de participantes que respondieron la pregunta de satisfacción
-              {!!Form::text("recomendacion", $factor_recomendacion, ["class"=>"form-control", "disabled","style"=>"margin:1%"])!!}
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="form-group col-md-6 text"> 
-              {!!Form::label("acreditacion", "5. FACTOR DE ACREDITACIÓN:")!!}
-              <br>
-              Total de participantes que recibieron constancia x 100 / Total de participantes que asistieron a cursos
-              {!!Form::text("acreditacion", $factor_acreditacion, ["class"=>"form-control", "disabled","style"=>"margin:1%"])!!}
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="form-group col-md-6 text"> 
-              {!!Form::label("calidad", "6. CALIDAD DE LOS CURSOS:")!!}
-              <br>
-              Total de reactivos positivos x 100 / Total de reactivos
-              {!!Form::text("calidad", $factor_calidad, ["class"=>"form-control", "disabled","style"=>"margin:1%"])!!}
-            </div>
-          </div>
-          
-          <div class="row" style="text-align:left">
-            <h6>7. INSTRUCTORES QUE SE VOLVERÍAN A CONTRATAR:</h4>
-            <div class="form-group col-md-6 text"> 
-              {!!Form::label("nombre_inst", "Nombre")!!}
-              {!!Form::label("minimo_inst", "Mínimo Evaluación")!!}
-              {!!Form::label("maximo_inst", "Máximo Evaluación")!!}
-              {!!Form::label("promedio_inst", "Promedio Evaluación")!!}
-              @foreach(@$nombres_instructores as $inst)
-                {!!Form::text("nombre_inst", $inst->nombre, ["class"=>"form-control", "disabled","style"=>"margin:1%"])!!}
-                {!!Form::text("minimo_inst", $inst->min, ["class"=>"form-control", "disabled","style"=>"margin:1%"])!!}
-                {!!Form::text("maximo_inst", $inst->max, ["class"=>"form-control", "disabled","style"=>"margin:1%"])!!}
-                {!!Form::text("promedio_inst", $inst->prom, ["class"=>"form-control", "disabled","style"=>"margin:1%"])!!}
-              @endforeach
-            </div>
-          </div>
-
-		
+		</table> 
+        <br>
+        <table width="100%">
+            <tr>
+                <th class="titulos" align= left >7. INSTRUCTORES QUE SE VOLVERÍAN A CONTRATAR</th>
+                <th class="titulos" align= left >Mínimo Evaluación</th>
+                <th class="titulos" align= left >Máximo Evaluación</th>
+                <th class="titulos" align= left >Promedio Evaluación</th>
+            </tr>
+            <?php
+                foreach($nombres_instructores as $instructor){
+                    echo "<tr>";
+                        echo "<td style=\"border: 0px solid white;\">";
+                            echo $instructor->nombre;
+                        echo "</td>";
+                        echo "<td style=\"border: 0px solid white; text-align: center;\">";
+                            echo $instructor->min;
+                        echo "</td>";
+                        echo "<td style=\"border: 0px solid white; text-align: center;\">";
+                          echo $instructor->max;
+                        echo "</td>";
+                        echo "<td style=\"border: 0px solid white; text-align: center;\">";
+                          echo $instructor->prom;
+                        echo "</td>";
+                    echo "</tr>";
+                }
+            ?>
+       </table> 
+        <br>
 
         <table style="width: 100%">
             <tr>
@@ -355,4 +407,3 @@
 <br>
 
 </div>
-@endsection
