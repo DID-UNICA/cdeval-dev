@@ -45,7 +45,7 @@
               <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Particpante</th>
+                        <th>Participante</th>
                         <th>Evaluar</th>
                         <th>Modificar</th>
                     </tr>

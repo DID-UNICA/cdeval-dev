@@ -165,7 +165,7 @@
                 <td class="margen"> {{$acreditados}}</td>
             </tr>
             <tr>
-                <td class="margen">b) Número de particpantes inscritos: </td>
+                <td class="margen">b) Número de participantes inscritos: </td>
                 <td class="margen"> {{$inscritos}}</td>
                 <td rowspan="2" class="margen">e) Número de participantes que contestaron el formato de evaluación</td>
                 <td rowspan="2"  class="margen">{{$contestaron}}</td>
