@@ -2087,8 +2087,10 @@ $promedio_p4=[
         ->where('cursos.semestre_pi', $fecha[1])
         ->where('cursos.semestre_si', $periodo)
         ->where('catalogo_cursos.coordinacion_id', $coordinacion->id)
+        ->where('cursos.sgc','<>',true)
         ->select('catalogo_cursos.*','cursos.*')
         ->get();
+      return $cursos;
       if($cursos->isEmpty())
         return redirect()->route('cd.area', [$semestre, $periodo, $coordinacion_id])
           ->with('warning', 
@@ -2532,7 +2534,11 @@ $promedio_p4=[
               }else if($elem == 5){
                 $Otros++;
               }
-              array_push($tematicas, array("tematica"=>$eval->tematica, "curso"=>$curso->nombre_curso));
+              array_push($tematicas, array(
+                "tematica"=>$eval->tematica, 
+                "curso"=>$curso->nombre_curso, 
+                "otros"=>$eval->otros
+              ));
             }
           }
 

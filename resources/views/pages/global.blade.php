@@ -252,20 +252,26 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <h5>Solicitud</h5>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <h5>Curso de donde proviene</h5>
+              </div>
+              <div class="col-md-4">
+                <h5>¿Qué otros cursos, talleres, seminarios o temáticos le gustaría que se impartiesen o tomasen en cuenta para próximas actividades? </h5>
               </div>
             </div>
             @foreach($tematicas as $tem)
               <div class="row" style="margin-top:0.5%">
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <input value="{{$tem['tematica']}}" type="text" name="tematica" id="tematica" disabled class="form-control">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <input value="{{$tem['curso']}}" type="text" name="tematica_curso" id="tematica_curso" disabled class="form-control">
+                </div>
+                <div class="col-md-4">
+                  <input value="{{$tem['otros']}}" type="text" name="otros" id="otros" disabled class="form-control">
                 </div>
               </div>
             @endforeach
