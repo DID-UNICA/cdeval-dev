@@ -133,7 +133,6 @@ margin-top: 350px;
 					
 				</td>
 		</table>
-        <br>
         <div align="center">
         <?php
 				//50
@@ -157,7 +156,7 @@ margin-top: 350px;
     <div>
         <table width="100%">
             <tr>
-                <th>1. DATOS GENERALES DEL CURSO</th>
+                <th style="text-align:left" colspan=4>1. DATOS GENERALES DEL CURSO</th>
             </tr>
             <tr>
                 <td style="font-weight: bold" class="n">a) Instructor</td>
@@ -190,7 +189,7 @@ margin-top: 350px;
         <br>
         <table width="100%">
             <tr>
-                <th>2. REGISTRO DE PARTICIPANTES</th>
+                <th style="text-align:left">2. REGISTRO DE PARTICIPANTES</th>
             </tr>
             <tr>
                 <td style="font-weight: bold" class="n">a) Inscritos</td>
@@ -208,25 +207,22 @@ margin-top: 350px;
         <br>
         <table width="100%">
             <tr>
-                <th>3. FACTOR DE OCUPACIÓN</th>
-                <td class="n"> {{round($ocupacion,2)}}</td>
-                <th>4. FACTOR DE RECOMENDACIÓN</th>
-                <td class="n"> {{$factor}}</td>
+                <th class="n" style="text-align:left">3. FACTOR DE OCUPACIÓN</th>
+                <td class="n" style="text-align:left"> {{round($ocupacion,2)}}</td>
+                <th class="n" style="text-align:left">4. FACTOR DE RECOMENDACIÓN</th>
+                <td class="n" style="text-align:left"> {{$factor}}</td>
+            </tr>
+            <tr>
+                <th class="n" style="text-align:left">5. FACTOR DE ACREDITACIÓN</th>
+                <td class="n" style="text-align:left"> {{$factor_acreditacion}}</td>
+                <th class="n" style="text-align:left">6. FACTOR DE CALIDAD</th>
+                <td class="n" style="text-align:left"> {{$positivas}}</td>
             </tr>
         </table>
         <br>
         <table width="100%">
             <tr>
-                <th>5. FACTOR DE ACREDITACIÓN</th>
-                <td class="n"> {{$factor_acreditacion}}</td>
-                <th>6. FACTOR DE CALIDAD</th>
-                <td class="n"> {{$positivas}}</td>
-            </tr>
-        </table>
-        <br>
-        <table width="100%">
-            <tr>
-                <th>7. FACTOR DE DESEMPEÑO INSTRUCTOR</th>
+                <th style="text-align:left">7. FACTOR DE DESEMPEÑO INSTRUCTOR</th>
             </tr>
         </table>
         <table width="100%">
@@ -274,7 +270,7 @@ margin-top: 350px;
         <br>
         <table>
             <tr>
-                <th>9. RECOMENDACIONES</th>
+                <th style="text-align:left">9. RECOMENDACIONES</th>
             </tr>
             <?php
                 foreach($sugerencias as $sug){
@@ -287,7 +283,7 @@ margin-top: 350px;
         <br>
         <table width="100%">
             <tr>
-                <th>10. ÁREAS SOLICITADAS</th>
+                <th style="text-align:left">10. ÁREAS SOLICITADAS</th>
                 <th>DP: </th>
                 <td class="n">{{$DP}}</td>
                 <th>DH: </th>
@@ -303,7 +299,7 @@ margin-top: 350px;
         <br>
         <table>
             <tr>
-                <th>11. TEMÁTICA SOLICITADAS</th>
+                <th style="text-align:left">11. TEMÁTICAS SOLICITADAS</th>
             </tr>
             <?php
                 foreach($tematicas as $tematica){
@@ -316,7 +312,7 @@ margin-top: 350px;
         <br>
         <table width="100%">
             <tr>
-                <th>12. HORARIOS SOLICITADOS</th>
+                <th style="text-align:left">12. HORARIOS SOLICITADOS</th>
             </tr>
             <table width="50%">
             <tr>
@@ -343,7 +339,7 @@ margin-top: 350px;
         <br>
         <table width="100%">
             <tr>
-                <th>13. CRITERIOS DE ACEPTACIÓN </th>
+                <th style="text-align:left">13. CRITERIOS DE ACEPTACIÓN </th>
             </tr>
         </table>
         <br>
