@@ -24,7 +24,7 @@
     #tabla_encabezado_debajo{
         border-collapse: collapse;
         border: 1px solid #000000;
-        height: 5%;
+        height: 35px;
         width:100%;
         text-align:center;
         font-family:Arial, Helvetica, Sans-serif,cursive; 
@@ -36,7 +36,7 @@ body {
   font-size: 15px;
 }
 .f{
-    background-color: #b9d7eb;
+    background-color: #378bf1;
     color: #000000;
 }
 .n{
@@ -63,15 +63,16 @@ body {
 }
 .header{
     z-index:-1;
-    margin-top: -310px;
+    margin-top: -240px;
 	position: fixed;
 }
-@page {
-margin-top: 350px;
+ @page {
+margin-top: 275px;
 }
+/*
 @page :first{
-margin-top: 350px;
-}
+margin-top: 275px;
+} */
 </style>
 <body>
 <script type="text/php">
@@ -83,7 +84,7 @@ margin-top: 350px;
       $pdf->page_script('
               $font = $fontMetrics->get_font("Arial", "normal");
               if ($PAGE_NUM >= 1){
-                  $pdf->text(480 , 135, "Página $PAGE_NUM de $PAGE_COUNT", $font, 8);
+                  $pdf->text(480 , 132, "Página $PAGE_NUM de $PAGE_COUNT", $font, 8);
               }
               if( $PAGE_NUM == $PAGE_COUNT){
                 $diassemana = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
@@ -133,34 +134,34 @@ margin-top: 350px;
 					
 				</td>
 		</table>
-        <br>
+    </div>
+
         <div align="center">
         <?php
 				//50
 				if(strlen($nombre_curso)>50){
-            		echo "<p style=\"float: left; width: 100%; font-size: 22px; line-heigh:5px;\" class=\"n\"> $nombre_curso </p>";
-					echo "<br>";
-            		echo "<p style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\"> $periodo</p>";
+            		echo "<p style=\"float: left; width: 100%; font-size: 15px; line-heigh:5px;\" class=\"n\"> $nombre_curso </p>";
+					      echo "<br>";
+            		echo "<p style=\"float: right; width: 15%; font-size: 15px;\" class=\"n\" style=\"text-align:right\"> $periodo</p>";
             		echo "<div style=\"clear: both\"></div>";
 					echo "<hr>";
 				}else{
-					echo "<div style=\"float: left; width: 100%; font-size: 22px;\" class=\"n\">$nombre_curso</div>";
-					echo "<div style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\">$periodo</div>";
+					echo "<div style=\"float: left; width: 100%; font-size: 15px;\" class=\"n\">$nombre_curso</div>";
+					echo "<div style=\"float: right; width: 15%; font-size: 15px;\" class=\"n\" style=\"text-align:right\">$periodo</div>";
 					echo "<div style=\"clear: both\"></div>";
 					echo "<hr>";
 				}
 			?>
-        </div>
     </div>
     <script type="text/php">$pdf->close_object();</script>
 </div>
     <div>
         <table width="100%">
             <tr>
-                <th>1. DATOS GENERALES DEL CURSO</th>
+                <th style="text-align:left" colspan=4>1. DATOS GENERALES DEL CURSO</th>
             </tr>
             <tr>
-                <td style="font-weight: bold" class="n">a) Instructor</td>
+                <td style="padding-left:12px; font-weight: bold" class="n">a) Instructor</td>
                 <td class="n">
                 <ul>
                     @foreach($instructores as $instructor)
@@ -170,19 +171,19 @@ margin-top: 350px;
                 </td>
             </tr>
             <tr>
-                <td style="font-weight: bold" class="n">b) Fecha de impartición</td>
-                <td style="width=10%" class="n">{{$fecha_imparticion}}</td>
+                <td style="padding-left:12px; font-weight: bold" class="n">b) Fecha de impartición</td>
+                <td  class="n">{{$fecha_imparticion}}</td>
                 <td style="font-weight: bold; margin-left:50px white; width=40%" class="n" >e) Capacidad</td>
-                <td style="width=10%" class="n">{{$cupo_maximo}}</td>
+                <td  class="n">{{$cupo_maximo}}</td>
             </tr>
             <tr>
-                <td style="font-weight: bold" class="n">c) Horario</td>
+                <td style="padding-left:12px; font-weight: bold" class="n">c) Horario</td>
                 <td class="n">{{$hora_inicio}}, {{$hora_fin}}</td>
                 <td style="font-weight: bold ; margin-left: 50px white;" class="n">f) Total de horas</td>
                 <td class="n">{{$duracion}}</td>
             </tr>
             <tr>
-                <td style="font-weight: bold" class="n">d) Lugar</td>
+                <td style="padding-left:12px; font-weight: bold" class="n">d) Lugar</td>
                 <td class="n">{{$sede}}</td>
                 
             </tr>     
@@ -190,43 +191,41 @@ margin-top: 350px;
         <br>
         <table width="100%">
             <tr>
-                <th>2. REGISTRO DE PARTICIPANTES</th>
+                <th style="text-align:left" colspan=4>2. REGISTRO DE PARTICIPANTES</th>
+            </tr>
+            <tr style="">
+                <td style="padding-left:5px; text-align:left; font-weight: bold; width:15%" class="n">a) Inscritos</td>
+                <td style="padding-left:5px; text-align:center; width:15%" class="n">{{$inscritos}}</td>
+                <td style="padding-left:5px; text-align:left; font-weight: bold ;" class="n" >c) Acreditaron</td>
+                <td style="padding-left:5px; text-align:left;" class="n">{{$acreditaron}}</td>
             </tr>
             <tr>
-                <td style="font-weight: bold" class="n">a) Inscritos</td>
-                <td class="n">{{$inscritos}}</td>
-                <td style="font-weight: bold ; margin-left: 50px white;" class="n" >c) Acreditaron</td>
-                <td class="n">{{$acreditaron}}</td>
-            </tr>
-            <tr>
-                <td style="font-weight: bold" class="n">b) Asistieron</td>
-                <td class="n">{{$asistieron}}</td>
-                <td style="font-weight: bold ; margin-left: 50px white;" class="n">d) Formatos de evaluación final</td>
-                <td class="n">{{$contestaron}}</td>
-            </tr>
-        </table>
-        <br>
-        <table width="100%">
-            <tr>
-                <th>3. FACTOR DE OCUPACIÓN</th>
-                <td class="n"> {{round($ocupacion,2)}}</td>
-                <th>4. FACTOR DE RECOMENDACIÓN</th>
-                <td class="n"> {{$factor}}</td>
+                <td style="padding-left:5px; text-align:left; font-weight: bold ; width:15%" class="n">b) Asistieron</td>
+                <td style="padding-left:5px; text-align:center; width:15%" class="n">{{$asistieron}}</td>
+                <td style="padding-left:5px; text-align:left; font-weight: bold ;" class="n">d) Formatos de evaluación final</td>
+                <td style="padding-left:5px; text-align:left;" class="n">{{$contestaron}}</td>
             </tr>
         </table>
         <br>
         <table width="100%">
             <tr>
-                <th>5. FACTOR DE ACREDITACIÓN</th>
-                <td class="n"> {{$factor_acreditacion}}</td>
-                <th>6. FACTOR DE CALIDAD</th>
-                <td class="n"> {{$positivas}}</td>
+                <th class="n" style="text-align:left">3. FACTOR DE OCUPACIÓN</th>
+                <td class="n" style="text-align:left"> {{round($ocupacion,2)}}</td>
+                <th class="n" style="text-align:left">4. FACTOR DE RECOMENDACIÓN</th>
+                <td class="n" style="text-align:left"> {{$factor}}</td>
+            </tr>
+            <tr>
+                <th class="n" style="text-align:left">5. FACTOR DE ACREDITACIÓN</th>
+                <td class="n" style="text-align:left"> {{$factor_acreditacion}}</td>
+                <th class="n" style="text-align:left">6. FACTOR DE CALIDAD</th>
+                <td class="n" style="text-align:left"> {{$positivas}}</td>
             </tr>
         </table>
         <br>
         <table width="100%">
             <tr>
-                <th>7. FACTOR DE DESEMPEÑO INSTRUCTOR</th>
+                <th style="text-align:left">7. FACTOR DE DESEMPEÑO INSTRUCTOR</th>
+                <th style="text-align:right;">8. JUICIO SUMARIO  INSTRUCTOR a)</th>
             </tr>
         </table>
         <table width="100%">
@@ -242,39 +241,34 @@ margin-top: 350px;
                 <td class="n">{{$instructor->factor}}</td>
                 <td class="n">{{$instructor->minimo}}</td>
                 <td class="n">{{$instructor->maximo}}</td>
+                @if($instructor->factor >= 80)
+                  <td style="text-align:right;" class= "n">  Si </td> 
+                @else
+                  <td style="text-align:right;" class= "n">  No </td> 
+                @endif
             </tr>
         @endforeach
 
         </table>
         <br>
-        <table style="align:left" width="100%">
+        <table  width="100%">
           <tr>
-            <th style="text-align:left; width: 40%">8. JUICIO SUMARIO  INSTRUCTOR a)</th>
-            @if($instructor->factor >= 80)
-              <td style="text-align:left; width: 60%" class= "n">  Si </td> 
-            @else
-              <td style="text-align:left; width: 60%" class= "n">  No </td> 
-            @endif
-          </tr>
-        </table>
-        <table style="align:left" width="100%">
-          <tr>
-            <th style="text-align:left; width: 40%">8. JUICIO SUMARIO  CURSO b)</th>
+            <th style="text-align:left; width: 35%">8. JUICIO SUMARIO  CURSO b)</th>
             @php
               $num = round(($factor+$factor_acreditacion+$positivas)/3,2);
             @endphp
-              <td style="width: 30%" class="n">{{$num}}</td>
+              <td style="width: 14%; text-align:center;" class="n">{{$num}}</td>
             @if($factor >= 80 && $factor_acreditacion >= 80 && $positivas >= 80)
-              <td style="text-align:left; width: 30%" class="n">Si</td>
+              <td style="text-align:left;" class="n">Si</td>
             @else
-              <td style="text-align:left; width: 30%" class="n">No</td>
+              <td style="text-align:left;" class="n" >No</td>
             @endif
           </tr>
         </table>
         <br>
         <table>
             <tr>
-                <th>9. RECOMENDACIONES</th>
+                <th style="text-align:left">9. RECOMENDACIONES</th>
             </tr>
             <?php
                 foreach($sugerencias as $sug){
@@ -287,7 +281,7 @@ margin-top: 350px;
         <br>
         <table width="100%">
             <tr>
-                <th>10. ÁREAS SOLICITADAS</th>
+                <th style="text-align:left">10. ÁREAS SOLICITADAS</th>
                 <th>DP: </th>
                 <td class="n">{{$DP}}</td>
                 <th>DH: </th>
@@ -296,19 +290,17 @@ margin-top: 350px;
                 <td class="n">{{$CO}}</td>
                 <th>DI: </th>
                 <td class="n">{{$DI}}</td>
-                <th>Otros: </th>
-                <td class="n">{{$Otros}}</td>
             </tr>
         </table>
         <br>
         <table>
             <tr>
-                <th>11. TEMÁTICA SOLICITADAS</th>
+                <th style="text-align:left">11. TEMÁTICAS SOLICITADAS</th>
             </tr>
             <?php
                 foreach($tematicas as $tematica){
                     echo "<tr>";
-                    echo "<td class=\"n\">$tematica</td>";
+                    echo "<td style=\"padding-left:2%\"class=\"n\">$tematica</td>";
                     echo "</tr>";
                 }
             ?>
@@ -316,56 +308,46 @@ margin-top: 350px;
         <br>
         <table width="100%">
             <tr>
-                <th>12. HORARIOS SOLICITADOS</th>
+                <th style="text-align:left" colspan=2>12. HORARIOS SOLICITADOS</th>
             </tr>
-            <table width="50%">
             <tr>
-              <th style="width: 50%" class="f">Horario semestral</th>
+              <th style="width: 50%; text-align:left" class="f">Horario semestral</th>
+              <th style="width: 50%; text-align:left" class="f">Horario intersemestral</th>
             </tr>
-            @foreach($horarios as $horaris)
+            @foreach($horarios as $horario)
               <tr>
-                  <td style="width: 50%;" class="n">{{$horaris}}</td>
+                  <td style="width: 50%;" class="n">{{$horario['semes']}}</td>
+                  <td style="width: 50%;" class="n">{{$horario['inter']}}</td>
               </tr>
             @endforeach
-        </table>
-        <table style="float:right" width="50%">
-            <tr>
-              <th style="width: 50%" class="f">Horario intersemestral</th>
-            </tr>
-              @foreach($horarioi as $horarii)
-                <tr>
-                  <td style="width: 50%;" class="n">{{$horarii}}</td>
-                </tr>
-              @endforeach
-        </table>
         </table>
         
         <br>
         <table width="100%">
             <tr>
-                <th>13. CRITERIOS DE ACEPTACIÓN </th>
+                <th style="text-align:left">13. CRITERIOS DE ACEPTACIÓN </th>
             </tr>
         </table>
         <br>
-        <table width="100%">
-            <tr>
-                <th style="width: 10%" >Contenido: </th>
-                <td style="width: 90%" class="n" >{{$contenido}}</td>
+        <table width="100%" style="padding-left:1.5%">
+            <tr >
+                <th style="width: 10%; text-align:left;" >Contenido: </th>
+                <td style="width: 90%; text-align:left;" class="n" >{{$contenido}}</td>
             </tr>
             <br>
             <tr>
-                <th style="width: 10%" >Instructores: </th>
-                <td style="width: 90%" class="n" >{{$ct_instructores}}</td>
+                <th style="width: 10%; text-align:left;" >Instructores: </th>
+                <td style="width: 90%; text-align:left" class="n" >{{$ct_instructores}}</td>
             </tr>
             <br>
             <tr>
-                <th style="width: 10%" >Coordinación: </th>
-                <td style="width: 90%" class="n" >{{$factor_coordinacion}}</td>
+                <th style="width: 10%; text-align:left;" >Coordinación: </th>
+                <td style="width: 90%; text-align:left" class="n" >{{$factor_coordinacion}}</td>
             </tr>
             <br>
             <tr>
-                <th style="width: 10%" >Recomendación: </th>
-                <td style="width: 90%" class="n" >{{$factor}}</td>
+                <th style="width: 10%; text-align:left;" >Recomendación: </th>
+                <td style="width: 90%; text-align:left" class="n" >{{$factor}}</td>
             </tr>
 
         </table>
@@ -377,6 +359,7 @@ margin-top: 350px;
             $pdf->add_object($GLOBALS["header"],"add");
         }
         ');
-    </script>
+ 
+   </script>
 </body>
 </html>
