@@ -138,20 +138,14 @@ margin-top: 350px;
         <?php
 				//50
 				if(strlen($nombre_curso)>50){
-            		echo "<p style=\"float: left; width: 100%; font-size: 22px; line-heigh:1cm;\" class=\"n\"> $nombre_curso </p>";
+            		echo "<p style=\"float: left; width: 100%; font-size: 22px; line-heigh:5px;\" class=\"n\"> $nombre_curso </p>";
 					echo "<br>";
             		echo "<p style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\"> $periodo</p>";
             		echo "<div style=\"clear: both\"></div>";
 					echo "<hr>";
 				}else{
-					echo "
-                        <table width=\"100\" style=\" width:100%;\">
-                        <tr>
-                        <th align=\"center\" style:\" font-size: 22px;\">$nombre_curso</th>
-                        <th class:\"n\" style=\" float: right; width:15%;\">$periodo</th>
-                        </tr>
-                        </table>";
-					
+					echo "<div style=\"float: left; width: 100%; font-size: 22px;\" class=\"n\">$nombre_curso</div>";
+					echo "<div style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\">$periodo</div>";
 					echo "<div style=\"clear: both\"></div>";
 					echo "<hr>";
 				}
@@ -159,7 +153,8 @@ margin-top: 350px;
         </div>
     </div>
     <script type="text/php">$pdf->close_object();</script>
-
+</div>
+    <div>
         <table width="100%">
             <tr>
                 <th>1. DATOS GENERALES DEL CURSO</th>
@@ -167,9 +162,11 @@ margin-top: 350px;
             <tr>
                 <td style="font-weight: bold" class="n">a) Instructor</td>
                 <td class="n">
+                <ul>
                     @foreach($instructores as $instructor)
-                         {{$instructor->getNombreProfesor()}}
+                        <li> {{$instructor->getNombreProfesor()}} </li>
                     @endforeach
+                </ul>
                 </td>
             </tr>
             <tr>
@@ -189,45 +186,47 @@ margin-top: 350px;
                 <td class="n">{{$sede}}</td>
                 
             </tr>     
-        
-
+        </table>
+        <br>
+        <table width="100%">
             <tr>
-                <th height="1cm" style="text-align: left;">2. REGISTRO DE PARTICIPANTES</th>
+                <th>2. REGISTRO DE PARTICIPANTES</th>
             </tr>
             <tr>
                 <td style="font-weight: bold" class="n">a) Inscritos</td>
                 <td class="n">{{$inscritos}}</td>
-                <td style="font-weight: bold ; margin-left: 50px white; text-align: left;" class="n" >c) Acreditaron</td>
+                <td style="font-weight: bold ; margin-left: 50px white;" class="n" >c) Acreditaron</td>
                 <td class="n">{{$acreditaron}}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold" class="n">b) Asistieron</td>
                 <td class="n">{{$asistieron}}</td>
-                <td style="font-weight: bold ; margin-left: 50px white; text-align: left;" class="n">d) Formatos de evaluación final</td>
+                <td style="font-weight: bold ; margin-left: 50px white;" class="n">d) Formatos de evaluación final</td>
                 <td class="n">{{$contestaron}}</td>
             </tr>
         </table>
         <br>
         <table width="100%">
             <tr>
-                <th style="text-align: left;">3. FACTOR DE OCUPACIÓN</th>
+                <th>3. FACTOR DE OCUPACIÓN</th>
                 <td class="n"> {{round($ocupacion,2)}}</td>
-                <th style="text-align: left;">4. FACTOR DE RECOMENDACIÓN</th>
+                <th>4. FACTOR DE RECOMENDACIÓN</th>
                 <td class="n"> {{$factor}}</td>
             </tr>
+        </table>
+        <br>
+        <table width="100%">
             <tr>
-                <th height="1cm" style="text-align: left;">5. FACTOR DE ACREDITACIÓN</th>
+                <th>5. FACTOR DE ACREDITACIÓN</th>
                 <td class="n"> {{$factor_acreditacion}}</td>
-                <th style="text-align: left;">6. FACTOR DE CALIDAD</th>
+                <th>6. FACTOR DE CALIDAD</th>
                 <td class="n"> {{$positivas}}</td>
             </tr>
         </table>
         <br>
         <table width="100%">
             <tr>
-                <th style="text-align: left;">7. FACTOR DE DESEMPEÑO INSTRUCTOR</th>
-                <th style="text-align:left; width: 40%">8. JUICIO SUMARIO  INSTRUCTOR a)</th>
-
+                <th>7. FACTOR DE DESEMPEÑO INSTRUCTOR</th>
             </tr>
         </table>
         <table width="100%">
@@ -250,6 +249,7 @@ margin-top: 350px;
         <br>
         <table style="align:left" width="100%">
           <tr>
+            <th style="text-align:left; width: 40%">8. JUICIO SUMARIO  INSTRUCTOR a)</th>
             @if($instructor->factor >= 80)
               <td style="text-align:left; width: 60%" class= "n">  Si </td> 
             @else
@@ -287,7 +287,7 @@ margin-top: 350px;
         <br>
         <table width="100%">
             <tr>
-                <th style="text-align:left;">10. ÁREAS SOLICITADAS</th>
+                <th>10. ÁREAS SOLICITADAS</th>
                 <th>DP: </th>
                 <td class="n">{{$DP}}</td>
                 <th>DH: </th>
@@ -296,8 +296,8 @@ margin-top: 350px;
                 <td class="n">{{$CO}}</td>
                 <th>DI: </th>
                 <td class="n">{{$DI}}</td>
-                <!--<th>Otros: </th>
-                <td class="n">{{$Otros}}</td>--> <!-- Solicitado que este rubro no aparezca.-->
+                <th>Otros: </th>
+                <td class="n">{{$Otros}}</td>
             </tr>
         </table>
         <br>
@@ -316,7 +316,7 @@ margin-top: 350px;
         <br>
         <table width="100%">
             <tr>
-                <th style="text-align:left;">12. HORARIOS SOLICITADOS</th>
+                <th>12. HORARIOS SOLICITADOS</th>
             </tr>
             <table width="50%">
             <tr>
@@ -343,7 +343,7 @@ margin-top: 350px;
         <br>
         <table width="100%">
             <tr>
-                <th style="text-align:left;">13. CRITERIOS DE ACEPTACIÓN </th>
+                <th>13. CRITERIOS DE ACEPTACIÓN </th>
             </tr>
         </table>
         <br>
@@ -377,7 +377,7 @@ margin-top: 350px;
             $pdf->add_object($GLOBALS["header"],"add");
         }
         ');
-    </script>
-</div>
+ 
+   </script>
 </body>
 </html>
