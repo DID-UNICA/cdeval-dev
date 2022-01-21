@@ -2090,7 +2090,6 @@ $promedio_p4=[
         ->where('cursos.sgc','<>',true)
         ->select('catalogo_cursos.*','cursos.*')
         ->get();
-      return $cursos;
       if($cursos->isEmpty())
         return redirect()->route('cd.area', [$semestre, $periodo, $coordinacion_id])
           ->with('warning', 
