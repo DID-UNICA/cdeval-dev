@@ -2839,7 +2839,7 @@ $promedio_p4=[
       //Arrays para sugerencias, tematicas, conocimiento y horarios
       $sugs = array();
       $tematicas = array();
-      $horarioi = array();
+      // $horarioi = array();
       $horarios = array();
       //Bucle necesario para obtener el numero de preguntas positivas, evaluaciones de cada uno de los instructores y los factores de calidad de contenido, de calidad de la coordinacion, y los factores de calidad de los instructores
       foreach($evals as $evaluacion){
@@ -2849,10 +2849,8 @@ $promedio_p4=[
           array_push($sugs, $evaluacion->sug);
         if($evaluacion->tematica)
           array_push($tematicas, $evaluacion->tematica);
-        if($evaluacion->horarioi)
-          array_push($horarioi, $evaluacion->horarioi);
-        if($evaluacion->horarios)
-          array_push($horarios, $evaluacion->horarios);
+        if($evaluacion->horarioi || $evaluacion->horarios)
+          array_push($horarios, array('inter'=>$evaluacion->horarioi, 'semes'=>$evaluacion->horarios));
         //Desde 1_1 a 1_5 obtenemos el factor de calidad del contenido ($respuestasContenido/$alumnos*5) valor >= 60
         if($evaluacion->p1_1 >= 50){
           $preguntas++;
@@ -3126,8 +3124,8 @@ $promedio_p4=[
         'positivas'=>$factor_respuestas_positivas,
         'sugerencias' => collect($sugs),
         'tematicas'=> collect($tematicas),
-        'horarioi' => collect($horarioi),
-        'horarios' => collect($horarios),
+        // 'horarioi' => collect($horarioi),
+        'horarios' => $horarios,
         //Criterio de aceptación de contenido
         'contenido'=>$factor_contenido,
         //Criterio de aceptacion de instructor
