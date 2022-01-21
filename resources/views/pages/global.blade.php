@@ -31,18 +31,6 @@
   }else{
       $calif_recomendacion_aritmetico = strval($criterio_recomendacion_arim).' *';
   }
-
-  if($criterio_contenido_pon <= 80)
-    $calif_contenido = $calif_contenido." BAJO";
-
-  if($criterio_instructores_pon <= 80)
-    $calif_instructor = $calif_instructor." BAJO";
-
-  if($criterio_coordinacion_pon <= 80)
-    $calif_coordinacion = $calif_coordinacion." BAJO";
-  
-  if($criterio_recomendacion_pon <= 80)
-    $calif_recomendacion = $calif_recomendacion." BAJO";
 @endphp
     <style>
       .h4{
@@ -306,58 +294,97 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4">
-                <h5>Campo</h5>
+              <div class="col-md-3">
+                <h5 style="text-align:left">Campo</h5>
               </div>
-              <div class="col-md-4">
-                <h5>Ponderado</h5>
+              <div class="col-md-3">
+                <h5 style="text-align:center">Ponderado</h5>
               </div>
-              <div class="col-md-4">
-                <h5>Aritmético</h5>
+              <div class="col-md-3">
+                <h5></h5>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4">
-                <p>Contenido de los cursos:</p>
-              </div>
-              <div class="col-md-4">
-                <p>{{$calif_contenido}}</p>
-              </div>
-              <div class="col-md-4">
-                <p>{{$calif_contenido_aritmetico}}</p>
+              <div class="col-md-3">
+                <h5 style="text-align:center">Aritmético</h5>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4">
-                <p>Desempeño de los instructores:</p>
+              <div class="col-md-3">
+                <p style="text-align:left">Contenido de los cursos:</p>
               </div>
-              <div class="col-md-4">
-                <p>{{$calif_instructor}}</p>
+              <div class="col-md-3">
+                <p style="text-align:center">{{$calif_contenido}}</p>
               </div>
-              <div class="col-md-4">
-                <p>{{$calif_instructor_aritmetico}}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4">
-                <p>Coordinación de los cursos:</p>
-              </div>
-              <div class="col-md-4">
-                <p>{{$calif_coordinacion}}</p>
-              </div>
-              <div class="col-md-4">
-                <p>{{$calif_coordinacion_aritmetico}}</p>
+              @if($criterio_contenido_pon <= 80)
+                <div class="col-md-3">
+                  <p style="color: red;">BAJO</p>
+                </div>
+              @else
+              <div class="col-md-3">
+                  <p></p>
+                </div>
+              @endif
+              <div class="col-md-3">
+                <p style="text-align:center">{{$calif_contenido_aritmetico}}</p>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4">
-                <p>Recomendación de los cursos:</p>
+              <div class="col-md-3">
+                <p style="text-align:left">Desempeño de los instructores:</p>
               </div>
-              <div class="col-md-4">
-               <p>{{$calif_recomendacion}}</p>
+              <div class="col-md-3">
+                <p style="text-align:center">{{$calif_instructor}}</p>
               </div>
-              <div class="col-md-4">
-               <p>{{$calif_recomendacion_aritmetico}}</p>
+              @if($criterio_instructores_pon <= 80)
+              <div class="col-md-3">
+                  <p style="color: red;">BAJO</p>
+                </div>
+              @else
+              <div class="col-md-3">
+                  <p></p>
+                </div>
+              @endif
+              <div class="col-md-3">
+                <p style="text-align:center">{{$calif_instructor_aritmetico}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <p style="text-align:left">Coordinación de los cursos:</p>
+              </div>
+              <div class="col-md-3">
+                <p style="text-align:center">{{$calif_coordinacion}}</p>
+              </div>
+              @if($criterio_coordinacion_pon <= 80)
+              <div class="col-md-3">
+                  <p style="color: red;">BAJO</p>
+                </div>
+              @else
+              <div class="col-md-3">
+                  <p></p>
+                </div>
+              @endif
+              <div class="col-md-3">
+                <p style="text-align:center">{{$calif_coordinacion_aritmetico}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <p style="text-align:left">Recomendación de los cursos:</p>
+              </div>
+              <div class="col-md-3">
+                <p style="text-align:center">{{$calif_recomendacion}}</p>
+              </div>
+              @if($criterio_recomendacion_pon <= 80)
+                <div class="col-md-3">
+                  <p style="color: red;">BAJO</p>
+                </div>
+              @else
+                <div class="col-md-3">
+                  <p></p>
+                </div>
+              @endif
+              <div class="col-md-3">
+               <p style="text-align:center">{{$calif_recomendacion_aritmetico}}</p>
               </div>
             </div>
           </div>
