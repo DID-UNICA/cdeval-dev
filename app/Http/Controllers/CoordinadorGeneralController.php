@@ -2952,7 +2952,6 @@ $promedio_p4=[
           }
         }
       }
-
       //Queremos obtener todas las evaluaciones para luego comparar promedio, 
       // minimo y maximo del instructor
       $instructores = $curso->getProfesoresCurso();
@@ -3079,6 +3078,7 @@ $promedio_p4=[
         $instructor->maximo = ${'maximo'.$instructor->id};
         $ct_instructores = $ct_instructores + $instructor->factor;
       }
+
       $ct_instructores = $ct_instructores/$instructores->count();
       $envioPDF = 'pages.validacion';
       //En caso de no haber alumnos ni preguntas (se pide el resumen de un curso no evaluado anteriormente) pasamos su valor a 1 para evitar division by zero exception

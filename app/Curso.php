@@ -142,6 +142,7 @@ class Curso extends Model
         if (substr_count($this->dias_semana, $diaSemana) > 0)
             array_push($dias_curso_array, array_search($diaSemana, $dias_semana_array)+1);      
     }
+
     $hayIntervalo = 0;
     //aqui se obtiene el posible intervalo de dias en una semana
     if (sizeof($dias_curso_array) >= 3) {
@@ -171,10 +172,12 @@ class Curso extends Model
         }
     }
 
+    if(sizeof($dias_curso_array) > 0) {
     //ajustes para empatar fecha_inicio y fecha_fin con un dia de imparticion de curso
     while (!in_array(($fecha_inicio->dayOfWeek+7)%7, $dias_curso_array)) {
       $fecha_inicio->addDay();
     }
+
     while (!in_array(($fecha_fin->dayOfWeek+7)%7, $dias_curso_array)) {
       $fecha_fin->subDay();
     }
@@ -254,6 +257,10 @@ class Curso extends Model
         }
     }
     return $fecha_cadena;
+
+    }
+
+    return $this->sesiones;
 
 }
 }
