@@ -2076,7 +2076,7 @@ $promedio_p4=[
 
     }
 
-    public function enviarArea($semestre, $periodo, $coordinacion_id){
+    public function reporteGlobalArea($semestre, $periodo, $coordinacion_id){
       // $evals_curso = collect();
       // $evals_instructores = collect();
       $fecha = explode('-',$semestre);
@@ -2359,7 +2359,11 @@ $promedio_p4=[
         }
 
         // //Calculos por evaluacion del curso
-
+        if($curso->contestaron != $evals_curso->count())
+          return redirect()->back()->with('danger',
+          'El número de participantes con la casilla de hoja de evaluación '. 
+          'marcada es diferente del número de constancias creadas, por favor '.
+          'verifique');
         foreach($evals_curso as $eval){
 
           //Para factor de recomendacion
@@ -2679,7 +2683,7 @@ $promedio_p4=[
     }
 
     public function reporteFinalCurso($curso_id){
-         //TODO:Meter esto a una funcion helper
+      //TODO:Meter esto a una funcion helper
       setlocale(LC_ALL,"es_MX");
       $date = getdate();
       $dia = '';
@@ -2750,6 +2754,7 @@ $promedio_p4=[
       $catalogoCurso = $curso->getCatalogoCurso();
       $participantes = $curso->getParticipantes();
       $evals =  $curso->getEvalsCurso();
+      
       if($evals->isEmpty()){
         return redirect()->back()
           ->with('danger', 'Curso no cuenta con evaluación');
@@ -2757,6 +2762,10 @@ $promedio_p4=[
 		  
       //Obtenemos el factor de recomendación y de asistencia
       $contestaron = $evals->count();
+      if($participantes->where('contesto_hoja_evaluacion','true')->count() != $contestaron)
+        return redirect()->back()->with('danger','El número de participantes '.
+        'que tienen el rubro de "Contestó hoja de evaluación" es diferente '.
+        'del número de encuestas encontradas');
       $recomendaciones = 0;
       $factor = 0;
       $alumnos = 0;

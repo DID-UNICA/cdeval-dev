@@ -41,7 +41,7 @@ Route::get('CD/evaluacion/final/{participante_id}',[CoordinadorGeneralController
 Route::get('CD/modificar/final/{participante_id}',[CoordinadorGeneralController::class,'modificarEvaluacion'])->name('cd.modificar.evaluacion');
 Route::get('/CD/participantes/{curso_id}',[CoordinadorGeneralController::class,'participantes'])->name('cd.participantes');
 Route::get('descargar/global/{fecha}/{semestral}',[CoordinadorGeneralController::class,'globalPDF'])->name('cd.global_pdf');
-Route::get('/CD/global/{semestre}/{periodo}/{coordinacion_id}',[CoordinadorGeneralController::class,'enviarArea'])->name('cd.reporte.area');
+Route::get('/CD/global/{semestre}/{periodo}/{coordinacion_id}',[CoordinadorGeneralController::class,'reporteGlobalArea'])->name('cd.reporte.area');
 Route::get('/CD/global/{curso_id}',[CoordinadorGeneralController::class,'reporteFinalCurso'])->name('cd.reporte.curso');
 Route::get('/CD/global/instructores/{curso_id}',[CoordinadorGeneralController::class,'reporteFinalInstructor'])->name('cd.instructores.curso');
 Route::post('/CD/participantes/buscar/{curso_id}',[CoordinadorGeneralController::class,'buscarInstructor'])->name('cd.buscar.instructor');
