@@ -48,6 +48,7 @@
                         <th>Participante</th>
                         <th>Evaluar</th>
                         <th>Modificar</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                   <tbody>
@@ -64,12 +65,19 @@
                             @endif
                           </td>
                           <td>
-                          @if(Auth::user()->es_admin === True)
+                            @if(Auth::user()->es_admin === True)
                               <button onclick="window.location='{{route("cd.modificar.evaluacion",$participante->id)}}'" class="btn btn-warning">Modificar evaluación final de curso</button>
                             @else
                               <button onclick="window.location='{{route("area.modificar.evaluacion",$participante->id)}}'" class="btn btn-warning">Modificar evaluación final de curso</button>
                             @endif
-                        </td>
+                          </td>
+                          <td>
+                            @if(Auth::user()->es_admin === True)
+                              <button onclick="window.location='{{route("cd.eliminar.evaluacion",$participante->id)}}'" class="btn btn-danger">Borrar evaluación final de curso</button>
+                            @else
+                              <button onclick="window.location='{{route("area.eliminar.evaluacion",$participante->id)}}'" class="btn btn-danger">Borrar evaluación final de curso</button>
+                            @endif
+                          </td>
                       </tr>
                     @endforeach
                   </tbody>

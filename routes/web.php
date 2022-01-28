@@ -39,6 +39,7 @@ Route::post('CD/area/buscar/curso/{id}/{semestreEnv}/{periodo}',[CoordinadorGene
 Route::get('/CD/evaluacion/{curso_id}',[CoordinadorGeneralController::class,'evaluacion'])->name('cd.evaluacion');
 Route::get('CD/evaluacion/final/{participante_id}',[CoordinadorGeneralController::class,'evaluacionVista'])->name('cd.evaluacion.vista');
 Route::get('CD/modificar/final/{participante_id}',[CoordinadorGeneralController::class,'modificarEvaluacion'])->name('cd.modificar.evaluacion');
+Route::get('CD/eliminar/final/{participante_id}',[CoordinadorGeneralController::class,'eliminarEvaluacion'])->name('cd.eliminar.evaluacion');
 Route::get('/CD/participantes/{curso_id}',[CoordinadorGeneralController::class,'participantes'])->name('cd.participantes');
 Route::get('descargar/global/{fecha}/{semestral}',[CoordinadorGeneralController::class,'globalPDF'])->name('cd.global_pdf');
 Route::get('/CD/global/{semestre}/{periodo}/{coordinacion_id}',[CoordinadorGeneralController::class,'reporteGlobalArea'])->name('cd.reporte.area');
@@ -60,6 +61,7 @@ Route::get('/area/evaluacion/vista/{participante_id}',[AreaController::class,'ev
 Route::post('/area/evaluacion/buscar/{curso_id}',[AreaController::class,'buscarInstructor'])->name('area.buscar.instructor');
 
 Route::get('/area/modificar/final/{participante_id}',[AreaController::class,'modificarEvaluacion'])->name('area.modificar.evaluacion');
+Route::get('/area/eliminar/final/{participante_id}',[AreaController::class,'eliminarEvaluacion'])->name('area.eliminar.evaluacion');
 Route::get('/area/participantes/{id}',[AreaController::class,'participantes'])->name('area.participantes');
 Route::get('/area/final/{id}',[AreaController::class,'reporteFinalCurso'])->name('area.curso');
 

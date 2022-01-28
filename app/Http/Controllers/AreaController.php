@@ -619,6 +619,24 @@ class AreaController extends Controller
       ->with('nombre_curso', $curso->getCatalogoCurso()->nombre_curso);
   }
 
+  public function eliminarEvaluacion(int $participante_id){
+    $participante = ParticipantesCurso::findOrFail($participante_id);
+    $evaluaciones = EvaluacionCurso::where('participante_curso_id', $participante->id)->get();
+    if($evaluaciones->isEmpty())
+      return redirect()->back()->with('warning',
+        'El participante no tiene evaluaciones');
+    foreach($evaluaciones as $evaluacion)
+      $evaluacion->delete();
+    $participante->contesto_hoja_evaluacion=false;
+    $participante->save();
+    $evaluaciones = EvaluacionInstructor::where('participante_id', $participante->id)->get();
+    if($evaluaciones->isNotEmpty()){
+      foreach($evaluaciones as $evaluacion)
+        $evaluacion->delete();
+    }
+    return redirect()->back()->with('success','Evaluación eliminada');
+  }
+
 	public function changeFinal_Curso(Request $request,int $participante_id,int $encuesta_id){
       $participante = ParticipantesCurso::findOrFail($participante_id);
       $curso = Curso::findOrFail($participante->curso_id);
