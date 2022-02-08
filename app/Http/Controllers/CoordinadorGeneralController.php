@@ -2359,11 +2359,12 @@ $promedio_p4=[
         }
 
         // //Calculos por evaluacion del curso
-        if($curso->contestaron != $evals_curso->count())
-          return redirect()->back()->with('danger',
-          'El número de participantes con la casilla de hoja de evaluación '. 
-          'marcada es diferente del número de constancias creadas, por favor '.
-          'verifique');
+        //TODO Descomentar
+        // if($curso->contestaron != $evals_curso->count())
+        //   return redirect()->back()->with('danger',
+        //   'El número de participantes con la casilla de hoja de evaluación '. 
+        //   'marcada es diferente del número de constancias creadas, por favor '.
+        //   'verifique');
         foreach($evals_curso as $eval){
 
           //Para factor de recomendacion
@@ -2762,10 +2763,11 @@ $promedio_p4=[
 		  
       //Obtenemos el factor de recomendación y de asistencia
       $contestaron = $evals->count();
-      if($participantes->where('contesto_hoja_evaluacion','true')->count() != $contestaron)
-        return redirect()->back()->with('danger','El número de participantes '.
-        'que tienen el rubro de "Contestó hoja de evaluación" es diferente '.
-        'del número de encuestas encontradas');
+      //TODO DESCOMENTAR
+      // if($participantes->where('contesto_hoja_evaluacion','true')->count() != $contestaron)
+      //   return redirect()->back()->with('danger','El número de participantes '.
+      //   'que tienen el rubro de "Contestó hoja de evaluación" es diferente '.
+      //   'del número de encuestas encontradas');
       $recomendaciones = 0;
       $factor = 0;
       $alumnos = 0;
