@@ -2797,11 +2797,11 @@ $promedio_p4=[
         if($participante->acreditacion == 1)
           $acreditado = $acreditado + 1;
         if($participante->asistencia == 1)
-        $asistieron++;
+          $asistieron++;
 		  }
 		  
       //Obtenemos el factor de acreditacion 
-      if($alumnos == 0)
+      if($asistieron == 0)
         $factor_acreditacion = round(($acreditado * 100) / 1,2);
       else
         $factor_acreditacion = round(($acreditado * 100) / $asistieron,2);
