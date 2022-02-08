@@ -133,7 +133,7 @@ td{
                                   <td><input type="checkbox" name="confirmaciones[]" value= "{{$participantes[$i]->profesor_id}}" id="Confirmacion{{$i}}" disabled></td>
                               @endif
 
-                              @if ($participantes[$i]->cancelación)
+                              @if ($participantes[$i]->cancelacion)
                                   <td><input type="checkbox" name="cancelaciones[]" value= "{{$participantes[$i]->profesor_id}}" checked onclick="cancelar({{ $i }})" id="Cancelacion{{$i}}" disabled></td>
                               @else
                                   <td><input type="checkbox" name="cancelaciones[]" value= "{{$participantes[$i]->profesor_id}}" onclick="cancelar({{ $i }})" id="Cancelacion{{$i}}" disabled></td>

@@ -2076,7 +2076,7 @@ $promedio_p4=[
 
     }
 
-    public function enviarArea($semestre, $periodo, $coordinacion_id){
+    public function reporteGlobalArea($semestre, $periodo, $coordinacion_id){
       // $evals_curso = collect();
       // $evals_instructores = collect();
       $fecha = explode('-',$semestre);
@@ -2359,7 +2359,11 @@ $promedio_p4=[
         }
 
         // //Calculos por evaluacion del curso
-
+        if($curso->contestaron != $evals_curso->count())
+          return redirect()->back()->with('danger',
+          'El número de participantes con la casilla de hoja de evaluación '. 
+          'marcada es diferente del número de constancias creadas, por favor '.
+          'verifique');
         foreach($evals_curso as $eval){
 
           //Para factor de recomendacion
@@ -2679,7 +2683,7 @@ $promedio_p4=[
     }
 
     public function reporteFinalCurso($curso_id){
-         //TODO:Meter esto a una funcion helper
+      //TODO:Meter esto a una funcion helper
       setlocale(LC_ALL,"es_MX");
       $date = getdate();
       $dia = '';
@@ -2750,6 +2754,7 @@ $promedio_p4=[
       $catalogoCurso = $curso->getCatalogoCurso();
       $participantes = $curso->getParticipantes();
       $evals =  $curso->getEvalsCurso();
+      
       if($evals->isEmpty()){
         return redirect()->back()
           ->with('danger', 'Curso no cuenta con evaluación');
@@ -2757,6 +2762,10 @@ $promedio_p4=[
 		  
       //Obtenemos el factor de recomendación y de asistencia
       $contestaron = $evals->count();
+      if($participantes->where('contesto_hoja_evaluacion','true')->count() != $contestaron)
+        return redirect()->back()->with('danger','El número de participantes '.
+        'que tienen el rubro de "Contestó hoja de evaluación" es diferente '.
+        'del número de encuestas encontradas');
       $recomendaciones = 0;
       $factor = 0;
       $alumnos = 0;
@@ -2952,7 +2961,6 @@ $promedio_p4=[
           }
         }
       }
-
       //Queremos obtener todas las evaluaciones para luego comparar promedio, 
       // minimo y maximo del instructor
       $instructores = $curso->getProfesoresCurso();
@@ -3079,6 +3087,7 @@ $promedio_p4=[
         $instructor->maximo = ${'maximo'.$instructor->id};
         $ct_instructores = $ct_instructores + $instructor->factor;
       }
+
       $ct_instructores = $ct_instructores/$instructores->count();
       $envioPDF = 'pages.validacion';
       //En caso de no haber alumnos ni preguntas (se pide el resumen de un curso no evaluado anteriormente) pasamos su valor a 1 para evitar division by zero exception
@@ -3161,6 +3170,24 @@ $promedio_p4=[
         ->with('instructores', $curso->getProfesoresCurso())
         ->with('fecha', $curso->getToday())
         ->with('nombre_curso', $curso->getCatalogoCurso()->nombre_curso);
+    }
+
+    public function eliminarEvaluacion(int $participante_id){
+      $participante = ParticipantesCurso::findOrFail($participante_id);
+      $evaluaciones = EvaluacionCurso::where('participante_curso_id', $participante->id)->get();
+      if($evaluaciones->isEmpty())
+        return redirect()->back()->with('warning',
+        'El participante no tiene evaluaciones');
+      foreach($evaluaciones as $evaluacion)
+        $evaluacion->delete();
+      $participante->contesto_hoja_evaluacion=false;
+      $participante->save();
+      $evaluaciones = EvaluacionInstructor::where('participante_id', $participante->id)->get();
+      if($evaluaciones->isNotEmpty()){
+        foreach($evaluaciones as $evaluacion)
+          $evaluacion->delete();
+      }
+      return redirect()->back()->with('success','Evaluación eliminada');
     }
 
     public function changeFinal_Curso(Request $request,int $participante_id,int $encuesta_id){
