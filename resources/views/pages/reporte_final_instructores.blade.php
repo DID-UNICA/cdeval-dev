@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Final de curso</title>
+	<title>Reporte de instructores</title>
 </head>
 <style>
     div.container {
@@ -24,7 +24,7 @@
     #tabla_encabezado_debajo{
         border-collapse: collapse;
         border: 1px solid #000000;
-        height: 5%;
+        height: 35px;
         width:100%;
         text-align:center;
         font-family:Arial, Helvetica, Sans-serif,cursive; 
@@ -78,9 +78,9 @@ body {
 margin-top: 250px;
 }
 
-@page :first{
+/* @page :first{
 margin-top: 260px;
-}
+} */
 </style>
 <body>
 <script type="text/php">
@@ -91,7 +91,7 @@ margin-top: 260px;
       $pdf->page_script('
               $font = $fontMetrics->get_font("Arial", "normal");
               if ($PAGE_NUM >= 1){
-                  $pdf->text(480 , 133, "Página $PAGE_NUM de $PAGE_COUNT", $font, 8);
+                  $pdf->text(480 , 123, "Página $PAGE_NUM de $PAGE_COUNT", $font, 8);
               }
               if( $PAGE_NUM == $PAGE_COUNT){
                 $diassemana = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
@@ -141,27 +141,27 @@ margin-top: 260px;
 
 					</td>
 			</table>
+			</div>
+
 			<div align="center">
 				<?php
-					//50
+						//50
 					if(strlen($nombre_curso)>50){
-						echo "<p style=\"float: left; width: 100%; font-size: 22px; line-heigh:5px;\" class=\"n\"> $nombre_curso </p>";
-						echo "<br>";
-						echo "<p style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\"> $periodo</p>";
+						echo "<p style=\"float: left; width: 100%; font-size: 15px; line-heigh:5px;\" class=\"n\"> $nombre_curso </p>";
+							echo "<br>";
+						echo "<p style=\"float: right; width: 15%; font-size: 15px;\" class=\"n\" style=\"text-align:right\"> $periodo</p>";
 						echo "<div style=\"clear: both\"></div>";
 						echo "<hr>";
 					}else{
-						echo "<div style=\"float: left; width: 100%; font-size: 22px;\" class=\"n\">$nombre_curso</div>";
-						echo "<div style=\"float: right; width: 15%\" class=\"n\" style=\"text-align:right\">$periodo </div>";
-						echo "<div style=\"clear: both\"></div>";
+						echo "<div style=\"float: left; width: 100%; font-size: 15px;\" class=\"n\">$nombre_curso</div>";
+						echo "<div style=\"float: right; width: 15%; font-size: 15px;\" class=\"n\" style=\"text-align:right\">$periodo</div>";							echo "<div style=\"clear: both\"></div>";
 						echo "<hr>";
 					}
 				?>
 			</div>
-		</div>
-		<script type="text/php">$pdf->close_object();</script>
-	</div>
-    <div>
+	<script type="text/php">$pdf->close_object();</script>
+</div>
+	<div>
         <table width="100%">
 			<thead>
 				<tr>

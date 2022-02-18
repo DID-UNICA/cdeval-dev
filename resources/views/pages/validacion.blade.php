@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Final de curso</title>
+	<title>Reporte de evaluación final de curso</title>
 </head>
 <style>
     div.container {
@@ -24,7 +24,7 @@
     #tabla_encabezado_debajo{
         border-collapse: collapse;
         border: 1px solid #000000;
-        height: 35px;
+        height: 30px;
         width:100%;
         text-align:center;
         font-family:Arial, Helvetica, Sans-serif,cursive; 
@@ -63,11 +63,11 @@ body {
 }
 .header{
     z-index:-1;
-    margin-top: -240px;
+    margin-top: -205px;
 	position: fixed;
 }
  @page {
-margin-top: 275px;
+margin-top: 245px;
 }
 /*
 @page :first{
@@ -84,9 +84,9 @@ margin-top: 275px;
       $pdf->page_script('
               $font = $fontMetrics->get_font("Arial", "normal");
               if ($PAGE_NUM >= 1){
-                  $pdf->text(480 , 132, "Página $PAGE_NUM de $PAGE_COUNT", $font, 8);
+                  $pdf->text(480 , 134, "Página $PAGE_NUM de $PAGE_COUNT", $font, 8);
               }
-              if( $PAGE_NUM == $PAGE_COUNT){
+              if( $PAGE_NUM <= $PAGE_COUNT){
                 $diassemana = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
                 $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
                 $temp_date = $diassemana[date("w")]." ".date("j")." de ".$meses[date("n")-1]. " del ".date("Y");
@@ -95,7 +95,7 @@ margin-top: 275px;
           ');
       
     </script>
-	<div height="10%">
+	<div height="10%" > <!-- style="border: 3px solid yellow"-->
 		<table style="width: 100%" align="center"  id="tabla_encabezado" height="5%">
 			<tr id="normal">
 				<td rowspan="2" width="20%" align="center" id="normal"><br>
@@ -136,11 +136,11 @@ margin-top: 275px;
 		</table>
     </div>
 
-        <div align="center">
+        <div align="center" style="height=0px; margin=0px;padding=0px;">
         <?php
 				//50
 				if(strlen($nombre_curso)>50){
-            		echo "<p style=\"float: left; width: 100%; font-size: 15px; line-heigh:5px;\" class=\"n\"> $nombre_curso </p>";
+            		echo "<p style=\"float: left; width: 80%; font-size: 15px; line-heigh:0px;\" class=\"n\"> $nombre_curso </p>";
 					      echo "<br>";
             		echo "<p style=\"float: right; width: 15%; font-size: 15px;\" class=\"n\" style=\"text-align:right\"> $periodo</p>";
             		echo "<div style=\"clear: both\"></div>";
@@ -161,11 +161,11 @@ margin-top: 275px;
                 <th style="text-align:left" colspan=4>1. DATOS GENERALES DEL CURSO</th>
             </tr>
             <tr>
-                <td style="padding-left:12px; font-weight: bold" class="n">a) Instructor</td>
-                <td class="n">
+                <td width="15%" style="padding-left:12px; font-weight: bold" class="n">a) Instructor</td>
+                <td width="50%"align='left' class="n">
                 <ul>
                     @foreach($instructores as $instructor)
-                        <li> {{$instructor->getNombreProfesor()}} </li>
+                        {{$instructor->getNombreProfesorConGrado()}}
                     @endforeach
                 </ul>
                 </td>
