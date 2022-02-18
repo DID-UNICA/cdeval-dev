@@ -50,6 +50,11 @@ body {
 .n{
     border: 0px solid white;
 }
+.n0{
+    border: 0px solid white;
+    margin: 0px;
+    display: inline-block;
+}
 #mayusculas{
 	text-transform: uppercase;
 }
@@ -147,9 +152,8 @@ margin-top: 260px;
 				<?php
 						//50
 					if(strlen($nombre_curso)>50){
-						echo "<p style=\"float: left; width: 100%; font-size: 15px; line-heigh:5px;\" class=\"n\"> $nombre_curso </p>";
-							echo "<br>";
-						echo "<p style=\"float: right; width: 15%; font-size: 15px;\" class=\"n\" style=\"text-align:right\"> $periodo</p>";
+						echo "<p style=\"float: left; width: 80%; font-size: 15px; line-heigh:5px;\" class=\"n0\"> $nombre_curso </p>";
+						echo "<p style=\"float: right; width: 15%; font-size: 15px;\" class=\"n0\" style=\"text-align:right\"> $periodo</p>";
 						echo "<div style=\"clear: both\"></div>";
 						echo "<hr>";
 					}else{
