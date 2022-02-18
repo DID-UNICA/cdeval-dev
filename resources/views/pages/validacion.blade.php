@@ -39,6 +39,11 @@ body {
     background-color: #378bf1;
     color: #000000;
 }
+.n1{
+    border: 0px solid white;
+    margin: 0px;
+    display: inline-block;
+}
 .n{
     border: 0px solid white;
 }
@@ -140,9 +145,8 @@ margin-top: 275px;
         <?php
 				//50
 				if(strlen($nombre_curso)>50){
-            		echo "<p style=\"float: left; width: 80%; font-size: 15px; line-heigh:0px;\" class=\"n\"> $nombre_curso </p>";
-					      echo "<br>";
-            		echo "<p style=\"float: right; width: 15%; font-size: 15px;\" class=\"n\" style=\"text-align:right\"> $periodo</p>";
+            		echo "<p style=\"float: left; width: 80%; font-size: 15px; line-heigh:0px;\" class=\"n1\"> $nombre_curso </p>";			      
+            		echo "<p style=\"float: right; width: 15%; font-size: 15px;\" class=\"n1\" style=\"text-align:right\"> $periodo</p>";
             		echo "<div style=\"clear: both\"></div>";
 					echo "<hr>";
 				}else{
