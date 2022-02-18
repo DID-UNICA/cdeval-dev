@@ -161,11 +161,11 @@ margin-top: 275px;
                 <th style="text-align:left" colspan=4>1. DATOS GENERALES DEL CURSO</th>
             </tr>
             <tr>
-                <td style="padding-left:12px; font-weight: bold" class="n">a) Instructor</td>
-                <td class="n">
+                <td width="15%" style="padding-left:12px; font-weight: bold" class="n">a) Instructor</td>
+                <td width="50%"align='left' class="n">
                 <ul>
                     @foreach($instructores as $instructor)
-                        <li> {{$instructor->getNombreProfesor()}} </li>
+                        {{$instructor->getNombreProfesorConGrado()}}
                     @endforeach
                 </ul>
                 </td>
