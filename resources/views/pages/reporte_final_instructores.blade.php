@@ -36,9 +36,10 @@ body {
   font-size: 15px;
 }
 .f{
-    color: #2D2F8A;
+  color: #2D2F8A;
 	font-size: 10px;
 	text-align:center;
+  font-family:'Calibri, sans-serif';
 }
 .f1{
 	font-family: "Times New Roman", Times, serif;
@@ -51,6 +52,7 @@ body {
 	border: 0px solid grey;
 	font-size: 11px;
 	text-align: center;
+  font-family:'Calibri, sans-serif';
 }
 .prof{
 	font-family: "Times New Roman", Times, serif;
@@ -124,7 +126,7 @@ margin-top: 250px;
 	<div class="header">
   <script type="text/php">$GLOBALS["header"] = $pdf->open_object();
       $pdf->page_script('
-              $font = $fontMetrics->get_font("Arial", "normal");
+              $font = $fontMetrics->get_font("Arial", "bold");
               if( $PAGE_NUM == $PAGE_COUNT){
                 $diassemana = array("Domingo","lunes","martes","miércoles","jueves","viernes","sábado");
                 $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
@@ -147,7 +149,7 @@ margin-top: 250px;
 						FACULTAD DE INGENIERÍA,UNAM<br>
 						Secretaría de Apoyo a la Docencia<br>
 						CENTRO DE DOCENCIA<br>
-						"Ing. Gilberto Borja Navarrete"<br>
+						<div style='font-style:italic; font-family:Times New Roman;'>"Ing. Gilberto Borja Navarrete"<br></div> 
 					</td>
 					<td rowspan="2" width="20%" align="center" class="escudos">
 						<img src="img/CentroDocencia.png" alt="" align="center" height="95">
@@ -192,7 +194,10 @@ margin-top: 250px;
 			<tbody>
 				@foreach($instructores as $instructor)
         <tr>
-					<td class="prof">{{$instructor->nombre}}</td>
+					<td text-align='left' class="prof">
+            {{$instructor->nombre}} <br>
+            <div style="font-family:'Calibri, sans-serif'; font-size:11px; color:#001E42">{{$total_evaluaciones}} hojas de evaluación</div> 
+          </td>
 					<td class="n1">{{$instructor->experiencia}}</td>
 					<td class="n1">{{$instructor->planeacion}}</td>
 					<td class="n1">{{$instructor->puntualidad}}</td>
