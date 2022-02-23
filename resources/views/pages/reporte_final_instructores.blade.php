@@ -36,18 +36,31 @@ body {
   font-size: 15px;
 }
 .f{
-    color: #2A4EDF;
+    color: #2D2F8A;
+	font-size: 10px;
 	text-align:center;
 }
 .f1{
+	font-family: "Times New Roman", Times, serif;
+	font-size: 13px;
 	font-weight: bold;
 	border: 0px solid white;
 }
 .n1{
+	
 	border: 0px solid grey;
+	font-size: 11px;
+	text-align: center;
+}
+.prof{
+	font-family: "Times New Roman", Times, serif;
+	border: 0px solid grey;
+	font-size: 15px;
 	text-align: center;
 }
 .n{
+	font-family: "Times New Roman", Times, serif;
+	font-size: 13px;
     border: 0px solid white;
 }
 .n0{
@@ -65,11 +78,9 @@ body {
 	 border: 1px solid white;
 }
 #normal, td,#encabezado{
-  border: 1px solid #000;
+  border: 0px solid #000;
   border-spacing: 0;
-}
-#encabezado{
-	/*padding: 10px;*/
+  
 }
 .small{
 	width: 20%;
@@ -79,13 +90,32 @@ body {
     margin-top: -225px;
 	position: fixed;
 }
+.unam{ 
+	border: 0px; 
+	border-top: 2px solid #000;
+	font-size: 20px;
+	font-weight: bold;
+}
+.fi{
+	border: 0px; 
+	font-size: 20px;
+	font-weight: bold;
+}
+.curso{
+	border: 0px; 
+	font-size: 18px;
+	font-weight: bold;
+	border-top: 2px solid #000;
+	border-bottom: 2px solid #000;	
+}
+.periodo{
+	font-family: "Times New Roman", Times, serif;
+	font-size: 12px;
+}
 @page {
 margin-top: 250px;
 }
 
-/* @page :first{
-margin-top: 260px;
-} */
 </style>
 <body>
 <script type="text/php">
@@ -95,95 +125,74 @@ margin-top: 260px;
   <script type="text/php">$GLOBALS["header"] = $pdf->open_object();
       $pdf->page_script('
               $font = $fontMetrics->get_font("Arial", "normal");
-              if ($PAGE_NUM >= 1){
-                  $pdf->text(480 , 123, "Página $PAGE_NUM de $PAGE_COUNT", $font, 8);
-              }
               if( $PAGE_NUM == $PAGE_COUNT){
-                $diassemana = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
+                $diassemana = array("Domingo","lunes","martes","miércoles","jueves","viernes","sábado");
                 $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-                $temp_date = $diassemana[date("w")]." ".date("j")." de ".$meses[date("n")-1]. " del ".date("Y");
+                $temp_date = $diassemana[date("w")].", ".date("j")." de ".$meses[date("n")-1]. " del ".date("Y");
                 $pdf->text(50 , 800, "$temp_date", $font, 10);
+				$pdf->text(50 , 773, "_______________________________________", $font, 10);
+				$pdf->text(50 , 788, "SAD,CDD", $font, 10);
               }
           ');
       
     </script>
 		<div height="10%">
-			<table style="width: 100%" align="center"  id="tabla_encabezado" height="5%">
-				<tr id="normal">
-					<td rowspan="2" width="20%" align="center" id="normal"><br>
-						<img src="img/fi.jpg" alt="" align="center" height="112">
+			<table style="width: 100%" align="center" height="5%">
+			<tr><td colspan = "3" align="center" class="unam">UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO</td></tr>	
+			<tr style="border-bottom: 2px solid #000;">
+					<td rowspan="2" width="20%" align="center" class="escudos">
+						<img src="img/fi_2.png" alt="" align="center" height="95">
 					</td>
-					<td rowspan="2" align="center" id="normal">
+					<td rowspan="2" align="center" class="fi">
 						FACULTAD DE INGENIERÍA,UNAM<br>
 						Secretaría de Apoyo a la Docencia<br>
-						CENTRO DE DOCENCIA "Ing. Gilberto Borja Navarrete"<br>
-						Sistema de Gestión de la Calidad<br>
-						Norma ISO 9001:2015<br>
-						Formato
+						CENTRO DE DOCENCIA<br>
+						"Ing. Gilberto Borja Navarrete"<br>
 					</td>
-					<td rowspan="2" width="20%" align="center" id="normal"><br>
-						<img src="img/cdd.png" alt="" align="center" height="112">
+					<td rowspan="2" width="20%" align="center" class="escudos">
+						<img src="img/CentroDocencia.png" alt="" align="center" height="95">
 					</td>
-				</tr>
+			</tr>
+				
 			</table>
-			<table id="tabla_encabezado_debajo">
-					<td width="20%" class="margen">
-						2730-SGC-IC-FO-09
-					</td>
-					<td  class="margen">
-						Fecha de emisión:
-					</td>
-					<td class="margen">
-						21/08/2017
-					</td>
-					<td class="margen">
-						Versión
-					</td>
-					<td class="margen">
-						2
-					</td>
-					<td width="20%" class="margen">
-
-					</td>
-			</table>
-			</div>
-
-			<div align="center">
-				<?php
+			<table style="width: 100%"  class="curso" align="center">
+					<?php
 						//50
 					if(strlen($nombre_curso)>50){
-						echo "<p style=\"float: left; width: 80%; font-size: 15px; line-heigh:5px;\" class=\"n0\"> $nombre_curso </p>";
-						echo "<p style=\"float: right; width: 15%; font-size: 15px;\" class=\"n0\" style=\"text-align:right\"> $periodo</p>";
-						echo "<div style=\"clear: both\"></div>";
-						echo "<hr>";
+						echo "<tr><td align=\"center\">Encuestas del curso</td></tr>";
+						echo "<tr><td align=\"center\" style=\"font-size: 15px;\"> $nombre_curso </td></tr>";
+						echo "<tr><td align=\"center\" class=\"periodo\"> $periodo </td></tr>";
 					}else{
-						echo "<div style=\"float: left; width: 100%; font-size: 15px;\" class=\"n\">$nombre_curso</div>";
-						echo "<div style=\"float: right; width: 15%; font-size: 15px;\" class=\"n\" style=\"text-align:right\">$periodo</div>";							echo "<div style=\"clear: both\"></div>";
-						echo "<hr>";
+						echo "<tr><td align=\"center\">Encuestas del curso</td></tr>";
+						echo "<tr><td align=\"center\"> $nombre_curso </td></tr>";
+						echo "<tr><td align=\"center\" class=\"periodo\"> $periodo </td></tr>";
 					}
 				?>
+			</table>
 			</div>
+
+		
 	<script type="text/php">$pdf->close_object();</script>
 </div>
 	<div>
         <table width="100%">
 			<thead>
 				<tr>
-					<th class="f"><pre>      </pre></th>
-					<th class="f">Experiencia</th>
-					<th class="f">Planeacion y Organizacion</th>
-					<th class="f">Puntualidad</th>
-					<th class="f">Materiales de apoyo</th>
-					<th class="f">Resolución de dudas</th>
-					<th class="f">Control de grupo</th>
-					<th class="f">Interés que despertó</th>
-					<th class="f">Actitud del instructor</th>
+					<th class="f" width="5%"><pre>      </pre></th>
+					<th class="f" width="2%">Experiencia</th>
+					<th class="f" width="1%">Planeacion y Organizacion</th>
+					<th class="f" width="1%">Puntualidad</th>
+					<th class="f" width="1%">Materiales de apoyo</th>
+					<th class="f" width="1%">Resolución de dudas</th>
+					<th class="f" width="1%">Control de grupo</th>
+					<th class="f" width="1%">Interés que despertó</th>
+					<th class="f" width="2%">Actitud del instructor</th>
 				</tr>
 			</thead>
 			<tbody>
 				@foreach($instructores as $instructor)
         <tr>
-					<td class="n1">{{$instructor->nombre}}</td>
+					<td class="prof">{{$instructor->nombre}}</td>
 					<td class="n1">{{$instructor->experiencia}}</td>
 					<td class="n1">{{$instructor->planeacion}}</td>
 					<td class="n1">{{$instructor->puntualidad}}</td>
@@ -199,7 +208,7 @@ margin-top: 260px;
 		<br>
 		<table width="100%">
 			<tr>
-				<th class="f1">Lo mejor del curso fue</th>
+				<th class="f1" align=left>Lo mejor del curso fue</th>
 			</tr>
       @foreach($mejor as $mejor)
         <tr>
@@ -211,7 +220,7 @@ margin-top: 260px;
 		<br>
 		<table width="100%">
 			<tr>
-				<th class="f1">Comentarios y sugerencias</th>
+				<th class="f1" align=left>Sugerencias y recomendaciones</th>
 			</tr>
             @foreach($sugerencias as $sugerencia)
                 <tr>
@@ -222,8 +231,7 @@ margin-top: 260px;
 
     </div>
 <br>
-<p>_______________________________________</p>
-<p>SAD,CDD</p>
+
 
 <script type="text/php">
 	$pdf->page_script('
