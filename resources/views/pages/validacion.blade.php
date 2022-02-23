@@ -47,6 +47,13 @@ body {
 .n{
     border: 0px solid white;
 }
+
+.small-font{
+    border: 0px solid white;
+    font-size: 13.5px;
+    vertical-align: top;
+    padding-bottom:1%;
+}
 #mayusculas{
 	text-transform: uppercase;
 }
@@ -68,7 +75,7 @@ body {
 }
 .header{
     z-index:-1;
-    margin-top: -205px;
+    margin-top: -220px;
 	position: fixed;
 }
  @page {
@@ -89,7 +96,7 @@ margin-top: 275px;
       $pdf->page_script('
               $font = $fontMetrics->get_font("Arial", "normal");
               if ($PAGE_NUM >= 1){
-                  $pdf->text(480 , 134, "Página $PAGE_NUM de $PAGE_COUNT", $font, 8);
+                  $pdf->text(480 , 124, "Página $PAGE_NUM de $PAGE_COUNT", $font, 8);
               }
               if( $PAGE_NUM <= $PAGE_COUNT){
                 $diassemana = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
@@ -100,7 +107,7 @@ margin-top: 275px;
           ');
       
     </script>
-	<div height="10%" > <!-- style="border: 3px solid yellow"-->
+	<div height="10%" >
 		<table style="width: 100%" align="center"  id="tabla_encabezado" height="5%">
 			<tr id="normal">
 				<td rowspan="2" width="20%" align="center" id="normal"><br>
@@ -143,57 +150,63 @@ margin-top: 275px;
 
         <div align="center" style="height=0px; margin=0px;padding=0px;">
         <?php
-				//50
-				if(strlen($nombre_curso)>50){
-            		echo "<p style=\"float: left; width: 80%; font-size: 15px; line-heigh:0px;\" class=\"n1\"> $nombre_curso </p>";			      
-            		echo "<p style=\"float: right; width: 15%; font-size: 15px;\" class=\"n1\" style=\"text-align:right\"> $periodo</p>";
-            		echo "<div style=\"clear: both\"></div>";
-					echo "<hr>";
-				}else{
-					echo "<div style=\"float: left; width: 100%; font-size: 15px;\" class=\"n\">$nombre_curso</div>";
-					echo "<div style=\"float: right; width: 15%; font-size: 15px;\" class=\"n\" style=\"text-align:right\">$periodo</div>";
-					echo "<div style=\"clear: both\"></div>";
-					echo "<hr>";
+       //50
+       if(strlen($nombre_curso)>50){
+          echo "<p style=\"float: left; width: 80%; font-size: 13px; line-heigh:0px;\" class=\"n1\"> $nombre_curso </p>";			      
+          echo "<p style=\"float: right; width: 15%; font-size: 13px;\" class=\"n1\" style=\"text-align:right\"> $periodo</p>";
+          echo "<div style=\"clear: both\"></div>";
+          echo "<hr>";
+        }else{
+          echo "<div style=\"float: left; width: 100%; font-size: 15px;\" class=\"n\">$nombre_curso</div>";
+          echo "<div style=\"float: right; width: 15%; font-size: 15px;\" class=\"n\" style=\"text-align:right\">$periodo</div>";
+          echo "<div style=\"clear: both\"></div>";
+          echo "<hr>";
 				}
 			?>
     </div>
     <script type="text/php">$pdf->close_object();</script>
 </div>
     <div>
-        <table width="100%">
-            <tr>
-                <th style="text-align:left" colspan=4>1. DATOS GENERALES DEL CURSO</th>
-            </tr>
-            <tr>
-                <td width="15%" style="padding-left:12px; font-weight: bold" class="n">a) Instructor</td>
-                <td width="50%"align='left' class="n">
-                <ul>
-                    @foreach($instructores as $instructor)
-                        {{$instructor->getNombreProfesorConGrado()}}
-                    @endforeach
-                </ul>
-                </td>
-            </tr>
-            <tr>
-                <td style="padding-left:12px; font-weight: bold" class="n">b) Fecha de impartición</td>
-                <td  class="n">{{$fecha_imparticion}}</td>
-                <td style="font-weight: bold; margin-left:50px white; width=40%" class="n" >e) Capacidad</td>
-                <td  class="n">{{$cupo_maximo}}</td>
-            </tr>
-            <tr>
-                <td style="padding-left:12px; font-weight: bold" class="n">c) Horario</td>
-                <td class="n">{{$hora_inicio}}, {{$hora_fin}}</td>
-                <td style="font-weight: bold ; margin-left: 50px white;" class="n">f) Total de horas</td>
-                <td class="n">{{$duracion}}</td>
-            </tr>
-            <tr>
-                <td style="padding-left:12px; font-weight: bold" class="n">d) Lugar</td>
-                <td class="n">{{$sede}}</td>
-                
-            </tr>     
+        <table width=100%>
+          <tr>
+            <th style="text-align:left" colspan=2>1. DATOS GENERALES DEL CURSO</th>
+          </tr>
+          <tr>
+              <td style="width: 15%; padding-left:12px; font-weight: bold" class="small-font">a) Instructor</td>
+              <td style="width: 85%" class="small-font">
+                  @foreach($instructores as $instructor)
+                    {{$instructor->getNombreProfesorConGrado()}}
+                    <br>
+                  @endforeach
+              </td>
+          </tr>
+        </table>
+        <table width=100%>
+          <tr>
+            <td width=30% style="padding-left:12px; font-weight: bold" class="small-font">b) Fecha de impartición</td>
+            <td width=40% class="small-font">{{$fecha_imparticion}}</td>
+            <td width=20% class="small-font" style="font-weight: bold;" class="small-font" >e) Capacidad</td>
+            <td width=10% class="small-font">{{$cupo_maximo}}</td>
+          </tr>
+        </table>
+        <table width=100%>
+          <tr>
+            <td width=15% style="padding-left:12px; font-weight: bold" class="small-font">c) Horario</td>
+            <td width=55% class="small-font">{{$hora_inicio}}-{{$hora_fin}}</td>
+            <td width=20% style="font-weight: bold ; margin-left: 50px white;" class="small-font">f) Total de horas</td>
+            <td width=10% class="small-font">{{$duracion}}</td>
+          </tr>
+        </table>
+        <table width=100%>
+          <tr>
+            <td width=15% style="padding-left:12px; font-weight: bold" class="small-font">d) Lugar</td>
+            <td width=85% class="small-font">{{$sede}}</td>
+          </tr>
+        </table>
+                 
         </table>
         <br>
-        <table width="100%">
+        <table width=100%>
             <tr>
                 <th style="text-align:left" colspan=4>2. REGISTRO DE PARTICIPANTES</th>
             </tr>
@@ -241,7 +254,7 @@ margin-top: 275px;
             </tr>
         @foreach($instructores as $instructor)
             <tr>
-                <td style="width: 65%" class="n" >{{$instructor->getNombreProfesor()}}</td>
+                <td style="width: 65%" class="n" >{{$instructor->getNombreProfesor2()}}</td>
                 <td class="n">{{$instructor->factor}}</td>
                 <td class="n">{{$instructor->minimo}}</td>
                 <td class="n">{{$instructor->maximo}}</td>
@@ -257,9 +270,9 @@ margin-top: 275px;
         <br>
         <table  width="100%">
           <tr>
-            <th style="text-align:left; width: 35%">8. JUICIO SUMARIO  CURSO b)</th>
+            <th style="text-align:left; width: 35%">8. JUICIO SUMARIO CURSO b)</th>
             @php
-              $num = round(($factor+$factor_acreditacion+$positivas)/3,2);
+              $num = round(($factor+$factor_acreditacion+$positivas)/3,1);
             @endphp
               <td style="width: 14%; text-align:center;" class="n">{{$num}}</td>
             @if($factor >= 80 && $factor_acreditacion >= 80 && $positivas >= 80)
