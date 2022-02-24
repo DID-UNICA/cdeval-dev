@@ -127,7 +127,7 @@ margin-top: 250px;
   <script type="text/php">$GLOBALS["header"] = $pdf->open_object();
       $pdf->page_script('
               $font = $fontMetrics->get_font("ARIAL", "bold");
-              if( $PAGE_NUM == $PAGE_COUNT){
+              if( $PAGE_NUM <= $PAGE_COUNT){
                 $diassemana = array("Domingo","lunes","martes","miércoles","jueves","viernes","sábado");
                 $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
                 $temp_date = $diassemana[date("w")].", ".date("j")." de ".$meses[date("n")-1]. " del ".date("Y");
