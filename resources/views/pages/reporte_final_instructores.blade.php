@@ -58,7 +58,7 @@ body {
 	font-family: "Times New Roman", Times, serif;
 	border: 0px solid grey;
 	font-size: 15px;
-	text-align: center;
+	text-align: left;
 }
 .n{
 	font-family: "Times New Roman", Times, serif;
@@ -126,7 +126,7 @@ margin-top: 250px;
 	<div class="header">
   <script type="text/php">$GLOBALS["header"] = $pdf->open_object();
       $pdf->page_script('
-              $font = $fontMetrics->get_font("Arial", "bold");
+              $font = $fontMetrics->get_font("ARIAL", "bold");
               if( $PAGE_NUM == $PAGE_COUNT){
                 $diassemana = array("Domingo","lunes","martes","miércoles","jueves","viernes","sábado");
                 $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
@@ -196,7 +196,7 @@ margin-top: 250px;
         <tr>
 					<td text-align='left' class="prof">
             {{$instructor->nombre}} <br>
-            <div style="font-family:'Calibri, sans-serif'; font-size:11px; color:#001E42">{{$total_evaluaciones}} hojas de evaluación</div> 
+            <div style="font-family:'Calibri, sans-serif'; font-size:11px; color:#001E42; margin-left:15%">{{$total_evaluaciones}} hojas de evaluación</div> 
           </td>
 					<td class="n1">{{$instructor->experiencia}}</td>
 					<td class="n1">{{$instructor->planeacion}}</td>
