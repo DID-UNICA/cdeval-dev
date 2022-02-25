@@ -3308,7 +3308,7 @@ $promedio_p4=[
         $instructor->control = round($instructor->control/$t_evals,2);
         $instructor->interes = round($instructor->interes/$t_evals,2);
         $instructor->actitud = round($instructor->actitud/$t_evals,2);
-        $instructor->nombre = $instructor->getNombreProfesor();
+        $instructor->nombre = $instructor->getNombreProfesorConGrado();
       }
       //TODO:Meter esto a una funcion helper
       setlocale(LC_ALL,"es_MX");
@@ -3382,6 +3382,7 @@ $promedio_p4=[
       $nombre = 'reporte_instructores_'.$catalogoCurso->nombre_curso.'.pdf';
       $pdf = PDF::loadView($lugar,array(
         'instructores' => $instructores,
+        'total_evaluaciones' => $t_evals,
         'mejor'=>collect($p9s),
         'sugerencias'=>collect($sugs),
         'nombre_curso'=>$catalogoCurso->nombre_curso,

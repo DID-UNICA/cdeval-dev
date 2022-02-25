@@ -24,6 +24,10 @@ class ProfesoresCurso extends Model
     $prof = Profesor::findOrFail($this->profesor_id);
     return $prof->nombres.' '.$prof->apellido_paterno.' '.$prof->apellido_materno;
   }
+  public function getNombreProfesor2(){
+    $prof = Profesor::findOrFail($this->profesor_id);
+    return $prof->apellido_paterno.' '.$prof->apellido_materno.' '.$prof->nombres;
+  }
   public function getNombreProfesorConGrado(){
     $prof = Profesor::findOrFail($this->profesor_id);
     return $prof->abreviatura_grado.' '.$prof->nombres.' '.$prof->apellido_paterno.' '.$prof->apellido_materno;
