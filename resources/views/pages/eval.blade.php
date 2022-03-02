@@ -23,6 +23,7 @@
           @else
             {!! Form::open(["route" => ["area.buscar.instructor",$curso_id], "method" => "POST"]) !!}
           @endif
+          @csrf
           <table>
             <tr>
               <div class="input-group">

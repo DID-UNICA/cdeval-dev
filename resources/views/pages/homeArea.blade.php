@@ -22,6 +22,7 @@
             <h4>Buscar</h4>
             <br>
             {!! Form::open(["route" => ["area.buscar.curso",$coordinacion->id], "method" => "POST"]) !!}
+            @csrf
               <table>
                 <tr>
                   <div class="input-group">
@@ -48,6 +49,7 @@
             <h4>Periodo</h4>
             <br>
             {!! Form::open(["route" => ["area.buscar.curso.periodo",$coordinacion->id], "method" => "POST"]) !!}
+            @csrf
                 <table>
                   <tr>
                     <td>

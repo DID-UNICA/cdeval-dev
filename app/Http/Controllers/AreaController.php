@@ -31,6 +31,9 @@ class AreaController extends Controller
      * @return Vista super usuario
      */
     public function index(){
+      if (Auth::guest()) {
+        return redirect()->route('coordinador.login');
+      }
         $coordinacion = Auth::user();
         
         $cursos = $coordinacion->getCursos();
@@ -57,6 +60,9 @@ class AreaController extends Controller
     // }
 
 	public function nuevaFecha(Request $request, $fecha){
+    if (Auth::guest()) {
+      return redirect()->route('coordinador.login');
+    }
 		$coordinacion_nombre = 'Área de cómputo';
 		$semestre = explode('-',$fecha);
 
@@ -109,6 +115,9 @@ class AreaController extends Controller
 	}
 
     public function buscarCurso(Request $request, $coordinacion_id){
+      if (Auth::guest()) {
+        return redirect()->route('coordinador.login');
+      }
       $coordinacion = Auth::user();
       if($request->type === 'nombre')
         $cursos = Curso::join('catalogo_cursos','catalogo_cursos.id','=','cursos.catalogo_id')
@@ -132,6 +141,9 @@ class AreaController extends Controller
     }
     
     public function buscarCursoPeriodo(Request $request, $coordinacion_id){
+      if (Auth::guest()) {
+        return redirect()->route('coordinador.login');
+      }
       $coordinacion = Auth::user();
       $cursos = Curso::join('catalogo_cursos','catalogo_cursos.id','=','cursos.catalogo_id')
                      ->where('semestre_si', $request->semestre_si)
@@ -145,7 +157,9 @@ class AreaController extends Controller
     }
 
 	public function nuevoCurso(Request $request, $coordinacion_id, $busqueda, $tipo){
-
+    if (Auth::guest()) {
+      return redirect()->route('coordinador.login');
+    }
 		$datos = array();
 		$cursos;
 
@@ -244,6 +258,9 @@ class AreaController extends Controller
 	}
 
     public function participantes(Request $request,$curso_id){
+      if (Auth::guest()) {
+        return redirect()->route('coordinador.login');
+      }
       $participantes = DB::table('participante_curso')
           ->where([['curso_id',$curso_id]])
           ->get();
@@ -265,6 +282,9 @@ class AreaController extends Controller
     }
 
 	public function buscarInstructor (Request $request, int $curso_id){
+    if (Auth::guest()) {
+      return redirect()->route('coordinador.login');
+    }
     $curso = Curso::findOrFail($curso_id);
     $profesores = array();
     $words=explode(" ", $request->pattern);
@@ -298,6 +318,9 @@ class AreaController extends Controller
     }
 
     public function evaluacion(int $curso_id){
+      if (Auth::guest()) {
+        return redirect()->route('coordinador.login');
+      }
       $curso = Curso::findOrFail($curso_id);
       return view('pages.eval')
         ->with('nombre_curso', $curso->getCatalogoCurso()->nombre_curso)
@@ -306,6 +329,9 @@ class AreaController extends Controller
     }
 
     public function evaluacionVista(int $participante_id){
+      if (Auth::guest()) {
+        return redirect()->route('coordinador.login');
+      }
     // TODO:Pasar tipo del curso, por si es seminario
     $participante = ParticipantesCurso::findOrFail($participante_id);
     $evaluacion = EvaluacionCurso::where('participante_curso_id', $participante->id)->get()->first();
@@ -324,6 +350,9 @@ class AreaController extends Controller
 	}
 
     public function saveFinal_Curso(Request $request, int $participante_id){
+      if (Auth::guest()) {
+        return redirect()->route('coordinador.login');
+      }
     $participante = ParticipantesCurso::findOrFail($participante_id);
     $curso = Curso::findOrFail($participante->curso_id);
     $instructores = $curso->getProfesoresCurso();
@@ -601,6 +630,9 @@ class AreaController extends Controller
 //     }
 
 	public function modificarEvaluacion(int $participante_id){
+    if (Auth::guest()) {
+      return redirect()->route('coordinador.login');
+    }
     $participante = ParticipantesCurso::findOrFail($participante_id);
     $evaluacion = EvaluacionCurso::where('participante_curso_id', $participante->id)->get()->first();
     if(!$evaluacion){
@@ -620,6 +652,9 @@ class AreaController extends Controller
   }
 
   public function eliminarEvaluacion(int $participante_id){
+    if (Auth::guest()) {
+      return redirect()->route('coordinador.login');
+    }
     $participante = ParticipantesCurso::findOrFail($participante_id);
     $evaluaciones = EvaluacionCurso::where('participante_curso_id', $participante->id)->get();
     if($evaluaciones->isEmpty())
@@ -638,6 +673,9 @@ class AreaController extends Controller
   }
 
 	public function changeFinal_Curso(Request $request,int $participante_id,int $encuesta_id){
+    if (Auth::guest()) {
+      return redirect()->route('coordinador.login');
+    }
       $participante = ParticipantesCurso::findOrFail($participante_id);
       $curso = Curso::findOrFail($participante->curso_id);
       $instructores = $curso->getProfesoresCurso();

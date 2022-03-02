@@ -36,6 +36,7 @@
               <br>
             <h4>Buscar</h4>
             {!! Form::open(["route" => ["cd.buscar.curso",$coordinacion_id,$semestre,$periodo], "method" => "POST"]) !!}
+            @csrf
               <table>
                 <tr>
                   <div class="input-group">

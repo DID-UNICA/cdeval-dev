@@ -21,9 +21,7 @@ Route::group(['middleware'=>'coordinador'], function() {
   Route::get('/home',[HomeController::class,'index'])->name('home.index');
 });
 
-
 Route::get('/admin', [CoordinadorGeneralController::class, 'index'])->name('admin.index');
-
 // Rutas anteriores
 Route::get('/', function() { return redirect()->route('coordinador.login');});
 // Route::get('/',[CoordinadorGeneralController::class,'index'])->name('cd.index');
