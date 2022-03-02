@@ -184,9 +184,9 @@ class Curso extends Model
 
     if (strlen($this->sesiones)>0) {
         if (count($sesiones_array) == 1) {
-            $fecha_cadena = 'El día '.(int)substr($this->sesiones,8).' de '.$meses_array[((int)substr($this->sesiones,5,2))-1].' de '.substr($this->sesiones,0,4);
+            $fecha_cadena = (int)substr($this->sesiones,8).' de '.$meses_array[((int)substr($this->sesiones,5,2))-1].' de '.substr($this->sesiones,0,4);
         }else{
-            $fecha_cadena = 'Los días '.(int)substr($sesiones_array[0],8);
+            $fecha_cadena = ''.(int)substr($sesiones_array[0],8);
             for ($i=1; $i < count($sesiones_array)-1; $i++) { 
                 if (substr($sesiones_array[$i],0,4) != substr($sesiones_array[$i-1],0,4)) {
                     $fecha_cadena .= ' de '.$meses_array[((int)substr($sesiones_array[$i-1],5,2))-1].' de '.substr($sesiones_array[$i-1],0,4).'. '.(int)substr($sesiones_array[$i],8);
@@ -210,7 +210,7 @@ class Curso extends Model
         //La magia
         //variable de retorno
         if ($fecha_inicio->diffInDays($fecha_fin) != 0){
-            $fecha_cadena = 'Los días ';
+            $fecha_cadena = '';
             for (; $fecha_aux->diffInDays($fecha_fin) != 0; $fecha_aux->addDay()) {
                 if (in_array(($fecha_aux->dayOfWeek+7)%7, $dias_curso_array)){
                     if ($fecha_aux->year != $auxYear) {
@@ -233,7 +233,7 @@ class Curso extends Model
                 }
             }
         }else{
-            $fecha_cadena = 'El día '.$fecha_inicio->day;
+            $fecha_cadena = $fecha_inicio->day;
         }
 
 

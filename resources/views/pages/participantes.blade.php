@@ -155,7 +155,7 @@ margin-top: 200px;
 </div>
 <script type="text/php">
     $pdf->page_script('
-        if ($PAGE_NUM >= 2) {
+        if ($PAGE_NUM >= 1) {
         $pdf->add_object($GLOBALS["header"],"add");
         }
         ');
