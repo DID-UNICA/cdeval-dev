@@ -307,6 +307,8 @@ class CoordinadorGeneralController extends Controller
       $evaluacion->horarios = $request->horarios;
       $evaluacion->horarioi = $request->horarioi;
       $evaluacion->save();
+      $participante->contesto_hoja_evaluacion = true;
+      $participante->save();
       return redirect()->route('area.evaluacion',$participante->curso_id)
         ->with('success','Encuesta guardada correctamente');
     }
@@ -1184,7 +1186,8 @@ $promedio_p4=[
       // $evals_instructores = collect();
       $fecha = explode('-',$semestre);
       $coordinacion = Coordinacion::findOrFail($coordinacion_id);
-      // $cursos = Curso::get();
+      //$cursos = Curso::get();
+      //return [$fecha,$periodo,$coordinacion_id];
       $cursos = Curso::join('catalogo_cursos', 'catalogo_cursos.id', '=', 'cursos.catalogo_id')
         ->where('cursos.semestre_anio', $fecha[0])
         ->where('cursos.semestre_pi', $fecha[1])
@@ -1193,6 +1196,7 @@ $promedio_p4=[
         ->where('cursos.sgc','<>',true)
         ->select('catalogo_cursos.*','cursos.*')
         ->get();
+      //return $cursos;
       if($cursos->isEmpty())
         return redirect()->route('cd.area', [$semestre, $periodo, $coordinacion_id])
           ->with('warning', 
