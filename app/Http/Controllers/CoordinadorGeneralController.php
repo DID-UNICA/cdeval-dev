@@ -1200,7 +1200,7 @@ $promedio_p4=[
       if($cursos->isEmpty())
         return redirect()->route('cd.area', [$semestre, $periodo, $coordinacion_id])
           ->with('warning', 
-          'El periodo seleccionado con anterioridad, no cuenta con cursos asignados.');
+          'El periodo seleccionado con anterioridad, no cuenta con cursos asignados que no pertenezcan al SGC.');
 
       //Variables para enviar a la vista
       $nombre_cursos = array();
