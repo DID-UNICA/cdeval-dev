@@ -231,6 +231,7 @@ margin-top: 275px;
                 <th class="n" style="text-align:left">4. FACTOR DE RECOMENDACIÓN</th>
                 <td class="n" style="text-align:left"> {{$factor}}</td>
             </tr>
+            <br>
             <tr>
                 <th class="n" style="text-align:left">5. FACTOR DE ACREDITACIÓN</th>
                 <td class="n" style="text-align:left"> {{$factor_acreditacion}}</td>
@@ -323,6 +324,7 @@ margin-top: 275px;
             ?>
         </table>
         <br>
+        <br>
         <table width="100%">
             <tr>
                 <th style="text-align:left" colspan=2>12. HORARIOS SOLICITADOS</th>
@@ -338,35 +340,28 @@ margin-top: 275px;
               </tr>
             @endforeach
         </table>
-        
+        <br>
         <br>
         <table width="100%">
             <tr>
-                <th style="text-align:left">13. CRITERIOS DE ACEPTACIÓN </th>
+                <th colspan=2 style="text-align:left">13. CRITERIOS DE ACEPTACIÓN </th>
             </tr>
-        </table>
-        <br>
-        <table width="100%" style="padding-left:1.5%">
             <tr >
                 <th style="width: 10%; text-align:left;" >Contenido: </th>
                 <td style="width: 90%; text-align:left;" class="n" >{{$contenido}}</td>
             </tr>
-            <br>
             <tr>
                 <th style="width: 10%; text-align:left;" >Instructores: </th>
                 <td style="width: 90%; text-align:left" class="n" >{{$ct_instructores}}</td>
             </tr>
-            <br>
             <tr>
                 <th style="width: 10%; text-align:left;" >Coordinación: </th>
                 <td style="width: 90%; text-align:left" class="n" >{{$factor_coordinacion}}</td>
             </tr>
-            <br>
             <tr>
                 <th style="width: 10%; text-align:left;" >Recomendación: </th>
                 <td style="width: 90%; text-align:left" class="n" >{{$factor}}</td>
             </tr>
-
         </table>
 
     </div>
