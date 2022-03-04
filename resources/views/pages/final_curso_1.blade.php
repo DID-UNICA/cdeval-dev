@@ -9,6 +9,7 @@
 @elseif(Session::get('sesion') == 'area' && isset($evaluacion) == false)
     <form method="POST" action="{{ action('AreaController@saveFinal_Curso',['profesor_id' => $profesor->id,'curso_id'=> $curso->id,  'catalogoCurso_id'=>$catalogoCurso->id ]) }}">
 @endif
+@csrf
 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
 @if(session()->has('message-success'))
     <div class="alert alert-success" role='alert'>{{session('message-success')}}</div>

@@ -31,6 +31,9 @@ class AreaController extends Controller
      * @return Vista super usuario
      */
     public function index(){
+      if (Auth::guest()) {
+        return redirect()->route('coordinador.login');
+      }
         $coordinacion = Auth::user();
         
         $cursos = $coordinacion->getCursos();
@@ -57,6 +60,9 @@ class AreaController extends Controller
     // }
 
 	public function nuevaFecha(Request $request, $fecha){
+    if (Auth::guest()) {
+      return redirect()->route('coordinador.login');
+    }
 		$coordinacion_nombre = 'Área de cómputo';
 		$semestre = explode('-',$fecha);
 
@@ -109,6 +115,9 @@ class AreaController extends Controller
 	}
 
     public function buscarCurso(Request $request, $coordinacion_id){
+      if (Auth::guest()) {
+        return redirect()->route('coordinador.login');
+      }
       $coordinacion = Auth::user();
       if($request->type === 'nombre')
         $cursos = Curso::join('catalogo_cursos','catalogo_cursos.id','=','cursos.catalogo_id')
@@ -116,15 +125,43 @@ class AreaController extends Controller
         ->where('catalogo_cursos.coordinacion_id',$coordinacion->id)
         ->get();
       elseif($request->type === 'instructor'){
-        $profesores = Profesor::select('id')->whereRaw("lower(unaccent(nombres)) ILIKE lower(unaccent('%".$request->pattern."%'))")
-                  ->orWhereRaw("lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$request->pattern."%'))")
-                  ->orWhereRaw("lower(unaccent(apellido_materno)) ILIKE lower(unaccent('%".$request->pattern."%'))")
-                  ->orderByRaw("lower(unaccent(apellido_paterno)),lower(unaccent(apellido_materno)),lower(unaccent(nombres))")
-                  ->get();
-        $curso_prof = ProfesoresCurso::select('curso_id')->whereIn('profesor_id', $profesores)->get();
+        $profesores = array();
+          $words=explode(" ", $request->pattern);
+          $words_num = sizeof($words);
+          for ($AP=1; $AP <= $words_num; $AP++) {
+            for ($AM=0; $AM <= $words_num-$AP; $AM++) {
+              $N = $words_num-$AP-$AM;
+              if ($AM==0 and $N==0) {
+                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, 0, $AP))."%')))")->get();
+              if($profesor->isNotEmpty())
+                array_push($profesores, $profesor);
+              }elseif ($AM>0 and $N==0) {
+                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, 0, $AP))."%'))) AND (unaccent(lower(apellido_materno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, $AP, $AM))."%')))")->get();
+              if($profesor->isNotEmpty())
+                array_push($profesores, $profesor);
+              }elseif ($AM==0 and $N>0){
+                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(nombres)) LIKE unaccent(lower('%".implode(' ', array_slice($words, $AP+$AM))."%'))) AND (unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, 0, $AP))."%')))")->get();
+              if($profesor->isNotEmpty())
+                array_push($profesores, $profesor);
+              }else{
+                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(nombres)) LIKE unaccent(lower('%".implode(' ', array_slice($words, $AP+$AM))."%'))) AND (unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, 0, $AP))."%'))) AND (unaccent(lower(apellido_materno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, $AP, $AM))."%')))")->get();
+              if($profesor->isNotEmpty())
+                array_push($profesores, $profesor);
+              }
+            }
+          }
+          $tmp = array();
+          foreach($profesores as $profesor_ar){
+            foreach($profesor_ar as $profesor){
+              array_push($tmp, $profesor->id);
+            }
+          }
+        $curso_prof = ProfesoresCurso::select('curso_id')->whereIn('profesor_id', $tmp)->get();
         $cursos = Curso::join('catalogo_cursos','catalogo_cursos.id', '=','cursos.catalogo_id')
-                  ->where('catalogo_cursos.coordinacion_id',$coordinacion->id)
-                  ->whereIn('cursos.id',$curso_prof)->get();
+                ->where('catalogo_cursos.coordinacion_id',$coordinacion->id)
+                ->whereIn('cursos.id',$curso_prof)
+                ->select('cursos.*', 'catalogo_cursos.coordinacion_id')
+                ->get();
       }
       return view('pages.homeArea')
            ->with('cursos',$cursos)
@@ -132,6 +169,9 @@ class AreaController extends Controller
     }
     
     public function buscarCursoPeriodo(Request $request, $coordinacion_id){
+      if (Auth::guest()) {
+        return redirect()->route('coordinador.login');
+      }
       $coordinacion = Auth::user();
       $cursos = Curso::join('catalogo_cursos','catalogo_cursos.id','=','cursos.catalogo_id')
                      ->where('semestre_si', $request->semestre_si)
@@ -145,7 +185,9 @@ class AreaController extends Controller
     }
 
 	public function nuevoCurso(Request $request, $coordinacion_id, $busqueda, $tipo){
-
+    if (Auth::guest()) {
+      return redirect()->route('coordinador.login');
+    }
 		$datos = array();
 		$cursos;
 
@@ -244,6 +286,9 @@ class AreaController extends Controller
 	}
 
     public function participantes(Request $request,$curso_id){
+      if (Auth::guest()) {
+        return redirect()->route('coordinador.login');
+      }
       $participantes = DB::table('participante_curso')
           ->where([['curso_id',$curso_id]])
           ->get();
@@ -265,13 +310,34 @@ class AreaController extends Controller
     }
 
 	public function buscarInstructor (Request $request, int $curso_id){
+    if (Auth::guest()) {
+      return redirect()->route('coordinador.login');
+    }
     $curso = Curso::findOrFail($curso_id);
     $profesores = array();
     $words=explode(" ", $request->pattern);
-    foreach($words as $word){
-        $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(nombres)) LIKE unaccent(lower('%".$word."%'))) OR (unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".$word."%'))) OR (unaccent(lower(apellido_materno)) LIKE unaccent(lower('%".$word."%')))")->get();
-        if($profesor->isNotEmpty())
-          array_push($profesores, $profesor);
+    $words_num = sizeof($words);
+    for ($AP=1; $AP <= $words_num; $AP++) {
+      for ($AM=0; $AM <= $words_num-$AP; $AM++) {
+        $N = $words_num-$AP-$AM;
+        if ($AM==0 and $N==0) {
+          $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, 0, $AP))."%')))")->get();
+          if($profesor->isNotEmpty())
+            array_push($profesores, $profesor);
+        }elseif ($AM>0 and $N==0) {
+          $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, 0, $AP))."%'))) AND (unaccent(lower(apellido_materno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, $AP, $AM))."%')))")->get();
+          if($profesor->isNotEmpty())
+            array_push($profesores, $profesor);
+        }elseif ($AM==0 and $N>0){
+          $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(nombres)) LIKE unaccent(lower('%".implode(' ', array_slice($words, $AP+$AM))."%'))) AND (unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, 0, $AP))."%')))")->get();
+          if($profesor->isNotEmpty())
+            array_push($profesores, $profesor);
+        }else{
+          $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(nombres)) LIKE unaccent(lower('%".implode(' ', array_slice($words, $AP+$AM))."%'))) AND (unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, 0, $AP))."%'))) AND (unaccent(lower(apellido_materno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, $AP, $AM))."%')))")->get();
+          if($profesor->isNotEmpty())
+            array_push($profesores, $profesor);
+        }
+      }
     }
     $curso_prof = array();
     $aux = array();
@@ -288,16 +354,20 @@ class AreaController extends Controller
     foreach($curso_prof as $prof_aux){
         foreach($prof_aux as $prof){
             $dato = ParticipantesCurso::findOrFail($prof->id);
-            array_push($datos, $dato);
+            if(!in_array($dato,$datos))
+              array_push($datos, $dato);
         }
     }
     return view('pages.eval')
         ->with('participantes',$datos)
         ->with('curso_id',$curso->id)
         ->with('nombre_curso', $curso->getCatalogoCurso()->nombre_curso);
-    }
+  }
 
     public function evaluacion(int $curso_id){
+      if (Auth::guest()) {
+        return redirect()->route('coordinador.login');
+      }
       $curso = Curso::findOrFail($curso_id);
       return view('pages.eval')
         ->with('nombre_curso', $curso->getCatalogoCurso()->nombre_curso)
@@ -306,6 +376,9 @@ class AreaController extends Controller
     }
 
     public function evaluacionVista(int $participante_id){
+      if (Auth::guest()) {
+        return redirect()->route('coordinador.login');
+      }
     // TODO:Pasar tipo del curso, por si es seminario
     $participante = ParticipantesCurso::findOrFail($participante_id);
     $evaluacion = EvaluacionCurso::where('participante_curso_id', $participante->id)->get()->first();
@@ -324,6 +397,9 @@ class AreaController extends Controller
 	}
 
     public function saveFinal_Curso(Request $request, int $participante_id){
+      if (Auth::guest()) {
+        return redirect()->route('coordinador.login');
+      }
     $participante = ParticipantesCurso::findOrFail($participante_id);
     $curso = Curso::findOrFail($participante->curso_id);
     $instructores = $curso->getProfesoresCurso();
@@ -601,6 +677,9 @@ class AreaController extends Controller
 //     }
 
 	public function modificarEvaluacion(int $participante_id){
+    if (Auth::guest()) {
+      return redirect()->route('coordinador.login');
+    }
     $participante = ParticipantesCurso::findOrFail($participante_id);
     $evaluacion = EvaluacionCurso::where('participante_curso_id', $participante->id)->get()->first();
     if(!$evaluacion){
@@ -620,6 +699,9 @@ class AreaController extends Controller
   }
 
   public function eliminarEvaluacion(int $participante_id){
+    if (Auth::guest()) {
+      return redirect()->route('coordinador.login');
+    }
     $participante = ParticipantesCurso::findOrFail($participante_id);
     $evaluaciones = EvaluacionCurso::where('participante_curso_id', $participante->id)->get();
     if($evaluaciones->isEmpty())
@@ -638,6 +720,9 @@ class AreaController extends Controller
   }
 
 	public function changeFinal_Curso(Request $request,int $participante_id,int $encuesta_id){
+    if (Auth::guest()) {
+      return redirect()->route('coordinador.login');
+    }
       $participante = ParticipantesCurso::findOrFail($participante_id);
       $curso = Curso::findOrFail($participante->curso_id);
       $instructores = $curso->getProfesoresCurso();

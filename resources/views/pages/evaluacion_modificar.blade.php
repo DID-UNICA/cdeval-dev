@@ -9,6 +9,7 @@
 @else
   {!! Form::open(["route" => ["area.update.encuesta",$participante_id, $evaluacion->id], "method" => "POST"]) !!}
 @endif
+@csrf
 <input type="hidden" name="_token" value="{!! csrf_token() !!}">
 @include ('partials.messages')
   <div style="padding-top: 2cm; padding-left: 0.5cm; padding-right: 0.5cm;">

@@ -59,14 +59,10 @@ td{
                 <h4>Instructores(es): {{ $curso->getCadenaInstructores()}}</h4>
             </div>
         </div>
-        <!--<form class="form-horizontal" method="POST" action=" route('curso.ver-respuesta') ">
-                  {{csrf_field()}}-->
-									@if( empty($users) )
-										<p>Aún no hay alumnos inscritos en este curso</p>
-										<a href="{{ URL::to('curso/inscripcion', $curso->id) }}" class="btn btn-success" style='margin: 20px;'>Inscribir Participantes</a>
-									@else
-									
-                  
+          @if( empty($users) )
+            <p>Aún no hay alumnos inscritos en este curso</p>
+            <a href="{{ URL::to('curso/inscripcion', $curso->id) }}" class="btn btn-success" style='margin: 20px;'>Inscribir Participantes</a>
+          @else
             <div class="panel-body tablaFija" style="overflow-x:auto;">
                   <input name="curso_id" type="hidden" value="{{$curso->id}}">
                   <table width="100%">

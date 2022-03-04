@@ -36,6 +36,7 @@
               <br>
             <h4>Buscar</h4>
             {!! Form::open(["route" => ["cd.buscar.curso",$coordinacion_id,$semestre,$periodo], "method" => "POST"]) !!}
+            @csrf
               <table>
                 <tr>
                   <div class="input-group">
@@ -83,24 +84,21 @@
                             </thead>
                             
                             <tbody>
-                              @foreach($datos as $curso)
+                              @foreach($cursos as $curso)
                                 <tr>
-                                    <td style="width:350px;">{{$curso[0]->nombre_curso}}</td>
+                                    <td style="width:350px;">{{$curso->getNombre()}}</td>
                                     <td>
-                                    @foreach($curso[1] as $profesors)
-                                    
-                                         <p>{{$profesors->nombres}} {{$profesors->apellido_paterno}} {{$profesors->apellido_materno}}</p>
-                                        
-                                    @endforeach
+                                         <p>{{$curso->getCadenaInstructores()}}</p>
+
                                     </td>
                                     <td>
-                                      <button onclick="window.location='{{ route("cd.evaluacion",[$curso[0]->id])}}'"  class="btn btn-success" id="btn_eval" >Capturar evaluación final de curso</button>
+                                      <button onclick="window.location='{{ route("cd.evaluacion",[$curso->id])}}'"  class="btn btn-success" id="btn_eval" >Capturar evaluación final de curso</button>
                                     </td>
                                     <td>
-                                      <a href="{{url("/CD/global/{$curso[0]->id}")}}" class="btn btn-info" id="btn_reporte">Reporte de Evaluación final de curso</a><br>
-                                      <a href="{{url("/CD/global/instructores/{$curso[0]->id}")}}" style='margin: 0; margin-top: 5%' class="btn btn-primary" id="btn_reporte">Reporte de Instructores</a>
+                                      <a href="{{url("/CD/global/{$curso->id}")}}" class="btn btn-info" id="btn_reporte">Reporte de Evaluación final de curso</a><br>
+                                      <a href="{{url("/CD/global/instructores/{$curso->id}")}}" style='margin: 0; margin-top: 5%' class="btn btn-primary" id="btn_reporte">Reporte de Instructores</a>
                                     </td>
-                                    <td><button onclick="window.location='{{ route("cd.participantes.curso",[$curso[0]->id])}}'" class="btn btn-warning" id="btn_participantes">Visualizar participantes inscritos</button>
+                                    <td><button onclick="window.location='{{ route("cd.participantes.curso",[$curso->id])}}'" class="btn btn-warning" id="btn_participantes">Visualizar participantes inscritos</button>
                                   </td>
                                 </tr>
                               @endforeach
