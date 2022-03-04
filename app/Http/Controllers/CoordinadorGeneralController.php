@@ -1212,14 +1212,14 @@ $promedio_p4=[
         ->where('cursos.semestre_pi', $fecha[1])
         ->where('cursos.semestre_si', $periodo)
         ->where('catalogo_cursos.coordinacion_id', $coordinacion->id)
-        ->where('cursos.sgc','<>',true)
+        ->where('cursos.sgc',true)
         ->select('catalogo_cursos.*','cursos.*')
         ->get();
       //return $cursos;
       if($cursos->isEmpty())
         return redirect()->route('cd.area', [$semestre, $periodo, $coordinacion_id])
           ->with('warning', 
-          'El periodo seleccionado con anterioridad, no cuenta con cursos asignados que no pertenezcan al SGC.');
+          'El periodo seleccionado con anterioridad, no cuenta con cursos del SGC.');
 
       //Variables para enviar a la vista
       $nombre_cursos = array();
