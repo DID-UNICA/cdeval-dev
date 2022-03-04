@@ -28,6 +28,10 @@ class Curso extends Model
       $catalogo = CatalogoCurso::find($this->catalogo_id);
       return $catalogo;
     }
+    public function getNombre(){
+      $catalogo = CatalogoCurso::findOrFail($this->catalogo_id);
+      return $catalogo->nombre_curso;
+    }
 
     public function getSemestre(){
         return $this->semestre_anio."-".$this->semestre_pi." ".$this->semestre_si." ";

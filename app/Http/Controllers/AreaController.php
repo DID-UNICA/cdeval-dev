@@ -125,15 +125,43 @@ class AreaController extends Controller
         ->where('catalogo_cursos.coordinacion_id',$coordinacion->id)
         ->get();
       elseif($request->type === 'instructor'){
-        $profesores = Profesor::select('id')->whereRaw("lower(unaccent(nombres)) ILIKE lower(unaccent('%".$request->pattern."%'))")
-                  ->orWhereRaw("lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$request->pattern."%'))")
-                  ->orWhereRaw("lower(unaccent(apellido_materno)) ILIKE lower(unaccent('%".$request->pattern."%'))")
-                  ->orderByRaw("lower(unaccent(apellido_paterno)),lower(unaccent(apellido_materno)),lower(unaccent(nombres))")
-                  ->get();
-        $curso_prof = ProfesoresCurso::select('curso_id')->whereIn('profesor_id', $profesores)->get();
+        $profesores = array();
+          $words=explode(" ", $request->pattern);
+          $words_num = sizeof($words);
+          for ($AP=1; $AP <= $words_num; $AP++) {
+            for ($AM=0; $AM <= $words_num-$AP; $AM++) {
+              $N = $words_num-$AP-$AM;
+              if ($AM==0 and $N==0) {
+                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, 0, $AP))."%')))")->get();
+              if($profesor->isNotEmpty())
+                array_push($profesores, $profesor);
+              }elseif ($AM>0 and $N==0) {
+                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, 0, $AP))."%'))) AND (unaccent(lower(apellido_materno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, $AP, $AM))."%')))")->get();
+              if($profesor->isNotEmpty())
+                array_push($profesores, $profesor);
+              }elseif ($AM==0 and $N>0){
+                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(nombres)) LIKE unaccent(lower('%".implode(' ', array_slice($words, $AP+$AM))."%'))) AND (unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, 0, $AP))."%')))")->get();
+              if($profesor->isNotEmpty())
+                array_push($profesores, $profesor);
+              }else{
+                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(nombres)) LIKE unaccent(lower('%".implode(' ', array_slice($words, $AP+$AM))."%'))) AND (unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, 0, $AP))."%'))) AND (unaccent(lower(apellido_materno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, $AP, $AM))."%')))")->get();
+              if($profesor->isNotEmpty())
+                array_push($profesores, $profesor);
+              }
+            }
+          }
+          $tmp = array();
+          foreach($profesores as $profesor_ar){
+            foreach($profesor_ar as $profesor){
+              array_push($tmp, $profesor->id);
+            }
+          }
+        $curso_prof = ProfesoresCurso::select('curso_id')->whereIn('profesor_id', $tmp)->get();
         $cursos = Curso::join('catalogo_cursos','catalogo_cursos.id', '=','cursos.catalogo_id')
-                  ->where('catalogo_cursos.coordinacion_id',$coordinacion->id)
-                  ->whereIn('cursos.id',$curso_prof)->get();
+                ->where('catalogo_cursos.coordinacion_id',$coordinacion->id)
+                ->whereIn('cursos.id',$curso_prof)
+                ->select('cursos.*', 'catalogo_cursos.coordinacion_id')
+                ->get();
       }
       return view('pages.homeArea')
            ->with('cursos',$cursos)

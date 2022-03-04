@@ -25,7 +25,6 @@
         <div class="card-body">
           <form class="form-horizontal" method="POST" action="{{ route('coordinador.login.post') }}">
           @csrf
-            {{ csrf_field() }}
             <div class="mb-3">
               <label for="area" class="form-label" style="color:white">Seleccionar Área</label>
               <select name="abreviatura" id=abreviatura class="form-select" aria-label="Default select example" required autofocus>

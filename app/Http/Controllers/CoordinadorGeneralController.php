@@ -79,6 +79,7 @@ class CoordinadorGeneralController extends Controller
                 ->join('coordinacions','coordinacions.id','=','coordinacion_id')
                 ->select('catalogo_cursos.nombre_curso','cursos.id')
                 ->where([['cursos.semestre_anio',$semestre[0]],['cursos.semestre_pi',$semestre[1]],['cursos.semestre_si',$periodo]])
+                ->select('cursos.id')
                 ->get();
         else
             $cursos = DB::table('cursos')
@@ -86,23 +87,16 @@ class CoordinadorGeneralController extends Controller
                 ->join('coordinacions','coordinacions.id','=','coordinacion_id')
                 ->select('catalogo_cursos.nombre_curso','cursos.id')
                 ->where([['cursos.semestre_anio',$semestre[0]],['cursos.semestre_pi',$semestre[1]],['cursos.semestre_si',$periodo],['coordinacions.id',$coordinacion->id]])
+                ->select('cursos.id')
                 ->get();
 
-        $datos = array();
+        $tmp = array();
         foreach($cursos as $curso){
-            $tupla = array();
-            $profesores = DB::table('profesor_curso')
-                ->join('profesors','profesors.id','=','profesor_curso.profesor_id')
-                ->select('profesors.nombres','profesors.apellido_paterno','profesors.apellido_materno')
-                ->where('profesor_curso.curso_id','=',$curso->id)
-                ->get();
-            array_push($tupla, $curso);
-            array_push($tupla, $profesores);
-            array_push($datos, $tupla);
+            array_push($tmp, $curso->id);
         }
-
+        $cursos = Curso::whereIn('id', $tmp)->get();
         return view('pages.area')
-            ->with('datos',$datos)
+            ->with('cursos',$cursos)
             ->with('coordinacion',$coordinacion->nombre_coordinacion)
             ->with('coordinacion_id',$coordinacion->id)
             ->with('semestre',$semestreEnv)
@@ -122,83 +116,140 @@ class CoordinadorGeneralController extends Controller
     }
 
     public function buscarCurso(Request $request, $coordinacion_id,$semestreEnv,$periodo){
-      if (Auth::guest()) {
+      if (Auth::guest())
         return redirect()->route('coordinador.login');
-      }
-      $fecha = $semestreEnv;
-      $busqueda = $request->get('pattern');
-      $tipo = $request->get('type');
-
-      $datos = array();
-      $cursos = '';
+      $semestre = explode('-',$semestreEnv);
 
       $coordinacion = Coordinacion::findOrFail($coordinacion_id);
-      $fecha = Carbon::now();
-      $fecha = ($fecha->month==8)? $fecha->subWeek() : (($fecha->month==1)? $fecha->addWeek() : $fecha);
-
-      $periodo_si = $request->filled('periodo_anio')? $request->periodo_si : (in_array($fecha->month,array(1, 6, 7, 12))? 'i':'s');
-      $periodo_pi = $request->filled('periodo_anio')? $request->periodo_pi : (in_array($fecha->month,array(2, 3, 4, 5, 6, 7))? '2':'1');
-      $periodo_anio = $request->filled('periodo_anio')? $request->periodo_anio : (in_array($fecha->month,array(8, 9, 10, 11, 12))? $fecha->year+1:$fecha->year);
-
-		if($tipo == 'nombre'){
-			$cursos = DB::table('cursos as c')
-        ->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
-        ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
-        ->whereRaw("lower(unaccent(nombre_curso)) ILIKE lower(unaccent('%".$request->pattern."%'))")
-        ->where('co.id','=',$coordinacion_id)
-        ->get(); 
-    }else{
-      $profesores = array();
-      $words=explode(" ", $request->pattern);
-      foreach($words as $word){
-        $profesores = Profesor::select('id')->whereRaw("lower(unaccent(nombres)) ILIKE lower(unaccent('%".$request->pattern."%'))")
-            ->orWhereRaw("lower(unaccent(apellido_paterno)) ILIKE lower(unaccent('%".$request->pattern."%'))")
-            ->orWhereRaw("lower(unaccent(apellido_materno)) ILIKE lower(unaccent('%".$request->pattern."%'))")
-            ->orderByRaw("lower(unaccent(apellido_paterno)),lower(unaccent(apellido_materno)),lower(unaccent(nombres))")
+      if($coordinacion->id == 1 || $coordinacion->id == 6){
+        if($request->type == 'nombre'){
+          $cursos = DB::table('cursos as c')
+            ->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
+            ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
+            ->whereRaw("lower(unaccent(nombre_curso)) ILIKE lower(unaccent('%".$request->pattern."%'))")
+            ->where([['c.semestre_anio',$semestre[0]],['c.semestre_pi',$semestre[1]],['c.semestre_si',$periodo]])
+            ->select('c.id')
             ->get();
-        $curso_prof = ProfesoresCurso::select('curso_id')->whereIn('profesor_id', $profesores)->get();
-        $cursos = Curso::join('catalogo_cursos','catalogo_cursos.id', '=','cursos.catalogo_id')
-            ->where('catalogo_cursos.coordinacion_id',$coordinacion_id)
-            ->whereIn('cursos.id',$curso_prof)->get();
+        }else if ($request->type == 'instructor'){
+          $profesores = array();
+          $words=explode(" ", $request->pattern);
+          $words_num = sizeof($words);
+          for ($AP=1; $AP <= $words_num; $AP++) {
+            for ($AM=0; $AM <= $words_num-$AP; $AM++) {
+              $N = $words_num-$AP-$AM;
+              if ($AM==0 and $N==0) {
+                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, 0, $AP))."%')))")->get();
+              if($profesor->isNotEmpty())
+                array_push($profesores, $profesor);
+              }elseif ($AM>0 and $N==0) {
+                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, 0, $AP))."%'))) AND (unaccent(lower(apellido_materno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, $AP, $AM))."%')))")->get();
+              if($profesor->isNotEmpty())
+                array_push($profesores, $profesor);
+              }elseif ($AM==0 and $N>0){
+                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(nombres)) LIKE unaccent(lower('%".implode(' ', array_slice($words, $AP+$AM))."%'))) AND (unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, 0, $AP))."%')))")->get();
+              if($profesor->isNotEmpty())
+                array_push($profesores, $profesor);
+              }else{
+                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(nombres)) LIKE unaccent(lower('%".implode(' ', array_slice($words, $AP+$AM))."%'))) AND (unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, 0, $AP))."%'))) AND (unaccent(lower(apellido_materno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, $AP, $AM))."%')))")->get();
+              if($profesor->isNotEmpty())
+                array_push($profesores, $profesor);
+              }
+            }
+          }
+          $tmp = array();
+          foreach($profesores as $profesor_ar){
+            foreach($profesor_ar as $profesor){
+              array_push($tmp, $profesor->id);
+            }
+          }
+          $cursos = DB::table('cursos as c')
+            ->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
+            ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
+            ->join('profesor_curso as pc', 'c.id', '=', 'pc.curso_id')
+            ->where([['c.semestre_anio',$semestre[0]],['c.semestre_pi',$semestre[1]],['c.semestre_si',$periodo]])
+            ->whereIn('pc.profesor_id', $tmp)
+            ->select('c.id')
+            ->get();
+        }
+      } else {
+        if($request->type == 'nombre'){
+          $cursos = DB::table('cursos as c')
+            ->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
+            ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
+            ->whereRaw("lower(unaccent(nombre_curso)) ILIKE lower(unaccent('%".$request->pattern."%'))")
+            ->where('co.id','=',$coordinacion_id)
+            ->where([['c.semestre_anio',$semestre[0]],['c.semestre_pi',$semestre[1]],['c.semestre_si',$periodo]])
+            ->select('c.id')
+            ->get();
+        }else if ($request->type == 'instructor'){
+          $profesores = array();
+          $words=explode(" ", $request->pattern);
+          $words_num = sizeof($words);
+          for ($AP=1; $AP <= $words_num; $AP++) {
+            for ($AM=0; $AM <= $words_num-$AP; $AM++) {
+              $N = $words_num-$AP-$AM;
+              if ($AM==0 and $N==0) {
+                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, 0, $AP))."%')))")->get();
+              if($profesor->isNotEmpty())
+                array_push($profesores, $profesor);
+              }elseif ($AM>0 and $N==0) {
+                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, 0, $AP))."%'))) AND (unaccent(lower(apellido_materno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, $AP, $AM))."%')))")->get();
+              if($profesor->isNotEmpty())
+                array_push($profesores, $profesor);
+              }elseif ($AM==0 and $N>0){
+                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(nombres)) LIKE unaccent(lower('%".implode(' ', array_slice($words, $AP+$AM))."%'))) AND (unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, 0, $AP))."%')))")->get();
+              if($profesor->isNotEmpty())
+                array_push($profesores, $profesor);
+              }else{
+                $profesor = Profesor::select('id','nombres','apellido_paterno','apellido_materno')->whereRaw("(unaccent(lower(nombres)) LIKE unaccent(lower('%".implode(' ', array_slice($words, $AP+$AM))."%'))) AND (unaccent(lower(apellido_paterno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, 0, $AP))."%'))) AND (unaccent(lower(apellido_materno)) LIKE unaccent(lower('%".implode(' ', array_slice($words, $AP, $AM))."%')))")->get();
+              if($profesor->isNotEmpty())
+                array_push($profesores, $profesor);
+              }
+            }
+          }
+          $tmp = array();
+          foreach($profesores as $profesor_ar){
+            foreach($profesor_ar as $profesor){
+              array_push($tmp, $profesor->id);
+            }
+          }
+          $cursos = DB::table('cursos as c')
+            ->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
+            ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
+            ->join('profesor_curso as pc', 'c.id', '=', 'pc.curso_id')
+            ->where('co.id','=',$coordinacion_id)
+            ->where([['c.semestre_anio',$semestre[0]],['c.semestre_pi',$semestre[1]],['c.semestre_si',$periodo]])
+            ->whereIn('pc.profesor_id', $tmp)
+            ->select('c.id')
+            ->get();
+        }
       }
-    }
-
+      $tmp = array();
       foreach($cursos as $curso){
-        $tupla = array();
-        $profesores = DB::table('profesor_curso')
-            ->join('profesors','profesors.id','=','profesor_curso.profesor_id')
-            ->select('profesors.nombres','profesors.apellido_paterno','profesors.apellido_materno')
-            ->where('profesor_curso.curso_id','=',$curso->id)
-            ->get();
-        array_push($tupla, $curso);
-        array_push($tupla, $profesores);
-        array_push($datos, $tupla);
+        array_push($tmp, $curso->id);
       }
-    $semestre_anio = DB::table('cursos')
+      $cursos = Curso::whereIn('id', $tmp)->get();
+      $semestre_anio = DB::table('cursos')
             ->select('semestre_anio')
             ->get();
 
-		$semestres = array();
-        foreach($semestre_anio as $semestre){
-            if(!in_array($semestre,$semestres)){
-                array_push($semestres,$semestre);
-            }
-        }
-        sort($semestres);
-        $reversed = array_reverse($semestres);
+		  $semestres = array();
+      foreach($semestre_anio as $semestre){
+          if(!in_array($semestre,$semestres))
+            array_push($semestres,$semestre);
+      }
+      sort($semestres);
+      $reversed = array_reverse($semestres);
 
-        Session::put('sesion','cd');
-        Session::put('url','CD');
-
-		
-
-            return view('pages.area')
-            ->with('datos',$datos)
-            ->with('periodo',$periodo)
-            ->with('semestre',$semestreEnv)
-            ->with('semestre_anio',$reversed)
-            ->with('coordinacion',$coordinacion->nombre_coordinacion)
-            ->with('coordinacion_id',$coordinacion->id);
+      Session::put('sesion','cd');
+      Session::put('url','CD');
+      return view('pages.area')
+        ->with('cursos',$cursos)
+        ->with('periodo',$periodo)
+        ->with('semestre',$semestreEnv)
+        ->with('semestre_anio',$reversed)
+        ->with('coordinacion',$coordinacion->nombre_coordinacion)
+        ->with('coordinacion_id',$coordinacion->id);
     }
 
     public function buscarInstructor (Request $request, int $curso_id){

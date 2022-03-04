@@ -69,7 +69,6 @@
                     </td>
                 </div>
                 <td>
-                {{ csrf_field ()}}
                  <button id="area"  type="submit" class="btn btn-success">Buscar</button>
                 </td>
               </table>
