@@ -1252,12 +1252,8 @@ $promedio_p4=[
       if (Auth::guest()) {
         return redirect()->route('coordinador.login');
       }
-      // $evals_curso = collect();
-      // $evals_instructores = collect();
       $fecha = explode('-',$semestre);
       $coordinacion = Coordinacion::findOrFail($coordinacion_id);
-      //$cursos = Curso::get();
-      //return [$fecha,$periodo,$coordinacion_id];
       $cursos = Curso::join('catalogo_cursos', 'catalogo_cursos.id', '=', 'cursos.catalogo_id')
         ->where('cursos.semestre_anio', $fecha[0])
         ->where('cursos.semestre_pi', $fecha[1])
@@ -1266,7 +1262,6 @@ $promedio_p4=[
         ->where('cursos.sgc',true)
         ->select('catalogo_cursos.*','cursos.*')
         ->get();
-      //return $cursos;
       if($cursos->isEmpty())
         return redirect()->route('cd.area', [$semestre, $periodo, $coordinacion_id])
           ->with('warning', 
@@ -1339,7 +1334,7 @@ $promedio_p4=[
         $curso->positivas = 0;
         $curso->negativas = 0;
 
-        //Calculos de encuestar por instructor
+        //Calculos de encuestas por instructor
         foreach($instructores as $instructor){
           $evals_instructor = $instructor->getEvaluaciones();
           $instructor->nombre = $instructor->getNombreProfesor();
@@ -1532,7 +1527,6 @@ $promedio_p4=[
             $curso->asistentes++;
           if($participante->contesto_hoja_evaluacion == 1)
             $curso->contestaron++;
-          // $evals_instructores = $participante->getEvaluacionesInstructores();
         }
 
         // //Calculos por evaluacion del curso
@@ -1540,7 +1534,7 @@ $promedio_p4=[
         // if($curso->contestaron != $evals_curso->count())
         //   return redirect()->back()->with('danger',
         //   'El número de participantes con la casilla de hoja de evaluación '. 
-        //   'marcada es diferente del número de constancias creadas, por favor '.
+        //   'marcada es diferente del número de evaluaciones creadas, por favor '.
         //   'verifique');
         foreach($evals_curso as $eval){
 
@@ -1614,7 +1608,6 @@ $promedio_p4=[
             $curso->negativas++;
           }
 
-          //TODO: Estos tambien cuentan como reactivos para los calculos?
           $reactivo = $eval->getCons($eval->p2_1);
           if($reactivo !== NULL){
             $curso->reactivos_autoevaluacion++;
@@ -1798,13 +1791,10 @@ $promedio_p4=[
                    $reactivos_instructores+
                    $reactivos_autoevaluacion;
 
-      // Calculo final de factores
-      $factor_ocupacion = round($asistentes*100 / $capacidad,2);
-      $factor_recomendacion = round($factor_recomendacion*100 / $reactivos_recomendacion,2);
-      $factor_acreditacion = round($acreditados*100/$asistentes,2);
-      $factor_calidad = round($positivas*100 / $reactivos,2);
 
-      // Calculo final de criterios ponderados
+      // Excepciones por división entre cero
+      if($reactivos === 0)
+        return redirect()->back()->with('danger', 'No hay reactivos de contenido, de coordinación, de instructores ni de autoevaluación para ninguna evaluacion de ningún curso de este periodo');
       if($reactivos_contenido === 0)
         return redirect()->back()->with('danger', 'No hay reactivos de contenido evaluados para ninguna evaluacion de ningún curso de este periodo');
       if($reactivos_coordinacion === 0)
@@ -1813,13 +1803,23 @@ $promedio_p4=[
         return redirect()->back()->with('danger', 'No hay reactivos de recomendacion evaluados para ninguna evaluacion de ningún curso de este periodo');
       if($reactivos_instructores === 0)
         return redirect()->back()->with('danger', 'No hay reactivos de instructores evaluados para ninguna evaluacion de ningún curso de este periodo');
+      if($capacidad === 0)
+        return redirect()->back()->with('danger', 'Capacidad de todos los cursos igual a cero, verifique.');
+      if($asistentes === 0)
+        return redirect()->back()->with('danger', 'Cantidad de asistentes de todos los cursos igual a cero, verifique.');
 
+
+      // Calculo final de factores
+      $factor_ocupacion = round($asistentes*100 / $capacidad,2);
+      $factor_recomendacion = round($factor_recomendacion*100 / $reactivos_recomendacion,2);
+      $factor_acreditacion = round($acreditados*100/$asistentes,2);
+      $factor_calidad = round($positivas*100 / $reactivos,2);
+
+      // Calculo final de criterios ponderados
       $criterio_contenido_pon = round($criterio_contenido_pon / $reactivos_contenido, 2);
       $criterio_coordinacion_pon = round($criterio_coordinacion_pon / $reactivos_coordinacion, 2);
       $criterio_recomendacion_pon = round(($criterio_recomendacion_pon * 100) / $reactivos_recomendacion, 2);
       $criterio_instructores_pon = round($criterio_instructores_pon / $reactivos_instructores, 2);
-
-
 
       // Calculo final de criterios aritmeticos
       $criterio_contenido_arim = round($criterio_contenido_arim / $cursos->count(),2);
@@ -1855,9 +1855,7 @@ $promedio_p4=[
       ->with('criterio_contenido_pon' , $criterio_contenido_pon)
       ->with('criterio_instructores_pon' , $criterio_instructores_pon)
       ->with('criterio_coordinacion_pon' , $criterio_coordinacion_pon)
-      ->with('criterio_recomendacion_pon' , $criterio_recomendacion_pon)
-      ;
-
+      ->with('criterio_recomendacion_pon' , $criterio_recomendacion_pon);
     }
 
     public function reporteFinalCurso($curso_id){
