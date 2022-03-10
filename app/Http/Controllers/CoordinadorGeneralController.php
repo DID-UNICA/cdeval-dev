@@ -2607,13 +2607,13 @@ $promedio_p4=[
             $externos = 0;
             $profesors = DB::table('participante_curso')
             ->join('profesors as p','p.id','=','participante_curso.profesor_id')
-            ->select('p.unam','p.procedencia')
+            ->select('p.unam','p.procedencia','participante_curso.asistencia')
             ->where([['participante_curso.curso_id',$curso->id]])
             ->get();
             foreach($profesors as $profesor){
                 if($profesor->unam == 1){
                     $unam++;
-                }else{
+                }else if($profesor->asistencia){
                     $externos++;
                 }
             }
@@ -2654,13 +2654,13 @@ $promedio_p4=[
             $externos = 0;
             $profesors = DB::table('participante_curso')
             ->join('profesors as p','p.id','=','participante_curso.profesor_id')
-            ->select('p.unam','p.procedencia')
+            ->select('p.unam','p.procedencia', 'participante_curso.asistencia')
             ->where([['participante_curso.curso_id',$curso->id]])
             ->get();
             foreach($profesors as $profesor){
                 if($profesor->unam == 1){
                     $unam++;
-                }else{
+                }else if($profesor->asistencia){
                     $externos++;
                 }
             }
