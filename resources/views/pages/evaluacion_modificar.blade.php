@@ -956,9 +956,9 @@
                             <div class="form-check">
                                 <input name="p8[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="4" @if(is_array($evaluacion->p8) && in_array('4', $evaluacion->p8)) checked @endif> Otro
                             @if(is_array($evaluacion->p8) && in_array('4', $evaluacion->p8))
-                            </div><input name="p8[]" type="otro" class="form-control" id="otro" placeholder="{{$evaluacion->p8[array_search('4',$evaluacion->p8)+1]}}">
+                            </div><input maxlength="300" name="p8[]" type="otro" class="form-control" id="otro" placeholder="{{$evaluacion->p8[array_search('4',$evaluacion->p8)+1]}}">
                             @else
-                            </div><input name="p8[]" type="otro" class="form-control" id="otro" placeholder="Otro">
+                            </div><input maxlength="300" name="p8[]" type="otro" class="form-control" id="otro" placeholder="Otro">
                             @endif
                         </td>
                         </tr>
@@ -966,15 +966,15 @@
                     <table class="table table-hover">
                         <tr>
                             <td width="40%" align="justify">Lo mejor del curso fue: </td>
-                            <td><textarea name="p9" class="form-control" id="contenido" rows="2" value={{old('p9')}}>{{(isset($evaluacion))?$evaluacion->p9 : ''}}</textarea></td>
+                            <td><textarea maxlength="1500" name="p9" class="form-control" id="contenido" rows="2" value={{old('p9')}}>{{(isset($evaluacion))?$evaluacion->p9 : ''}}</textarea></td>
                         </tr>
                         <tr>
                             <td width="40%" align="justify">Sugerencias y recomendaciones: </td>
-                            <td><textarea name="sug" class="form-control" id="sugerencias" rows="2" value={{old('sug')}}>{{(isset($evaluacion))?$evaluacion->sug : ''}}</textarea></td>
+                            <td><textarea maxlength="1500" name="sug" class="form-control" id="sugerencias" rows="2" value={{old('sug')}}>{{(isset($evaluacion))?$evaluacion->sug : ''}}</textarea></td>
                         </tr>
                         <tr>
                             <td width="40%" align="justify">¿Qué otros cursos, talleres, seminarios o temáticos le gustaría que se impartiesen o tomasen en cuenta para próximas actividades? </td>
-                            <td><textarea name="otros" class="form-control" id="sugerencias" rows="2" value={{old('otros')}}>{{(isset($evaluacion))?$evaluacion->otros : ''}}</textarea></td>
+                            <td><textarea maxlength="300" name="otros" class="form-control" id="sugerencias" rows="2" value={{old('otros')}}>{{(isset($evaluacion))?$evaluacion->otros : ''}}</textarea></td>
                         </tr>
                     </table> 
                     <table class="table table-hover">
@@ -995,7 +995,7 @@
                                 <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="4" {{(is_array($evaluacion->conocimiento) && in_array('4', $evaluacion->conocimiento)) ? 'checked':'' }}> Disciplinar
                             </div></td>
                             <td><div class="form-check">
-                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="5" {{(is_array($evaluacion->conocimiento) && in_array('5', $evaluacion->conocimiento)) ? 'checked':'' }}> Otro
+                                <input maxlength="300" name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="5" {{(is_array($evaluacion->conocimiento) && in_array('5', $evaluacion->conocimiento)) ? 'checked':'' }}> Otro
                             </div></td>
                         </tr>
                     </table>     
@@ -1003,7 +1003,7 @@
                     <table class="table table-hover">
                         <tr>
                             <td width="40%" align="justify">Temáticas: </td>
-                            <td><textarea name="tematica" class="form-control" id="contenido" rows="2" value="{{old('tematica')}}">{{(isset($evaluacion))?$evaluacion->tematica : ''}}</textarea></td>
+                            <td><textarea maxlength="300" name="tematica" class="form-control" id="contenido" rows="2" value="{{old('tematica')}}">{{(isset($evaluacion))?$evaluacion->tematica : ''}}</textarea></td>
                         </tr>
                         
                         <tr>
@@ -1011,11 +1011,11 @@
                                 <td><label for="">¿En qué horarios le gustaría que se impartiesen los cursos, talleres, seminarios o diplomados?</label></td>
                                 </tr>
                             <td width="40%" align="justify">Horarios Semestrales: </td>
-                            <td><input name="horarios" type="text" class="form-control" id="semestral" placeholder=""  value="{{(isset($evaluacion))?$evaluacion->horarios : ''}}"></td>
+                            <td><input maxlength="300" name="horarios" type="text" class="form-control" id="semestral" placeholder=""  value="{{(isset($evaluacion))?$evaluacion->horarios : ''}}"></td>
                         </tr>
                         <tr>
                             <td width="40%" align="justify">Horarios Intersemestrales: </td>
-                            <td><input name="horarioi" type="text" class="form-control" id="intersemestral" placeholder="" value="{{(isset($evaluacion))?$evaluacion->horarioi : ''}}"></td>
+                            <td><input maxlength="300" name="horarioi" type="text" class="form-control" id="intersemestral" placeholder="" value="{{(isset($evaluacion))?$evaluacion->horarioi : ''}}"></td>
                         </tr>
                     </table> 
                     <br>
