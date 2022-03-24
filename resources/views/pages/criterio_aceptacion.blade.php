@@ -77,6 +77,12 @@
    .mayus{
         text-transform: uppercase;
     }
+    .final_prom{
+      text-align:left;
+      font-family:Arial, Helvetica, Sans-serif,cursive; 
+      font-size: 15px;
+      margin-left: 5px;
+    }
     table {
         font-family: arial, sans-serif;
         border-collapse: collapse;
@@ -163,6 +169,9 @@ margin-top: 150px;
         </tbody>
     </table>
     @endif
+    <div class="final_prom">
+      <p>Promedio de ambos periodos: {{$final_prom}}</p>
+    </div>
     <script type="text/php">
         $pdf->page_script('
           if ($PAGE_NUM >= 1) {
