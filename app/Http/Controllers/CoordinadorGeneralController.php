@@ -2749,7 +2749,7 @@ $promedio_p4=[
             $aux1_empty = true;
         }else{
             $promedio1 = round($promedio1/sizeof($aux1),2);
-            $aux1['Promedio: '] = $promedio1;
+            $aux1['Promedio:'] = $promedio1;
         }
 
         $aux2_empty = false;
@@ -2762,7 +2762,7 @@ $promedio_p4=[
             $aux2_empty = true;
         }else{
             $promedio2 = round($promedio2/sizeof($aux2),2);
-            $aux2['Promedio: '] = $promedio2;
+            $aux2['Promedio:'] = $promedio2;
         }
 
         if($aux1_empty && $aux2_empty){
@@ -2770,7 +2770,13 @@ $promedio_p4=[
               ->with('warning', 'El periodo '.$semestreEnv.' no posee ninguna evaluación asociada a algún curso');
         }
 
-        $pdf = PDF::loadView('pages.criterio_aceptacion',array('semestre'=>$semestreEnv,'criterio_s'=>$aux1,'criterio_i'=>$aux2,'criterio_s_empty'=>$aux1_empty,'criterio_i_empty'=>$aux2_empty));	
+        if($aux1_empty)
+          $final_prom = $aux2['Promedio:'];
+        elseif($aux2_empty)
+          $final_prom = $aux1['Promedio:'];
+        else
+          $final_prom = ($aux2['Promedio:']+$aux1['Promedio:'])/2;
+        $pdf = PDF::loadView('pages.criterio_aceptacion',array('semestre'=>$semestreEnv,'criterio_s'=>$aux1,'criterio_i'=>$aux2,'criterio_s_empty'=>$aux1_empty,'criterio_i_empty'=>$aux2_empty, 'final_prom'=>$final_prom));	
 
         $download='criterio_aceptacion'.$semestre[0].'-'.$semestre[1].'.pdf';
         //Retornamos la descarga del pdf
