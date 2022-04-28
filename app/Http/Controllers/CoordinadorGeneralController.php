@@ -919,10 +919,10 @@ $promedio_p4=[
                     }
 
                     //incrementamos el número de profesores que recomendaron el curso
-                    if(intval($eval->p7) == 1){
+                    if(intval($eval->p7) === 1){
                         $factor_recomendacion_curso++;
                         $tam_recomendacion++;
-                    }elseif(intval($eval->p7) != null){
+                    }elseif(intval($eval->p7) === 0){
                         $tam_recomendacion++;
                     }
                 }
@@ -1203,10 +1203,10 @@ $promedio_p4=[
                     $tam3++;
                 }
 
-                if(intval($eval->p7) == 1){
+                if(intval($eval->p7) === 1){
                     $factor_recomendacion_curso++;
                     $tam_recomendacion++;
-                }else if(intval($eval->p7) != null ){
+                }else if(intval($eval->p7) === 0 ){
                     $tam_recomendacion++;
                 }
 
@@ -1539,9 +1539,9 @@ $promedio_p4=[
         foreach($evals_curso as $eval){
 
           //Para factor de recomendacion
-          if($eval->p7 != null)
+          if($eval->p7 === 0)
             $curso->reactivos_recomendacion++;
-          elseif($eval->p7 == 1){
+          elseif($eval->p7 === 1){
             $curso->reactivos_recomendacion++;
             $curso->criterio_recomendacion++;
             $criterio_recomendacion_pon++;
@@ -1951,10 +1951,10 @@ $promedio_p4=[
       $alumnos = 0;
       foreach($evals as $eval){
       //Si la pregunta 7 vale uno es curso es recomendado
-        if($eval->p7 == 1){
+        if($eval->p7 === 1){
           $recomendaciones = $recomendaciones + 1;
           $alumnos = $alumnos + 1;
-        }else if($eval->p7 != null){
+        }else if($eval->p7 === 0){
           $alumnos = $alumnos + 1;
         }
       }
