@@ -922,7 +922,7 @@ $promedio_p4=[
                     if(intval($eval->p7) == 1){
                         $factor_recomendacion_curso++;
                         $tam_recomendacion++;
-                    }elseif(intval($eval->p7) == 0){
+                    }elseif(intval($eval->p7) != null){
                         $tam_recomendacion++;
                     }
                 }
@@ -1206,7 +1206,7 @@ $promedio_p4=[
                 if(intval($eval->p7) == 1){
                     $factor_recomendacion_curso++;
                     $tam_recomendacion++;
-                }else if(intval($eval->p7) == 0){
+                }else if(intval($eval->p7) != null ){
                     $tam_recomendacion++;
                 }
 
@@ -1539,9 +1539,9 @@ $promedio_p4=[
         foreach($evals_curso as $eval){
 
           //Para factor de recomendacion
-          if($eval->p7 === 0)
+          if($eval->p7 != null)
             $curso->reactivos_recomendacion++;
-          elseif($eval->p7 === 1){
+          elseif($eval->p7 == 1){
             $curso->reactivos_recomendacion++;
             $curso->criterio_recomendacion++;
             $criterio_recomendacion_pon++;
@@ -1954,7 +1954,7 @@ $promedio_p4=[
         if($eval->p7 == 1){
           $recomendaciones = $recomendaciones + 1;
           $alumnos = $alumnos + 1;
-        }else if($eval->p7 == 0){
+        }else if($eval->p7 != null){
           $alumnos = $alumnos + 1;
         }
       }
