@@ -471,7 +471,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="justify">La calidad del servicio en cuanto a instalaciones, ventilación, ilumniación, mobiliario y equipo fue</td>
+                        <td align="justify">La calidad del servicio en cuanto a instalaciones, ventilación, iluminación, mobiliario y equipo fue</td>
                         <td align="center">
                             <div class="form-check">
                                 <input type="radio" name="p3_3" value="0"  {{ (isset($evaluacion)) ? (($evaluacion->p3_3 == 0) ? 'checked' : '') : '' }}  class="form-check-input" id="materialUnchecked">
