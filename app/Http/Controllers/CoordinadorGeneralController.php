@@ -2670,7 +2670,7 @@ $promedio_p4=[
         
         $pdf = PDF::loadView('pages.participantes',array('semestre'=>$semestreEnv,'cursos'=>$asistentes));	
 
-        $download='participantes_'.$coordinacion[0]->abreviatura.'-'.$semestre[0].'-'.$semestre[1].'pdf';
+        $download='participantes_'.$coordinacion[0]->abreviatura.'-'.$semestre[0].'-'.$semestre[1].'.pdf';
         //Retornamos la descarga del pdf
         return $pdf->download($download);
     }

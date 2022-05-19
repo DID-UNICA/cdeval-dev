@@ -97,10 +97,10 @@ td{
                               <td>
                                   @if($participantes[$i]->espera > 0)
                                     <input type="input" name="espera[]" size="3" value="{{$participantes[$i]->espera}}" id="espera{{$i}}" disabled>
-                                    <input type="hidden" name="aux[]" id="aux{{$i}}" value="{{$participantes[$i]->espera}}">
+                                    <input type="hidden" name="aux[]" id="aux{{$i}}" value="{{$participantes[$i]->espera}}" disabled>
                                   @else
                                     <input type="input" name="espera[]" size="3" value="" id="espera{{$i}}" disabled>
-                                    <input type="hidden" name="aux[]" id="aux{{$i}}">
+                                    <input type="hidden" name="aux[]" id="aux{{$i}}" disabled>
                                   @endif
                                     <script type="text/javascript">
                                       agregarLista({{$i}},{{$participantes[$i]->espera}});
@@ -149,7 +149,7 @@ td{
                               @endif
                               <td>
                                   <input name="alumnos[]" type="hidden" value="{{$participantes[$i]->profesor_id}}">
-                                  <input type="number" name="calificaciones[]" value="{{$participantes[$i]->calificacion}}" id="Calificacion{{$i}}" min="0" max="10" /*oninvalid="this.setCustomValidity('Ingrese una calificacion del 0 al 10')" oninput="this.setCustomValidity('')" step="0.01"*/  disabled></td>
+                                  <input type="number" name="calificaciones[]" value="{{$participantes[$i]->calificacion}}" id="Calificacion{{$i}}" min="0" max="10" disabled></td>
                               @if ($participantes[$i]->contesto_hoja_evaluacion)
                                   <td><input type="checkbox" name="hoja_evaluacion[]" value="{{$participantes[$i]->profesor_id}}" checked id="Evaluacion{{$i}}" disabled></td>
 
