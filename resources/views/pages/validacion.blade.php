@@ -194,7 +194,7 @@ margin-top: 275px;
             <td width=15% style="padding-left:12px; font-weight: bold" class="small-font">c) Horario</td>
             <td width=55% class="small-font">{{$hora_inicio}}-{{$hora_fin}}</td>
             <td width=20% style="font-weight: bold ; margin-left: 50px white;" class="small-font">f) Total de horas</td>
-            <td width=10% class="small-font">{{$duracion}}</td>
+            <td width=10% class="small-font">{{intval($duracion)}}</td>
           </tr>
         </table>
         <table width=100%>
@@ -255,7 +255,7 @@ margin-top: 275px;
             </tr>
         @foreach($instructores as $instructor)
             <tr>
-                <td style="width: 65%" class="n" >{{$instructor->getNombreProfesor2()}}</td>
+                <td style="width: 65%" class="n" >{{$instructor->getNombreProfesorConGrado()}}</td>
                 <td class="n">{{$instructor->factor}}</td>
                 <td class="n">{{$instructor->minimo}}</td>
                 <td class="n">{{$instructor->maximo}}</td>

@@ -1708,18 +1708,75 @@ $promedio_p4=[
               }else if($elem == 5){
                 $Otros++;
               }
-              array_push($tematicas, array(
-                "tematica"=>$eval->tematica, 
-                "curso"=>$curso->nombre_curso, 
-                "otros"=>$eval->otros
-              ));
+              if($eval->tematica)
+                array_push($tematicas, array(
+                  "tematica"=>$eval->tematica, 
+                  "curso"=>$curso->nombre_curso, 
+                  "otros"=>$eval->otros
+                ));
+              else{
+                $nombre_curso = DB::table('_evaluacion_final_curso as e')
+                  ->select('cc.nombre_curso')
+                  ->join('participante_curso as pc','e.participante_curso_id', '=' ,'pc.id')
+                  ->join('cursos as c', 'pc.curso_id','=','c.id')
+                  ->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
+                  ->where('e.participante_curso_id','=',$eval->participante_curso_id)
+                  ->get();
+                $semestre_anio = DB::table('_evaluacion_final_curso as e')
+                  ->select('c.semestre_anio')
+                  ->join('participante_curso as pc','e.participante_curso_id', '=' ,'pc.id')
+                  ->join('cursos as c', 'pc.curso_id','=','c.id')
+                  ->where('e.participante_curso_id','=',$eval->participante_curso_id)
+                  ->get();
+                $semestre_pi = DB::table('_evaluacion_final_curso as e')
+                  ->select('c.semestre_pi')
+                  ->join('participante_curso as pc','e.participante_curso_id', '=' ,'pc.id')
+                  ->join('cursos as c', 'pc.curso_id','=','c.id')
+                  ->where('e.participante_curso_id','=',$eval->participante_curso_id)
+                  ->get();
+                $semestre_si = DB::table('_evaluacion_final_curso as e')
+                  ->select('c.semestre_si')
+                  ->join('participante_curso as pc','e.participante_curso_id', '=' ,'pc.id')
+                  ->join('cursos as c', 'pc.curso_id','=','c.id')
+                  ->where('e.participante_curso_id','=',$eval->participante_curso_id)
+                  ->get();
+                $semestre_anio = $semestre_anio[0]->semestre_anio;
+                $semestre_pi = $semestre_pi[0]->semestre_pi;
+                $semestre_si = $semestre_si[0]->semestre_si;
+                $nombre_curso = $nombre_curso[0]->nombre_curso;
+                $tematica = DB::table('_evaluacion_final_curso as e')
+                  ->select('h.tematica')
+                  ->join('participante_curso as pc','e.participante_curso_id', '=' ,'pc.id')
+                  ->join('profesors as p','pc.profesor_id', '=', 'p.id')
+                  ->join('cursos as c','pc.curso_id','=','c.id')
+                  ->join('historico_tematicas as h','p.email', '=' ,'h.email_profesor')
+                  ->where([['e.participante_curso_id','=',$eval->participante_curso_id],['h.nombre_curso','=',$nombre_curso],['c.semestre_anio','=',$semestre_anio],['c.semestre_pi','=',$semestre_pi],['c.semestre_si','=',$semestre_si]])
+                  ->get();
+                if($tematica != '[]'){
+                  foreach($tematica as $tem){
+                    $in_tematicas = false;
+                    foreach($tematicas as $arreglo){
+                      if(in_array($tem->tematica,$arreglo))
+                        $in_tematicas = true;
+                    }
+                    if(!$in_tematicas)
+                      array_push($tematicas, array(
+                          "tematica"=>$tem->tematica, 
+                          "curso"=>$curso->nombre_curso, 
+                          "otros"=>$eval->otros
+                      ));
+                  }
+                }
+              }
             }
           }
 
           if($eval->horarios !== NULL || $eval->horarioi !== NULL){
             $horario = collect([$eval->horarios,$eval->horarioi]);
+          }else{
+            $horario = NULL;
           }
-            array_push($horarios, $horario);
+          array_push($horarios, $horario);
         }
 
         // CALCULOS POR CURSO
@@ -1994,7 +2051,7 @@ $promedio_p4=[
       $DI=0;
       $Otros=0;
       foreach($evals as $evaluacion){
-          if($evaluacion->conocimiento === null)
+          if($evaluacion->conocimiento === NULL)
             continue;
           foreach($evaluacion->conocimiento as $elem){
               if($elem == 1 ){
@@ -2038,6 +2095,18 @@ $promedio_p4=[
           array_push($sugs, $evaluacion->sug);
         if($evaluacion->tematica)
           array_push($tematicas, $evaluacion->tematica);
+        else{
+          $tematica = DB::table('_evaluacion_final_curso as e')
+            ->select('h.tematica')
+            ->join('participante_curso as pc','e.participante_curso_id', '=' ,'pc.id')
+            ->join('profesors as p','pc.profesor_id', '=', 'p.id')
+            ->join('historico_tematicas as h','p.email', '=' ,'h.email_profesor')
+            ->where([['e.participante_curso_id','=',$evaluacion->participante_curso_id],['h.nombre_curso','=',$catalogoCurso->nombre_curso]])
+            ->get();
+          if($tematica != '[]'){
+            array_push($tematicas, $tematica[0]->tematica);
+          }
+        }
         if($evaluacion->horarioi || $evaluacion->horarios)
           array_push($horarios, array('inter'=>$evaluacion->horarioi, 'semes'=>$evaluacion->horarios));
         //Desde 1_1 a 1_5 obtenemos el factor de calidad del contenido ($respuestasContenido/$alumnos*5) valor >= 60
@@ -2289,6 +2358,12 @@ $promedio_p4=[
         .$curso->semestre_pi.'_'
         .$curso->semestre_si.
         '.pdf';
+      $inscritos = 0;
+      foreach($participantes as $participante){
+        if(!$participante->cancelacion){
+          $inscritos++;
+        }
+      }
       $pdf = PDF::loadView($envioPDF,array(
         'nombre_curso' => $catalogoCurso->nombre_curso,
         'periodo'=> $curso->getPeriodo(),
@@ -2300,7 +2375,7 @@ $promedio_p4=[
         'hora_fin'=> $curso->hora_fin,
         'duracion'=> $catalogoCurso->duracion_curso,
         'sede' => $curso->getSede()->sede,
-        'inscritos' => $participantes->count(),
+        'inscritos' => $inscritos,
         'asistieron'=>$asistieron,
         'acreditaron'=>$acreditado,
         'contestaron'=>$contestaron,
