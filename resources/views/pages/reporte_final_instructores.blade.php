@@ -146,7 +146,7 @@ margin-top: 250px;
 						<img src="img/fi_2.png" alt="" align="center" height="95">
 					</td>
 					<td rowspan="2" align="center" class="fi">
-						FACULTAD DE INGENIERÍA,UNAM<br>
+						FACULTAD DE INGENIERÍA<br>
 						Secretaría de Apoyo a la Docencia<br>
 						CENTRO DE DOCENCIA<br>
 						<div style='font-style:italic; font-family:Times New Roman;'>"Ing. Gilberto Borja Navarrete"<br></div> 

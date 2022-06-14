@@ -87,7 +87,7 @@
             </div>
               <div class="row" style="margin-top:0.5%">
                 <div class="col-md-6">
-                  <h5>a) Periodo de evaluación:</h5>
+                  <h5>a) Semiperiodo de evaluación:</h5>
                 </div>
                 <div class="col-md-3">
                   <input type="text" value={{$periodo}} disabled class="form-control" name="periodo" id="periodo">
@@ -185,7 +185,7 @@
                 <h5>Promedio Evaluación</h5>
               </div>
             </div>
-            @foreach(@$nombres_instructores as $inst)
+            @foreach($nombres_instructores as $inst)
               <div class="row" style="margin-top:0.5%">
                 <div class="col-md-3">
                   <input value="{{$inst->nombre}}" type="text" name="nombre_inst" id="nombre_inst" disabled class="form-control">
