@@ -11,6 +11,7 @@
   $calif_coordinacion_aritmetico = $criterio_coordinacion_arim;
   $calif_recomendacion = $criterio_recomendacion_pon;
   $calif_recomendacion_aritmetico = $criterio_recomendacion_arim;
+  $factor_ocupacion = (floor($factor_ocupacion) != $factor_ocupacion) ? $factor_ocupacion : intval($factor_ocupacion);
   if($criterio_contenido_pon > $criterio_contenido_arim){
       $calif_contenido = strval($criterio_contenido_pon).' *';
   }else{
