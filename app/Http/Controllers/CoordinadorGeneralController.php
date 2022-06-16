@@ -1337,7 +1337,7 @@ $promedio_p4=[
         //Calculos de encuestas por instructor
         foreach($instructores as $instructor){
           $evals_instructor = $instructor->getEvaluaciones();
-          $instructor->nombre = $instructor->getNombreProfesor();
+          $instructor->nombre = $instructor->getNombreProfesorConGrado();
           $instructor->min = 100;
           $instructor->max = 0;
           $instructor->prom = 0;
