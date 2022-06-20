@@ -1,129 +1,109 @@
-
 <!-- Vista: Home - Centro de Docencia y Área de Gestión y Vinculación -->
 @extends('layouts.principal')
 
 @section('contenido')
-  <!--Body content-->
+<!--Body content-->
+<div id="inner">
+  <section class="content-inner" style="padding-top: 5%">
     <br>
-    <br>
-    <br>
-    <div id="inner">
-    <div class="top-bar">
-    </div>
-    <section class="content-inner">
-      <br>
-      @include ('partials.messages')
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3>Coodinación del Centro de Docencia</h3> <!-- Obtener valor de BD-->
-        </div>
-        <div class="panel-body">
-          
-          <div class="div_periodo">
-                <h3>Periodo</h3>
-
-                <table>
-                  <tr>
-                <div class="panel-body">
-
-                  <select name="semestre" id="semestre" onChange="updateDate()">
-                    <!-- Obtener valores de BD -->
-                    @foreach($semestre_anio as $anio)
-                      <option value="{{$anio->semestre_anio.'-1'}}">{{$anio->semestre_anio}}-1</option>
-                      <option value="{{$anio->semestre_anio.'-2'}}">{{$anio->semestre_anio}}-2</option>
-                    @endforeach
-                  </select>
-
-                  <select id = "periodo" name='periodo' width = '25%' onChange="updatePeriodo()">
-                    <option value='s'>s</option>
-                    <option value='i'>i</option>
-                  </select>
-                </div>
-                </tr>
-                <tr style=>
-                  <td><button id="boton1" type="button" class="btn btn-primary" >Reporte participantes periodo</button></td>
-                  <td><button id="boton3" type="button" class="btn btn-warning" >Criterio de aceptación de coordinación de cursos</button></td>
-                </tr>
-              </table>      
-          </div>
-
-            <div class="div_area">
-                <h3>Área</h3>
-
-                <div class="panel-body">
-                  <select class='' id='area' name='area'> 
-                    @foreach($coordinaciones as $coordinacion)
-                      <option value="{{$coordinacion->id}}">{{$coordinacion->nombre_coordinacion}}</option>
-                    @endforeach
-                  </select>
-                  <button id="boton2"  type="submit" class="btn btn-success">Visualizar Área</button>
-                </div>
-            </div>
-        <br><br>
-        </div>
-      
-		  	
-       
+    @include ('partials.messages')
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Coodinación del Centro de Docencia</h3> <!-- Obtener valor de BD-->
       </div>
-    </section>
-    <br>
-  </div>
+      <div class="panel-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h3>Periodo</h3>
+              <div class="col-md-6">
+                <select class="form-control" name="semestre" id="semestre">
+                  <!-- Obtener valores de BD -->
+                  @foreach($semestre_anio as $anio)
+                  <option value="{{$anio->semestre_anio.'-1'}}">{{$anio->semestre_anio}}-1</option>
+                  <option value="{{$anio->semestre_anio.'-2'}}">{{$anio->semestre_anio}}-2</option>
+                  @endforeach
+                </select>
+              </div>
+              <div class="col-md-2">
+                <select id="periodo" name='periodo' class="form-control">
+                  <option value='s'>s</option>
+                  <option value='i'>i</option>
+                </select>
+              </div>
+            </div>
+                
+            <div class="col-md-6">
+              <h3>Área</h3>
+              <div class="col-md-8">
+                <select class='form-control' id='coord'>
+                  @foreach($coordinaciones as $coordinacion)
+                  <option value="{{$coordinacion->id}}">{{$coordinacion->nombre_coordinacion}}</option>
+                  @endforeach
+                </select>
+              </div>
+              <div class='col-md-2'>
+                <button id='route-area' type="button" class="btn btn-success">Visualizar Área</button>
+              </div>
+            </div>
+          </div>
+        <div>
+          <div class="row" style="margin-top: 1%">
+            <div class="col-md-2">
+              <button id='route-participantes' type="button" class="btn btn-info">Reporte participantes periodo</button>
+            </div>
+            <div class="col-md-3">
+              <button id='route-criterio'type='button' class="btn btn-warning">Criterio de aceptación de coordinación de cursos</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
 
-  <script type="text/javascript"> 
+<script type="text/javascript">
+  function sendReporteParticipantes() {
+    const periodo = document.getElementById('periodo').value
+    const semestre = document.getElementById('semestre').value;
+    let url = '{{route("cd.participantes",[":var1",":var2"])}}'
+    url = url.replace(":var1", semestre);
+    url = url.replace(":var2",periodo);
+    window.location.href = url;
+  }
 
-      function sendGlobal(){
-        var select = document.getElementById('semestre');
-				var date = select.value
-        var select2 = document.getElementById('periodo');
-				var periodo = select2.value;
-        //var url = '{{route("cd.participantes",[":var1",":var2"])}}'
-        var url = '{{route("cd.participantes",[":var1"])}}'
-        url = url.replace(":var1",date);
-        //url = url.replace(":var2",periodo);
-        window.location.href = url;
-      }
+  function sendVerArea() {
+    const area = document.getElementById('coord').value;
+    const periodo = document.getElementById('periodo').value
+    const semestre = document.getElementById('semestre').value;
+    let url = '{{route("cd.area",[":var1",":var2",":var3"])}}'
+    url = url.replace(":var1", semestre);
+    url = url.replace(":var2", periodo);
+    url = url.replace(":var3", area);
+    window.location.href = url;
+  }
 
-      function sendArea(){
-        var select = document.getElementById('semestre');
-				var date = select.value
-        var select2 = document.getElementById('periodo');
-				var periodo = select2.value;
-        var select3 = document.getElementById('area');
-				var area = select3.value;
-        var url = '{{route("cd.area",[":var1",":var2",":var3"])}}'
-        url = url.replace(":var1",date);
-        url = url.replace(":var2",periodo);
-        url = url.replace(":var3",area);
-        window.location.href = url;
-      }
+  function sendCriterioAceptacion() {
+    let url = '{{route("cd.criterio",[":var1"])}}'
+    const anio = document.getElementById('semestre').value;
+    url = url.replace(":var1", anio);
+    window.location.href = url;
+  }
 
-      function sendCriterio(){
-        var select = document.getElementById('semestre');
-				var date = select.value
-        var select2 = document.getElementById('periodo');
-				var periodo = select2.value;
-        var url = '{{route("cd.criterio",[":var1"])}}'
-        url = url.replace(":var1",date);
-        window.location.href = url;
-      }
-
-      var boton = document.getElementById("boton1");
-      boton.addEventListener("click", ()=>{
-        sendGlobal();
-      })
+  const btn1 = document.getElementById("route-participantes");
+  btn1.addEventListener("click", () => {
+    sendReporteParticipantes();
+  })
 
 
-      var boton = document.getElementById("boton2");
-      boton.addEventListener("click", ()=>{
-        sendArea();
-      })
+  const btn2 = document.getElementById("route-area");
+  btn2.addEventListener("click", () => {
+    sendVerArea();
+  })
 
-      var boton = document.getElementById("boton3");
-      boton.addEventListener("click", ()=>{
-        sendCriterio();
-      })
-  
+  const btn3 = document.getElementById("route-criterio");
+  btn3.addEventListener("click", () => {
+    sendCriterioAceptacion();
+  })
 
 </script>
 @endsection
-
