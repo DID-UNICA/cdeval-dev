@@ -43,6 +43,7 @@ class CoordinadorGeneralController extends Controller
         
         $coordinaciones = DB::table('coordinacions')
             ->select('id','nombre_coordinacion')
+            ->where('nombre_coordinacion', '<>', 'Área de Gestión y Vinculación')
             ->get();
 
         $semestres = array();
@@ -2679,9 +2680,9 @@ $promedio_p4=[
       if (Auth::guest()) {
         return redirect()->route('coordinador.login');
       }
+
         $fecha=$semestreEnv;
         $semestre=explode('-',$fecha);
-
         $cursos = DB::table('cursos as c')
             ->join('catalogo_cursos as cc','cc.id','=','c.catalogo_id')
             ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
@@ -2689,7 +2690,6 @@ $promedio_p4=[
             ->where([['c.semestre_anio',$semestre[0]],['c.semestre_pi',$semestre[1]]])
             ->orderBy('semestre_si', 'desc')
             ->get();
-
         $criterios_s=array();
         $criterios_i=array();
 
