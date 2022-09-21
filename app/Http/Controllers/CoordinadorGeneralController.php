@@ -1774,10 +1774,8 @@ $promedio_p4=[
 
           if($eval->horarios !== NULL || $eval->horarioi !== NULL){
             $horario = collect([$eval->horarios,$eval->horarioi]);
-          }else{
-            $horario = NULL;
+            array_push($horarios, $horario);
           }
-          array_push($horarios, $horario);
         }
 
         // CALCULOS POR CURSO
@@ -1885,6 +1883,7 @@ $promedio_p4=[
       $criterio_recomendacion_arim = round($criterio_recomendacion_arim / $cursos->count(),2);
       $criterio_instructores_arim = round($criterio_instructores_arim / $cursos->count(),2);
 
+      // return $horarios;
       return view('pages.global')
       ->with('nombre_cursos',$nombre_cursos)
       ->with('periodo',$semestre.$periodo)

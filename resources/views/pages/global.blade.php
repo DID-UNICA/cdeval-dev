@@ -281,7 +281,7 @@
             @foreach($horarios as $horario)
               <div class="row" style="margin-top:0.5%">
                 <div class="col-md-6">
-                  <input value="{{$horario[0]}}" type="text" name="horario_s" id="horario_s" disabled class="form-control">
+                    <input value="{{$horario[0]}}" type="text" name="horario_s" id="horario_s" disabled class="form-control">
                 </div>
                 <div class="col-md-6">
                   <input value="{{$horario[1]}}" type="text" name="horario_i" id="horario_i" disabled class="form-control">
