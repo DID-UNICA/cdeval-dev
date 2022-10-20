@@ -1883,7 +1883,6 @@ $promedio_p4=[
       $criterio_recomendacion_arim = round($criterio_recomendacion_arim / $cursos->count(),2);
       $criterio_instructores_arim = round($criterio_instructores_arim / $cursos->count(),2);
 
-      // return $horarios;
       return view('pages.global')
       ->with('nombre_cursos',$nombre_cursos)
       ->with('periodo',$semestre.$periodo)
