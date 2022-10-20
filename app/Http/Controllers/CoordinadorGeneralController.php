@@ -1883,7 +1883,6 @@ $promedio_p4=[
       $criterio_recomendacion_arim = round($criterio_recomendacion_arim / $cursos->count(),2);
       $criterio_instructores_arim = round($criterio_instructores_arim / $cursos->count(),2);
 
-      // return $horarios;
       return view('pages.global')
       ->with('nombre_cursos',$nombre_cursos)
       ->with('periodo',$semestre.$periodo)
@@ -2539,9 +2538,12 @@ $promedio_p4=[
       //Iteramos todas las evaluaciones para ir sumando los valores de las evaluaciones
       foreach($instructores as $instructor){
         $evals = $instructor->getEvaluaciones();
-        if($evals->isEmpty())
+        $instructor->nombre = $instructor->getNombreProfesorConGrado();
+        if($evals->isEmpty()){
+          $instructor->t_evals = 0;
           continue;
-        $t_evals = $evals->count();
+        }
+        $instructor->t_evals = $evals->count();
         foreach($evals as $eval){
           if($eval->p1)
             $instructor->experiencia += $eval->p1;
@@ -2561,15 +2563,14 @@ $promedio_p4=[
             $instructor->actitud += $eval->p8;
         }
         //Obtenemos los promedios de cada profesor
-        $instructor->experiencia = round($instructor->experiencia/$t_evals,2);
-        $instructor->planeacion = round($instructor->planeacion/$t_evals,2);
-        $instructor->puntualidad = round($instructor->puntualidad/$t_evals,2);
-        $instructor->materiales = round($instructor->materiales/$t_evals,2);
-        $instructor->dudas = round($instructor->dudas/$t_evals,2);
-        $instructor->control = round($instructor->control/$t_evals,2);
-        $instructor->interes = round($instructor->interes/$t_evals,2);
-        $instructor->actitud = round($instructor->actitud/$t_evals,2);
-        $instructor->nombre = $instructor->getNombreProfesorConGrado();
+        $instructor->experiencia = round($instructor->experiencia/$instructor->t_evals,2);
+        $instructor->planeacion = round($instructor->planeacion/$instructor->t_evals,2);
+        $instructor->puntualidad = round($instructor->puntualidad/$instructor->t_evals,2);
+        $instructor->materiales = round($instructor->materiales/$instructor->t_evals,2);
+        $instructor->dudas = round($instructor->dudas/$instructor->t_evals,2);
+        $instructor->control = round($instructor->control/$instructor->t_evals,2);
+        $instructor->interes = round($instructor->interes/$instructor->t_evals,2);
+        $instructor->actitud = round($instructor->actitud/$instructor->t_evals,2);
       }
       //TODO:Meter esto a una funcion helper
       setlocale(LC_ALL,"es_MX");
@@ -2643,7 +2644,6 @@ $promedio_p4=[
       $nombre = 'reporte_instructores_'.$catalogoCurso->nombre_curso.'.pdf';
       $pdf = PDF::loadView($lugar,array(
         'instructores' => $instructores,
-        'total_evaluaciones' => $t_evals,
         'mejor'=>collect($p9s),
         'sugerencias'=>collect($sugs),
         'nombre_curso'=>$catalogoCurso->nombre_curso,
