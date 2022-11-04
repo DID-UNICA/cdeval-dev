@@ -52,24 +52,31 @@ class Curso extends Model
     return ParticipantesCurso::where('curso_id', $this->id)->get('id');
 }
     public function getCadenaInstructores(){
-        $instructores = ProfesoresCurso::where('curso_id',$this->id)->get();
+        $instructores = ProfesoresCurso::where('curso_id',$this->id)
+                                       ->where('profesor_id', '<>', NULL)
+                                       ->get();
 
         $cadena="";
 
-        if ( count($instructores) == 1 ){
-            $profesor = Profesor::findOrFail($instructores[0]->profesor_id);
-            $cadena .= $profesor->nombres." ";
-            $cadena .= $profesor->apellido_paterno." ";
-            $cadena .= $profesor->apellido_materno;
-            return $cadena;
+        if($instructores->isEmpty())
+          $cadena = "No cuenta con instructores asignados";
+
+        else{
+          if ( count($instructores) == 1 ){
+              $profesor = Profesor::findOrFail($instructores->first()->profesor_id);
+              $cadena .= $profesor->nombres." ";
+              $cadena .= $profesor->apellido_paterno." ";
+              $cadena .= $profesor->apellido_materno;
+              return $cadena;
+          }
+          foreach($instructores as $instructor){
+              $profesor = Profesor::findOrFail($instructor->profesor_id);
+              $cadena .= $profesor->nombres." ";
+              $cadena .= $profesor->apellido_paterno." ";
+              $cadena .= $profesor->apellido_materno."/";
+          }
+          $cadena = substr($cadena, 0, -1);
         }
-        foreach($instructores as $instructor){
-            $profesor = Profesor::find($instructor->profesor_id);
-            $cadena .= $profesor->nombres." ";
-            $cadena .= $profesor->apellido_paterno." ";
-            $cadena .= $profesor->apellido_materno."/";
-        }
-        $cadena = substr($cadena, 0, -1);
         return $cadena;
     }
 
