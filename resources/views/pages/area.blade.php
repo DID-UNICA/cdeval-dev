@@ -98,7 +98,7 @@
                                       <a href="{{url("/CD/global/{$curso->id}")}}" class="btn btn-info" id="btn_reporte">Reporte de Evaluación final de curso</a><br>
                                       <a href="{{url("/CD/global/instructores/{$curso->id}")}}" style='margin: 0; margin-top: 5%' class="btn btn-primary" id="btn_reporte">Reporte de Instructores</a>
                                     </td>
-                                    <td><button onclick="window.location='{{ route("cd.participantes.curso",[$curso->id])}}'" class="btn btn-warning" id="btn_participantes">Visualizar participantes inscritos</button>
+                                    <td><button onclick="window.location='{{ route("cd.participantes.curso",$curso->id)}}'" class="btn btn-warning" id="btn_participantes">Visualizar participantes inscritos</button>
                                   </td>
                                 </tr>
                               @endforeach

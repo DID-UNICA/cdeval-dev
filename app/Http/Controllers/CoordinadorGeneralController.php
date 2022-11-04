@@ -621,11 +621,12 @@ $promedio_p4=[
       }
         $participantes = DB::table('participante_curso')
             ->where([['curso_id',$curso_id]])
-            ->get();
-        $curso = Curso::find($curso_id);
+            ->get(); 
+        $curso = Curso::findOrFail($curso_id);
         $users = array();
         if(sizeof($participantes) == 0){
-          return redirect()->back()
+          return redirect()
+            ->route('cd.area', [$curso->semestre_anio.'-'.$curso->semestre_pi, $curso->semestre_si, '1'])
             ->with('warning', 'Por el momento no hay alumnos inscritos en el curso');
         }
         foreach($participantes as $participante){
@@ -1991,7 +1992,8 @@ $promedio_p4=[
       $evals =  $curso->getEvalsCurso();
       
       if($evals->isEmpty()){
-        return redirect()->back()
+        return redirect()
+          ->route('cd.area', [$curso->semestre_anio.'-'.$curso->semestre_pi, $curso->semestre_si, '1'])
           ->with('danger', 'Curso no cuenta con evaluación');
       }
 		  
@@ -2526,7 +2528,9 @@ $promedio_p4=[
       
       //TODO:Arreglar rutas en cd.area para redirigir a cd.area y no back por buscador
       if($evalsCurso->isEmpty())
-        return redirect()->back()->with('danger', 'El curso no cuenta con evaluaciones');
+        return redirect()
+             ->route('cd.area', [$curso->semestre_anio.'-'.$curso->semestre_pi, $curso->semestre_si, '1'])
+             ->with('danger', 'El curso no cuenta con evaluaciones');
 
       foreach($evalsCurso as $eval){
         if($eval->sug)
