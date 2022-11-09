@@ -45,7 +45,9 @@ class Curso extends Model
     }
 
     public function getProfesoresCurso(){
-       return ProfesoresCurso::where('curso_id', $this->id)->get();
+       return ProfesoresCurso::where('curso_id', $this->id)
+                             ->where('profesor_id','<>', NULL)
+                             ->get();
    }
 
    public function getParticipantesCursoId(){
