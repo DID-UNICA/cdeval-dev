@@ -955,10 +955,10 @@
                         <td>
                             <div class="form-check">
                                 <input name="p8[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="4" @if(is_array($evaluacion->p8) && in_array('4', $evaluacion->p8)) checked @endif> Otro
-                            @if(is_array($evaluacion->p8) && in_array('4', $evaluacion->p8))
-                            </div><input maxlength="300" name="p8[]" type="otro" class="form-control" id="otro" placeholder="{{$evaluacion->p8[array_search('4',$evaluacion->p8)+1]}}">
+                            @if(is_array($evaluacion->p8) && in_array('4', $evaluacion->p8) && array_key_exists(array_search('4',$evaluacion->p8)+1, $evaluacion->p8))
+                              </div><input maxlength="300" name="p8[]" type="otro" class="form-control" id="otro" value="{{$evaluacion->p8[array_search('4',$evaluacion->p8)+1]}}">
                             @else
-                            </div><input maxlength="300" name="p8[]" type="otro" class="form-control" id="otro" placeholder="Otro">
+                              </div><input maxlength="300" name="p8[]" type="otro" class="form-control" id="otro" placeholder="Otro">
                             @endif
                         </td>
                         </tr>

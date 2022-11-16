@@ -993,7 +993,7 @@
                                 <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="4" {{(is_array(old('conocimiento[]')) && in_array('4', old('conocimiento[]'))) ? 'checked':'' }}> Disciplinar
                             </div></td>
                             <td><div class="form-check">
-                                <input maxlength="300" name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="5" {{(is_array(old('conocimiento[]')) && in_array('5', old('conocimiento[]'))) ? 'checked':'' }}> Otro
+                                <input name="conocimiento[]" type="checkbox" class="form-check-input" id="materialUnchecked" value="5" {{(is_array(old('conocimiento[]')) && in_array('5', old('conocimiento[]'))) ? 'checked':'' }}> Otro
                             </div></td>
                         </tr>
                     </table>   
