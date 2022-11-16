@@ -25,6 +25,7 @@ use Mail;
 use PDF;
 use DB; 
 use Carbon\Carbon;
+use Exception;
 
 class CoordinadorGeneralController extends Controller
 {
@@ -318,15 +319,16 @@ class CoordinadorGeneralController extends Controller
         return redirect()->route('area.evaluacion', $participante->curso_id)->with('warning', 'El participante ya ha contestado la encuesta por primera vez. Presione el botón de Modificar Evaluación Final de Curso.');
       }
       $curso = $participante->getCurso();
-  
+      $instructores = $curso->getProfesoresCurso();
+      if($instructores->isEmpty())
+        return redirect()->route('area.evaluacion', $participante->curso_id)->with('danger', 'No pueden generarse encuestas de cursos sin instructores.');
       return view("pages.evaluacion_nueva")
         ->with("participante_nombre",$participante->getProfesor()->getNombre())
         ->with("participante_id",$participante->id)
         ->with('instructores_cadena', $curso->getCadenaInstructores())
-        ->with('instructores', $curso->getProfesoresCurso())
+        ->with('instructores', $instructores)
         ->with('fecha', $curso->getToday())
         ->with('nombre_curso', $curso->getCatalogoCurso()->nombre_curso);
-        
     }
 
     public function saveFinal_Curso(Request $request, int $participante_id){
@@ -336,6 +338,16 @@ class CoordinadorGeneralController extends Controller
       $participante = ParticipantesCurso::findOrFail($participante_id);
       $curso = Curso::findOrFail($participante->curso_id);
       $instructores = $curso->getProfesoresCurso();
+      if($instructores->isEmpty())
+        return redirect()->route('area.evaluacion',$participante->curso_id)
+              ->with('danger','No es posible generar encuestas para cursos sin instructores.');
+      $participante->contesto_hoja_evaluacion = true;
+      try{
+        $participante->save();
+      }catch(Exception $e){
+        return redirect()->route('area.evaluacion',$participante->curso_id)
+          ->with('danger','Error al guardar participante curso.');
+      }
       foreach($instructores as $instructor){
         $evaluacion_inst = new EvaluacionInstructor();
         $evaluacion_inst->instructor_id = $instructor->id;
@@ -351,7 +363,13 @@ class CoordinadorGeneralController extends Controller
         $evaluacion_inst->p9 = $request->{"i_".$instructor->id."_p9"};
         $evaluacion_inst->p10 = $request->{"i_".$instructor->id."_p10"};
         $evaluacion_inst->p11 = $request->{"i_".$instructor->id."_p11"};
-        $evaluacion_inst->save();
+        try{
+          $evaluacion_inst->save();
+        }catch(Exception $e){
+          $evaluacion_inst->delete();
+          return redirect()->route('area.evaluacion',$participante->curso_id)
+            ->with('danger','Error al guardar evaluaciones de instructores.');
+        }
       }
       $evaluacion = new EvaluacionCurso();
       $evaluacion->participante_curso_id = $participante->id;
@@ -377,9 +395,13 @@ class CoordinadorGeneralController extends Controller
       $evaluacion->tematica = $request->tematica;
       $evaluacion->horarios = $request->horarios;
       $evaluacion->horarioi = $request->horarioi;
-      $evaluacion->save();
-      $participante->contesto_hoja_evaluacion = true;
-      $participante->save();
+      try{
+        $evaluacion->save();
+      }catch(Exception $e){
+        $evaluacion->delete();
+        return redirect()->route('area.evaluacion',$participante->curso_id)
+          ->with('danger','Error al guardar evaluacion del curso.');
+      }
       return redirect()->route('area.evaluacion',$participante->curso_id)
         ->with('success','Encuesta guardada correctamente');
     }
@@ -2420,12 +2442,12 @@ $promedio_p4=[
       }
       $participante = ParticipantesCurso::findOrFail($participante_id);
       $evaluacion = EvaluacionCurso::where('participante_curso_id', $participante->id)->get()->first();
-      $evaluacion->p8 = $evaluacion->p8ToArray();
-      $evaluacion->conocimiento = $evaluacion->conocimientoToArray();
       if(!$evaluacion){
         return redirect()->route('area.evaluacion', $participante->curso_id)
           ->with('warning', 'El participante aún no ha contestado la encuesta por primera vez. Presione el botón de Evaluación Final de Curso para hacerlo.');
       }
+      $evaluacion->p8 = $evaluacion->p8ToArray();
+      $evaluacion->conocimiento = $evaluacion->conocimientoToArray();
       $curso = $participante->getCurso();
   
       return view("pages.evaluacion_modificar")
