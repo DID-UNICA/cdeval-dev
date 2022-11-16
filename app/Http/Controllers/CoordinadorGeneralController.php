@@ -2420,12 +2420,12 @@ $promedio_p4=[
       }
       $participante = ParticipantesCurso::findOrFail($participante_id);
       $evaluacion = EvaluacionCurso::where('participante_curso_id', $participante->id)->get()->first();
-      $evaluacion->p8 = $evaluacion->p8ToArray();
-      $evaluacion->conocimiento = $evaluacion->conocimientoToArray();
       if(!$evaluacion){
         return redirect()->route('area.evaluacion', $participante->curso_id)
           ->with('warning', 'El participante aún no ha contestado la encuesta por primera vez. Presione el botón de Evaluación Final de Curso para hacerlo.');
       }
+      $evaluacion->p8 = $evaluacion->p8ToArray();
+      $evaluacion->conocimiento = $evaluacion->conocimientoToArray();
       $curso = $participante->getCurso();
   
       return view("pages.evaluacion_modificar")
