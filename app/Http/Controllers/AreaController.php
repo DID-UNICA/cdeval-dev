@@ -429,11 +429,11 @@ class AreaController extends Controller
     $evaluacion->p3_3 = $request->p3_3;
     $evaluacion->p3_4 = $request->p3_4;
     $evaluacion->p7 = $request->p7;
-    $evaluacion->p8 = $request->p8;
+    $evaluacion->p8 = $evaluacion->p8ToString($request->p8);
     $evaluacion->p9 = $request->p9;
     $evaluacion->sug = $request->sug;
     $evaluacion->otros = $request->otros;
-    $evaluacion->conocimiento = $request->conocimiento;
+    $evaluacion->conocimiento = $evaluacion->conocimientoToString($request->conocimiento);
     $evaluacion->tematica = $request->tematica;
     $evaluacion->horarios = $request->horarios;
     $evaluacion->horarioi = $request->horarioi;
@@ -448,6 +448,8 @@ class AreaController extends Controller
     }
     $participante = ParticipantesCurso::findOrFail($participante_id);
     $evaluacion = EvaluacionCurso::where('participante_curso_id', $participante->id)->get()->first();
+    $evaluacion->p8 = $evaluacion->p8ToArray();
+    $evaluacion->conocimiento = $evaluacion->conocimientoToArray();
     if(!$evaluacion){
       return redirect()->route('area.evaluacion', $participante->curso_id)
         ->with('warning', 'El participante aún no ha contestado la encuesta por primera vez. Presione el botón de Evaluación Final de Curso para hacerlo.');
@@ -528,11 +530,11 @@ class AreaController extends Controller
       $evaluacion->p3_3 = $request->p3_3;
       $evaluacion->p3_4 = $request->p3_4;
       $evaluacion->p7 = $request->p7;
-      $evaluacion->p8 = $request->p8;
+      $evaluacion->p8 = $evaluacion->p8ToString($request->p8);
       $evaluacion->p9 = $request->p9;
       $evaluacion->sug = $request->sug;
       $evaluacion->otros = $request->otros;
-      $evaluacion->conocimiento = $request->conocimiento;
+      $evaluacion->conocimiento = $evaluacion->conocimientoToString($request->conocimiento);
       $evaluacion->tematica = $request->tematica;
       $evaluacion->horarios = $request->horarios;
       $evaluacion->horarioi = $request->horarioi;

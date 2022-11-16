@@ -32,10 +32,6 @@ class EvaluacionCurso extends Model
       'horarios',
       'horarioi'
    ];
-   protected $casts = [
-      'p8' => 'array',
-      'conocimiento' => 'array'
-  ];
   public $timestamps = false;
 
   public function getCons($p){
@@ -47,4 +43,49 @@ class EvaluacionCurso extends Model
       return NULL;
   }
 
+  public function conocimientoToArray(){
+    if($this->conocimiento || $this->conocimiento != '[]'){
+      $find = ['[', ']', ' ', "'", '"'];
+      return explode("," , str_replace($find, "", $this->conocimiento));
+    }
+    else
+      return NULL;
+  }
+
+  public function p8ToArray(){
+    if($this->p8 || $this->p8 != '[]'){
+      $find = ['[', ']', ' ', "'", '"'];
+      return explode("," , str_replace($find, "", $this->p8));
+    }
+    else
+      return NULL;
+  }
+
+  public function conocimientoToString($input){
+    $r = '[';
+    if($input){
+      foreach($input as $key => $value) {
+        $r .= "'".$value."'";
+        if (next($input)==true) $r .= ",";
+    }
+    return $r .=']';
+    }
+    else
+      return NULL;
+  }
+
+  public function p8ToString($input){
+    $r = '[';
+    if($input){
+      foreach($input as $key => $value) {
+        if($value){
+          $r .= "'".$value."'";
+        }
+        if (next($input)==true) $r .= ",";
+    }
+    return $r .=']';
+    }
+    else
+      return NULL;
+  }
 }

@@ -369,11 +369,11 @@ class CoordinadorGeneralController extends Controller
       $evaluacion->p3_3 = $request->p3_3;
       $evaluacion->p3_4 = $request->p3_4;
       $evaluacion->p7 = $request->p7;
-      $evaluacion->p8 = $request->p8;
+      $evaluacion->p8 = $evaluacion->p8ToString($request->p8);
       $evaluacion->p9 = $request->p9;
       $evaluacion->sug = $request->sug;
       $evaluacion->otros = $request->otros;
-      $evaluacion->conocimiento = $request->conocimiento;
+      $evaluacion->conocimiento = $evaluacion->conocimientoToString($request->conocimiento);
       $evaluacion->tematica = $request->tematica;
       $evaluacion->horarios = $request->horarios;
       $evaluacion->horarioi = $request->horarioi;
@@ -1313,6 +1313,7 @@ $promedio_p4=[
 
 
       //Recorremos cada curso
+      $inscritos = 0;
       foreach($cursos as $curso){
         //Datos por curso
         $participantes = $curso->getParticipantes();
@@ -1522,7 +1523,10 @@ $promedio_p4=[
         }
 
         //Calculos por participante del curso
+        $inscritos += $participantes->count();
         foreach($participantes as $participante){
+          if($participante->cancelacion === true)
+            $inscritos--;
           if($participante->acreditacion == 1)
             $curso->acreditados++;
           if($participante->asistencia == 1)
@@ -1539,7 +1543,8 @@ $promedio_p4=[
         //   'marcada es diferente del número de evaluaciones creadas, por favor '.
         //   'verifique');
         foreach($evals_curso as $eval){
-
+            $eval->conocimiento = $eval->conocimientoToArray();
+            $eval->p8 = $eval->p8ToArray();
           //Para factor de recomendacion
           if($eval->p7 === 0)
             $curso->reactivos_recomendacion++;
@@ -1832,7 +1837,6 @@ $promedio_p4=[
         $contestaron += $curso->contestaron;
         $capacidad   += $curso->cupo_maximo;
         $positivas   += $curso->positivas;
-        $inscritos   += $participantes->count();
         $duracion += $curso->duracion_curso;
 
         
@@ -2052,22 +2056,23 @@ $promedio_p4=[
       $DI=0;
       $Otros=0;
       foreach($evals as $evaluacion){
+        $evaluacion->conocimiento  = $evaluacion->conocimientoToArray();
           if($evaluacion->conocimiento === NULL)
             continue;
           foreach($evaluacion->conocimiento as $elem){
-              if($elem == 1 ){
+              if($elem == '1' ){
                 //Aumentamos numero integrante Division Pedagogia
                 $DP++;
-              }else if($elem == 2 ){
+              }else if($elem == '2' ){
                 //Aumentamos numero integrantes division desarrollo humano
                 $DH++;
-              }else if($elem == 3 ){
+              }else if($elem == '3' ){
                 //Aumentamos numero integrante Division de computo
                 $CO++;
-              }else if($elem == 4 ){
+              }else if($elem == '4' ){
               //Aumentamos numero integrante Division de disciplina
                 $DI++;
-              }else if($elem == 5 ){
+              }else if($elem == '5' ){
               //Aumentamos numero integrante externo
                 $Otros++;
               }
@@ -2415,6 +2420,8 @@ $promedio_p4=[
       }
       $participante = ParticipantesCurso::findOrFail($participante_id);
       $evaluacion = EvaluacionCurso::where('participante_curso_id', $participante->id)->get()->first();
+      $evaluacion->p8 = $evaluacion->p8ToArray();
+      $evaluacion->conocimiento = $evaluacion->conocimientoToArray();
       if(!$evaluacion){
         return redirect()->route('area.evaluacion', $participante->curso_id)
           ->with('warning', 'El participante aún no ha contestado la encuesta por primera vez. Presione el botón de Evaluación Final de Curso para hacerlo.');
@@ -2495,11 +2502,11 @@ $promedio_p4=[
       $evaluacion->p3_3 = $request->p3_3;
       $evaluacion->p3_4 = $request->p3_4;
       $evaluacion->p7 = $request->p7;
-      $evaluacion->p8 = $request->p8;
+      $evaluacion->p8 = $evaluacion->p8ToString($request->p8);
       $evaluacion->p9 = $request->p9;
       $evaluacion->sug = $request->sug;
       $evaluacion->otros = $request->otros;
-      $evaluacion->conocimiento = $request->conocimiento;
+      $evaluacion->conocimiento = $evaluacion->conocimientoToString($request->conocimiento);
       $evaluacion->tematica = $request->tematica;
       $evaluacion->horarios = $request->horarios;
       $evaluacion->horarioi = $request->horarioi;
