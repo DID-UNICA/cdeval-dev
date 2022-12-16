@@ -336,16 +336,19 @@ class CoordinadorGeneralController extends Controller
         return redirect()->route('coordinador.login');
       }
       $participante = ParticipantesCurso::findOrFail($participante_id);
+      if(EvaluacionCurso::where('participante_curso_id', $participante_id)->get()->isNotEmpty())
+        return redirect()->route('cd.evaluacion', $participante->curso_id)
+             ->with('danger','Una encuesta ya ha sido creada. No es posible volverla a crear.');
       $curso = Curso::findOrFail($participante->curso_id);
       $instructores = $curso->getProfesoresCurso();
       if($instructores->isEmpty())
-        return redirect()->route('area.evaluacion',$participante->curso_id)
+        return redirect()->route('cd.evaluacion',$participante->curso_id)
               ->with('danger','No es posible generar encuestas para cursos sin instructores.');
       $participante->contesto_hoja_evaluacion = true;
       try{
         $participante->save();
       }catch(Exception $e){
-        return redirect()->route('area.evaluacion',$participante->curso_id)
+        return redirect()->route('cd.evaluacion',$participante->curso_id)
           ->with('danger','Error al guardar participante curso.');
       }
       foreach($instructores as $instructor){
@@ -367,7 +370,8 @@ class CoordinadorGeneralController extends Controller
           $evaluacion_inst->save();
         }catch(Exception $e){
           $evaluacion_inst->delete();
-          return redirect()->route('area.evaluacion',$participante->curso_id)
+          return $e;
+          return redirect()->route('cd.evaluacion',$participante->curso_id)
             ->with('danger','Error al guardar evaluaciones de instructores.');
         }
       }
@@ -399,10 +403,10 @@ class CoordinadorGeneralController extends Controller
         $evaluacion->save();
       }catch(Exception $e){
         $evaluacion->delete();
-        return redirect()->route('area.evaluacion',$participante->curso_id)
+        return redirect()->route('cd.evaluacion',$participante->curso_id)
           ->with('danger','Error al guardar evaluacion del curso.');
       }
-      return redirect()->route('area.evaluacion',$participante->curso_id)
+      return redirect()->route('cd.evaluacion',$participante->curso_id)
         ->with('success','Encuesta guardada correctamente');
     }
 
@@ -2485,6 +2489,7 @@ $promedio_p4=[
       if (Auth::guest()) {
         return redirect()->route('coordinador.login');
       }
+      $evaluacion = EvaluacionCurso::findOrFail($encuesta_id);
       $participante = ParticipantesCurso::findOrFail($participante_id);
       $curso = Curso::findOrFail($participante->curso_id);
       $instructores = $curso->getProfesoresCurso();
@@ -2509,7 +2514,6 @@ $promedio_p4=[
         $evaluacion_inst->p11 = $request->{"i_".$instructor->id."_p11"};
         $evaluacion_inst->save();
       }
-      $evaluacion = EvaluacionCurso::findOrFail($encuesta_id);
       $evaluacion->p1_1 = $request->p1_1;
       $evaluacion->p1_2 = $request->p1_2;
       $evaluacion->p1_3 = $request->p1_3;
