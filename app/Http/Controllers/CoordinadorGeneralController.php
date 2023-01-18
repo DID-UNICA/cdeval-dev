@@ -2794,106 +2794,164 @@ $promedio_p4=[
         return redirect()->route('coordinador.login');
       }
 
-        $fecha=$semestreEnv;
-        $semestre=explode('-',$fecha);
-        $cursos = DB::table('cursos as c')
-            ->join('catalogo_cursos as cc','cc.id','=','c.catalogo_id')
-            ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
-            ->select('c.id','cc.nombre_curso','co.abreviatura','c.semestre_si','cc.tipo')
-            ->where([['c.semestre_anio',$semestre[0]],['c.semestre_pi',$semestre[1]]])
-            ->orderBy('semestre_si', 'desc')
-            ->get();
-        $criterios_s=array();
-        $criterios_i=array();
+      $semestre = explode('-', $semestreEnv);
 
-        foreach($cursos as $curso){
-            $criterio = 0;
-            $criterio=DB::table('_evaluacion_final_curso as e')
-                ->join('participante_curso as p','p.id','=','e.participante_curso_id')
-                ->join('cursos as c','p.curso_id','=','c.id')
-                ->join('catalogo_cursos as cc','c.catalogo_id','=','cc.id')
-                ->join('coordinacions as co','co.id','=','cc.coordinacion_id')
-                ->select('e.p7','co.abreviatura')
-                ->where('c.id',$curso->id)
-                ->get();
+      $data = DB::table('_evaluacion_final_curso AS e')
+        ->join('participante_curso AS p', 'p.id', 'e.participante_curso_id')
+        ->join('cursos AS c', 'c.id', 'p.curso_id')
+        ->join('catalogo_cursos AS cc', 'cc.id', 'c.catalogo_id')
+        ->join('coordinacions AS co', 'co.id', 'cc.coordinacion_id')
+        ->select('e.id AS evaluacion_id', 'e.p3_1', 'e.p3_2', 
+                 'e.p3_3', 'e.p3_4', 'c.id AS curso_id', 'c.semestre_si',
+                 'co.abreviatura')
+        ->where('c.semestre_anio',$semestre[0])
+        ->where('c.semestre_pi',$semestre[1])
+        ->orderBy('semestre_si', 'desc')
+        ->get();
 
-            if($curso->semestre_si == 's' && $criterio != null){
-                array_push($criterios_s, $criterio);
-            }else if ($curso->semestre_si == 'i' && $criterio != null){
-                array_push($criterios_i, $criterio);
-            }
+      if( $data->isEmpty()) {
+        return redirect()
+          ->back()
+          ->with('Warning', 'No existen evaluaciones registradas para esos periodos.');
+      }
+
+      $evaluaciones_s = collect();
+      $evaluaciones_i = collect();
+
+      foreach ( $data as $evaluacion ) {
+
+        // Calcular suma de la evaluacion y total de preguntas
+        
+        $numero_preguntas = 0;
+        $sumatoria_preguntas = 0;
+
+
+        if ($evaluacion->p3_1 >= 50) {
+          $sumatoria_preguntas += $evaluacion->p3_1;
+          $numero_preguntas++;
         }
 
-        $aux1=array();
-        $tam1=array();
-        foreach($criterios_s as $criterios){
-            foreach($criterios as $criterio){
-                if(!array_key_exists($criterio->abreviatura,$aux1)){
-                    $aux1[$criterio->abreviatura]=$criterio->p7;
-                    $tam1[$criterio->abreviatura] = 1;
-                }else{
-                    $aux1[$criterio->abreviatura]+=$criterio->p7;
-                    $tam1[$criterio->abreviatura] += 1;
-                }
-            }
+        if ($evaluacion->p3_2 >= 50) {
+          $sumatoria_preguntas += $evaluacion->p3_1;
+          $numero_preguntas++;
         }
 
-        $aux2=array();
-        $tam2=array();
-        foreach($criterios_i as $criterios){
-            foreach($criterios as $criterio){
-                if(!array_key_exists($criterio->abreviatura,$aux2)){
-                    $aux2[$criterio->abreviatura]=$criterio->p7;
-                    $tam2[$criterio->abreviatura] = 1;
-                }else{
-                    $aux2[$criterio->abreviatura]+=$criterio->p7;
-                    $tam2[$criterio->abreviatura] += 1;
-                }
-            }
+        if ($evaluacion->p3_3 >= 50) {
+          $sumatoria_preguntas += $evaluacion->p3_1;
+          $numero_preguntas++;
         }
 
-        $aux1_empty = false;
-        $promedio1 = 0;
-        foreach ($aux1 as $key => $value) {
-            $aux1[$key] = round(($aux1[$key]/$tam1[$key])*100,2);
-            $promedio1 += $aux1[$key];
-        }
-        if(sizeof($aux1)==0){
-            $aux1_empty = true;
-        }else{
-            $promedio1 = round($promedio1/sizeof($aux1),2);
-            $aux1['Promedio:'] = $promedio1;
+        if ($evaluacion->p3_4 >= 50) {
+          $sumatoria_preguntas += $evaluacion->p3_1;
+          $numero_preguntas++;
         }
 
-        $aux2_empty = false;
-        $promedio2 = 0;
-        foreach ($aux2 as $key => $value) {
-            $aux2[$key] = round(($aux2[$key]/$tam2[$key])*100,2);
-            $promedio2 += $aux2[$key];
+        // Clasificar por semestral
+        if ( $evaluacion->semestre_si == 's') {
+
+          // Clasificar por coordinacion
+          if ( ! $evaluaciones_s->has($evaluacion->abreviatura) ) {
+
+            $evaluaciones_s->put($evaluacion->abreviatura, collect([
+              $evaluacion->evaluacion_id => 
+              [
+                'sumatoria_preguntas' => $sumatoria_preguntas,
+                'numero_preguntas' => $numero_preguntas
+              ]
+            ]));
+
+          } else if ( $evaluaciones_s->has($evaluacion->abreviatura) ) {
+            $tmp = $evaluaciones_s->pull($evaluacion->abreviatura);
+            $tmp[$evaluacion->evaluacion_id] = [
+              'sumatoria_preguntas' => $sumatoria_preguntas,
+              'numero_preguntas' => $numero_preguntas
+            ];
+            $evaluaciones_s->put($evaluacion->abreviatura, $tmp);
+          }
+          
+          // Clasificar por intersemestral
+        } else if ( $evaluacion->semestre_si == 'i' ) {
+
+          // Clasificar por coordinacion
+          if ( ! $evaluaciones_i->has($evaluacion->abreviatura) ) {
+
+            $evaluaciones_i->put($evaluacion->abreviatura, collect([
+              $evaluacion->evaluacion_id => 
+              [
+                'sumatoria_preguntas' => $sumatoria_preguntas,
+                'numero_preguntas' => $numero_preguntas
+              ]
+            ]));
+
+          } else if ( $evaluaciones_i->has($evaluacion->abreviatura) ) {
+            $tmp = $evaluaciones_i->pull($evaluacion->abreviatura);
+            $tmp[$evaluacion->evaluacion_id] = [
+              'sumatoria_preguntas' => $sumatoria_preguntas,
+              'numero_preguntas' => $numero_preguntas
+            ];
+            $evaluaciones_i->put($evaluacion->abreviatura, $tmp);
+          }
         }
-        if(sizeof($aux2) == 0){
-            $aux2_empty = true;
-        }else{
-            $promedio2 = round($promedio2/sizeof($aux2),2);
-            $aux2['Promedio:'] = $promedio2;
+      }
+      
+
+      // Calculo de criterios semestrales
+      $criterio_s = 0;
+      foreach ($evaluaciones_s as $abreviatura => $evaluaciones_coordinacion) {
+        
+        $sumatoria_preguntas = 0;
+        $numero_preguntas = 0;
+        
+
+        foreach($evaluaciones_coordinacion as $evaluacion) {
+
+          $sumatoria_preguntas += $evaluacion['sumatoria_preguntas'];
+          $numero_preguntas += $evaluacion['numero_preguntas'];
+
         }
 
-        if($aux1_empty && $aux2_empty){
-            return redirect()->back()
-              ->with('warning', 'El periodo '.$semestreEnv.' no posee ninguna evaluación asociada a algún curso');
+        $evaluaciones_coordinacion['criterio'] = $numero_preguntas ? round($sumatoria_preguntas/$numero_preguntas, 2) : 0;
+        $criterio_s += $evaluaciones_coordinacion['criterio'];
+      }
+      
+      $criterio_s = $evaluaciones_s->count() ? round( $criterio_s/$evaluaciones_s->count(),2 ) : 0;
+
+      // Calculo de criterios intersemestrales
+      $criterio_i = 0;
+      foreach ($evaluaciones_i as $abreviatura => $evaluaciones_coordinacion) {
+        
+        $sumatoria_preguntas = 0;
+        $numero_preguntas = 0;
+        
+
+        foreach($evaluaciones_coordinacion as $evaluacion) {
+
+          $sumatoria_preguntas += $evaluacion['sumatoria_preguntas'];
+          $numero_preguntas += $evaluacion['numero_preguntas'];
+
         }
 
-        if($aux1_empty)
-          $final_prom = $aux2['Promedio:'];
-        elseif($aux2_empty)
-          $final_prom = $aux1['Promedio:'];
-        else
-          $final_prom = ($aux2['Promedio:']+$aux1['Promedio:'])/2;
-        $pdf = PDF::loadView('pages.criterio_aceptacion',array('semestre'=>$semestreEnv,'criterio_s'=>$aux1,'criterio_i'=>$aux2,'criterio_s_empty'=>$aux1_empty,'criterio_i_empty'=>$aux2_empty, 'final_prom'=>$final_prom));	
+        $evaluaciones_coordinacion['criterio'] = $numero_preguntas ? round($sumatoria_preguntas/$numero_preguntas, 2) : 0;
+        $criterio_i += $evaluaciones_coordinacion['criterio'];
+      }
+      
+      $criterio_i = $evaluaciones_i->count() ? round( $criterio_i/$evaluaciones_i->count(),2 ) : 0;
 
-        $download='criterio_aceptacion'.$semestre[0].'-'.$semestre[1].'.pdf';
-        //Retornamos la descarga del pdf
-        return $pdf->download($download);
+      //PDF
+      $pdf = PDF::loadView('pages.criterio_aceptacion', array(
+        'semestre' => $semestreEnv,
+        'criterios_coord_s' => $evaluaciones_s->isNotEmpty() ? 
+          $evaluaciones_s->map(function ($item) { return $item['criterio']; })->sortKeys() : 
+          NULL,
+        'criterios_coord_i' => $evaluaciones_i->isNotEmpty() ?
+          $evaluaciones_i->map(function ($item) { return $item['criterio']; })->sortKeys() :
+          NULL,
+        'criterio_s' => $criterio_s,
+        'criterio_i' => $criterio_i,
+        'criterio_si'=> round(($criterio_i + $criterio_s) / 2,2)
+      ));
+      $download = 'criterio_aceptacion'.$semestre[0].'-'.$semestre[1].'.pdf';
+      return $pdf->download($download);
     }
 
 }   
