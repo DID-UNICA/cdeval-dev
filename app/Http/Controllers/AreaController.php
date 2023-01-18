@@ -522,6 +522,8 @@ class AreaController extends Controller
     }
     $evaluacion = EvaluacionCurso::findOrFail($encuesta_id);
       $participante = ParticipantesCurso::findOrFail($participante_id);
+      $participante->contesto_hoja_evaluacion = true;
+      $participante->save();
       $curso = Curso::findOrFail($participante->curso_id);
       $instructores = $curso->getProfesoresCurso();
       foreach($instructores as $instructor){
