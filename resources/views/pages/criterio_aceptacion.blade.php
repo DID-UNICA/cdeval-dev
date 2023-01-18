@@ -130,7 +130,7 @@ margin-top: 150px;
     </table>
     <script type="text/php">$pdf->close_object();</script>
 </div>
-    @if(!$criterio_s_empty)
+    @if($criterios_coord_s != NULL)
     <table class="tabla_lista">
         <thead>
             <tr>
@@ -138,19 +138,23 @@ margin-top: 150px;
                 <th>Criterio de aceptación de la coordinación de cursos</th>
             </tr>
         </thead>
-            @foreach($criterio_s as $key => $value)
+            @foreach($criterios_coord_s as $key => $value)
                 <tr>
                     <td>{{$key}}</td>
                     <td>{{$value}}</td>
                 </tr>
             @endforeach
+            <tr>
+              <td>Promedio:</td>
+              <td>{{$criterio_s}}</td>
+            </tr>
         <tbody>
         </tbody>
     </table>
     @endif
     <br>
     <br>
-    @if(!$criterio_i_empty)
+    @if($criterios_coord_i != NULL)
     <table class="tabla_lista">
         <thead>
             <tr>
@@ -159,25 +163,35 @@ margin-top: 150px;
             </tr>
         </thead>
 
-        @foreach($criterio_i as $key => $value)
+        @foreach($criterios_coord_i as $key => $value)
             <tr>
                 <td>{{$key}}</td>
                 <td>{{$value}}</td>
             </tr>
         @endforeach
+        <tr>
+          <td>Promedio:</td>
+          <td>{{$criterio_i}}</td>
+        </tr>
         <tbody>
         </tbody>
     </table>
     @endif
     <div class="final_prom">
-      <p>Promedio de ambos periodos: {{$final_prom}}</p>
+      @if ($criterios_coord_i == NULL)
+        <p>Promedio de ambos periodos: {{ $criterio_s }}</p>
+      @elseif ($criterios_coord_s == NULL)
+        <p>Promedio de ambos periodos: {{ $criterio_i }}</p>
+      @else
+        <p>Promedio de ambos periodos: {{$criterio_si}}</p>
+      @endif
     </div>
     <script type="text/php">
-        $pdf->page_script('
-          if ($PAGE_NUM >= 1) {
-            $pdf->add_object($GLOBALS["header"],"add");
-          }
-        ');
-      </script>
+      $pdf->page_script('
+        if ($PAGE_NUM >= 1) {
+          $pdf->add_object($GLOBALS["header"],"add");
+        }
+      ');
+    </script>
 </body>
 </html>
