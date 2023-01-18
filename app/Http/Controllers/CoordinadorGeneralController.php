@@ -2716,23 +2716,23 @@ $promedio_p4=[
         }
         
         $asistentes = array();
-        foreach($cursos as $curso){
-            $unam = 0;
-            $externos = 0;
-            $profesors = DB::table('participante_curso')
+        foreach($cursos as $curso) {
+          $unam = 0;
+          $total = 0;
+          $profesors = DB::table('participante_curso')
             ->join('profesors as p','p.id','=','participante_curso.profesor_id')
             ->select('p.unam','p.procedencia','participante_curso.asistencia')
             ->where([['participante_curso.curso_id',$curso->id]])
             ->get();
-            foreach($profesors as $profesor){
-                if($profesor->unam == 1){
-                    $unam++;
-                }else if($profesor->asistencia){
-                    $externos++;
-                }
+          foreach($profesors as $profesor) {
+            if($profesor->asistencia) {
+              $total++;
+              if($profesor->unam)
+                $unam++;
             }
-            $total = $unam+$externos;
-            array_push($asistentes, [$curso, $unam, $externos, $total]);
+          }
+          $externos = $total - $unam;
+          array_push($asistentes, [$curso, $unam, $externos, $total]);
         }
 
         $pdf = PDF::loadView('pages.participantes',array('semestre'=>$semestreEnv,'cursos'=>$asistentes));	
@@ -2765,20 +2765,20 @@ $promedio_p4=[
         $asistentes = array();
         foreach($cursos as $curso){
             $unam = 0;
-            $externos = 0;
+            $total = 0;
             $profesors = DB::table('participante_curso')
             ->join('profesors as p','p.id','=','participante_curso.profesor_id')
             ->select('p.unam','p.procedencia', 'participante_curso.asistencia')
             ->where([['participante_curso.curso_id',$curso->id]])
             ->get();
-            foreach($profesors as $profesor){
-                if($profesor->unam == 1){
-                    $unam++;
-                }else if($profesor->asistencia){
-                    $externos++;
-                }
+            foreach($profesors as $profesor) {
+              if($profesor->asistencia) {
+                $total++;
+                if($profesor->unam)
+                  $unam++;
+              }
             }
-            $total = $unam+$externos;
+            $externos = $total - $unam;
             array_push($asistentes, [$curso, $unam, $externos, $total]);
         }
         
