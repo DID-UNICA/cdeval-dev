@@ -1291,7 +1291,7 @@ $promedio_p4=[
         ->select('catalogo_cursos.*','cursos.*')
         ->get();
       if($cursos->isEmpty())
-        return redirect()->route('cd.area', [$semestre, $periodo, $coordinacion_id])
+        return redirect()->back()
           ->with('warning', 
           'El periodo seleccionado con anterioridad, no cuenta con cursos del SGC.');
 
@@ -2023,7 +2023,7 @@ $promedio_p4=[
       
       if($evals->isEmpty()){
         return redirect()
-          ->route('cd.area', [$curso->semestre_anio.'-'.$curso->semestre_pi, $curso->semestre_si, '1'])
+          ->back()
           ->with('danger', 'Curso no cuenta con evaluación');
       }
 		  
@@ -2564,7 +2564,7 @@ $promedio_p4=[
       //TODO:Arreglar rutas en cd.area para redirigir a cd.area y no back por buscador
       if($evalsCurso->isEmpty())
         return redirect()
-             ->route('cd.area', [$curso->semestre_anio.'-'.$curso->semestre_pi, $curso->semestre_si, '1'])
+             ->back()
              ->with('danger', 'El curso no cuenta con evaluaciones');
 
       foreach($evalsCurso as $eval){
@@ -2761,6 +2761,10 @@ $promedio_p4=[
             ->where([['c.semestre_anio',$semestre[0]],['c.semestre_pi',$semestre[1]],['co.id',$division]])
             ->orderBy('c.semestre_si', 'desc')
             ->get();
+
+            if(sizeof($cursos) == 0)
+              return redirect()->back()
+                ->with('danger', 'No hay cursos dados de alta en el periodo '.$semestreEnv);
         
         $asistentes = array();
         foreach($cursos as $curso){
