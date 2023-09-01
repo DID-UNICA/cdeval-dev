@@ -1,6 +1,13 @@
 <?php
 
 /**
+ * Variables de entorno para el ambiente del Centro de Docencia
+ * 
+ */
+ini_set('memory_limit', '-1');
+ini_set('max_execution_time', '-1');
+
+/**
  * Laravel - A PHP Framework For Web Artisans
  *
  * @package  Laravel

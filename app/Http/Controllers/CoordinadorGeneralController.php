@@ -2601,6 +2601,7 @@ $promedio_p4=[
           if($eval->p8)
             $instructor->actitud += $eval->p8;
         }
+
         //Obtenemos los promedios de cada profesor
         $instructor->experiencia = round($instructor->experiencia/$instructor->t_evals,2);
         $instructor->planeacion = round($instructor->planeacion/$instructor->t_evals,2);
@@ -2610,7 +2611,9 @@ $promedio_p4=[
         $instructor->control = round($instructor->control/$instructor->t_evals,2);
         $instructor->interes = round($instructor->interes/$instructor->t_evals,2);
         $instructor->actitud = round($instructor->actitud/$instructor->t_evals,2);
+        $instructor->str_total_evals = strval($instructor->t_evals);
       }
+      
       //TODO:Meter esto a una funcion helper
       setlocale(LC_ALL,"es_MX");
       $date = getdate();
@@ -2678,6 +2681,8 @@ $promedio_p4=[
           $mes = 'diciembre';
           break;
       }
+
+      //return $instructores;
       //Obtenemos el pdf
       $lugar = 'pages.reporte_final_instructores';
       $nombre = 'reporte_instructores_'.$catalogoCurso->nombre_curso.'.pdf';
@@ -2691,7 +2696,7 @@ $promedio_p4=[
         'curso'=>$curso,
         'date'=>$date,
         'dia'=>$dia,
-        'mes'=>$mes));	
+        'mes'=>$mes));
       return $pdf->download($nombre);
     }
 

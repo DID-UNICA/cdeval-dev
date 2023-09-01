@@ -196,7 +196,7 @@ margin-top: 250px;
         <tr>
 					<td text-align='left' class="prof">
             {{$instructor->nombre}} <br>
-            <div style="font-family:'Calibri, sans-serif'; font-size:11px; color:#001E42; margin-left:15%">{{$instructor->t_evals}} hojas de evaluación</div> 
+            <div style="font-family:'Calibri, sans-serif'; font-size:11px; color:#001E42; margin-left:15%">{{$instructor->str_total_evals}} hojas de evaluación</div> 
           </td>
 					<td class="n1">{{$instructor->experiencia}}</td>
 					<td class="n1">{{$instructor->planeacion}}</td>
@@ -228,7 +228,7 @@ margin-top: 250px;
 				<th class="f1" align=left>Sugerencias y recomendaciones</th>
 			</tr>
             @foreach($sugerencias as $sugerencia)
-                <tr>
+                <tr style="margin: 3%">
 				<td class="n">{{$sugerencia}}</td>
                 </tr>
             @endforeach
